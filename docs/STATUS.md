@@ -92,6 +92,7 @@ Framework-free TypeScript toolkit that draws our data on the Matterport model, p
 **Redesign (branch `ui-guide-sign`): the real `frontend/` now uses the new UI**
 - "Guide Sign" world, fire palette (charcoal, fire orange, ember red only for life risk). Product brief in `PRODUCT.md`; clickable mock in `.impeccable/mocks/prototype.html`.
 - Home (`src/brief/Home.jsx`) is the briefing: 5 key-fact signs with pictograms, floor plan with the plan of attack drawn on it, 4 steps Arrive / Enter / Search / Get out with diagrams (building section, hose gauge, distance scale, search path, exit bars), Play (browser TTS + caption) or Read. Live/replayed calls reshape it as facts arrive.
+- All spoken output is ElevenLabs via `POST /speech` (narrator voice, word-timed captions, cached in `fixtures/tts/`); the browser voice is gone. The 4 briefing steps are fetched together when Play is pressed.
 - Calls replay from `GET /calls/{id}/frames` (`src/hooks/useCallPlayer.js`) with a transport bar under the top strip (`src/brief/CallBar.jsx`): play/pause, previous/next fact, scrub bar with Fire / Trapped / Hazard markers, 1–2× speed, Space and arrow keys. Click a transcript line to jump there. The spoken briefing can skip steps (⏮ ⏭, or click a step while it plays).
 - During a call the home plan goes live: everything known so far is drawn at once, rooms named in each update flash, and a NEW banner quotes the change (from the stream's `changes`). Clicking a step takes over; when the call ends it lands on Search.
 - 3D model is first-class: a 2D/3D switch on the home plan (briefing overlays follow the step) and a `#model` page, first in the toolbar.
@@ -142,3 +143,4 @@ Framework-free TypeScript toolkit that draws our data on the Matterport model, p
 - 2026-11-14: 3D model back up front: 2D/3D switch on the home briefing plan, `#model` page first in the toolbar.
 - 2026-11-14: Live call highlights back on the 2D plan: live mode, flashing rooms per update, NEW banner, key signs flash on change.
 - 2026-11-14: Seekable calls: `GET /calls/{id}/frames` + call transport bar (scrub, skip to next fact, speed); skip steps in the spoken briefing (54 tests).
+- 2026-11-14: ElevenLabs voice for the spoken briefing and mayday steps (`POST /speech`, word-timed captions, cached); Office 110 mayday lines pre-generated (55 tests).

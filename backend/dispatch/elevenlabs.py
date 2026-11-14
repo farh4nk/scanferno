@@ -86,6 +86,44 @@ def tts(text: str, voice: str = "narrator", emotion: str | None = None) -> bytes
     raise RuntimeError(f"ElevenLabs TTS rejected all models: {last.status_code} {last.text[:300]}")
 
 
+def tts_timed(text: str, voice: str = "narrator") -> tuple[bytes, list[dict]]:
+    """MP3 plus word timings [{word, start, end}] from the with-timestamps endpoint, so a caption can follow
+    the voice word by word. Tries the expressive model first, then the multilingual one."""
+    import base64
+    vid = voice_id(voice) if voice in ROLES else voice
+    last = None
+    for m in TTS_MODELS:
+        r = httpx.post(
+            f"{BASE}/text-to-speech/{vid}/with-timestamps",
+            params={"output_format": "mp3_44100_128"},
+            json={"text": text, "model_id": m},
+            headers=_headers(),
+            timeout=90,
+        )
+        if _model_rejected(r):
+            last = r
+            continue
+        r.raise_for_status()
+        j = r.json()
+        al = j.get("normalized_alignment") or j.get("alignment") or {}
+        chars, starts, ends = al.get("characters", []), al.get("character_start_times_seconds", []), al.get("character_end_times_seconds", [])
+        words, cur = [], None
+        for ch, a, b in zip(chars, starts, ends):
+            if ch.isspace():
+                if cur:
+                    words.append(cur)
+                cur = None
+            elif cur is None:
+                cur = {"word": ch, "start": a, "end": b}
+            else:
+                cur["word"] += ch
+                cur["end"] = b
+        if cur:
+            words.append(cur)
+        return base64.b64decode(j["audio_base64"]), words
+    raise RuntimeError(f"ElevenLabs TTS rejected all models: {last.status_code} {last.text[:300]}")
+
+
 def stt(audio: bytes, filename: str = "call.wav") -> dict:
     """Transcript with word timings and speaker ids: {text, words: [{text, start, end, type, speaker_id}]}."""
     global stt_model

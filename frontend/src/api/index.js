@@ -22,6 +22,7 @@ export const ask = (id, question, dispatch = {}) => post(`/buildings/${id}/ask`,
 // routers/calls.py
 export const getCalls = () => get('/calls')
 export const getCall = (id) => get(`/calls/${id}`)
+export const speech = (text, voice = 'narrator') => post('/speech', { text, voice })
 export const getCallFrames = (id) => get(`/calls/${enc(id)}/frames`)
 export const liveUrl = (callId, speed) => sseUrl(`/calls/${enc(callId)}/live`, { speed })
 

@@ -52,6 +52,7 @@ One router file per area (`buildings.py`, `calls.py`, `dispatch.py`, `search.py`
 | `GET /fixtures/<path>` | any cached file (images, audio, JSON) |
 | `GET /calls` | scripted calls |
 | `GET /calls/{id}` | script, `audio_url`, `utterances`, `timeline` of dispatch records |
+| `POST /speech` | `{text, voice}` -> `{audio_url, words:[{word,start,end}]}`: ElevenLabs voice with word timings, cached in `fixtures/tts/`. All spoken output in the UI goes through this (never the browser's speechSynthesis) |
 | `GET /calls/{id}/frames` | whole call precomputed for a seekable player: `utterances`, `duration`, `audio_url`, and `frames[]` (`t`, `record`, `briefing` with `changes`, or `mayday`). The frontend replays calls from this |
 | `GET /calls/{id}/replay?speed=1` | SSE in call time: `utterance`, `record`, `done` events. Start the audio when the stream opens |
 | `POST /dispatch/extract` | `{building_id, transcript:[{role,text}], previous}` -> updated dispatch record (typed fallback) |
@@ -87,7 +88,7 @@ One router file per area (`buildings.py`, `calls.py`, `dispatch.py`, `search.py`
 ## LLM and speech
 
 - LLM is **Gemini** via `backend/agent/llm.py` `generate(prompt, system, json_schema)`. Main models are often overloaded, so it falls back through `gemini-3.5-flash` -> `3.5-flash-lite` -> `3.1-flash-lite`, 20 s max per model. Don't call the SDK directly; use the wrapper.
-- **ElevenLabs** (`backend/dispatch/elevenlabs.py`): STT `scribe_v2` with speaker diarization; TTS `eleven_v3` (understands `emotion` tags like panicked). Voices by role, auto-picked from the account: dispatcher Daniel, caller Sarah, caller2 Adam, firefighter Harry (mayday radio), narrator Alice (spoken directions). Without TTS access, calls fall back to macOS `say`.
+- **ElevenLabs** (`backend/dispatch/elevenlabs.py`): STT `scribe_v2` with speaker diarization; TTS `eleven_v3` (understands `emotion` tags like panicked). Voices by role, auto-picked from the account: dispatcher Daniel, caller Sarah, caller2 Adam, firefighter Harry (mayday radio), narrator Alice (spoken directions). Without TTS access, calls fall back to macOS `say`. The UI speaks through `POST /speech` (`frontend/src/ui/speech.js`): the briefing narration and mayday steps use the narrator voice, with captions following the word timings.
 - **Call scripts** (`fixtures/calls/<id>/script.json`): each line has `role` (dispatcher | caller), optional `voice` (a role above) and `emotion`. Speakers in the audio get roles in the order they first appear in the script, so a single-speaker `"kind": "mayday"` call is the caller, not the dispatcher. After adding or editing a script, run `python -m scripts.process_calls <id>` (add `--refresh` to redo audio, transcript and timeline).
 
 ## Rules

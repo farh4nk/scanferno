@@ -6,6 +6,7 @@ import { HoseGauge, Ring, Section } from '../brief/Diagrams'
 import LivePanel from '../components/LivePanel'
 import Viewer3D from '../components/Viewer3D'
 import Icon from '../ui/Icon'
+import { prepare, speak } from '../ui/speech'
 
 const fmt = (t) => `${Math.floor(t / 60)}:${String(Math.floor(t % 60)).padStart(2, '0')}`
 const show = (v) => (Array.isArray(v) ? v.map((x) => (typeof x === 'object' ? x.location || x.description : x)).join('; ') : v == null ? '' : String(v))
@@ -222,9 +223,17 @@ export function MaydayPage({ ctx, k }) {
   useEffect(() => {
     if (!room) return; let alive = true; setErr(null); setStep(0)
     getMayday(ctx.buildingId, room).then((r) => alive && setM(r)).catch((e) => alive && setErr(e.message))
-    return () => { alive = false; window.speechSynthesis?.cancel() }
+    return () => { alive = false; voiceLine.current?.stop() }
   }, [room, ctx.buildingId])
-  const say = (t) => { window.speechSynthesis?.cancel(); window.speechSynthesis?.speak(new SpeechSynthesisUtterance(t)) }
+  const voiceLine = useRef(null); const [saying, setSaying] = useState(false); const [vErr, setVErr] = useState(null)
+  const say = (t) => {
+    voiceLine.current?.stop(); setVErr(null); setSaying(true)
+    const h = speak(t, { voice: 'narrator' }); voiceLine.current = h
+    h.finished.then((why) => { if (voiceLine.current === h) { setSaying(false); if (why === 'error') setVErr('ElevenLabs voice unavailable') } })
+  }
+  // fetch the voice for every step as soon as the directions arrive, so Speak is instant
+  useEffect(() => { m?.directions?.forEach((d) => prepare(d, 'narrator').catch(() => {})) }, [m])
+  useEffect(() => () => voiceLine.current?.stop(), [])
   const n = m?.directions?.length || 0; const wp = m?.wall_path || []; const cut = n ? Math.round(wp.length * stepI / n) : 0
   return (
     <div className="page split" style={{ gridTemplateColumns: '1fr 480px' }}>
@@ -232,7 +241,7 @@ export function MaydayPage({ ctx, k }) {
         <select className="sel big" value={room} onChange={(e) => setRoom(e.target.value)}>
           {ctx.plan.rooms.filter((r) => r.type !== 'void').map((r) => <option key={r.id} value={r.id}>Last known room: {r.label} · side {r.side}</option>)}
         </select>
-        {err && <p className="err">{err}</p>}
+        {(err || vErr) && <p className="err">{err || vErr}</p>}
         {m && <>
           <div className="sign"><div><small>Hand on wall</small><div className="big">{m.hand[0].toUpperCase() + m.hand.slice(1)} hand · {m.distance_m} m to side {m.exit_side} exit</div><div className="sub">Passes {m.doors_passed} door{m.doors_passed === 1 ? '' : 's'} · shortest path {m.shortest_m} m</div></div></div>
           <div className="panel grow steps">{m.directions.map((d, i) => <button key={i} className={`st ${i < stepI ? 'done' : i === stepI ? 'now' : ''}`} onClick={() => setStep(i)}><i>{i + 1}</i>{d}</button>)}</div>
@@ -242,7 +251,7 @@ export function MaydayPage({ ctx, k }) {
         <div className="panel grow flat">{m && <PlanSvg plan={ctx.plan} k={k} selected={room} dashed={wp.slice(Math.max(cut - 1, 0))} walked={cut > 1 ? wp.slice(0, cut) : null} />}</div>
         <div className="row-btns">
           <button className="btn" onClick={() => setStep(Math.max(0, stepI - 1))} disabled={!stepI} aria-label="Previous step"><Icon name="back" /></button>
-          <button className="btn wide" onClick={() => m && say(m.directions[stepI])}><Icon name="speak" />Speak step</button>
+          <button className="btn wide" onClick={() => m && say(m.directions[stepI])}><Icon name="speak" />{saying ? 'Speaking…' : 'Speak step'}</button>
           <button className="btn f wide" onClick={() => setStep(Math.min(n - 1, stepI + 1))} disabled={stepI >= n - 1}>Next step<Icon name="arrow" /></button>
         </div>
       </div>

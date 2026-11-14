@@ -87,3 +87,21 @@ def test_mayday_call_frames_carry_directions():
     from app.main import app
     r = TestClient(app).get("/calls/vibe-mayday/frames").json()
     assert any(f.get("mayday", {}).get("directions") for f in r["frames"])
+
+
+def test_speech_validates_input_and_serves_cache():
+    from fastapi.testclient import TestClient
+    from app.main import app
+    from data import cache
+    c = TestClient(app)
+    assert c.post("/speech", json={"text": "  ", "voice": "narrator"}).status_code == 400
+    assert c.post("/speech", json={"text": "hi", "voice": "robot"}).status_code == 400
+    meta = {"text": "cached line", "voice": "narrator", "audio_url": "/fixtures/tts/x.mp3", "words": []}
+    import hashlib
+    key = hashlib.sha1(b"narrator|cached line").hexdigest()[:16]
+    p = cache.save_json(meta, "tts", f"{key}.json")
+    try:
+        r = c.post("/speech", json={"text": "cached   line", "voice": "narrator"}).json()
+        assert r["cached"] and r["audio_url"] == meta["audio_url"]
+    finally:
+        p.unlink()

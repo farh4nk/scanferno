@@ -5,6 +5,7 @@ import { SIDE_NAME, STEPS, hazardName, stepScript } from './model'
 import { DeadEndPict, DistScale, EnterPict, ExitBars, ExitPict, FirePict, HoseGauge, Ring, SearchChain, Section, TrappedPict, WatchPict } from './Diagrams'
 import Icon from '../ui/Icon'
 import Viewer3D from '../components/Viewer3D'
+import { prepare, speak } from '../ui/speech'
 
 function KeyBand({ k, step }) {
   const cells = [
@@ -122,19 +123,34 @@ export default function Home({ k, plan, briefing, feed, go, building }) {
   const [caption, setCaption] = useState(null)
   const alive = useRef(false)
 
-  const stop = () => { alive.current = false; window.speechSynthesis?.cancel(); setNarrating(false); setCaption(null) }
-  const narrate = (i) => {
-    if (!alive.current || i >= STEPS.length) { stop(); return }
+  // narration in the ElevenLabs narrator voice; `run` guards against a stopped or restarted session
+  const line = useRef(null); const run = useRef(0)
+  const [voiceErr, setVoiceErr] = useState(null)
+  const [loadingVoice, setLoadingVoice] = useState(false)
+  const halt = () => { run.current += 1; line.current?.stop(); line.current = null }
+  const stop = () => { halt(); alive.current = false; setNarrating(false); setCaption(null); setLoadingVoice(false) }
+  const narrate = (i, id) => {
+    if (id !== run.current) return
+    if (i >= STEPS.length) { stop(); return }
     setStep(i)
-    const txt = stepScript(k, i); const u = new SpeechSynthesisUtterance(txt); u.rate = 1.05
-    setCaption({ txt, at: 0, end: 0 })
-    u.onboundary = (ev) => { const b = txt.indexOf(' ', ev.charIndex + 1); setCaption({ txt, at: ev.charIndex, end: b < 0 ? txt.length : b }) }
-    u.onend = () => { if (alive.current) setTimeout(() => narrate(i + 1), 350) }
-    window.speechSynthesis.speak(u)
+    const txt = stepScript(k, i)
+    setCaption({ txt, at: 0, end: 0 }); setLoadingVoice(true)
+    const h = speak(txt, { voice: 'narrator', onStart: () => setLoadingVoice(false), onWord: (w) => setCaption({ txt, at: w.s, end: w.e }) })
+    line.current = h
+    h.finished.then((why) => {
+      if (id !== run.current) return
+      if (why === 'error') { setVoiceErr('ElevenLabs voice unavailable. Use Read instead.'); stop(); return }
+      if (why === 'ended') setTimeout(() => narrate(i + 1, id), 300)
+    })
   }
-  const jump = (i) => { window.speechSynthesis?.cancel(); alive.current = false; setTimeout(() => { alive.current = true; setNarrating(true); setFollow(false); narrate(Math.max(0, Math.min(STEPS.length - 1, i))) }, 60) }
-  const toggle = () => { if (narrating) stop(); else { window.speechSynthesis?.cancel(); setFollow(false); alive.current = true; setNarrating(true); narrate(0) } }
-  useEffect(() => () => { alive.current = false; window.speechSynthesis?.cancel() }, [])
+  const begin = (i) => {
+    halt(); setVoiceErr(null); setFollow(false); alive.current = true; setNarrating(true)
+    STEPS.forEach((_, j) => prepare(stepScript(k, j), 'narrator').catch(() => {})) // fetch every step up front
+    narrate(Math.max(0, Math.min(STEPS.length - 1, i)), run.current)
+  }
+  const jump = (i) => begin(i)
+  const toggle = () => { if (narrating) stop(); else begin(0) }
+  useEffect(() => () => { run.current += 1; line.current?.stop() }, [])
   useEffect(() => {
     const onKey = (e) => { if (/^[1-4]$/.test(e.key) && !e.target.closest('input,textarea,select')) { stop(); setFollow(false); setStep(+e.key - 1) } }
     window.addEventListener('keydown', onKey); return () => window.removeEventListener('keydown', onKey)
@@ -180,8 +196,9 @@ export default function Home({ k, plan, briefing, feed, go, building }) {
                 highlight={step === 3 ? { rooms: [], polylines: o.routes } : step === 1 && o.hose ? { rooms: [], polylines: [o.hose] } : null} mayday={null} evac={null} />
             : <PlanSvg plan={plan} k={k} {...o} />}
         </div>
+        {voiceErr && <p className="caption err">{voiceErr}</p>}
         {narrating && caption ? (
-          <p className="caption"><span className="said">{caption.txt.slice(0, caption.at)}</span><mark>{caption.txt.slice(caption.at, caption.end)}</mark>{caption.txt.slice(caption.end)}</p>
+          <p className={`caption ${loadingVoice ? 'loading' : ''}`}>{loadingVoice && <span className="vload">Preparing voice… </span>}<span className="said">{caption.txt.slice(0, caption.at)}</span><mark>{caption.txt.slice(caption.at, caption.end)}</mark>{caption.txt.slice(caption.end)}</p>
         ) : live ? (
           <div className="ticker"><span className="dotlive" /><b>{last?.role || 'call'}</b>{last?.text || 'Connecting…'}</div>
         ) : null}

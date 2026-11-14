@@ -288,3 +288,6 @@ svg.mi { width: 22px; height: 22px; } .ip { fill: var(--white); } .iad { fill: v
 .cb-mark .tip { display: none; } .cb-mark:hover .tip { display: block; position: absolute; top: -4px; transform: translateY(-100%); max-width: 320px; white-space: normal; background: var(--white); color: var(--ink); z-index: 5; }
 .utt.seekable { cursor: pointer; border-radius: 6px; } .utt.seekable:hover { background: var(--road2); }
 .btn.play.skip { width: 60px; padding: 0; }
+
+.caption.err { color: var(--hotfg); }
+.caption .vload { color: var(--fire); font-weight: 800; }
