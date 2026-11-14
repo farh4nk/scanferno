@@ -1,6 +1,6 @@
 # Scanferno: context for coding agents
 
-Read this first, then [docs/STATUS.md](docs/STATUS.md) for what's done and what's next. Data shapes between roles: [docs/CONTRACTS.md](docs/CONTRACTS.md). Product plan and demo moments: [docs/PLAN.md](docs/PLAN.md).
+Read this first, then [docs/STATUS.md](docs/STATUS.md) for what's done and what's next. Data shapes between roles: [docs/CONTRACTS.md](docs/CONTRACTS.md). Product plan and demo moments: [docs/PLAN.md](docs/PLAN.md). Product brief for UI work (users, principles, required features): [PRODUCT.md](PRODUCT.md). UI redesign prototype: open `.impeccable/mocks/prototype.html` in a browser.
 
 ## What we're building
 

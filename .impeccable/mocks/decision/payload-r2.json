@@ -1,0 +1,55 @@
+{
+  "title": "Scanferno, round 2: one job per screen",
+  "question": "Every card uses the same organized structure: a left rail of 6 workspaces (Call, Briefing, Plan, Aerial, Mayday, Evac), a slim incident strip on top, and Ask at the bottom. The cards differ in look. Sketches show the Briefing workspace.",
+  "options": [
+    {
+      "id": "r2-assigned", "kind": "assigned", "label": "Field Manual", "kicker": "THE ROLL",
+      "lineage": "IFSTA-style firefighter training manuals: color-coded chapter tabs, numbered skill sheets",
+      "thesis": "Each workspace is a chapter with its own tab color; every list an officer acts on is a numbered step sheet.",
+      "palette": ["#141312", "#1c1a19", "#ece8e1", "#d8262c", "#e9a23b"],
+      "materials": ["chapter tab colors", "numbered step circles", "ruled boxes, no cards"],
+      "viewport": "Red wordmark, slim incident strip, color-tabbed workspace rail. Briefing as 4 ruled boxes: Rescue (red plate + numbered steps + mini plan), Entry, Hazards, Exterior.",
+      "risk": "The chapter colors must stay on the rail; repeated across the page they turn into rainbow clutter.",
+      "raised": [
+        {"from": "c-specimen", "raise": "Hierarchy by scale contrast: one large fact per box, small labels."},
+        {"from": "c-bitmap", "raise": "Inferred data carries a visible INFERRED state instead of being hidden."},
+        {"from": "c-gate", "raise": "A fact that changes holds its highlight until the officer looks at it."},
+        {"from": "c-crouwel", "raise": "One grid governs every workspace, so compartments line up across screens."},
+        {"from": "c-timetable", "raise": "Three type sizes total; one reversed plate (the trapped person) per screen."}
+      ],
+      "html": ".impeccable/mocks/decision/r2-assigned.html"
+    },
+    {
+      "id": "r2-pick", "kind": "pick", "label": "Guide Sign", "kicker": "IMPECCABLE’S PICK",
+      "lineage": "US highway guide and warning signs, made to be read at speed from a moving vehicle",
+      "thesis": "The three facts that matter are signs you read at a glance from a moving truck; everything else waits below.",
+      "palette": ["#0c0e0d", "#151817", "#f2f4f1", "#00703c", "#ffcc00", "#d4202a"],
+      "materials": ["sign panels with inset border", "Highway Gothic-style type", "drawn icon rail"],
+      "viewport": "Three sign panels across the top (Trapped red, Enter green, Watch yellow), then Search order with plan and Hazards, Ask bar at the bottom.",
+      "risk": "Sign panels become costume if used beyond the top three; big type means less fits per screen.",
+      "html": ".impeccable/mocks/decision/r2-pick.html"
+    },
+    {
+      "id": "c-lexicon", "kind": "challenger", "catalogId": "rw-lexicon-shoulder-and-plate", "label": "Lexicon and Plate", "verdict": "competitive",
+      "lineage": "19th-century reference lexicons: black text column, color only inside bordered plates",
+      "thesis": "The briefing reads as calm prose; color lives only in the plates (floor plan, aerial).",
+      "palette": ["#f1ead9", "#191714", "#d2401f", "#1f7a52", "#2b3f9e"],
+      "materials": ["uncoated cream stock", "bordered plates", "guide words in the head rule"],
+      "viewport": "Text column left (Rescue, Entry, Hazards as entries), plates right (plan, aerial), workspace index down the outside margin.",
+      "case": "Wins on calm and organization; loses on audience and on night use in a truck.",
+      "risk": "A light, bookish page glares in a dark cab and reads academic, not fireground.",
+      "html": ".impeccable/mocks/decision/r2-lexicon.html",
+      "hero": "https://impeccable.style/worlds/cards/rw-lexicon-shoulder-and-plate-hero.webp"
+    },
+    {"id":"c-specimen","kind":"challenger","catalogId":"variable-font-specimen","label":"Type Specimen","verdict":"declined","lineage":"Variable font specimens","thesis":"One giant glyph, tiny labels.","palette":["#f5f5f2","#111111","#ff4f00"],"materials":["flat paper","axis sliders"],"viewport":"One giant fact fills the screen.","risk":"Type play distracts under stress.","case":"Loses both: no fireground connection, no room for the plan.","kept":"Hierarchy by scale contrast alone."},
+    {"id":"c-bitmap","kind":"challenger","catalogId":"emigre-bitmap-specimen","label":"Bitmap Specimen","verdict":"declined","lineage":"Emigre bitmap type","thesis":"Pixel type at poster scale.","palette":["#f4f1ea","#111111","#ff2d55"],"materials":["halftone","bitmap type"],"viewport":"Pixel headline over dense columns.","risk":"Low-res type hurts reading at speed.","case":"Loses both.","kept":"Data quality shown as an honest, visible state."},
+    {"id":"c-gate","kind":"challenger","catalogId":"vernacular-ephemera-boarding-pass-and-gate-board","label":"Gate Board","verdict":"declined","lineage":"Airport gate boards","thesis":"Rows rerank in place; changes stay lit.","palette":["#111418","#f2f2f2","#ffb000"],"materials":["split rows","tabular figures"],"viewport":"Ranked board of facts.","risk":"Airline again; you passed on the coupon book.","case":"Loses on audience, ties on clarity.","kept":"A changed fact stays lit until noticed."},
+    {"id":"c-crouwel","kind":"challenger","catalogId":"crouwel-grid-specimen","label":"Grid Specimen","verdict":"declined","lineage":"Wim Crouwel grid posters","thesis":"The grid is visible and governs everything.","palette":["#ffffff","#111111","#0047ff"],"materials":["construction grid","grid letterforms"],"viewport":"Visible grid with built letters.","risk":"Grid lines add noise you asked to remove.","case":"Loses both.","kept":"One shared grid across every workspace."},
+    {"id":"c-timetable","kind":"challenger","catalogId":"rw-timetable-slide-rack","label":"Timetable Rack","verdict":"declined","lineage":"1970s pocket airline timetables","thesis":"One type size; rank by weight and case.","palette":["#d9a93a","#2b2f36","#f3ecd8","#c8341e"],"materials":["tinted glass slides","raked panels"],"viewport":"A raked rack of slides.","risk":"Slanted panels slow reading.","case":"Loses both.","kept":"Few type sizes; one reversed plate per screen."}
+  ],
+  "reroll": {"registers": ["safer", "bolder"]},
+  "buildPath": {"value": "code"},
+  "canon": true,
+  "canonCard": {"kind":"canon","label":"The category standard","thesis":"A clean sidebar app (Linear / Vercel class) in dark slate with one orange accent.","palette":["#0b0d12","#151922","#e7e9ee","#f97316","#ef4444"],"materials":["rounded cards","Inter"],"viewport":"Sidebar with workspaces, Briefing as 3 cards and an Ask bar.","risk":"Organized but anonymous; looks like any SaaS app.","html":".impeccable/mocks/decision/r2-canon.html"},
+  "steer": true
+}

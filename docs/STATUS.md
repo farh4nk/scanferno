@@ -63,6 +63,11 @@ Framework-free TypeScript toolkit that draws our data on the Matterport model, p
 
 ## Visuals and pitch (branch `ui`)
 
+**Redesign in progress (branch `ui-redesign-prototype`, not yet in `frontend/`)**
+- New direction chosen: "Guide Sign" world, fire palette (charcoal, fire orange, ember red only for life risk). Product brief in `PRODUCT.md`.
+- Clickable prototype: `.impeccable/mocks/prototype.html` (open in a browser, no backend needed; real Vibe Hobby data baked in). Home is the briefing itself: 5 key-fact signs on top, floor plan with the plan of attack drawn on it, 4 steps Arrive / Enter / Search / Get out, spoken briefing (Play) or text (Read), live call reshapes the plan. Tool pages (Call, Facts, Rescue, Entry, Hazards, Hose, Exterior, Aerial, Plan, Mayday, Evac, Ask) behind a small toolbar.
+- Next: port the prototype into `frontend/` (React) wired to the real API; convert detail pages to diagrams.
+
 **Done**
 - React + Vite app in `frontend/` (`npm install && npm run dev`, http://localhost:5173; backend URL via `VITE_API_URL`, default http://localhost:8000).
 - Live call view: SSE `/calls/{id}/live` drives transcript, dispatch record (changed fields flash), briefing, mayday; audio starts when the stream opens.
@@ -97,3 +102,4 @@ Framework-free TypeScript toolkit that draws our data on the Matterport model, p
 - 2026-11-14: Live call transcription: `/live/sessions` (mic via ElevenLabs, browser speech, typed lines, uploads), save live calls as replayable fixtures, frontend Live mode (47 tests).
 - 2026-11-14: 3D walk mode: click a room to fly into it; exit route follows the camera, visible through walls, with a turn arrow (branch `walk-route`).
 - 2026-11-14: All 5 calls re-voiced with ElevenLabs; speaker roles follow script order (fixes single-speaker mayday call); `--refresh` now re-transcribes too.
+- 2026-11-14: UI redesign prototype (Guide Sign, briefing-first home with diagrams, spoken/read briefing) in `.impeccable/mocks/prototype.html`; `PRODUCT.md` product brief (branch `ui-redesign-prototype`).

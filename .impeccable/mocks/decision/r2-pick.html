@@ -1,0 +1,105 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Scanferno · Guide Sign</title>
+<link href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--night:#0c0e0d;--road:#151817;--rule:#272b29;--white:#f2f4f1;--dim:#9aa19c;--green:#00703c;--yellow:#ffcc00;--red:#d4202a;--blue:#1f5fbf}
+*{box-sizing:border-box;margin:0}
+body{width:1440px;height:900px;overflow:hidden;background:var(--night);color:var(--white);font:16px/1.4 Overpass,sans-serif;font-variant-numeric:tabular-nums;display:grid;grid-template-columns:96px 1fr;grid-template-rows:60px 1fr}
+.mark{display:grid;place-items:center;background:var(--green);font-weight:800;font-size:22px}
+.strip{display:flex;align-items:center;gap:26px;padding:0 32px;border-bottom:1px solid var(--rule)}
+.strip b{font-weight:800}.strip .f{color:var(--dim);font-size:14px}.strip .f b{color:var(--white)}
+.live{color:var(--yellow);font-weight:700;font-size:14px}
+.search{margin-left:auto;width:300px;height:36px;border-radius:6px;background:var(--road);display:flex;align-items:center;padding:0 14px;color:var(--dim);font-size:14px}
+nav{border-right:1px solid var(--rule);display:flex;flex-direction:column;align-items:center;padding:14px 0;gap:4px}
+nav a{width:78px;padding:12px 0 10px;border-radius:8px;text-align:center;font-size:12px;font-weight:700;color:var(--dim)}
+nav a svg{display:block;margin:0 auto 6px;width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:2}
+nav a.on{background:var(--green);color:var(--white)}nav .sp{flex:1}
+main{padding:28px 36px;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:auto 1fr auto;gap:20px}
+.sign{border-radius:12px;padding:6px}.sign>div{border:3px solid currentColor;border-radius:8px;padding:16px 20px;height:100%}
+.sign.g{background:var(--green);color:var(--white)}.sign.y{background:var(--yellow);color:#111}.sign.r{background:var(--red);color:var(--white)}
+.sign small{display:block;font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.08em;opacity:.85}
+.sign .big{font-size:34px;font-weight:800;line-height:1.05;margin:4px 0 2px}
+.sign .sub{font-size:15px;font-weight:600}
+.arrow{display:inline-block;width:30px;height:30px;vertical-align:-4px;margin-right:6px}
+.panel{background:var(--road);border-radius:10px;padding:20px 22px;overflow:hidden}
+h2{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--dim);margin-bottom:12px;display:flex;justify-content:space-between}
+h2 span{text-transform:none;letter-spacing:0;font-weight:600}
+.row{display:grid;grid-template-columns:34px 1fr auto;gap:12px;align-items:center;padding:9px 0;border-top:1px solid var(--rule)}
+.row:first-of-type{border-top:0}
+.sh{width:30px;height:30px;border-radius:6px;background:var(--white);color:#111;display:grid;place-items:center;font-weight:800}
+.sh.r{background:var(--red);color:#fff}.sh.y{background:var(--yellow)}
+.row small{display:block;color:var(--dim);font-size:13px}.row .d{font-weight:700}.src{font-size:12px;color:var(--dim);text-transform:uppercase;font-weight:700}
+.span2{grid-column:span 2}
+.planbox{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+svg.plan{width:100%;height:250px}
+.room{fill:#1d2120;stroke:#5c635f;stroke-width:4}.room.fire{fill:#4a1416;stroke:var(--red)}.room.victim{fill:var(--red);stroke:var(--red)}
+.route{fill:none;stroke:var(--green);stroke-width:12;stroke-linecap:round;stroke-linejoin:round}.exit{fill:var(--green);stroke:var(--white);stroke-width:3}
+.ord circle{fill:var(--white)}.ord text{font:800 20px Overpass;fill:#111;text-anchor:middle}.lbl{display:none}
+.ask{grid-column:span 3;height:48px;border-radius:10px;background:var(--road);display:flex;align-items:center;padding:0 18px;color:var(--dim)}
+.ask b{margin-left:auto;color:var(--white);background:var(--green);padding:6px 14px;border-radius:6px;font-size:14px}
+img{width:100%;height:170px;object-fit:cover;border-radius:6px;margin-bottom:10px}
+</style></head><body>
+<div class="mark">SF</div>
+<div class="strip"><b>Vibe Hobby · 8866 Gulf Fwy</b><span class="live">● Call live 0:43</span><span class="f">Floor <b>3</b></span><span class="f">Fire <b>Side C</b></span><span class="f">5-story masonry, sprinklered</span><div class="search">Search address</div></div>
+<nav>
+ <a><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-3 2a11 11 0 0 0 5 5l2-3 5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>Call</a>
+ <a class="on"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6zM9 12h7M9 16h7M9 8h3"/></svg>Briefing</a>
+ <a><svg viewBox="0 0 24 24"><path d="M3 4h18v16H3zM3 12h8V4M11 20v-4h10"/></svg>Plan</a>
+ <a><svg viewBox="0 0 24 24"><path d="M3 20l6-9 4 5 3-4 5 8zM15 6a2 2 0 1 0 0 .1"/></svg>Aerial</a>
+ <a><svg viewBox="0 0 24 24"><path d="M12 3l9 16H3zM12 9v5M12 17v.5"/></svg>Mayday</a>
+ <a><svg viewBox="0 0 24 24"><path d="M14 4a2 2 0 1 0 0 .1M9 21l3-7 3 3v4M7 11l4-3 4 2 3 3"/></svg>Evac</a>
+</nav>
+<main>
+ <div class="sign r"><div><small>Trapped · 75%</small><div class="big">Kitchen 106</div><div class="sub">Coworker, floor 3</div></div></div>
+ <div class="sign g"><div><small>Enter</small><div class="big"><svg class="arrow" viewBox="0 0 30 30"><path d="M15 27V5M6 13l9-9 9 9" stroke="#fff" stroke-width="4" fill="none"/></svg>Side A</div><div class="sub">Door into Office 111 · 8 m to victim</div></div></div>
+ <div class="sign y"><div><small>Watch</small><div class="big">Oxygen</div><div class="sub">Cylinders, caller + suite 384</div></div></div>
+ <div class="panel span2"><h2>Search order <span>distance to nearest exit</span></h2><div class="planbox"><div>
+  <div class="row"><span class="sh r">1</span><div>Kitchen 106<small>Reported coworker</small></div><span class="d">8.4 m</span></div>
+  <div class="row"><span class="sh">2</span><div>Office 101<small>Reported fire area</small></div><span class="d">11.4 m</span></div>
+  <div class="row"><span class="sh">3</span><div>Office 102<small>Reported fire area</small></div><span class="d">10.5 m</span></div>
+  <div class="row"><span class="sh">4</span><div>Hallway B<small>Next to fire area</small></div><span class="d">4.4 m</span></div>
+ </div><svg class="plan" viewBox="0 0 901 678" xmlns="http://www.w3.org/2000/svg">
+<polygon class="room office fire" points="240,199 178,199 48,199 48,49 240,49"/>
+<polygon class="room office fire" points="386,178 386,199 240,199 240,49 320,49 320,81 345,81 345,49 386,49"/>
+<polygon class="room office" points="532,199 386,199 386,178 386,49 532,49 532,140"/>
+<polygon class="room office" points="532,49 665,48 665,163 665,199 532,199 532,140"/>
+<polygon class="room office" points="674,199 665,199 665,163 665,48 814,48 814,81 853,81 853,199 714,199"/>
+<polygon class="room kitchen victim" points="178,199 178,337 48,337 48,199"/>
+<polygon class="room hallway" points="238,268 327,268 327,356 327,397 327,510 238,510 238,337"/>
+<polygon class="room office" points="458,322 458,397 327,397 327,356 327,268 378,268 458,268"/>
+<polygon class="room office" points="458,268 588,268 588,397 458,397 458,322"/>
+<polygon class="room office" points="714,268 714,397 640,397 640,268"/>
+<polygon class="room office maze" points="714,397 714,268 714,199 853,199 852,397 798,397"/>
+<polygon class="room office" points="178,337 238,337 238,510 48,510 48,337"/>
+<polygon class="room office" points="588,397 588,629 326,629 327,571 345,571 345,557 327,557 327,510 327,397 458,397"/>
+<polygon class="room hallway" points="386,199 532,199 665,199 674,199 714,199 714,268 640,268 640,397 640,515 640,622 640,629 588,629 588,397 588,268 458,268 378,268 327,268 238,268 238,337 178,337 178,199 240,199"/>
+<polygon class="room office" points="640,397 714,397 798,397 852,397 852,516 640,515"/>
+<polygon class="room office" points="852,630 676,629 676,622 640,622 640,515 852,516"/>
+<polyline class="route" points="113,268 178,311 209,338 76,510"/>
+<rect class="exit" x="649" y="613" width="18" height="18"/>
+<rect class="exit" x="318" y="525" width="18" height="18"/>
+<rect class="exit" x="66" y="501" width="18" height="18"/>
+<rect class="exit" x="295" y="501" width="18" height="18"/>
+<g class="ord" transform="translate(144,124)"><circle r="17"/><text dy="6">2</text></g>
+<g class="ord" transform="translate(312,126)"><circle r="17"/><text dy="6">3</text></g>
+<g class="ord" transform="translate(459,124)"><circle r="17"/><text dy="6">5</text></g>
+<text class="lbl" x="599" y="124">104</text>
+<text class="lbl" x="755" y="126">105</text>
+<g class="ord" transform="translate(113,268)"><circle r="17"/><text dy="6">1</text></g>
+<text class="lbl" x="282" y="389">A</text>
+<text class="lbl" x="392" y="332">107</text>
+<text class="lbl" x="523" y="333">108</text>
+<text class="lbl" x="677" y="333">109</text>
+<g class="ord" transform="translate(783,298)"><circle r="17"/><text dy="6">6</text></g>
+<text class="lbl" x="143" y="424">111</text>
+<text class="lbl" x="458" y="513">112</text>
+<g class="ord" transform="translate(614,456)"><circle r="17"/><text dy="6">4</text></g>
+<text class="lbl" x="746" y="456">113</text>
+<text class="lbl" x="747" y="572">114</text>
+</svg></div></div>
+ <div class="panel"><h2>Hazards <span>4 high</span></h2>
+  <div class="row"><span class="sh y">!</span><div>Office 110 dead end<small>14 m to exit, no window</small></div><span class="src">Scan</span></div>
+  <div class="row"><span class="sh y">!</span><div>Students may be inside<small>Driving school, suite 335</small></div><span class="src">CoStar</span></div>
+  <div class="row"><span class="sh y">!</span><div>Aerial device needed<small>Roof about 19 m, sides A and C</small></div><span class="src">Vexcel</span></div>
+ </div>
+ <div class="ask">Ask about this building, e.g. “where is the closest exit to Office 110?”<b>Ask</b></div>
+</main></body></html>

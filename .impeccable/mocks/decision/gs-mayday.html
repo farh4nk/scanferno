@@ -1,0 +1,77 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Scanferno · Mayday</title><link href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;700;800&display=swap" rel="stylesheet"><style>
+:root{--night:#100c0b;--road:#1a1412;--road2:#221a17;--rule:#352a24;--white:#f4efea;--dim:#a99a90;--fire:#ff5a1f;--green:var(--fire);--yellow:var(--fire);--red:#d42a1e}
+*{box-sizing:border-box;margin:0}
+body{width:1440px;height:900px;overflow:hidden;background:var(--night);color:var(--white);font:16px/1.4 Overpass,sans-serif;font-variant-numeric:tabular-nums;display:flex;flex-direction:column}
+.strip{height:60px;flex:none;display:flex;align-items:center;gap:22px;padding:0 28px;border-bottom:1px solid var(--rule)}
+.sf{height:36px;padding:0 12px;border-radius:6px;background:var(--fire);color:#1c0b03;display:grid;place-items:center;font-weight:800;font-size:18px}
+.strip b{font-weight:800}.strip .f{color:var(--dim);font-size:14px}.strip .f b{color:var(--white)}
+.live{color:var(--yellow);font-weight:700;font-size:14px}
+.btn{height:36px;border-radius:6px;background:var(--road2);display:flex;align-items:center;gap:8px;padding:0 14px;font-size:14px;font-weight:700}
+.btn.g{background:var(--fire);color:#1c0b03}
+.ml{margin-left:auto}
+.crumb{color:var(--dim);font-size:14px;font-weight:600}.crumb b{color:var(--white)}
+.sign{border-radius:12px;padding:5px}.sign>div{border:3px solid currentColor;border-radius:8px;padding:12px 18px;height:100%}
+.sign.g,.sign.y{background:var(--road2);color:var(--white)}.sign.g>div,.sign.y>div{border-color:#5a4a40}.sign.g small,.sign.y small{color:var(--fire);opacity:1}.sign.r{background:var(--red);color:var(--white)}
+.sign small{display:block;font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.1em;opacity:.85}
+.sign .big{font-size:30px;font-weight:800;line-height:1.05;margin:3px 0 2px}
+.sign .sub{font-size:14px;font-weight:600}
+h2{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--dim)}
+svg.ic{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.room{fill:#211a17;stroke:#6b5c52;stroke-width:4}.room.fire{fill:#4a1712;stroke:var(--red)}.room.victim{fill:var(--red);stroke:var(--red)}
+.route{fill:none;stroke:var(--green);stroke-width:12;stroke-linecap:round;stroke-linejoin:round}.exit{fill:var(--white);stroke:var(--fire);stroke-width:4}
+.ord circle{fill:var(--white)}.ord text{font:800 20px Overpass;fill:#111;text-anchor:middle}.lbl{font:600 15px Overpass;fill:#7d847f;text-anchor:middle}
+
+main{flex:1;padding:24px 28px;display:grid;grid-template-columns:1fr 480px;gap:24px;min-height:0}
+.left{display:flex;flex-direction:column;gap:16px;min-height:0}
+.pick{display:flex;gap:10px;align-items:center}
+.sel{flex:1;height:48px;border-radius:8px;background:var(--road);display:flex;align-items:center;padding:0 16px;font-weight:700;font-size:17px}
+.sel span{color:var(--dim);font-weight:600;margin-right:10px;font-size:14px}
+.steps{background:var(--road);border-radius:12px;padding:8px 20px;overflow:hidden;flex:1}
+.st{display:grid;grid-template-columns:40px 1fr;gap:14px;align-items:center;padding:9px 0;border-top:1px solid var(--rule);font-size:17px}
+.st:first-child{border-top:0}
+.st i{font-style:normal;width:34px;height:34px;border-radius:50%;border:2px solid var(--dim);display:grid;place-items:center;font-weight:800;font-size:15px;color:var(--dim)}
+.st.now{font-size:21px;font-weight:700}.st.now i{background:var(--fire);border-color:var(--fire);color:#1c0b03}
+.st.hand i{border-color:var(--yellow);color:var(--yellow)}.st.out i{background:var(--white);border-color:var(--white);color:#1c0b03}
+.right{display:flex;flex-direction:column;gap:16px}
+.map{background:var(--road);border-radius:12px;padding:14px;flex:1;display:flex}
+svg.plan{width:100%;height:100%}
+.ctl{display:flex;gap:10px}.ctl .btn{flex:1;height:48px;justify-content:center;font-size:15px}
+</style></head><body><div class="strip"><div class="btn"><svg class="ic" viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>Home</div><span class="crumb">Inside › <b>Mayday</b></span><span class="f">Vibe Hobby · 8866 Gulf Fwy</span><span class="live">● Call live 0:43</span><div class="btn g ml">Next: Evacuation<svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div></div><main><div class="left"><div class="pick"><div class="sel"><span>Last known room</span>Office 110 · Side D</div><div class="btn" style="height:48px">From radio call</div></div><div class="sign y"><div><small>Hand on wall</small><div class="big">Left hand · 23.7 m to Side A exit</div><div class="sub">Passes 1 door · shortest path is 13.9 m but crosses open floor</div></div></div><div class="steps"><div class="st now  "><i>1</i>Crawl to the nearest wall (2 meters).</div><div class="st  hand "><i>2</i>Left hand on the wall.</div><div class="st   "><i>3</i>Follow the wall 2 meters, then turn right at the corner.</div><div class="st   "><i>4</i>Follow the wall 3 meters, then turn right at the corner.</div><div class="st   "><i>5</i>Follow the wall 4 meters, then go through the door on your left into Hallway B.</div><div class="st   "><i>6</i>Follow the wall about 1 meter, then turn right at the corner.</div><div class="st   "><i>7</i>Follow the wall 2 meters, then turn left at the corner.</div><div class="st   "><i>8</i>Follow the wall 8 meters, passing 1 door on your left, then go through the door on your left into Office 114.</div><div class="st  hand "><i>9</i>Switch to your right hand.</div><div class="st   "><i>10</i>Right away, then turn left at the corner.</div><div class="st   out"><i>11</i>Exit door on your right: you're outside on the A side.</div></div></div><div class="right"><div class="map"><svg class="plan" viewBox="0 0 901 678" xmlns="http://www.w3.org/2000/svg">
+<polygon class="room office fire" points="240,199 178,199 48,199 48,49 240,49"/>
+<polygon class="room office fire" points="386,178 386,199 240,199 240,49 320,49 320,81 345,81 345,49 386,49"/>
+<polygon class="room office" points="532,199 386,199 386,178 386,49 532,49 532,140"/>
+<polygon class="room office" points="532,49 665,48 665,163 665,199 532,199 532,140"/>
+<polygon class="room office" points="674,199 665,199 665,163 665,48 814,48 814,81 853,81 853,199 714,199"/>
+<polygon class="room kitchen" points="178,199 178,337 48,337 48,199"/>
+<polygon class="room hallway" points="238,268 327,268 327,356 327,397 327,510 238,510 238,337"/>
+<polygon class="room office" points="458,322 458,397 327,397 327,356 327,268 378,268 458,268"/>
+<polygon class="room office" points="458,268 588,268 588,397 458,397 458,322"/>
+<polygon class="room office" points="714,268 714,397 640,397 640,268"/>
+<polygon class="room office victim" points="714,397 714,268 714,199 853,199 852,397 798,397"/>
+<polygon class="room office" points="178,337 238,337 238,510 48,510 48,337"/>
+<polygon class="room office" points="588,397 588,629 326,629 327,571 345,571 345,557 327,557 327,510 327,397 458,397"/>
+<polygon class="room hallway" points="386,199 532,199 665,199 674,199 714,199 714,268 640,268 640,397 640,515 640,622 640,629 588,629 588,397 588,268 458,268 378,268 327,268 238,268 238,337 178,337 178,199 240,199"/>
+<polygon class="room office" points="640,397 714,397 798,397 852,397 852,516 640,515"/>
+<polygon class="room office" points="852,630 676,629 676,622 640,622 640,515 852,516"/>
+<polyline class="route" points="836,298 836,318 836,338 836,358 836,378 847,382 831,382 811,382 791,382 771,382 751,382 731,382 730,394 730,374 730,354 730,334 730,314 730,294 730,274 730,254 730,234 698,234 698,255 706,252 685,252 664,252 644,252 624,286 624,306 624,328 624,348 624,369 624,390 624,411 624,432 624,453 624,474 624,495 624,516 624,537 624,558 624,578 624,600 656,600 656,620 659,607"/>
+<rect class="exit" x="649" y="613" width="18" height="18"/>
+<rect class="exit" x="318" y="525" width="18" height="18"/>
+<rect class="exit" x="66" y="501" width="18" height="18"/>
+<rect class="exit" x="295" y="501" width="18" height="18"/>
+
+
+
+<text class="lbl" x="599" y="124">104</text>
+<text class="lbl" x="755" y="126">105</text>
+
+<text class="lbl" x="282" y="389">A</text>
+<text class="lbl" x="392" y="332">107</text>
+<text class="lbl" x="523" y="333">108</text>
+<text class="lbl" x="677" y="333">109</text>
+
+<text class="lbl" x="143" y="424">111</text>
+<text class="lbl" x="458" y="513">112</text>
+
+<text class="lbl" x="746" y="456">113</text>
+<text class="lbl" x="747" y="572">114</text>
+</svg></div><div class="ctl"><div class="btn"><svg class="ic" viewBox="0 0 24 24"><path d="M5 9v6h4l5 4V5L9 9zM17 9a4 4 0 0 1 0 6"/></svg>Speak directions</div><div class="btn g">Next step<svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div></div></div></main></body></html>
