@@ -1,0 +1,13 @@
+{
+  "wkt": "POINT Z(-95.2589941 29.6623127 29.837688446044922)",
+  "srid": 4326,
+  "dem-priority": [
+    "vexcel-dsm"
+  ],
+  "collection": [
+    "us-tx-pearland-2026"
+  ],
+  "layer": [
+    "urban"
+  ]
+}

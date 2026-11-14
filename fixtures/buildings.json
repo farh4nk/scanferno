@@ -1,29 +1,29 @@
 [
   {
-    "id": "costar-23551",
-    "name": "Harwin Plaza II Bldg",
-    "address": "7457 Harwin Dr, Houston, TX",
-    "lat": 29.7164302,
-    "lon": -95.5148383,
-    "matterport_model_id": "4AGeBia6uPA",
-    "costar_property_id": 23551
+    "id": "costar-350372",
+    "name": "Bellaire Medical Professional Building",
+    "address": "6550 Mapleridge St, Houston, TX",
+    "lat": 29.709744,
+    "lon": -95.474863,
+    "matterport_model_id": "THASDAsdrw3",
+    "costar_property_id": 350372
   },
   {
-    "id": "costar-23573",
-    "name": "Harwin Plaza I Bldg",
-    "address": "7447 Harwin Dr, Houston, TX",
-    "lat": 29.7171285,
-    "lon": -95.5147201,
-    "matterport_model_id": "2y9vzVj7S5w",
-    "costar_property_id": 23573
+    "id": "costar-23553",
+    "name": "Piney Point Offices II",
+    "address": "2500 Fondren Rd, Houston, TX",
+    "lat": 29.7403587,
+    "lon": -95.5221355,
+    "matterport_model_id": "vwvigaJjyV8",
+    "costar_property_id": 23553
   },
   {
-    "id": "costar-239890",
-    "name": "Denmark House",
-    "address": "12777 Jones Rd, Houston, TX",
-    "lat": 29.9581009,
-    "lon": -95.5859031,
-    "matterport_model_id": "4z2y8ayqrWs",
-    "costar_property_id": 239890
+    "id": "costar-239873",
+    "name": "Vibe Hobby",
+    "address": "8866 Gulf Fwy, Houston, TX",
+    "lat": 29.6623127,
+    "lon": -95.2589941,
+    "matterport_model_id": "szdeKc4TjsE",
+    "costar_property_id": 239873
   }
 ]

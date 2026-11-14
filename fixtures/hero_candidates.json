@@ -1,26 +1,139 @@
 [
   {
-    "costar_property_id": 23551,
-    "name": "Harwin Plaza II Bldg",
-    "address": "7457 Harwin Dr, Houston, TX",
-    "lat": 29.7164302,
-    "lon": -95.5148383,
+    "costar_property_id": 350372,
+    "name": "Bellaire Medical Professional Building",
+    "address": "6550 Mapleridge St, Houston, TX",
+    "lat": 29.709744,
+    "lon": -95.474863,
+    "type": "Office",
+    "stories": 2,
+    "current_tenants": 16,
+    "matterport_model_ids": [
+      "THASDAsdrw3",
+      "i8Q5pWYiYvf",
+      "mtUS93XRggA"
+    ],
+    "score": 33,
+    "scan": {
+      "model_id": "THASDAsdrw3",
+      "floors": 1,
+      "rooms": 35,
+      "doorways": 44
+    }
+  },
+  {
+    "costar_property_id": 23553,
+    "name": "Piney Point Offices II",
+    "address": "2500 Fondren Rd, Houston, TX",
+    "lat": 29.7403587,
+    "lon": -95.5221355,
     "type": "Office",
     "stories": 3,
-    "current_tenants": 53,
+    "current_tenants": 15,
     "matterport_model_ids": [
-      "4AGeBia6uPA",
-      "8DW9Tug1jxw",
-      "R5KgZDtKVdA",
-      "XSzS7Tbp1Jq",
-      "afdok4vuHZ2",
-      "b7HBcRyZUBt",
-      "hu9LX64osUN",
-      "qWnbmx87VTG",
-      "xH3GSAxmmht",
-      "zDYYFhPQqHC"
+      "9xZApYqePUx",
+      "fEqu4q25qYs",
+      "vwvigaJjyV8"
     ],
-    "score": 37
+    "score": 33,
+    "scan": {
+      "model_id": "vwvigaJjyV8",
+      "floors": 1,
+      "rooms": 20,
+      "doorways": 20
+    }
+  },
+  {
+    "costar_property_id": 239873,
+    "name": "Vibe Hobby",
+    "address": "8866 Gulf Fwy, Houston, TX",
+    "lat": 29.6623127,
+    "lon": -95.2589941,
+    "type": "Office",
+    "stories": 5,
+    "current_tenants": 40,
+    "matterport_model_ids": [
+      "PgQxLGrVujC",
+      "QB5AhU1bLSH",
+      "bptKZKChzrE",
+      "szdeKc4TjsE"
+    ],
+    "score": 35,
+    "scan": {
+      "model_id": "szdeKc4TjsE",
+      "floors": 1,
+      "rooms": 16,
+      "doorways": 32
+    }
+  },
+  {
+    "costar_property_id": 10060757,
+    "name": "18211 Katy Fwy, Houston, TX",
+    "address": "18211 Katy Fwy, Houston, TX",
+    "lat": 29.7838751,
+    "lon": -95.6938104,
+    "type": "Office",
+    "stories": 4,
+    "current_tenants": 13,
+    "matterport_model_ids": [
+      "41bTijRQFAA",
+      "SWKbYMUxPHt",
+      "Zw2dte7mCYt",
+      "q2UkJ27FHcc",
+      "vMWevYUHth9"
+    ],
+    "score": 35,
+    "scan": {
+      "model_id": "q2UkJ27FHcc",
+      "floors": 1,
+      "rooms": 12,
+      "doorways": 0
+    }
+  },
+  {
+    "costar_property_id": 235123,
+    "name": "1113 Vine St, Houston, TX",
+    "address": "1113 Vine St, Houston, TX",
+    "lat": 29.768557,
+    "lon": -95.357148,
+    "type": "Office",
+    "stories": 3,
+    "current_tenants": 29,
+    "matterport_model_ids": [
+      "BX54kKDUE9E",
+      "EXBCDf5VFiT",
+      "GicaHwHVx8e",
+      "RLhHDfrcy3N"
+    ],
+    "score": 35,
+    "scan": {
+      "model_id": "GicaHwHVx8e",
+      "floors": 1,
+      "rooms": 11,
+      "doorways": 19
+    }
+  },
+  {
+    "costar_property_id": 248905,
+    "name": "Carthay Campus 30",
+    "address": "6330 San Vicente Blvd, Los Angeles, CA",
+    "lat": 34.0608618,
+    "lon": -118.3682216,
+    "type": "Office",
+    "stories": 5,
+    "current_tenants": 18,
+    "matterport_model_ids": [
+      "3n7niwMjM7L",
+      "LAsmpGYaESn",
+      "snW23qPjxFX"
+    ],
+    "score": 33,
+    "scan": {
+      "model_id": "LAsmpGYaESn",
+      "floors": 1,
+      "rooms": 6,
+      "doorways": 0
+    }
   },
   {
     "costar_property_id": 23573,
@@ -39,27 +152,13 @@
       "a2P3KaD3tva",
       "a5mSkdXF7es"
     ],
-    "score": 37
-  },
-  {
-    "costar_property_id": 239890,
-    "name": "Denmark House",
-    "address": "12777 Jones Rd, Houston, TX",
-    "lat": 29.9581009,
-    "lon": -95.5859031,
-    "type": "Office",
-    "stories": 4,
-    "current_tenants": 36,
-    "matterport_model_ids": [
-      "4z2y8ayqrWs",
-      "6BLGvbbHy6R",
-      "6M3cEZ6EXbM",
-      "L27mebZzrMW",
-      "cMyqySGEaPd",
-      "eQ284JtaJy4",
-      "vx2K8Srqg5N"
-    ],
-    "score": 37
+    "score": 37,
+    "scan": {
+      "model_id": "X7PNurupPWJ",
+      "floors": 1,
+      "rooms": 3,
+      "doorways": 0
+    }
   },
   {
     "costar_property_id": 240022,
@@ -80,92 +179,13 @@
       "tXGXgSZhRCQ",
       "z61niNxSM3a"
     ],
-    "score": 37
-  },
-  {
-    "costar_property_id": 235123,
-    "name": "1113 Vine St, Houston, TX",
-    "address": "1113 Vine St, Houston, TX",
-    "lat": 29.768557,
-    "lon": -95.357148,
-    "type": "Office",
-    "stories": 3,
-    "current_tenants": 29,
-    "matterport_model_ids": [
-      "BX54kKDUE9E",
-      "EXBCDf5VFiT",
-      "GicaHwHVx8e",
-      "RLhHDfrcy3N"
-    ],
-    "score": 35
-  },
-  {
-    "costar_property_id": 239873,
-    "name": "Vibe Hobby",
-    "address": "8866 Gulf Fwy, Houston, TX",
-    "lat": 29.6623127,
-    "lon": -95.2589941,
-    "type": "Office",
-    "stories": 5,
-    "current_tenants": 40,
-    "matterport_model_ids": [
-      "PgQxLGrVujC",
-      "QB5AhU1bLSH",
-      "bptKZKChzrE",
-      "szdeKc4TjsE"
-    ],
-    "score": 35
-  },
-  {
-    "costar_property_id": 239915,
-    "name": "Rockstar Building",
-    "address": "5700 Central Dr, Houston, TX",
-    "lat": 29.8490131,
-    "lon": -95.4942376,
-    "type": "Office",
-    "stories": 4,
-    "current_tenants": 15,
-    "matterport_model_ids": [
-      "HiEPzBGtAN1",
-      "SeopdNigQ8v",
-      "o3MxwzEsiWP",
-      "qn9Xcmg3TSq"
-    ],
-    "score": 35
-  },
-  {
-    "costar_property_id": 10060757,
-    "name": "18211 Katy Fwy, Houston, TX",
-    "address": "18211 Katy Fwy, Houston, TX",
-    "lat": 29.7838751,
-    "lon": -95.6938104,
-    "type": "Office",
-    "stories": 4,
-    "current_tenants": 13,
-    "matterport_model_ids": [
-      "41bTijRQFAA",
-      "SWKbYMUxPHt",
-      "Zw2dte7mCYt",
-      "q2UkJ27FHcc",
-      "vMWevYUHth9"
-    ],
-    "score": 35
-  },
-  {
-    "costar_property_id": 23553,
-    "name": "Piney Point Offices II",
-    "address": "2500 Fondren Rd, Houston, TX",
-    "lat": 29.7403587,
-    "lon": -95.5221355,
-    "type": "Office",
-    "stories": 3,
-    "current_tenants": 15,
-    "matterport_model_ids": [
-      "9xZApYqePUx",
-      "fEqu4q25qYs",
-      "vwvigaJjyV8"
-    ],
-    "score": 33
+    "score": 37,
+    "scan": {
+      "model_id": "CyZvCnFNFw4",
+      "floors": 1,
+      "rooms": 3,
+      "doorways": 0
+    }
   },
   {
     "costar_property_id": 239944,
@@ -181,39 +201,13 @@
       "p6k7AhDKLiV",
       "r1NyoGS9Ebb"
     ],
-    "score": 33
-  },
-  {
-    "costar_property_id": 240089,
-    "name": "10700 Richmond Ave, Houston, TX",
-    "address": "10700 Richmond Ave, Houston, TX",
-    "lat": 29.7285491,
-    "lon": -95.5646285,
-    "type": "Office",
-    "stories": 3,
-    "current_tenants": 67,
-    "matterport_model_ids": [
-      "44PkZCbzNdR",
-      "6FWhwBkLgyU",
-      "7gvxscLPz1Q"
-    ],
-    "score": 33
-  },
-  {
-    "costar_property_id": 248905,
-    "name": "Carthay Campus 30",
-    "address": "6330 San Vicente Blvd, Los Angeles, CA",
-    "lat": 34.0608618,
-    "lon": -118.3682216,
-    "type": "Office",
-    "stories": 5,
-    "current_tenants": 18,
-    "matterport_model_ids": [
-      "3n7niwMjM7L",
-      "LAsmpGYaESn",
-      "snW23qPjxFX"
-    ],
-    "score": 33
+    "score": 33,
+    "scan": {
+      "model_id": "1J9YKR5rPqk",
+      "floors": 1,
+      "rooms": 3,
+      "doorways": 0
+    }
   },
   {
     "costar_property_id": 349486,
@@ -229,23 +223,90 @@
       "GXfemwjSgbN",
       "yAsnTE5YZYL"
     ],
-    "score": 33
+    "score": 33,
+    "scan": {
+      "model_id": "GXfemwjSgbN",
+      "floors": 1,
+      "rooms": 3,
+      "doorways": 0
+    }
   },
   {
-    "costar_property_id": 350372,
-    "name": "Bellaire Medical Professional Building",
-    "address": "6550 Mapleridge St, Houston, TX",
-    "lat": 29.709744,
-    "lon": -95.474863,
+    "costar_property_id": 23551,
+    "name": "Harwin Plaza II Bldg",
+    "address": "7457 Harwin Dr, Houston, TX",
+    "lat": 29.7164302,
+    "lon": -95.5148383,
     "type": "Office",
-    "stories": 2,
-    "current_tenants": 16,
+    "stories": 3,
+    "current_tenants": 53,
     "matterport_model_ids": [
-      "THASDAsdrw3",
-      "i8Q5pWYiYvf",
-      "mtUS93XRggA"
+      "4AGeBia6uPA",
+      "8DW9Tug1jxw",
+      "R5KgZDtKVdA",
+      "XSzS7Tbp1Jq",
+      "afdok4vuHZ2",
+      "b7HBcRyZUBt",
+      "hu9LX64osUN",
+      "qWnbmx87VTG",
+      "xH3GSAxmmht",
+      "zDYYFhPQqHC"
     ],
-    "score": 33
+    "score": 37,
+    "scan": {
+      "model_id": "R5KgZDtKVdA",
+      "floors": 1,
+      "rooms": 2,
+      "doorways": 0
+    }
+  },
+  {
+    "costar_property_id": 239890,
+    "name": "Denmark House",
+    "address": "12777 Jones Rd, Houston, TX",
+    "lat": 29.9581009,
+    "lon": -95.5859031,
+    "type": "Office",
+    "stories": 4,
+    "current_tenants": 36,
+    "matterport_model_ids": [
+      "4z2y8ayqrWs",
+      "6BLGvbbHy6R",
+      "6M3cEZ6EXbM",
+      "L27mebZzrMW",
+      "cMyqySGEaPd",
+      "eQ284JtaJy4",
+      "vx2K8Srqg5N"
+    ],
+    "score": 37,
+    "scan": {
+      "model_id": "4z2y8ayqrWs",
+      "floors": 1,
+      "rooms": 2,
+      "doorways": 0
+    }
+  },
+  {
+    "costar_property_id": 240089,
+    "name": "10700 Richmond Ave, Houston, TX",
+    "address": "10700 Richmond Ave, Houston, TX",
+    "lat": 29.7285491,
+    "lon": -95.5646285,
+    "type": "Office",
+    "stories": 3,
+    "current_tenants": 67,
+    "matterport_model_ids": [
+      "44PkZCbzNdR",
+      "6FWhwBkLgyU",
+      "7gvxscLPz1Q"
+    ],
+    "score": 33,
+    "scan": {
+      "model_id": "6FWhwBkLgyU",
+      "floors": 1,
+      "rooms": 2,
+      "doorways": 4
+    }
   },
   {
     "costar_property_id": 578727,
@@ -262,7 +323,36 @@
       "cBUW9fva82D",
       "tQUWwdMxffZ"
     ],
-    "score": 33
+    "score": 33,
+    "scan": {
+      "model_id": "Vko45ku6Sbb",
+      "floors": 1,
+      "rooms": 2,
+      "doorways": 0
+    }
+  },
+  {
+    "costar_property_id": 239915,
+    "name": "Rockstar Building",
+    "address": "5700 Central Dr, Houston, TX",
+    "lat": 29.8490131,
+    "lon": -95.4942376,
+    "type": "Office",
+    "stories": 4,
+    "current_tenants": 15,
+    "matterport_model_ids": [
+      "HiEPzBGtAN1",
+      "SeopdNigQ8v",
+      "o3MxwzEsiWP",
+      "qn9Xcmg3TSq"
+    ],
+    "score": 35,
+    "scan": {
+      "model_id": "HiEPzBGtAN1",
+      "floors": 1,
+      "rooms": 1,
+      "doorways": 0
+    }
   },
   {
     "costar_property_id": 5528958,

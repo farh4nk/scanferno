@@ -1,0 +1,419 @@
+{
+  "costar_property_id": 239873,
+  "building_name": "Vibe Hobby",
+  "address": "8866 Gulf Fwy, Houston, TX",
+  "lat": 29.6623127,
+  "lon": -95.2589941,
+  "property_type": "Office",
+  "year_built": 1983,
+  "year_renovated": 2012,
+  "stories": 5,
+  "height_ft": null,
+  "rba_sqft": 89501.0,
+  "construction_material": "Masonry",
+  "has_sprinklers": true,
+  "sprinkler_type": "Unknown",
+  "floors": [
+    {
+      "id": 38782,
+      "name": "SecondFloor",
+      "sqft": 17818.0
+    },
+    {
+      "id": 38783,
+      "name": "FourthFloor",
+      "sqft": 17818.0
+    },
+    {
+      "id": 39424,
+      "name": "ThirdFloor",
+      "sqft": 17818.0
+    },
+    {
+      "id": 40096,
+      "name": "FifthFloor",
+      "sqft": 17818.0
+    },
+    {
+      "id": 41900,
+      "name": "FirstFloor",
+      "sqft": 17818.0
+    },
+    {
+      "id": 1687346,
+      "name": "UnknownFloor",
+      "sqft": 17818.0
+    }
+  ],
+  "current_tenant_count": 40,
+  "vacant": false,
+  "tenants": [
+    {
+      "name": "Lindale Healthcare Clinic",
+      "industry": "HealthCareAndSocialAssistance",
+      "employees": 7,
+      "floor": "FirstFloor",
+      "suite": "122",
+      "sqft": 1000.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Vibe Office Properties",
+      "industry": "AdministrativeAndSupportServices",
+      "employees": 59,
+      "floor": "SecondFloor",
+      "suite": "250",
+      "sqft": 8909.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Law Offices of Pablo Rodriguez Jr.",
+      "industry": "ProfessionalScientificAndTechnicalServices",
+      "employees": 4,
+      "floor": "FirstFloor",
+      "suite": "110",
+      "sqft": 996.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Unknown tenant",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "ThirdFloor",
+      "suite": null,
+      "sqft": 1083.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Unknown tenant",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "ThirdFloor",
+      "suite": null,
+      "sqft": 614.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Unknown tenant",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "FourthFloor",
+      "suite": null,
+      "sqft": 970.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Unknown tenant",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "FourthFloor",
+      "suite": null,
+      "sqft": 3342.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Unknown tenant",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "FourthFloor",
+      "suite": null,
+      "sqft": 1368.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Talamantes Design",
+      "industry": "ProfessionalScientificAndTechnicalServices",
+      "employees": 2,
+      "floor": "FirstFloor",
+      "suite": "102",
+      "sqft": 1000.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "INC Nautical L.P.",
+      "industry": "MiningQuarryingAndOilAndGasExtraction",
+      "employees": 6,
+      "floor": "FourthFloor",
+      "suite": "430",
+      "sqft": 4161.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "AtWork Houston East",
+      "industry": "AdministrativeAndSupportServices",
+      "employees": 6,
+      "floor": "FifthFloor",
+      "suite": "530",
+      "sqft": 1003.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Unknown tenant",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "FirstFloor",
+      "suite": null,
+      "sqft": 1255.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Rendon & Associates",
+      "industry": "ProfessionalScientificAndTechnicalServices",
+      "employees": 18,
+      "floor": "FirstFloor",
+      "suite": "140",
+      "sqft": 2738.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Unknown tenant",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "FifthFloor",
+      "suite": null,
+      "sqft": 1099.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Unknown tenant",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "SecondFloor",
+      "suite": null,
+      "sqft": 784.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Unknown tenant",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "FifthFloor",
+      "suite": null,
+      "sqft": 1234.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Unknown tenant",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "ThirdFloor",
+      "suite": null,
+      "sqft": 1193.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Unknown tenant",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "ThirdFloor",
+      "suite": null,
+      "sqft": 698.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Unknown tenant",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "FirstFloor",
+      "suite": null,
+      "sqft": 1538.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "LMCN Corporation",
+      "industry": "AgriculturalOrMiningOrUtilities",
+      "employees": 8,
+      "floor": "SecondFloor",
+      "suite": "225",
+      "sqft": 2372.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "SAGE Truck Driving School",
+      "industry": "EducationalServices",
+      "employees": 9,
+      "floor": "ThirdFloor",
+      "suite": "335",
+      "sqft": 1480.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Unknown tenant",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "SecondFloor",
+      "suite": null,
+      "sqft": 880.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Unknown tenant",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "ThirdFloor",
+      "suite": null,
+      "sqft": 907.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Unknown tenant",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "FirstFloor",
+      "suite": null,
+      "sqft": 1903.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Legacy Home Health Care",
+      "industry": "HealthCareAndSocialAssistance",
+      "employees": null,
+      "floor": "ThirdFloor",
+      "suite": "384",
+      "sqft": null,
+      "space_use": "Office"
+    },
+    {
+      "name": "Unknown tenant",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "SecondFloor",
+      "suite": null,
+      "sqft": 530.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Unknown tenant",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "FirstFloor",
+      "suite": null,
+      "sqft": 792.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Unknown tenant",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "FifthFloor",
+      "suite": null,
+      "sqft": 2299.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Unknown tenant",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "SecondFloor",
+      "suite": null,
+      "sqft": 1899.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Gulf Harbor Shipping LLC",
+      "industry": "Transportation",
+      "employees": 17,
+      "floor": "FifthFloor",
+      "suite": "510",
+      "sqft": 500.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Unknown tenant",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "FifthFloor",
+      "suite": null,
+      "sqft": 3300.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Unknown tenant",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "FifthFloor",
+      "suite": null,
+      "sqft": 792.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Unknown tenant",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "FourthFloor",
+      "suite": null,
+      "sqft": 970.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Innova Realty Group",
+      "industry": "RealEstate",
+      "employees": 8,
+      "floor": "FirstFloor",
+      "suite": "160",
+      "sqft": 1754.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Royal T Energy Llc",
+      "industry": "AgriculturalOrMiningOrUtilities",
+      "employees": 6,
+      "floor": "FourthFloor",
+      "suite": "425",
+      "sqft": null,
+      "space_use": "Office"
+    },
+    {
+      "name": "Law Office of M. Elena Navarro",
+      "industry": "ProfessionalScientificAndTechnicalServices",
+      "employees": 3,
+      "floor": "SecondFloor",
+      "suite": "211",
+      "sqft": 662.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Unknown tenant",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "FourthFloor",
+      "suite": null,
+      "sqft": 970.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Cristobal Batarse",
+      "industry": "FinancialInstitutions",
+      "employees": null,
+      "floor": "ThirdFloor",
+      "suite": "380",
+      "sqft": null,
+      "space_use": "Office"
+    },
+    {
+      "name": "Unknown tenant",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "SecondFloor",
+      "suite": null,
+      "sqft": 784.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Unknown tenant",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "FifthFloor",
+      "suite": null,
+      "sqft": 753.0,
+      "space_use": "Office"
+    }
+  ],
+  "photo_url": "https://ahprd1cdn.csgpimgs.com/i2/AKMnhFWGxe232KhdWHnLHxh2jAJK3fgXMb1Zv5XJQEU/112/image.jpg",
+  "matterport_model_ids": [
+    "PgQxLGrVujC",
+    "QB5AhU1bLSH",
+    "bptKZKChzrE",
+    "szdeKc4TjsE"
+  ]
+}

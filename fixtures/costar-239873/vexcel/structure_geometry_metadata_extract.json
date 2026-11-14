@@ -1,0 +1,21 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "metadata.camera-technology": null,
+        "metadata.gsd": 0.07493,
+        "metadata.image-id": null,
+        "metadata.ortho-date-estimate": 1767484800000,
+        "metadata.version": "6.2.1",
+        "metadata.layer-name": "urban",
+        "metadata.collection": "us-tx-pearland-2026",
+        "metadata.is-ortho-image": true,
+        "primary-structure": true,
+        "footprint.area": 2128.126642287907
+      },
+      "geometry": "MULTIPOLYGON (((-95.258756 29.662528, -95.258746 29.662111, -95.259222 29.662106, -95.259225 29.662253, -95.259235 29.662253, -95.259236 29.662293, -95.259227 29.662293, -95.25923 29.662521, -95.258756 29.662528)))"
+    }
+  ]
+}

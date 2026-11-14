@@ -1,0 +1,13 @@
+{
+  "wkt": "POINT Z(-95.5221355 29.7403587 32.41583251953125)",
+  "srid": 4326,
+  "dem-priority": [
+    "vexcel-dsm"
+  ],
+  "collection": [
+    "us-tx-houston-2026"
+  ],
+  "layer": [
+    "urban"
+  ]
+}

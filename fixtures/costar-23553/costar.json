@@ -1,0 +1,183 @@
+{
+  "costar_property_id": 23553,
+  "building_name": "Piney Point Offices II",
+  "address": "2500 Fondren Rd, Houston, TX",
+  "lat": 29.7403587,
+  "lon": -95.5221355,
+  "property_type": "Office",
+  "year_built": 1980,
+  "year_renovated": null,
+  "stories": 3,
+  "height_ft": 40.0,
+  "rba_sqft": 77159.0,
+  "construction_material": "Steel",
+  "has_sprinklers": true,
+  "sprinkler_type": "Unknown",
+  "floors": [
+    {
+      "id": 262746,
+      "name": "SecondFloor",
+      "sqft": 26666.0
+    },
+    {
+      "id": 263961,
+      "name": "ThirdFloor",
+      "sqft": 26666.0
+    },
+    {
+      "id": 264714,
+      "name": "FirstFloor",
+      "sqft": 26666.0
+    },
+    {
+      "id": 1532897,
+      "name": "UnknownFloor",
+      "sqft": 26666.0
+    }
+  ],
+  "current_tenant_count": 15,
+  "vacant": false,
+  "tenants": [
+    {
+      "name": "Select Physical Therapy",
+      "industry": "HealthCareAndSocialAssistance",
+      "employees": 4,
+      "floor": "ThirdFloor",
+      "suite": "302",
+      "sqft": 2000.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Iidon Security Associates",
+      "industry": "ProfessionalScientificAndTechnicalServices",
+      "employees": 26,
+      "floor": "SecondFloor",
+      "suite": "220",
+      "sqft": 3942.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Ethos Endocrinology",
+      "industry": "HealthCareAndSocialAssistance",
+      "employees": 8,
+      "floor": "ThirdFloor",
+      "suite": "320",
+      "sqft": 1233.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "J.A. Pinera, Jr., DDS",
+      "industry": "HealthCareAndSocialAssistance",
+      "employees": 7,
+      "floor": "SecondFloor",
+      "suite": "280",
+      "sqft": 1000.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Jose Rodriguez-Cordova, MD",
+      "industry": "HealthCareAndSocialAssistance",
+      "employees": 5,
+      "floor": "SecondFloor",
+      "suite": "210",
+      "sqft": 2133.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Rice Residential Designs",
+      "industry": "AgriculturalOrMiningOrUtilities",
+      "employees": 9,
+      "floor": "FirstFloor",
+      "suite": "110",
+      "sqft": 1050.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Aspire Fertility",
+      "industry": "HealthCareAndSocialAssistance",
+      "employees": 6,
+      "floor": "ThirdFloor",
+      "suite": "300",
+      "sqft": 3000.0,
+      "space_use": "Medical"
+    },
+    {
+      "name": "Rheum to Grow",
+      "industry": "HealthCareAndSocialAssistance",
+      "employees": 8,
+      "floor": "SecondFloor",
+      "suite": "235",
+      "sqft": 1705.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Econsortium Group",
+      "industry": "ProfessionalScientificAndTechnicalServices",
+      "employees": 20,
+      "floor": "FirstFloor",
+      "suite": "100",
+      "sqft": 2500.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Hillcroft Medical",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "SecondFloor",
+      "suite": "209",
+      "sqft": 8209.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Dr Simon Gebara",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "SecondFloor",
+      "suite": "260",
+      "sqft": 2667.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "The Learning Sphere Speech Therapy",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "SecondFloor",
+      "suite": "205",
+      "sqft": 2133.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Russell C Vanhiber MD",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "SecondFloor",
+      "suite": "255",
+      "sqft": 2133.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Vita Care Pharmacy",
+      "industry": "RetailersOrWholesalers",
+      "employees": 1,
+      "floor": "FirstFloor",
+      "suite": "180",
+      "sqft": 2667.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "NovaCare Rehabilitation",
+      "industry": "HealthCareAndSocialAssistance",
+      "employees": null,
+      "floor": "FirstFloor",
+      "suite": "115",
+      "sqft": 2000.0,
+      "space_use": "Office"
+    }
+  ],
+  "photo_url": "https://ahprd1cdn.csgpimgs.com/i2/_ke5-Oe0ggx6Va_H-tJaOI6fn4A1VBujYOAXJBT0wgY/112/image.jpg",
+  "matterport_model_ids": [
+    "9xZApYqePUx",
+    "fEqu4q25qYs",
+    "vwvigaJjyV8"
+  ]
+}
