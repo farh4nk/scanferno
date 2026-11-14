@@ -98,6 +98,9 @@ main { flex: 1; min-height: 0; display: grid; grid-template-columns: 330px minma
 .viewer3d { flex: 1; min-height: 360px; display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: #000; }
 .viewer3d-bar { display: flex; gap: 6px; align-items: center; padding: 6px 8px; background: var(--panel2); flex-wrap: wrap; }
 .viewer3d-bar button.on { background: var(--cyan); color: #00222d; border-color: var(--cyan); }
+.viewer3d-bar .walk-info { color: var(--cyan); font-weight: 600; }
+.viewer3d-bar .walk-hint { color: #00222d; background: var(--cyan); border-radius: 6px; padding: 1px 8px; font-weight: 800; font-size: 16px; }
+.viewer3d-bar .walk-hint small { font-size: 11px; font-weight: 700; }
 .viewer3d-box { flex: 1; min-height: 0; position: relative; }
 .viewer3d-msg { flex: 1; display: grid; place-content: center; padding: 24px; text-align: center; color: var(--muted); border: 1px dashed var(--line); border-radius: 8px; }
 .viewer3d-msg code { background: var(--panel2); padding: 1px 5px; border-radius: 4px; color: var(--text); }
