@@ -84,6 +84,8 @@ export default function App() {
     setAddressHint(null)
     if (!id || id === buildingId) return
     live.reset(); listen.stop(); setBuildingId(id); go('home')
+    // Ondemand open may have just registered this building — refresh so Viewer3D gets matterport_model_id.
+    getBuildings().then(setBuildings).catch(() => {})
   }, [buildingId, live, listen, go])
 
   const adoptBuilding = useCallback(async (id, { auto = false } = {}) => {

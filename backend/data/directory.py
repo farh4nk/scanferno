@@ -117,6 +117,16 @@ def entries() -> tuple[dict, ...]:
         if not e["city"] and e["address"] and e["address"].count(",") >= 2:
             city = e["address"].split(",")[1].strip()
             e["city"] = city if re.fullmatch(r"[A-Za-z .'-]+", city) else None
+    # On-demand onboarded buildings are ready (same cache layout as heroes).
+    from ondemand import registry
+    ready_ids = {b["id"] for b in registry.all()
+                 if cache.FIXTURES.joinpath(b["id"], "matterport_vector.json").exists()}
+    for e in out:
+        bid = e.get("building_id") or e["id"]
+        if bid in ready_ids:
+            e["status"] = "ready"
+            e["building_id"] = bid
+
     _clean_cities(out)
     return tuple(out)
 
@@ -379,3 +389,11 @@ def geocode(query: str) -> dict | None:
     result = {"lat": float(rows[0]["lat"]), "lon": float(rows[0]["lon"]), "display_name": rows[0]["display_name"]} if rows else None
     cache.save_json({"query": query, "result": result}, "geocode", f"{key}.json")
     return result
+
+
+def clear():
+    """Drop entry caches after ondemand registry changes."""
+    entries.cache_clear()
+    _index.cache_clear()
+    _keys.cache_clear()
+

@@ -49,8 +49,6 @@ def test_status_unknown_and_hero():
 
 
 def test_prepare_catalog_building_with_mocked_matterport(monkeypatch, tmp_path):
-    e = directory.get(CATALOG_ID)
-    assert e and e["status"] == "scanned"
     monkeypatch.setattr("ondemand.ready.matterport.vector_data", lambda mid: _fake_vector(mid))
     monkeypatch.setattr("ondemand.ready.vexcel.oriented_image", lambda *a, **k: b"JPEG")
     monkeypatch.setattr("ondemand.ready.vexcel.structure", lambda *a, **k: {"features": []})
@@ -60,7 +58,10 @@ def test_prepare_catalog_building_with_mocked_matterport(monkeypatch, tmp_path):
     rows = [b for b in registry.all() if b["id"] != CATALOG_ID]
     cache.save_json(rows, *registry.PATH)
     registry.clear()
+    directory.clear()
     layers.clear()
+    e = directory.get(CATALOG_ID)
+    assert e and e["status"] == "scanned"
 
     r = client.post(f"/ondemand/{CATALOG_ID}", params={"outside": False}).json()
     assert r["status"] == "ready" and r["building_id"] == CATALOG_ID and r["cached"] is False

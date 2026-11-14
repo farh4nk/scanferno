@@ -83,6 +83,10 @@ def outside(bid: str) -> dict:
 
 @lru_cache
 def floorplan(bid: str) -> dict:
+    # Prefer the cached floorplan.json (Ion-scale scans take ~20s to rebuild).
+    cached = cache.load_json(bid, "floorplan.json")
+    if cached and cached.get("rooms") is not None:
+        return cached
     raw = cache.load_json(bid, "matterport_vector.json")
     if raw is None:
         raise FileNotFoundError(f"No Matterport fixture for {bid}; run scripts.fetch_fixtures")

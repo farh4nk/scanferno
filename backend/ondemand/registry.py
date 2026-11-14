@@ -29,6 +29,11 @@ def upsert(row: dict) -> dict:
     rows.sort(key=lambda b: b["id"])
     cache.save_json(rows, *PATH)
     all.cache_clear()
+    try:
+        from data import directory
+        directory.clear()
+    except Exception:
+        pass
     return row
 
 

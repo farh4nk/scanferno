@@ -55,7 +55,15 @@ def prepare(key: str, refresh: bool = False, fetch_outside: bool = True) -> dict
     bid = e["building_id"] or e["id"]
     row = _config_row(e, bid, mid)
     vector_path = cache.FIXTURES / bid / "matterport_vector.json"
+    floorplan_path = cache.FIXTURES / bid / "floorplan.json"
     cached = vector_path.exists() and not refresh
+
+    # Fast path: already onboarded — do not layers.clear() / rebuild (Ion ~20s+).
+    if cached and floorplan_path.exists() and registry.get(bid) and not refresh:
+        _ensure_costar(bid, e)
+        if fetch_outside and e.get("lat") is not None:
+            _ensure_vexcel(bid, e["lat"], e["lon"], refresh=False)
+        return _result(bid, cached=True, entry=e)
 
     if not cached:
         try:
@@ -72,7 +80,13 @@ def prepare(key: str, refresh: bool = False, fetch_outside: bool = True) -> dict
         _ensure_vexcel(bid, e["lat"], e["lon"], refresh)
 
     registry.upsert(row)
-    layers.clear()
+    # Drop only this building's floorplan cache entry if we must rebuild.
+    if refresh or not floorplan_path.exists():
+        layers.floorplan.cache_clear()
+        layers.nav.cache_clear()
+        layers.sides.cache_clear()
+        if floorplan_path.exists():
+            floorplan_path.unlink()
     try:
         layers.floorplan(bid)
     except Exception as ex:

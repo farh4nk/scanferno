@@ -85,6 +85,7 @@ Living handoff doc. Update your role's section and add a changelog line in the s
 **Unblocked by:** aerial images at `/fixtures/<id>/vexcel/*.jpg`, calls at `/calls/{id}` and `/calls/{id}/replay` (SSE), sample briefing at `fixtures/sample/briefing.json`.
 
 ## Changelog
+- 2026-11-14: Ion 3D hang fix: reuse floorplan.json, skip ondemand rebuild on cache hit, mark onboarded buildings ready in search.
 
 - 2026-11-14: Repo scaffold, data clients, contracts.
 - 2026-11-14: CoStar kit loader, hero picker, Gemini wrapper.
