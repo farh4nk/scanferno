@@ -15,6 +15,7 @@ Work only in your own folder and branch; ask before editing someone else's.
 | Agent and data | `backend/data/`, `backend/dispatch/`, `backend/agent/`, `backend/scripts/`, `backend/app/` | `agent-data` |
 | Geometry | `backend/geometry/` | `geometry` |
 | Visuals and pitch | `frontend/` | `ui` |
+| 3D model overlays | `viewer3d/` | `matterport-3d` |
 
 Shared: `fixtures/` (cached data, anyone may read), `docs/`. Merge to `main` through PRs.
 
@@ -26,6 +27,7 @@ cp .env.example .env                 # get keys from the team; never commit .env
 cd backend && python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
 .venv/bin/python -m scripts.check_access        # all 5 sources should say OK
 .venv/bin/uvicorn app.main:app --reload         # API on http://localhost:8000
+cd ../viewer3d && npm install && npm run dev    # 3D dev bench on http://localhost:5173 (needs the API)
 ```
 
 You don't need any keys to build against cached data: everything for the 3 hero buildings and 2 calls is already in `fixtures/` and served by the API.
@@ -70,6 +72,7 @@ Per building: `matterport_vector.json` (raw floor plan), `costar.json` (building
 - **CoStar enums** are ints in the kit; `data/costar.py` decodes them to names (`FirstFloor`, `Masonry`). Many tenants are "Unknown tenant".
 - **Vexcel** REST needs `X-API-KEY`; WKT is lon first: `POINT(-95.39 29.74)`. Other tools go through MCP (`data/vexcel.py` `VexcelMCP`); full tool list in `fixtures/vexcel_mcp_tools.json`.
 - **Matterport auth** is HTTP Basic (API key : API token). The Showcase SDK key is separate (frontend 3D viewer, domain-locked to localhost).
+- **3D overlays need the Bundle SDK**, not the embed SDK: only the bundle has `sdk.Scene` (Showcase's three.js scene). `viewer3d/` self-hosts it from `@matterport/webcomponent` (copied to `public/bundle` on `npm install`). Floor plan `(x, y)` = Showcase world `(x, floor, -y)`; Showcase `Room.data` ids equal floorplan `matterport_id`, which `viewer3d/src/frame.ts` uses to auto-calibrate.
 
 ## LLM and speech
 

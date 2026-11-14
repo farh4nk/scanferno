@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scanferno 3D dev bench</title>
+    <style>
+      * { box-sizing: border-box; }
+      html, body { margin: 0; height: 100%; font: 13px/1.4 system-ui, sans-serif; background: #0f1115; color: #e5e7eb; }
+      body { display: grid; grid-template-columns: 300px 1fr; }
+      #panel { overflow-y: auto; padding: 10px 12px; border-right: 1px solid #262a33; }
+      #viewer { position: relative; min-width: 0; }
+      fieldset { border: 1px solid #262a33; border-radius: 6px; margin: 0 0 10px; padding: 6px 10px 10px; }
+      legend { color: #9ca3af; padding: 0 4px; }
+      label { display: flex; align-items: center; gap: 6px; margin: 3px 0; }
+      select, input, button { font: inherit; color: inherit; background: #1a1d24; border: 1px solid #333846; border-radius: 4px; padding: 3px 6px; }
+      input[type=number] { width: 80px; }
+      input[type=range] { flex: 1; }
+      button { cursor: pointer; margin: 2px 2px 2px 0; }
+      button:hover { background: #262a33; }
+      .row { display: flex; gap: 4px; align-items: center; flex-wrap: wrap; }
+      .muted { color: #9ca3af; }
+      pre { white-space: pre-wrap; margin: 4px 0 0; color: #cbd5e1; font-size: 12px; }
+      ol { margin: 4px 0 0; padding-left: 18px; font-size: 12px; }
+    </style>
+  </head>
+  <body>
+    <div id="panel">
+      <fieldset>
+        <legend>Building</legend>
+        <select id="building" style="width: 100%"></select>
+        <div class="row" style="margin-top: 6px">
+          <button data-view="dollhouse">Dollhouse</button><button data-view="floorplan">Floor plan</button><button data-view="inside">Inside</button>
+        </div>
+        <div id="status" class="muted">Loading…</div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Layers</legend>
+        <label><input type="checkbox" data-layer="rooms" checked /> Rooms
+          <select id="coloring"><option value="type">by type</option><option value="maze">by maze score</option></select></label>
+        <label><input type="checkbox" data-layer="labels" checked /> Labels</label>
+        <label><input type="checkbox" data-layer="outline" checked /> Outline</label>
+        <label><input type="checkbox" data-layer="doors" /> Doors</label>
+        <label><input type="checkbox" data-layer="exits" checked /> Exits</label>
+        <label><input type="checkbox" data-layer="windows" /> Exterior windows</label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Pick (click the model)</legend>
+        <div id="pick" class="muted">Click a room to select it.</div>
+        <select id="room" style="width: 100%; margin-top: 4px"></select>
+      </fieldset>
+
+      <fieldset>
+        <legend>Features</legend>
+        <div class="row"><button id="route">Route to exit</button><button id="mayday">Mayday</button><button id="clear">Clear</button></div>
+        <div class="row" style="margin-top: 6px">
+          <button id="evac">Evac sim</button><input id="occupants" type="number" placeholder="occupants" min="1" />
+        </div>
+        <label><button id="evacPlay">▶</button><input id="evacSeek" type="range" min="0" max="1" step="0.05" value="0" />
+          <select id="evacSpeed"><option>0.5</option><option selected>1</option><option>2</option><option>4</option></select></label>
+        <pre id="info"></pre>
+      </fieldset>
+
+      <fieldset>
+        <legend>Calibration (floor plan → model)</legend>
+        <label>dx <input id="cal-dx" type="number" step="0.05" /> dy <input id="cal-dy" type="number" step="0.05" /></label>
+        <label>rot° <input id="cal-rotationDeg" type="number" step="0.5" /> floor <input id="cal-floorHeight" type="number" step="0.05" /></label>
+        <div class="row"><button id="calAuto">Auto fit</button><button id="calSave">Save locally</button><button id="calCopy">Copy JSON</button></div>
+        <div id="calInfo" class="muted"></div>
+      </fieldset>
+    </div>
+    <div id="viewer"></div>
+    <script type="module" src="/src/dev/main.ts"></script>
+  </body>
+</html>
