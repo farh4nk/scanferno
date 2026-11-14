@@ -253,6 +253,7 @@ svg.mi { width: 22px; height: 22px; } .ip { fill: var(--white); } .iad { fill: v
 .viewer3d-box { flex: 1; min-height: 0; position: relative; }
 .viewer3d-msg { flex: 1; display: grid; place-content: center; padding: 24px; text-align: center; color: var(--dim); border: 1px dashed var(--rule); border-radius: 10px; }
 
+<<<<<<< Updated upstream
 /* ---------- live call highlights ---------- */
 .rm.flash { stroke: var(--fire); stroke-width: 9; animation: roomflash 1s ease-in-out 6; }
 @keyframes roomflash { 50% { fill: rgba(255, 90, 31, .45); } }
@@ -292,6 +293,8 @@ svg.mi { width: 22px; height: 22px; } .ip { fill: var(--white); } .iad { fill: v
 .caption.err { color: var(--hotfg); }
 .caption .vload { color: var(--fire); font-weight: 800; }
 .para .said { color: var(--dim); } .para mark { background: var(--fire); color: var(--ink); border-radius: 3px; padding: 0 2px; }
+=======
+>>>>>>> Stashed changes
 /* guided clips: caption and controls over the 3D model */
 .tour-bar { position: absolute; left: 12px; right: 12px; bottom: 12px; max-width: 640px; margin: 0 auto; padding: 10px 14px 12px; border-radius: 10px; background: rgba(15,17,21,.9); border: 2px solid #38bdf8; backdrop-filter: blur(6px); display: flex; flex-direction: column; gap: 8px; }
 .tour-bar.out { border-color: #22c55e; }
