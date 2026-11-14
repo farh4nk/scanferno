@@ -2,71 +2,71 @@
   "utterances": [
     {
       "role": "dispatcher",
-      "start": 0.28,
-      "end": 2.98,
-      "text": "911, what's the address of your emergency?"
+      "start": 0.26,
+      "end": 3.0,
+      "text": "911. What's the address of your emergency?"
     },
     {
       "role": "caller",
-      "start": 3.8,
-      "end": 10.4,
-      "text": "Eighty-eight sixty-six Gulf Freeway, the Vibe office building by the feeder road. There's a fire on the third floor."
+      "start": 3.88,
+      "end": 10.42,
+      "text": "Eighty-eight sixty-six Gulf Freeway. The Vibe office building by the feeder road. There's a fire on the third floor."
     },
     {
       "role": "dispatcher",
-      "start": 11.2,
-      "end": 13.06,
-      "text": "Okay, where on the third floor?"
+      "start": 11.5,
+      "end": 13.38,
+      "text": "Okay. Where on the third floor?"
     },
     {
       "role": "caller",
-      "start": 13.88,
-      "end": 19.46,
+      "start": 14.2,
+      "end": 19.5,
       "text": "The back of the building in the truck driving school suite. Black smoke is pouring out of the windows."
     },
     {
       "role": "dispatcher",
-      "start": 20.26,
-      "end": 21.6,
+      "start": 20.5,
+      "end": 21.68,
       "text": "Is anyone still inside?"
     },
     {
       "role": "caller",
-      "start": 22.4,
-      "end": 28.6,
+      "start": 23.52,
+      "end": 29.26,
       "text": "My coworker Maria went back for her laptop. She's in the break room, the little kitchen at the end of the hall."
     },
     {
       "role": "dispatcher",
-      "start": 29.38,
-      "end": 32.46,
-      "text": "Do you know of any hazards, gas, chemicals?"
+      "start": 30.24,
+      "end": 33.46,
+      "text": "Do you know of any hazards? Gas? Chemicals?"
     },
     {
       "role": "caller",
-      "start": 33.26,
-      "end": 37.7,
+      "start": 34.52,
+      "end": 38.42,
       "text": "The driving school keeps oxygen tanks for their first aid class in the back."
     },
     {
       "role": "dispatcher",
-      "start": 38.5,
-      "end": 39.6,
+      "start": 39.22,
+      "end": 40.26,
       "text": "Where are you right now?"
     },
     {
       "role": "caller",
-      "start": 40.42,
-      "end": 42.84,
+      "start": 41.4,
+      "end": 43.62,
       "text": "I'm outside in the front parking lot."
     }
   ],
   "timeline": [
     {
-      "t": 10.4,
+      "t": 10.42,
       "utterance_index": 1,
       "record": {
-        "address": "8866 Gulf Fwy",
+        "address": "8866 Gulf Fwy, Houston, TX",
         "cross_street": null,
         "floor": 3,
         "side": null,
@@ -96,14 +96,14 @@
       }
     },
     {
-      "t": 19.46,
+      "t": 19.5,
       "utterance_index": 3,
       "record": {
-        "address": "8866 Gulf Freeway",
-        "cross_street": "feeder road",
+        "address": "8866 Gulf Fwy, Houston, TX",
+        "cross_street": null,
         "floor": 3,
         "side": "C",
-        "fire_location": "SAGE Truck Driving School suite",
+        "fire_location": "third floor, truck driving school suite, back of the building",
         "conditions": [
           "black smoke is pouring out of the windows"
         ],
@@ -118,7 +118,6 @@
           "hazards": 0.0
         },
         "changed": [
-          "cross_street",
           "side",
           "fire_location",
           "conditions"
@@ -126,20 +125,20 @@
       }
     },
     {
-      "t": 28.6,
+      "t": 29.26,
       "utterance_index": 5,
       "record": {
-        "address": "8866 Gulf Freeway",
-        "cross_street": "feeder road",
+        "address": "8866 Gulf Fwy, Houston, TX",
+        "cross_street": null,
         "floor": 3,
         "side": "C",
-        "fire_location": "SAGE Truck Driving School suite",
+        "fire_location": "third floor, truck driving school suite, back of the building",
         "conditions": [
           "black smoke is pouring out of the windows"
         ],
         "trapped": [
           {
-            "description": "Coworker Maria went back for her laptop",
+            "description": "Coworker Maria went back for her laptop, she's in the break room",
             "location": "break room, little kitchen at the end of the hall",
             "floor": 3,
             "room_id": "2qdmc5i9byxi79ry1pxdkqzea",
@@ -161,20 +160,20 @@
       }
     },
     {
-      "t": 37.7,
+      "t": 38.42,
       "utterance_index": 7,
       "record": {
-        "address": "8866 Gulf Freeway",
-        "cross_street": "feeder road",
+        "address": "8866 Gulf Fwy, Houston, TX",
+        "cross_street": null,
         "floor": 3,
         "side": "C",
-        "fire_location": "SAGE Truck Driving School suite",
+        "fire_location": "third floor, truck driving school suite, back of the building",
         "conditions": [
           "black smoke is pouring out of the windows"
         ],
         "trapped": [
           {
-            "description": "Coworker Maria went back for her laptop",
+            "description": "Coworker Maria went back for her laptop, she's in the break room",
             "location": "break room, little kitchen at the end of the hall",
             "floor": 3,
             "room_id": "2qdmc5i9byxi79ry1pxdkqzea",
@@ -198,20 +197,20 @@
       }
     },
     {
-      "t": 42.84,
+      "t": 43.62,
       "utterance_index": 9,
       "record": {
-        "address": "8866 Gulf Freeway",
+        "address": "8866 Gulf Fwy, Houston, TX",
         "cross_street": "feeder road",
         "floor": 3,
         "side": "C",
-        "fire_location": "SAGE Truck Driving School suite",
+        "fire_location": "third floor, truck driving school suite, back of the building",
         "conditions": [
           "black smoke is pouring out of the windows"
         ],
         "trapped": [
           {
-            "description": "Coworker Maria went back for her laptop",
+            "description": "Coworker Maria went back for her laptop, she's in the break room",
             "location": "break room, little kitchen at the end of the hall",
             "floor": 3,
             "room_id": "2qdmc5i9byxi79ry1pxdkqzea",
@@ -230,6 +229,7 @@
           "hazards": 0.9
         },
         "changed": [
+          "cross_street",
           "caller_location"
         ]
       }

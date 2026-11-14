@@ -7,11 +7,12 @@ Living handoff doc. Update your role's section and add a changelog line in the s
 **Done**
 - Access to all sources verified: CoStar kit, Matterport GraphQL, Vexcel REST + MCP, Gemini, ElevenLabs STT (`scripts/check_access`).
 - 3 hero buildings picked by verified scan quality; all data cached in `fixtures/` (`scripts/pick_heroes`, `scripts/fetch_fixtures`).
-- Dispatch pipeline: audio -> diarized transcript -> live dispatch records via Gemini, with deterministic room matching (`dispatch/`). Two Vibe Hobby calls processed: `vibe-1-clean`, `vibe-2-messy`.
+- Dispatch pipeline: audio -> diarized transcript -> live dispatch records via Gemini, with deterministic room matching (`dispatch/`).
+- All 5 calls voiced with ElevenLabs (eleven_v3, emotion tags) and processed: `vibe-1-clean`, `vibe-2-messy`, `bellaire-1-patient`, `piney-1-storage`, `vibe-mayday`. Mayday call verified on `/calls/vibe-mayday/live` (emits the `mayday` event).
 - API: buildings, calls, SSE replay, typed extract, transcribe, static fixtures (`app/main.py`).
 
 **Next**
-1. Regenerate call audio with real ElevenLabs voices (waiting on Voices: Read for the key).
+1. ~~Regenerate call audio with real ElevenLabs voices~~ done.
 2. ~~Briefing agent~~ done on `geometry-agent`: `POST /buildings/{id}/briefing` (`agent/briefing.py`).
 3. ~~Commander Q&A~~ done on `geometry-agent`: `POST /buildings/{id}/ask` (`agent/ask.py`, Gemini tool calling, rules fallback).
 4. Mayday TTS: speak the `directions` from `GET /buildings/{id}/mayday` (or the `mayday` event on `/calls/{id}/live`).
@@ -32,7 +33,7 @@ Living handoff doc. Update your role's section and add a changelog line in the s
 
 **Open issues**
 - Piney Point and Bellaire exits are inferred from aerials (`floorplan_overrides` in buildings.json); scan has no exterior doorways.
-- New scripts `bellaire-1-patient`, `piney-1-storage`, `vibe-mayday` have no audio yet: run `scripts.process_calls`.
+- ~~New scripts have no audio yet~~ all voiced and processed (agent-data).
 
 ## Visuals and pitch (branch `ui`)
 
@@ -47,3 +48,4 @@ Living handoff doc. Update your role's section and add a changelog line in the s
 - 2026-11-14: Dispatch pipeline, two scripted calls, call API with SSE replay.
 - 2026-11-14: AGENTS.md / CLAUDE.md / STATUS.md for teammates' agents.
 - 2026-11-14: Geometry (floorplan, routes, maze, mayday, evac, sides), briefing + Q&A agents, live call stream.
+- 2026-11-14: All 5 calls re-voiced with ElevenLabs; speaker roles follow script order (fixes single-speaker mayday call); `--refresh` now re-transcribes too.

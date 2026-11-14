@@ -17,7 +17,7 @@ from data import cache
 from . import elevenlabs, extract
 
 CALLS = cache.FIXTURES / "calls"
-SAY_VOICES = {"dispatcher": "Samantha", "caller": "Daniel", "caller2": "Karen", "narrator": "Samantha"}
+SAY_VOICES = {"dispatcher": "Samantha", "caller": "Daniel", "caller2": "Karen", "firefighter": "Fred", "narrator": "Samantha"}
 
 
 def call_dir(call_id: str) -> Path:
@@ -82,15 +82,19 @@ def transcribe(call_id: str, refresh: bool = False) -> dict:
     return result
 
 
-def utterances(stt_result: dict, gap_s: float = 1.0) -> list[dict]:
-    """Group words into utterances by speaker change or pause. First speaker = dispatcher."""
+def utterances(stt_result: dict, gap_s: float = 1.0, role_order: list[str] | None = None) -> list[dict]:
+    """Group words into utterances by speaker change or pause.
+    The n-th distinct speaker gets role_order[n] (default dispatcher, caller); a single-speaker
+    mayday call passes ["caller"] so it isn't mistaken for the dispatcher."""
+    order = role_order or ["dispatcher", "caller"]
     words = [w for w in stt_result.get("words") or [] if w.get("type") == "word"]
     roles: dict[str, str] = {}
     out: list[dict] = []
     for w in words:
         spk = w.get("speaker_id") or "speaker_0"
         if spk not in roles:
-            roles[spk] = "dispatcher" if not roles else ("caller" if len(roles) == 1 else f"caller{len(roles)}")
+            n = len(roles)
+            roles[spk] = order[n] if n < len(order) else f"caller{n}"
         role = roles[spk]
         if out and out[-1]["role"] == role and w["start"] - out[-1]["end"] < gap_s:
             out[-1]["text"] += " " + w["text"]
@@ -98,6 +102,16 @@ def utterances(stt_result: dict, gap_s: float = 1.0) -> list[dict]:
         else:
             out.append({"role": role, "start": w["start"], "end": w["end"], "text": w["text"]})
     return out
+
+
+def script_roles(script: dict) -> list[str]:
+    """Distinct speakers in order of first appearance, e.g. [dispatcher, caller] or [caller]."""
+    seen: list[tuple[str, str]] = []
+    for line in script["lines"]:
+        key = line.get("voice", line["role"])
+        if key not in [s for s, _ in seen]:
+            seen.append((key, line["role"]))
+    return [role for _, role in seen]
 
 
 # ---- live timeline ----
@@ -109,10 +123,11 @@ def build_timeline(call_id: str, refresh: bool = False) -> dict:
     if cached:
         return cached
     script = cache.load_json("calls", call_id, "script.json")
-    utts = utterances(transcribe(call_id))
+    utts = utterances(transcribe(call_id, refresh=refresh), role_order=script_roles(script))
     timeline, record = [], None
     for i, u in enumerate(utts):
-        if u["role"] == "dispatcher":
+        # Mayday calls get directions from /calls/{id}/live, not dispatch records.
+        if u["role"] == "dispatcher" or script.get("kind") == "mayday":
             continue
         record = extract.extract(utts[: i + 1], script["building_id"], record)
         timeline.append({"t": u["end"], "utterance_index": i, "record": record})

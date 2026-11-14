@@ -1,0 +1,385 @@
+{
+  "language_code": "eng",
+  "language_probability": 0.9244444370269775,
+  "text": "Mayday! Mayday! Mayday! Engine 23, crew of two. We're lost in zero visibility. Last known position, office 110 on the Delta side. Low air",
+  "words": [
+    {
+      "text": "Mayday!",
+      "start": 0.1,
+      "end": 0.48,
+      "type": "word",
+      "speaker_id": "speaker_0",
+      "logprob": -0.0031729036870404214
+    },
+    {
+      "text": " ",
+      "start": 0.48,
+      "end": 0.76,
+      "type": "spacing",
+      "speaker_id": "speaker_0",
+      "logprob": -1.9073304429184645e-05
+    },
+    {
+      "text": "Mayday!",
+      "start": 0.76,
+      "end": 1.12,
+      "type": "word",
+      "speaker_id": "speaker_0",
+      "logprob": -8.906558475376056e-06
+    },
+    {
+      "text": " ",
+      "start": 1.12,
+      "end": 1.42,
+      "type": "spacing",
+      "speaker_id": "speaker_0",
+      "logprob": -1.6927575416048057e-05
+    },
+    {
+      "text": "Mayday!",
+      "start": 1.42,
+      "end": 1.78,
+      "type": "word",
+      "speaker_id": "speaker_0",
+      "logprob": -4.281166794888642e-05
+    },
+    {
+      "text": " ",
+      "start": 1.78,
+      "end": 1.78,
+      "type": "spacing",
+      "speaker_id": "speaker_0",
+      "logprob": -1.168244216387393e-05
+    },
+    {
+      "text": "Engine",
+      "start": 2.46,
+      "end": 2.68,
+      "type": "word",
+      "speaker_id": "speaker_0",
+      "logprob": -1.168244216387393e-05
+    },
+    {
+      "text": " ",
+      "start": 2.68,
+      "end": 2.88,
+      "type": "spacing",
+      "speaker_id": "speaker_0",
+      "logprob": -0.11285226792097092
+    },
+    {
+      "text": "23,",
+      "start": 2.88,
+      "end": 3.22,
+      "type": "word",
+      "speaker_id": "speaker_0",
+      "logprob": -0.00016828119976016373
+    },
+    {
+      "text": " ",
+      "start": 3.22,
+      "end": 3.62,
+      "type": "spacing",
+      "speaker_id": "speaker_0",
+      "logprob": -4.887569048150908e-06
+    },
+    {
+      "text": "crew",
+      "start": 3.62,
+      "end": 3.76,
+      "type": "word",
+      "speaker_id": "speaker_0",
+      "logprob": -4.887569048150908e-06
+    },
+    {
+      "text": " ",
+      "start": 3.76,
+      "end": 3.8,
+      "type": "spacing",
+      "speaker_id": "speaker_0",
+      "logprob": 0.0
+    },
+    {
+      "text": "of",
+      "start": 3.8,
+      "end": 3.92,
+      "type": "word",
+      "speaker_id": "speaker_0",
+      "logprob": 0.0
+    },
+    {
+      "text": " ",
+      "start": 3.92,
+      "end": 3.98,
+      "type": "spacing",
+      "speaker_id": "speaker_0",
+      "logprob": -1.3232143828645349e-05
+    },
+    {
+      "text": "two.",
+      "start": 3.98,
+      "end": 4.18,
+      "type": "word",
+      "speaker_id": "speaker_0",
+      "logprob": -7.545082917204127e-05
+    },
+    {
+      "text": " ",
+      "start": 4.18,
+      "end": 4.18,
+      "type": "spacing",
+      "speaker_id": "speaker_0",
+      "logprob": -1.1920928244535389e-07
+    },
+    {
+      "text": "We're",
+      "start": 4.76,
+      "end": 4.88,
+      "type": "word",
+      "speaker_id": "speaker_0",
+      "logprob": -1.1205644085521272e-06
+    },
+    {
+      "text": " ",
+      "start": 4.88,
+      "end": 4.92,
+      "type": "spacing",
+      "speaker_id": "speaker_0",
+      "logprob": -2.3841830625315197e-06
+    },
+    {
+      "text": "lost",
+      "start": 4.92,
+      "end": 5.2,
+      "type": "word",
+      "speaker_id": "speaker_0",
+      "logprob": -2.3841830625315197e-06
+    },
+    {
+      "text": " ",
+      "start": 5.2,
+      "end": 5.24,
+      "type": "spacing",
+      "speaker_id": "speaker_0",
+      "logprob": 0.0
+    },
+    {
+      "text": "in",
+      "start": 5.24,
+      "end": 5.32,
+      "type": "word",
+      "speaker_id": "speaker_0",
+      "logprob": 0.0
+    },
+    {
+      "text": " ",
+      "start": 5.32,
+      "end": 5.44,
+      "type": "spacing",
+      "speaker_id": "speaker_0",
+      "logprob": -7.152555099310121e-07
+    },
+    {
+      "text": "zero",
+      "start": 5.44,
+      "end": 5.66,
+      "type": "word",
+      "speaker_id": "speaker_0",
+      "logprob": -7.152555099310121e-07
+    },
+    {
+      "text": " ",
+      "start": 5.66,
+      "end": 5.74,
+      "type": "spacing",
+      "speaker_id": "speaker_0",
+      "logprob": -8.344646857949556e-07
+    },
+    {
+      "text": "visibility.",
+      "start": 5.74,
+      "end": 6.3,
+      "type": "word",
+      "speaker_id": "speaker_0",
+      "logprob": -9.103250497653128e-07
+    },
+    {
+      "text": " ",
+      "start": 6.3,
+      "end": 6.3,
+      "type": "spacing",
+      "speaker_id": "speaker_0",
+      "logprob": -2.3841855067985307e-07
+    },
+    {
+      "text": "Last",
+      "start": 6.98,
+      "end": 7.18,
+      "type": "word",
+      "speaker_id": "speaker_0",
+      "logprob": -2.3841855067985307e-07
+    },
+    {
+      "text": " ",
+      "start": 7.18,
+      "end": 7.24,
+      "type": "spacing",
+      "speaker_id": "speaker_0",
+      "logprob": -1.1920928244535389e-07
+    },
+    {
+      "text": "known",
+      "start": 7.24,
+      "end": 7.44,
+      "type": "word",
+      "speaker_id": "speaker_0",
+      "logprob": -1.1920928244535389e-07
+    },
+    {
+      "text": " ",
+      "start": 7.44,
+      "end": 7.46,
+      "type": "spacing",
+      "speaker_id": "speaker_0",
+      "logprob": -2.3841855067985307e-07
+    },
+    {
+      "text": "position,",
+      "start": 7.46,
+      "end": 7.9,
+      "type": "word",
+      "speaker_id": "speaker_0",
+      "logprob": -0.000662758222031496
+    },
+    {
+      "text": " ",
+      "start": 7.9,
+      "end": 8.26,
+      "type": "spacing",
+      "speaker_id": "speaker_0",
+      "logprob": -0.4287024438381195
+    },
+    {
+      "text": "office",
+      "start": 8.26,
+      "end": 8.54,
+      "type": "word",
+      "speaker_id": "speaker_0",
+      "logprob": -0.4287024438381195
+    },
+    {
+      "text": " ",
+      "start": 8.54,
+      "end": 8.84,
+      "type": "spacing",
+      "speaker_id": "speaker_0",
+      "logprob": -0.00020346954988781363
+    },
+    {
+      "text": "110",
+      "start": 8.84,
+      "end": 9.14,
+      "type": "word",
+      "speaker_id": "speaker_0",
+      "logprob": -2.781548952649852e-07
+    },
+    {
+      "text": " ",
+      "start": 9.14,
+      "end": 9.18,
+      "type": "spacing",
+      "speaker_id": "speaker_0",
+      "logprob": -1.1920928244535389e-07
+    },
+    {
+      "text": "on",
+      "start": 9.18,
+      "end": 9.24,
+      "type": "word",
+      "speaker_id": "speaker_0",
+      "logprob": -1.1920928244535389e-07
+    },
+    {
+      "text": " ",
+      "start": 9.24,
+      "end": 9.28,
+      "type": "spacing",
+      "speaker_id": "speaker_0",
+      "logprob": 0.0
+    },
+    {
+      "text": "the",
+      "start": 9.28,
+      "end": 9.32,
+      "type": "word",
+      "speaker_id": "speaker_0",
+      "logprob": 0.0
+    },
+    {
+      "text": " ",
+      "start": 9.32,
+      "end": 9.38,
+      "type": "spacing",
+      "speaker_id": "speaker_0",
+      "logprob": -0.02054283395409584
+    },
+    {
+      "text": "Delta",
+      "start": 9.38,
+      "end": 9.64,
+      "type": "word",
+      "speaker_id": "speaker_0",
+      "logprob": -0.02054283395409584
+    },
+    {
+      "text": " ",
+      "start": 9.64,
+      "end": 9.74,
+      "type": "spacing",
+      "speaker_id": "speaker_0",
+      "logprob": -5.149708886165172e-05
+    },
+    {
+      "text": "side.",
+      "start": 9.74,
+      "end": 10.08,
+      "type": "word",
+      "speaker_id": "speaker_0",
+      "logprob": -4.1221512945810444e-05
+    },
+    {
+      "text": " ",
+      "start": 10.08,
+      "end": 10.62,
+      "type": "spacing",
+      "speaker_id": "speaker_0",
+      "logprob": -5.483612312673358e-06
+    },
+    {
+      "text": "Low",
+      "start": 10.62,
+      "end": 10.8,
+      "type": "word",
+      "speaker_id": "speaker_0",
+      "logprob": -5.483612312673358e-06
+    },
+    {
+      "text": " ",
+      "start": 10.8,
+      "end": 10.98,
+      "type": "spacing",
+      "speaker_id": "speaker_0",
+      "logprob": -1.0728830375228426e-06
+    },
+    {
+      "text": "air",
+      "start": 10.98,
+      "end": 11.22,
+      "type": "word",
+      "speaker_id": "speaker_0",
+      "logprob": -1.0728830375228426e-06
+    }
+  ],
+  "transcription_id": "5Kvw49UurTKqXeqLe4xa",
+  "audio_duration_secs": 12.22
+}

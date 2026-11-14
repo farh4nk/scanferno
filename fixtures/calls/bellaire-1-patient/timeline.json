@@ -1,0 +1,196 @@
+{
+  "utterances": [
+    {
+      "role": "dispatcher",
+      "start": 0.3,
+      "end": 3.34,
+      "text": "911, what is the address of your emergency?"
+    },
+    {
+      "role": "caller",
+      "start": 4.5,
+      "end": 11.68,
+      "text": "6550 Maple Ridge Street, the Bel Air Medical Building. There's smoke in the hallway in the back. It's filling up fast."
+    },
+    {
+      "role": "dispatcher",
+      "start": 12.64,
+      "end": 13.3,
+      "text": "Is everyone out?"
+    },
+    {
+      "role": "caller",
+      "start": 14.64,
+      "end": 20.8,
+      "text": "One of our patients is still inside. She uses a wheelchair. She was in an exam room near the storage closets."
+    },
+    {
+      "role": "dispatcher",
+      "start": 21.72,
+      "end": 23.1,
+      "text": "Any hazards we should know about?"
+    },
+    {
+      "role": "caller",
+      "start": 24.1,
+      "end": 26.48,
+      "text": "We keep oxygen tanks in the storage closet."
+    },
+    {
+      "role": "caller",
+      "start": 27.48,
+      "end": 28.94,
+      "text": "I'm in the parking lot out front."
+    }
+  ],
+  "timeline": [
+    {
+      "t": 11.68,
+      "utterance_index": 1,
+      "record": {
+        "address": "6550 Maple Ridge Street",
+        "cross_street": null,
+        "floor": null,
+        "side": "C",
+        "fire_location": "hallway in the back",
+        "conditions": [
+          "smoke in the hallway"
+        ],
+        "trapped": [],
+        "hazards": [],
+        "caller_location": "hallway in the back",
+        "confidence": {
+          "address": 1.0,
+          "floor": 0.0,
+          "side": 0.9,
+          "trapped": 0.0,
+          "hazards": 0.0
+        },
+        "changed": [
+          "address",
+          "cross_street",
+          "floor",
+          "side",
+          "fire_location",
+          "conditions",
+          "trapped",
+          "hazards",
+          "caller_location"
+        ]
+      }
+    },
+    {
+      "t": 20.8,
+      "utterance_index": 3,
+      "record": {
+        "address": "6550 Maple Ridge Street",
+        "cross_street": null,
+        "floor": null,
+        "side": "C",
+        "fire_location": "hallway in the back",
+        "conditions": [
+          "smoke in the hallway",
+          "filling up fast"
+        ],
+        "trapped": [
+          {
+            "description": "patient using a wheelchair",
+            "location": "exam room near the storage closets",
+            "floor": null,
+            "room_id": null,
+            "confidence": 0.8
+          }
+        ],
+        "hazards": [],
+        "caller_location": "hallway in the back",
+        "confidence": {
+          "address": 1.0,
+          "floor": 0.0,
+          "side": 0.9,
+          "trapped": 0.8,
+          "hazards": 0.0
+        },
+        "changed": [
+          "conditions",
+          "trapped"
+        ]
+      }
+    },
+    {
+      "t": 26.48,
+      "utterance_index": 5,
+      "record": {
+        "address": "6550 Maple Ridge Street",
+        "cross_street": null,
+        "floor": null,
+        "side": "C",
+        "fire_location": "hallway in the back",
+        "conditions": [
+          "smoke in the hallway",
+          "filling up fast"
+        ],
+        "trapped": [
+          {
+            "description": "patient using a wheelchair",
+            "location": "exam room near the storage closets",
+            "floor": null,
+            "room_id": null,
+            "confidence": 0.8
+          }
+        ],
+        "hazards": [
+          "oxygen tanks in storage closet"
+        ],
+        "caller_location": "hallway in the back",
+        "confidence": {
+          "address": 1.0,
+          "floor": 0.0,
+          "side": 0.9,
+          "trapped": 0.8,
+          "hazards": 0.9
+        },
+        "changed": [
+          "hazards"
+        ]
+      }
+    },
+    {
+      "t": 28.94,
+      "utterance_index": 6,
+      "record": {
+        "address": "6550 Maple Ridge Street",
+        "cross_street": null,
+        "floor": null,
+        "side": "C",
+        "fire_location": "hallway in the back",
+        "conditions": [
+          "smoke in the hallway",
+          "filling up fast"
+        ],
+        "trapped": [
+          {
+            "description": "patient using a wheelchair",
+            "location": "exam room near the storage closets",
+            "floor": null,
+            "room_id": null,
+            "confidence": 0.8
+          }
+        ],
+        "hazards": [
+          "oxygen tanks in storage closet"
+        ],
+        "caller_location": "parking lot out front",
+        "confidence": {
+          "address": 1.0,
+          "floor": 0.0,
+          "side": 0.9,
+          "trapped": 0.8,
+          "hazards": 0.9
+        },
+        "changed": [
+          "caller_location"
+        ]
+      }
+    }
+  ]
+}
