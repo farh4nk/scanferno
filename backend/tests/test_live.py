@@ -68,3 +68,46 @@ def test_save_makes_a_replayable_call(monkeypatch):
 def test_unknown_session_and_building():
     assert client.get("/live/sessions/nope").status_code == 404
     assert client.post("/live/sessions", json={"building_id": "nope"}).status_code == 404
+
+
+def test_call_frames_are_seekable():
+    from fastapi.testclient import TestClient
+    from app.main import app
+    r = TestClient(app).get("/calls/vibe-1-clean/frames").json()
+    assert r["utterances"] and r["frames"] and r["duration"] > 0
+    ts = [f["t"] for f in r["frames"]]
+    assert ts == sorted(ts)
+    last = r["frames"][-1]["briefing"]
+    assert last["trapped"] and last["fire_room_ids"]
+    assert any(c["kind"] == "trapped" for f in r["frames"] for c in f["briefing"]["changes"])
+
+
+def test_mayday_call_frames_carry_directions():
+    from fastapi.testclient import TestClient
+    from app.main import app
+    r = TestClient(app).get("/calls/vibe-mayday/frames").json()
+    assert any(f.get("mayday", {}).get("directions") for f in r["frames"])
+
+
+def test_speech_validates_input_and_serves_cache():
+    from fastapi.testclient import TestClient
+    from app.main import app
+    from data import cache
+    c = TestClient(app)
+    assert c.post("/speech", json={"text": "  ", "voice": "narrator"}).status_code == 400
+    assert c.post("/speech", json={"text": "hi", "voice": "robot"}).status_code == 400
+    from app.routers.speech import cache_key
+    meta = {"text": "cached line", "voice": "narrator", "audio_url": "/fixtures/tts/x.mp3", "words": []}
+    key = cache_key("cached line", "narrator")
+    p = cache.save_json(meta, "tts", f"{key}.json")
+    try:
+        r = c.post("/speech", json={"text": "cached   line", "voice": "narrator"}).json()
+        assert r["cached"] and r["audio_url"] == meta["audio_url"]
+    finally:
+        p.unlink()
+
+
+def test_stutter_detector_flags_stretched_words_only():
+    from dispatch.elevenlabs import _glitchy
+    assert _glitchy([{"word": "follow", "start": 6.2, "end": 7.73}])          # the real stutter we heard
+    assert not _glitchy([{"word": "follow", "start": 6.38, "end": 6.63}, {"word": "8866", "start": 0.8, "end": 1.98}])

@@ -5,6 +5,7 @@ import { SIDE_NAME, STEPS, hazardName, stepScript } from './model'
 import { DeadEndPict, DistScale, EnterPict, ExitBars, ExitPict, FirePict, HoseGauge, Ring, SearchChain, Section, TrappedPict, WatchPict } from './Diagrams'
 import Icon from '../ui/Icon'
 import Viewer3D from '../components/Viewer3D'
+import { prepareInOrder, speak } from '../ui/speech'
 
 function KeyBand({ k, step }) {
   const cells = [
@@ -19,7 +20,7 @@ function KeyBand({ k, step }) {
   return (
     <div className="keyband">
       {cells.map((c) => (
-        <div key={c.key} className={`kcell ${c.s.includes(step) ? 'now' : ''} ${c.hot ? 'hot' : ''} ${c.off ? 'off' : ''}`}>
+        <div key={`${c.key}-${c.v}`} className={`kcell ${c.s.includes(step) ? 'now' : ''} ${c.hot ? 'hot' : ''} ${c.off ? 'off' : ''}`}>
           {c.pict}<div><span>{c.key}</span><b>{c.v}</b>{c.sub && <em>{c.sub}</em>}</div>
         </div>
       ))}
@@ -57,6 +58,17 @@ function attackPlan(k, step) {
     if (k.vRoute) o.tags.push({ at: exitPt(k.vRoute), dy: 44, text: `NEAREST EXIT · ${k.vRoute.distance_m} M`, cls: 'f' })
   }
   if (step > 0 && k.fireKnown && k.fireIds[0]) o.tags.push({ at: k.R[k.fireIds[0]].centroid, dx: 60, dy: -62, text: k.isO2 ? 'FIRE · O₂ CYLINDERS REPORTED' : 'FIRE AREA', cls: 'r' })
+  return o
+}
+
+function liveOverlay(k) {
+  // during a call: everything known so far at once, so each new fact visibly lands on the plan
+  const o = { sides: true, tags: [], routes: [], order: Object.fromEntries(k.plan_.slice(0, 4).map((s, i) => [s.room_id, i + 1])), pulse: null, dashed: null }
+  if (k.victim && k.vRoute) {
+    o.dashed = [...k.vRoute.polyline].reverse(); o.pulse = k.R[k.victim].centroid
+    o.tags.push({ at: k.R[k.victim].centroid, dy: -44, text: `TRAPPED · ${k.victimLabel.toUpperCase()}`, cls: 'r' })
+  }
+  if (k.fireKnown && k.fireIds[0]) o.tags.push({ at: k.R[k.fireIds[0]].centroid, dx: 60, dy: -62, text: k.isO2 ? 'FIRE · O₂ CYLINDERS REPORTED' : 'FIRE AREA', cls: 'r' })
   return o
 }
 
@@ -103,34 +115,88 @@ function StepPanel({ k, step, briefing, go }) {
 export default function Home({ k, plan, briefing, feed, go, building }) {
   const [step, setStep] = useState(0)
   const [view, setView] = useState('2d')
+  const [follow, setFollow] = useState(true)
+  const [flash, setFlash] = useState(null)
+  const live = ['live', 'connecting', 'paused'].includes(feed.status)
   const [narrating, setNarrating] = useState(false)
   const [reading, setReading] = useState(false)
   const [caption, setCaption] = useState(null)
   const alive = useRef(false)
 
-  const stop = () => { alive.current = false; window.speechSynthesis?.cancel(); setNarrating(false); setCaption(null) }
-  const narrate = (i) => {
-    if (!alive.current || i >= STEPS.length) { stop(); return }
+  // narration in the ElevenLabs narrator voice; `run` guards against a stopped or restarted session
+  const line = useRef(null); const run = useRef(0)
+  const [voiceErr, setVoiceErr] = useState(null)
+  const [loadingVoice, setLoadingVoice] = useState(false)
+  const halt = () => { run.current += 1; line.current?.stop(); line.current = null }
+  const stop = () => { halt(); alive.current = false; setNarrating(false); setCaption(null); setLoadingVoice(false) }
+  const narrate = (i, id) => {
+    if (id !== run.current) return
+    if (i >= STEPS.length) { stop(); return }
     setStep(i)
-    const txt = stepScript(k, i); const u = new SpeechSynthesisUtterance(txt); u.rate = 1.05
-    setCaption({ txt, at: 0, end: 0 })
-    u.onboundary = (ev) => { const b = txt.indexOf(' ', ev.charIndex + 1); setCaption({ txt, at: ev.charIndex, end: b < 0 ? txt.length : b }) }
-    u.onend = () => setTimeout(() => narrate(i + 1), 350)
-    window.speechSynthesis.speak(u)
+    const txt = stepScript(k, i)
+    setCaption({ txt, at: 0, end: 0 }); setLoadingVoice(true)
+    const h = speak(txt, { voice: 'briefing', onStart: () => setLoadingVoice(false), onWord: (w) => setCaption({ txt, at: w.s, end: w.e }) })
+    line.current = h
+    h.finished.then((why) => {
+      if (id !== run.current) return
+      if (why === 'error') { setVoiceErr('ElevenLabs voice unavailable. Use Read instead.'); stop(); return }
+      if (why === 'ended') setTimeout(() => narrate(i + 1, id), 150)
+    })
   }
-  const toggle = () => { if (narrating) stop(); else { window.speechSynthesis?.cancel(); alive.current = true; setNarrating(true); narrate(0) } }
-  useEffect(() => () => { alive.current = false; window.speechSynthesis?.cancel() }, [])
+  const begin = (i) => {
+    halt(); setVoiceErr(null); setFollow(false); alive.current = true; setNarrating(true)
+    const from = Math.max(0, Math.min(STEPS.length - 1, i))
+    // the step about to play first, then the rest in order, one request at a time
+    prepareInOrder([...STEPS.keys()].slice(from).concat([...STEPS.keys()].slice(0, from)).map((j) => stepScript(k, j)), 'briefing')
+    narrate(from, run.current)
+  }
+  const jump = (i) => begin(i)
+  const toggle = () => { if (narrating) stop(); else begin(0) }
+  useEffect(() => () => { run.current += 1; line.current?.stop() }, [])
+  // generate the voice in the background once the briefing settles, so Play starts at once.
+  // Not during a live call: the text changes with every caller line and each version costs a generation.
+  const scripts = STEPS.map((_, j) => stepScript(k, j)).join('\n')
   useEffect(() => {
-    const onKey = (e) => { if (/^[1-4]$/.test(e.key) && !e.target.closest('input,textarea,select')) { stop(); setStep(+e.key - 1) } }
+    if (feed.status === 'live' || feed.status === 'connecting') return undefined
+    const t = setTimeout(() => prepareInOrder(scripts.split('\n'), 'briefing'), 1200)
+    return () => clearTimeout(t)
+  }, [scripts, feed.status])
+  useEffect(() => {
+    const onKey = (e) => { if (/^[1-4]$/.test(e.key) && !e.target.closest('input,textarea,select')) { stop(); setFollow(false); setStep(+e.key - 1) } }
     window.addEventListener('keydown', onKey); return () => window.removeEventListener('keydown', onKey)
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
-  const o = attackPlan(k, step)
+  // a call starting hands the plan to live mode; when it ends, land on the step that matters most
+  const prevStatus = useRef(feed.status)
+  useEffect(() => {
+    const was = prevStatus.current; prevStatus.current = feed.status
+    if (feed.status === 'connecting' || (feed.status === 'live' && was !== 'live')) setFollow(true)
+    if (feed.status === 'done' && was === 'live') { setFollow(false); setStep(k.victim ? 2 : 0) }
+  }, [feed.status]) // eslint-disable-line react-hooks/exhaustive-deps
+  // flash the rooms each briefing update names, with the change as a banner
+  useEffect(() => {
+    const ch = briefing.changes || []
+    if (!ch.length || feed.jumped) return undefined
+    const ids = [...new Set(ch.flatMap((c) => (c.kind === 'fire' ? k.fireIds : c.room_id ? [c.room_id] : [])))]
+    const items = ch.filter((c) => c.kind !== 'search_plan' || ch.length === 1)
+    setFlash({ ids, items, key: briefing.generated_at })
+    const t = setTimeout(() => setFlash(null), 6000)
+    return () => clearTimeout(t)
+  }, [briefing.generated_at]) // eslint-disable-line react-hooks/exhaustive-deps
+  const livePlan = live && follow
+  const o = { ...(livePlan ? liveOverlay(k) : attackPlan(k, step)), flash: flash?.ids || [] }
   const last = feed.utterances.at(-1)
   return (
     <div className="page brief">
       <KeyBand k={k} step={step} />
       <div className="stage panel">
+        {livePlan && <button className="livebadge" onClick={() => setFollow(false)} title="Click a step to take over"><span className="dotlive" />Live · the plan updates as the caller talks</button>}
+        {live && !follow && <button className="livebadge off" onClick={() => setFollow(true)}><span className="dotlive" />Back to live</button>}
+        {flash?.items?.length > 0 && (
+          <div className="newbanner" key={flash.key}>
+            {flash.items.slice(0, 2).map((c, i) => <div key={i} className={`nb ${c.kind}`}><b>New</b>{c.text}</div>)}
+          </div>
+        )}
         <div className="seg stage-mode"><button className={view === '2d' ? 'on' : ''} onClick={() => setView('2d')}>2D plan</button><button className={view === '3d' ? 'on' : ''} onClick={() => setView('3d')}>3D model</button></div>
         <div className="planwrap">
           {view === '3d'
@@ -140,9 +206,10 @@ export default function Home({ k, plan, briefing, feed, go, building }) {
                 highlight={step === 3 ? { rooms: [], polylines: o.routes } : step === 1 && o.hose ? { rooms: [], polylines: [o.hose] } : null} mayday={null} evac={null} />
             : <PlanSvg plan={plan} k={k} {...o} />}
         </div>
-        {narrating && caption ? (
-          <p className="caption"><span className="said">{caption.txt.slice(0, caption.at)}</span><mark>{caption.txt.slice(caption.at, caption.end)}</mark>{caption.txt.slice(caption.end)}</p>
-        ) : feed.status === 'live' || feed.status === 'connecting' ? (
+        {voiceErr && <p className="caption err">{voiceErr}</p>}
+        {narrating && caption && !reading ? (
+          <p className={`caption ${loadingVoice ? 'loading' : ''}`}>{loadingVoice && <span className="vload">Preparing voice… </span>}<span className="said">{caption.txt.slice(0, caption.at)}</span><mark>{caption.txt.slice(caption.at, caption.end)}</mark>{caption.txt.slice(caption.end)}</p>
+        ) : live ? (
           <div className="ticker"><span className="dotlive" /><b>{last?.role || 'call'}</b>{last?.text || 'Connecting…'}</div>
         ) : null}
       </div>
@@ -151,7 +218,7 @@ export default function Home({ k, plan, briefing, feed, go, building }) {
           <div className="readp"><h2>Briefing <span>tap a step to show it on the plan</span></h2>
             {STEPS.map((s, i) => (
               <button key={s} className={`para ${i === step ? 'on' : ''}`} onClick={() => { stop(); setStep(i) }}>
-                <i>{i + 1}</i><div><b>{s}</b><p>{stepScript(k, i)}</p></div>
+                <i>{i + 1}</i><div><b>{s}</b><p>{narrating && i === step && caption ? <><span className="said">{caption.txt.slice(0, caption.at)}</span><mark>{caption.txt.slice(caption.at, caption.end)}</mark>{caption.txt.slice(caption.end)}</> : stepScript(k, i)}</p></div>
               </button>
             ))}
           </div>
@@ -159,8 +226,10 @@ export default function Home({ k, plan, briefing, feed, go, building }) {
       </div>
       <div className="stepper">
         {STEPS.map((s, i) => (
-          <button key={s} className={`stp ${i === step ? 'on' : ''} ${i < step ? 'past' : ''}`} onClick={() => { stop(); setStep(i) }}><i>{i + 1}</i>{s}</button>
+          <button key={s} className={`stp ${!livePlan && i === step ? 'on' : ''} ${!livePlan && i < step ? 'past' : ''}`} onClick={() => { if (narrating) jump(i); else { stop(); setFollow(false); setStep(i) } }}><i>{i + 1}</i>{s}</button>
         ))}
+        {narrating && <button className="btn play skip" onClick={() => jump(step - 1)} disabled={step === 0} aria-label="Previous step"><Icon name="prev" /></button>}
+        {narrating && <button className="btn play skip" onClick={() => jump(step + 1)} disabled={step === STEPS.length - 1} aria-label="Next step"><Icon name="next" /></button>}
         <button className="btn f play" onClick={toggle}><Icon name={narrating ? 'pause' : 'speak'} />{narrating ? 'Stop' : 'Play'}</button>
         <button className={`btn play ${reading ? 'on' : ''}`} onClick={() => setReading((r) => !r)}><Icon name="facts" />{reading ? 'Close text' : 'Read'}</button>
       </div>

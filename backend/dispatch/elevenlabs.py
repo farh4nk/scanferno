@@ -18,6 +18,7 @@ ROLES = {
     "caller2": ["Adam", "Charlie", "Liam", "Will"],
     "firefighter": ["Harry", "Callum", "Roger", "Bill"],  # mayday radio calls
     "narrator": ["Alice", "Matilda", "River", "Bella"],   # spoken mayday directions
+    "briefing": ["Bill", "Callum", "Adam", "Liam"],        # en-route briefing: crisp, urgent (picked by ear)
 }
 SAMPLE_RATE = 16000  # pcm_16000 output: 16-bit mono
 _voices: dict[str, str] = {}
@@ -84,6 +85,87 @@ def tts(text: str, voice: str = "narrator", emotion: str | None = None) -> bytes
         tts_model = m
         return r.content
     raise RuntimeError(f"ElevenLabs TTS rejected all models: {last.status_code} {last.text[:300]}")
+
+
+# ElevenLabs plans cap concurrent requests (2 on ours); more returns 429. Gate and retry instead of failing.
+import threading as _threading
+import time as _time
+_TTS_SLOTS = _threading.BoundedSemaphore(int(os.getenv("ELEVENLABS_CONCURRENCY", "2")))
+
+
+def _post_tts(url: str, **kw) -> httpx.Response:
+    for wait in (0.6, 1.2, 2.5, 5.0, None):
+        with _TTS_SLOTS:
+            r = httpx.post(url, **kw)
+        if r.status_code != 429 or wait is None:
+            return r
+        _time.sleep(wait)
+    return r
+
+
+# How each spoken role should sound. The briefing is read to a crew en route: fast model (low latency),
+# quicker pace, less stability for more urgency. Bump PROFILE_VERSION when these change so caches refresh.
+PROFILE_VERSION = 4
+PROFILES = {
+    "briefing": {"models": ["eleven_flash_v2_5", "eleven_turbo_v2_5", "eleven_multilingual_v2"],
+                 "settings": {"stability": 0.45, "similarity_boost": 0.8, "style": 0.45, "speed": 1.2, "use_speaker_boost": True}},  # 1.2 is the API max; below ~0.4 stability the flash model stutters
+}
+
+
+def _tts_timed_once(text: str, voice: str = "narrator") -> tuple[bytes, list[dict]]:
+    """MP3 plus word timings [{word, start, end}] from the with-timestamps endpoint, so a caption can follow
+    the voice word by word. Model and voice settings come from PROFILES for the role, if any."""
+    import base64
+    vid = voice_id(voice) if voice in ROLES else voice
+    prof = PROFILES.get(voice, {})
+    last = None
+    for m in prof.get("models", TTS_MODELS):
+        r = _post_tts(
+            f"{BASE}/text-to-speech/{vid}/with-timestamps",
+            params={"output_format": "mp3_44100_128"},
+            json={"text": text, "model_id": m, **({"voice_settings": prof["settings"]} if "settings" in prof else {})},
+            headers=_headers(),
+            timeout=90,
+        )
+        if _model_rejected(r):
+            last = r
+            continue
+        r.raise_for_status()
+        j = r.json()
+        al = j.get("normalized_alignment") or j.get("alignment") or {}
+        chars, starts, ends = al.get("characters", []), al.get("character_start_times_seconds", []), al.get("character_end_times_seconds", [])
+        words, cur = [], None
+        for ch, a, b in zip(chars, starts, ends):
+            if ch.isspace():
+                if cur:
+                    words.append(cur)
+                cur = None
+            elif cur is None:
+                cur = {"word": ch, "start": a, "end": b}
+            else:
+                cur["word"] += ch
+                cur["end"] = b
+        if cur:
+            words.append(cur)
+        return base64.b64decode(j["audio_base64"]), words
+    raise RuntimeError(f"ElevenLabs TTS rejected all models: {last.status_code} {last.text[:300]}")
+
+
+def _glitchy(words: list[dict]) -> bool:
+    """A stutter shows up as one short word stretched far past normal speech (e.g. 'follow' lasting 1.5 s)."""
+    # numbers are spoken as several words ("8866"), so only plain words are checked
+    return any((w["end"] - w["start"]) > 0.35 + 0.09 * len(w["word"]) for w in words if w["word"].strip(".,:;!?").isalpha())
+
+
+def tts_timed(text: str, voice: str = "narrator", attempts: int = 3) -> tuple[bytes, list[dict]]:
+    """MP3 plus word timings; regenerates (up to `attempts` times) when the audio has a stutter."""
+    best = None
+    for _ in range(attempts):
+        audio, words = _tts_timed_once(text, voice)
+        if not _glitchy(words):
+            return audio, words
+        best = best or (audio, words)
+    return best
 
 
 def stt(audio: bytes, filename: str = "call.wav") -> dict:

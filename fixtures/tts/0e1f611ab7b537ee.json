@@ -1,0 +1,72 @@
+{
+  "text": "Right away. Exit door on your right: you're outside on the A side.",
+  "voice": "briefing",
+  "audio_url": "/fixtures/tts/0e1f611ab7b537ee.mp3",
+  "words": [
+    {
+      "word": "Right",
+      "start": 0.023,
+      "end": 0.174
+    },
+    {
+      "word": "away.",
+      "start": 0.197,
+      "end": 0.546
+    },
+    {
+      "word": "Exit",
+      "start": 0.813,
+      "end": 1.126
+    },
+    {
+      "word": "door",
+      "start": 1.149,
+      "end": 1.347
+    },
+    {
+      "word": "on",
+      "start": 1.382,
+      "end": 1.428
+    },
+    {
+      "word": "your",
+      "start": 1.463,
+      "end": 1.556
+    },
+    {
+      "word": "right:",
+      "start": 1.59,
+      "end": 1.869
+    },
+    {
+      "word": "you're",
+      "start": 2.136,
+      "end": 2.287
+    },
+    {
+      "word": "outside",
+      "start": 2.31,
+      "end": 2.728
+    },
+    {
+      "word": "on",
+      "start": 2.751,
+      "end": 2.81
+    },
+    {
+      "word": "the",
+      "start": 2.833,
+      "end": 2.902
+    },
+    {
+      "word": "A",
+      "start": 2.972,
+      "end": 3.03
+    },
+    {
+      "word": "side.",
+      "start": 3.123,
+      "end": 3.576
+    }
+  ]
+}

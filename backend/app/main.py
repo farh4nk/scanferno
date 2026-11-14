@@ -17,7 +17,7 @@ from fastapi.staticfiles import StaticFiles
 
 load_dotenv(Path(__file__).resolve().parents[2] / ".env")
 
-from app.routers import buildings, calls, dispatch, live, search  # noqa: E402
+from app.routers import buildings, calls, dispatch, live, search, speech  # noqa: E402
 from data import cache  # noqa: E402
 from dispatch import elevenlabs, facts  # noqa: E402
 
@@ -26,7 +26,7 @@ app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], all
 # Everything cached (images, audio, JSON) is served as-is: /fixtures/costar-239873/vexcel/nadir.jpg
 app.mount("/fixtures", StaticFiles(directory=cache.FIXTURES), name="fixtures")
 
-for r in (buildings, calls, dispatch, live, search):
+for r in (buildings, calls, dispatch, live, search, speech):
     app.include_router(r.router)
 
 

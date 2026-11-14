@@ -1,0 +1,87 @@
+{
+  "text": "Follow the wall 4 meters, then go through the door on your left into Hallway B.",
+  "voice": "briefing",
+  "audio_url": "/fixtures/tts/65a9b907fa214938.mp3",
+  "words": [
+    {
+      "word": "Follow",
+      "start": 0.023,
+      "end": 0.255
+    },
+    {
+      "word": "the",
+      "start": 0.313,
+      "end": 0.383
+    },
+    {
+      "word": "wall",
+      "start": 0.406,
+      "end": 0.685
+    },
+    {
+      "word": "4",
+      "start": 0.894,
+      "end": 1.126
+    },
+    {
+      "word": "meters,",
+      "start": 1.196,
+      "end": 1.765
+    },
+    {
+      "word": "then",
+      "start": 1.997,
+      "end": 2.148
+    },
+    {
+      "word": "go",
+      "start": 2.206,
+      "end": 2.31
+    },
+    {
+      "word": "through",
+      "start": 2.368,
+      "end": 2.543
+    },
+    {
+      "word": "the",
+      "start": 2.566,
+      "end": 2.635
+    },
+    {
+      "word": "door",
+      "start": 2.67,
+      "end": 2.856
+    },
+    {
+      "word": "on",
+      "start": 2.926,
+      "end": 3.007
+    },
+    {
+      "word": "your",
+      "start": 3.042,
+      "end": 3.146
+    },
+    {
+      "word": "left",
+      "start": 3.181,
+      "end": 3.448
+    },
+    {
+      "word": "into",
+      "start": 3.541,
+      "end": 3.738
+    },
+    {
+      "word": "Hallway",
+      "start": 3.82,
+      "end": 4.273
+    },
+    {
+      "word": "B.",
+      "start": 4.354,
+      "end": 4.83
+    }
+  ]
+}
