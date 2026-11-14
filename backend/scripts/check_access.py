@@ -49,11 +49,24 @@ def gemini_check():
     return f"model={llm.last_model} (primary {llm.model()}) replied {reply.strip()[:40]!r}"
 
 
+def elevenlabs_check():
+    from dispatch import elevenlabs, pipeline
+    pcm = pipeline._say_pcm("Fire on the third floor.", "Samantha")  # local audio, no TTS credits
+    text = elevenlabs.stt(pipeline.wav_bytes(pcm))["text"]
+    try:
+        elevenlabs.voice_id("dispatcher")
+        tts = "TTS voices ok"
+    except RuntimeError as e:
+        tts = f"TTS voices missing ({e}); calls fall back to macOS say"
+    return f"STT {elevenlabs.stt_model} heard {text.strip()!r}; {tts}"
+
+
 if __name__ == "__main__":
     results = [
         check("CoStar kit", [], costar_check),
         check("Matterport", ["MATTERPORT_API_KEY", "MATTERPORT_API_TOKEN"], matterport_check),
         check("Vexcel", ["VEXCEL_API_KEY"], vexcel_check),
         check("Gemini", ["GEMINI_API_KEY"], gemini_check),
+        check("ElevenLabs", ["ELEVENLABS_API_KEY"], elevenlabs_check),
     ]
     sys.exit(0 if all(results) else 1)
