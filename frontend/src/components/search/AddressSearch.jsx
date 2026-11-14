@@ -13,10 +13,12 @@ function Highlight({ text, query }) {
 
 function Item({ r, query, active, onPick, onHover }) {
   const meta = [r.property_type, r.stories && `${r.stories} stories`, r.tenants != null && `${r.tenants} tenants`,
+    r.models_count > 1 && `${r.models_count} 3D scans`, r.match === 'extra' && 'matched a scan, tenant or room',
+    r.lat == null && 'no location',
     r.distance_m != null && (r.distance_m < 1000 ? `${r.distance_m} m away` : `${(r.distance_m / 1000).toFixed(1)} km away`)].filter(Boolean)
   return (
     <li className={`sr-item ${active ? 'on' : ''}`} onMouseDown={(e) => { e.preventDefault(); onPick(r) }} onMouseEnter={onHover}>
-      <span className={`sr-status ${r.status}`}>{r.status === 'ready' ? 'briefing' : 'facts only'}</span>
+      <span className={`sr-status ${r.status}`}>{r.status === 'ready' ? 'briefing' : '3D scan'}</span>
       <span className="sr-text">
         <b><Highlight text={r.name} query={query} /></b>
         {r.address && r.address !== r.name && <span className="muted"> · <Highlight text={r.address} query={query} /></span>}

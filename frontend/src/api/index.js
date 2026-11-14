@@ -1,5 +1,5 @@
 // One function per backend endpoint, grouped like backend/app/routers/. Add new endpoints here, not in components.
-import { del, get, post, postForm, sseUrl } from './client'
+import { API, del, get, post, postForm, sseUrl } from './client'
 
 export { API, asset } from './client'
 
@@ -36,3 +36,6 @@ export const endLiveSession = (sid) => del(`/live/sessions/${sid}`)
 export const search = (q, { limit = 8, geocode = false } = {}) => get('/search', { q, limit, geocode: geocode || null })
 export const searchNear = (lat, lon, limit = 8) => get('/search', { lat, lon, limit })
 export const getProperty = (key) => get(`/properties/${enc(key)}`)
+export const getPropertyVexcel = (key) => get(`/properties/${enc(key)}/vexcel`)
+export const propertyAerialUrl = (key, view = 'nadir') => `${API}/properties/${enc(key)}/aerial?view=${view}`
+export const searchStats = () => get('/search/stats')
