@@ -61,6 +61,7 @@ def test_prepare_catalog_building_with_mocked_matterport(monkeypatch, tmp_path):
     cache.save_json(rows, *registry.PATH)
     registry.clear()
     layers.clear()
+    directory.clear()
 
     r = client.post(f"/ondemand/{CATALOG_ID}", params={"outside": False}).json()
     assert r["status"] == "ready" and r["building_id"] == CATALOG_ID and r["cached"] is False
@@ -73,6 +74,11 @@ def test_prepare_catalog_building_with_mocked_matterport(monkeypatch, tmp_path):
 
     again = client.post(f"/ondemand/{CATALOG_ID}", params={"outside": False}).json()
     assert again["cached"] is True
+
+    # search list flips to ready so picking it opens the briefing (not the property modal)
+    hit = client.get("/search", params={"q": "skylux", "limit": 5}).json()["results"][0]
+    assert hit["id"] == CATALOG_ID and hit["status"] == "ready" and hit["building_id"] == CATALOG_ID
+    assert client.get(f"/properties/{CATALOG_ID}").json()["status"] == "ready"
 
     # listed alongside heroes
     ids = {b["id"] for b in client.get("/buildings").json()}

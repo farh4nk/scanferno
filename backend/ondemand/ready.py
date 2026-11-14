@@ -73,6 +73,7 @@ def prepare(key: str, refresh: bool = False, fetch_outside: bool = True) -> dict
 
     registry.upsert(row)
     layers.clear()
+    directory.clear()  # search list flips to ready / building_id
     try:
         layers.floorplan(bid)
     except Exception as ex:
