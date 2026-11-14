@@ -1,0 +1,13 @@
+{
+  "costar_property_id": "SAMPLE",
+  "property_type": "Office",
+  "year_built": 1978,
+  "stories": 1,
+  "rba_sqft": 12000,
+  "vacancy_pct": 15,
+  "estimated_occupancy": 40,
+  "tenants": [
+    {"name": "Acme Print Shop", "type": "printing", "floor": 1, "suite": "302", "notes": "solvents and inks on site"},
+    {"name": "Bayou Dental", "type": "medical office", "floor": 1, "suite": "301"}
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "address": "1234 Westheimer Rd, Houston TX",
+  "floor": 1,
+  "side": "C",
+  "conditions": ["black smoke"],
+  "trapped": [{"description": "coworker", "near": "storage room", "floor": 1, "room_id": "r-302"}],
+  "hazards": ["possible gas leak"],
+  "caller_location": "outside in the parking lot",
+  "confidence": {"floor": 0.95, "side": 0.8, "trapped": 0.7},
+  "transcript": [
+    {"t": 0.0, "speaker": "dispatcher", "text": "911, what's the address of your emergency?"},
+    {"t": 2.1, "speaker": "caller", "text": "1234 Westheimer, near Montrose, there's black smoke coming out the back."},
+    {"t": 7.4, "speaker": "caller", "text": "My coworker is still in there, in the storage room. It smells like gas."}
+  ]
+}

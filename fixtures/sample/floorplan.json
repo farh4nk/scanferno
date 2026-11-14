@@ -1,0 +1,27 @@
+{
+  "building_id": "sample",
+  "units": "meters",
+  "floors": [{"id": "f-1", "label": "Floor 1", "sequence": 0}],
+  "rooms": [
+    {"id": "r-lobby", "floor_id": "f-1", "label": "Lobby", "type": "lobby",
+     "polygon": [[0, 0], [8, 0], [8, 6], [0, 6]], "centroid": [4, 3]},
+    {"id": "r-hall", "floor_id": "f-1", "label": "Hallway", "type": "hallway",
+     "polygon": [[8, 2], [24, 2], [24, 4], [8, 4]], "centroid": [16, 3]},
+    {"id": "r-301", "floor_id": "f-1", "label": "Office 301", "type": "office",
+     "polygon": [[10, 4], [16, 4], [16, 10], [10, 10]], "centroid": [13, 7]},
+    {"id": "r-302", "floor_id": "f-1", "label": "Storage 302", "type": "storage",
+     "polygon": [[18, -4], [24, -4], [24, 2], [18, 2]], "centroid": [21, -1]},
+    {"id": "r-kitchen", "floor_id": "f-1", "label": "Break room", "type": "kitchen",
+     "polygon": [[18, 4], [24, 4], [24, 10], [18, 10]], "centroid": [21, 7]}
+  ],
+  "doors": [
+    {"id": "d-front", "floor_id": "f-1", "rooms": ["r-lobby", "outside"], "position": [0, 3], "width_m": 1.8, "type": "doorway", "is_exit": true},
+    {"id": "d-lobby-hall", "floor_id": "f-1", "rooms": ["r-lobby", "r-hall"], "position": [8, 3], "width_m": 1.2, "type": "opening", "is_exit": false},
+    {"id": "d-301", "floor_id": "f-1", "rooms": ["r-hall", "r-301"], "position": [13, 4], "width_m": 0.9, "type": "doorway", "is_exit": false},
+    {"id": "d-302", "floor_id": "f-1", "rooms": ["r-hall", "r-302"], "position": [21, 2], "width_m": 0.9, "type": "doorway", "is_exit": false},
+    {"id": "d-kitchen", "floor_id": "f-1", "rooms": ["r-hall", "r-kitchen"], "position": [21, 4], "width_m": 0.9, "type": "doorway", "is_exit": false},
+    {"id": "d-rear", "floor_id": "f-1", "rooms": ["r-hall", "outside"], "position": [24, 3], "width_m": 0.9, "type": "doorway", "is_exit": true}
+  ],
+  "stairs": [],
+  "maze_score": {"r-lobby": 0.1, "r-hall": 0.3, "r-301": 0.5, "r-302": 0.8, "r-kitchen": 0.6}
+}

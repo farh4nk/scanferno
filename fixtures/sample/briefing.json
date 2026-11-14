@@ -1,0 +1,34 @@
+{
+  "building_id": "sample",
+  "generated_at": "2026-11-14T14:00:00Z",
+  "summary": "1-story 1978 office, ~40 occupants. Fire reported Charlie side with black smoke; one trapped occupant reported in Storage 302. Print shop solvents and a possible gas leak.",
+  "hazards": [
+    {"kind": "chemicals", "severity": "high", "text": "Print shop tenant: solvents and inks in Suite 302.", "source": "costar", "room_id": "r-302"},
+    {"kind": "gas", "severity": "high", "text": "Caller reports gas smell.", "source": "dispatch"},
+    {"kind": "solar", "severity": "med", "text": "Solar panels on roof, side C half. May stay energized; limits vertical ventilation.", "source": "vexcel", "side": "C"},
+    {"kind": "dead_end", "severity": "med", "text": "Storage 302 has one door and the highest maze score.", "source": "matterport", "room_id": "r-302"}
+  ],
+  "entry_points": [
+    {"side": "A", "door_id": "d-front", "text": "Main entrance, 1.8 m double door into lobby."},
+    {"side": "C", "door_id": "d-rear", "text": "Rear door at end of hallway, 4 m from Storage 302."}
+  ],
+  "ladder_positions": [
+    {"side": "A", "text": "Roof 5 m; ground ladder from front parking lot."}
+  ],
+  "search_plan": [
+    {"room_id": "r-302", "reason": "Reported trapped occupant; closest to fire."},
+    {"room_id": "r-kitchen", "reason": "Adjacent to fire area."},
+    {"room_id": "r-301", "reason": "Occupied tenant suite."}
+  ],
+  "exit_routes": [
+    {"from_room_id": "r-302", "path": ["r-302", "r-hall"], "door_ids": ["d-302"], "exit_door_id": "d-rear", "distance_m": 4.2},
+    {"from_room_id": "r-301", "path": ["r-301", "r-hall", "r-lobby"], "door_ids": ["d-301", "d-lobby-hall"], "exit_door_id": "d-front", "distance_m": 14.0}
+  ],
+  "trapped": [
+    {"room_id": "r-302", "description": "coworker", "confidence": 0.7}
+  ],
+  "images": {
+    "nadir": "fixtures/sample/vexcel/nadir.jpg",
+    "oblique-north": "fixtures/sample/vexcel/oblique-north.jpg"
+  }
+}

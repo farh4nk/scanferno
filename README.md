@@ -45,6 +45,16 @@ pip install -r requirements.txt
 uvicorn app.main:app --reload  # http://localhost:8000/health
 ```
 
+## Data workflow
+
+```bash
+cd backend
+python -m scripts.check_access     # which of Matterport / Vexcel / CoStar work
+python -m scripts.fetch_fixtures   # cache raw data for buildings in fixtures/buildings.json
+```
+
+Data shapes shared between roles: [docs/CONTRACTS.md](docs/CONTRACTS.md). Sample data to build against: `fixtures/sample/`.
+
 ## Scope
 
 Must have: 2-3 hero buildings, briefing from all three layers, dispatch call to facts, nav graph + maze score heatmap, mayday directions.

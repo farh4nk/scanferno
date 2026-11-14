@@ -1,0 +1,12 @@
+[
+  {
+    "id": "hero-1",
+    "name": "TODO: building name",
+    "address": "TODO: street address",
+    "lat": null,
+    "lon": null,
+    "matterport_model_id": null,
+    "costar_property_id": null,
+    "notes": "Pick buildings with a good multi-room Matterport scan first; that's the scarce data."
+  }
+]
