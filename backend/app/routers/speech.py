@@ -15,6 +15,12 @@ router = APIRouter(tags=["speech"])
 VOICES = {"briefing", "narrator", "firefighter", "dispatcher", "caller", "caller2"}
 
 
+def cache_key(text: str, voice: str) -> str:
+    """Keyed on the role, any pinned voice id and the profile version, so it works offline (no voice lookup)."""
+    pinned = os.getenv(f"ELEVENLABS_VOICE_{voice.upper()}", "auto")
+    return hashlib.sha1(f"{voice}|{pinned}|{elevenlabs.PROFILE_VERSION}|{text}".encode()).hexdigest()[:16]
+
+
 @router.post("/speech")
 def speech(text: str = Body(..., embed=True), voice: str = Body("briefing", embed=True)):
     """{text, voice} -> {audio_url, words: [{word, start, end}], cached}. Voices are the call roles."""
@@ -23,9 +29,7 @@ def speech(text: str = Body(..., embed=True), voice: str = Body("briefing", embe
         raise HTTPException(400, "empty text")
     if voice not in VOICES:
         raise HTTPException(400, f"voice must be one of {sorted(VOICES)}")
-    # keyed on the role, any pinned voice id and the profile version, so it works offline (no voice lookup)
-    pinned = os.getenv(f"ELEVENLABS_VOICE_{voice.upper()}", "auto")
-    key = hashlib.sha1(f"{voice}|{pinned}|{elevenlabs.PROFILE_VERSION}|{text}".encode()).hexdigest()[:16]
+    key = cache_key(text, voice)
     meta = cache.load_json("tts", f"{key}.json")
     if meta:
         return {**meta, "cached": True}

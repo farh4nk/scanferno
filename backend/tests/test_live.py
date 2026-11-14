@@ -96,9 +96,9 @@ def test_speech_validates_input_and_serves_cache():
     c = TestClient(app)
     assert c.post("/speech", json={"text": "  ", "voice": "narrator"}).status_code == 400
     assert c.post("/speech", json={"text": "hi", "voice": "robot"}).status_code == 400
+    from app.routers.speech import cache_key
     meta = {"text": "cached line", "voice": "narrator", "audio_url": "/fixtures/tts/x.mp3", "words": []}
-    import hashlib
-    key = hashlib.sha1(b"narrator|cached line").hexdigest()[:16]
+    key = cache_key("cached line", "narrator")
     p = cache.save_json(meta, "tts", f"{key}.json")
     try:
         r = c.post("/speech", json={"text": "cached   line", "voice": "narrator"}).json()
