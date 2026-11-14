@@ -30,6 +30,10 @@ Sample: [fixtures/sample/dispatch.json](../fixtures/sample/dispatch.json)
 
 Updated live as the transcript grows. `side` uses fireground sides: A = street front, then B, C (rear), D clockwise. `confidence` is 0..1 per field. `room_id` is set once a phrase is matched to the floor plan.
 
+Real records (from `dispatch/extract.py`) also carry: `cross_street`, `fire_location`, per-person `trapped[].location` / `confidence` / optional `room_match` (why a room was picked), and `changed` (fields that moved this update: highlight these in the UI).
+
+**Real calls to build the UI against:** `GET /calls/vibe-1-clean` returns the script, `audio_url`, `utterances` and `timeline` ([{t, utterance_index, record}]). `GET /calls/{id}/replay` streams the same as server-sent events (`utterance`, `record`, `done`) in call time; start the audio when the stream opens. Files: `fixtures/calls/<id>/`.
+
 ## 3. costar.json (built from the CoStar kit by `data/costar.py`)
 
 Sample: [fixtures/sample/costar.json](../fixtures/sample/costar.json). Built per building from the kit: property facts (year built, stories, construction, sprinklers), floors, and current tenants with industry, floor, suite and square feet. Enum names come straight from the kit (`FirstFloor`, `Masonry`, `HealthCareAndSocialAssistance`). `vacant: true` is a hazard flag in itself.

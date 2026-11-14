@@ -1,0 +1,15 @@
+{
+  "building_id": "costar-239873",
+  "title": "Vibe Hobby: messy call, caller corrects the floor, gas smell",
+  "lines": [
+    {"role": "dispatcher", "text": "Nine one one, what's the address of your emergency?"},
+    {"role": "caller", "voice": "caller2", "emotion": "panicked", "text": "It's the office building on Gulf Freeway, by the Almeda exit, I don't know the number, there's smoke everywhere!"},
+    {"role": "dispatcher", "text": "Sir, is it eighty eight sixty six Gulf Freeway?"},
+    {"role": "caller", "voice": "caller2", "emotion": "panicked", "text": "Yes, yes, that one. The fire's on the second floor. No, wait, sorry, it's the third. It's the third floor."},
+    {"role": "dispatcher", "text": "Is everyone out of the building?"},
+    {"role": "caller", "voice": "caller2", "emotion": "nervous", "text": "I think two people are still up there. Actually, one just came out. So one, my manager, he was in the hallway by the copy machine."},
+    {"role": "dispatcher", "text": "Anything else we should know?"},
+    {"role": "caller", "voice": "caller2", "emotion": "panicked", "text": "It smells like gas on the stairs. And the smoke is black, really black, coming from the left side."},
+    {"role": "dispatcher", "text": "Stay away from the building. Help is on the way.", "pause": 1.0}
+  ]
+}

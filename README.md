@@ -55,6 +55,8 @@ python -m scripts.check_access                 # CoStar kit / Matterport / Vexce
 python -m scripts.pick_heroes                  # rank kit buildings as hero candidates
 python -m scripts.pick_heroes --check-matterport 15 --write 3   # verify scans, write top 3 to buildings.json
 python -m scripts.fetch_fixtures               # cache Matterport, Vexcel and CoStar data per building
+python -m scripts.process_calls                # scripted calls -> audio -> transcript -> live dispatch records
+uvicorn app.main:app --reload                  # API: /buildings, /calls, /calls/{id}/replay, /fixtures/...
 ```
 
 Data shapes shared between roles: [docs/CONTRACTS.md](docs/CONTRACTS.md). Sample data to build against: `fixtures/sample/`.
@@ -64,7 +66,7 @@ Data shapes shared between roles: [docs/CONTRACTS.md](docs/CONTRACTS.md). Sample
 Must have: 2-3 hero buildings, briefing from all three layers, dispatch call to facts, nav graph + maze score heatmap, mayday directions.
 Nice to have: evacuation sim, live mic, multi-caller merge, auto indoor/aerial alignment.
 
-See [docs/PLAN.md](docs/PLAN.md).
+See [docs/PLAN.md](docs/PLAN.md). Current progress and next steps: [docs/STATUS.md](docs/STATUS.md). Coding agents: start at [AGENTS.md](AGENTS.md).
 
 ## Ground rules
 

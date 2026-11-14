@@ -1,0 +1,96 @@
+"""ElevenLabs speech-to-text (dispatch calls) and text-to-speech (scripted calls, mayday directions).
+
+Key needs Speech to Text and Text to Speech. Voices per role come from
+ELEVENLABS_VOICE_<ROLE> in .env (copy ids from the ElevenLabs voice library), or, if the
+key also has Voices: Read, are picked automatically from your account's voices.
+"""
+import os
+
+import httpx
+
+BASE = "https://api.elevenlabs.io/v1"
+STT_MODELS = ["scribe_v2", "scribe_v1"]
+TTS_MODELS = ["eleven_v3", "eleven_multilingual_v2"]  # v3 understands [panicked]-style tags
+# Preferred voice names per role when auto-picking from the account.
+ROLES = {
+    "dispatcher": ["George", "Brian", "Daniel", "Bill"],
+    "caller": ["Sarah", "Jessica", "Laura", "Lily"],
+    "caller2": ["Adam", "Charlie", "Liam", "Will"],
+    "narrator": ["Rachel", "Alice", "Matilda", "River"],
+}
+SAMPLE_RATE = 16000  # pcm_16000 output: 16-bit mono
+_voices: dict[str, str] = {}
+
+
+def voice_id(role: str) -> str:
+    env = os.getenv(f"ELEVENLABS_VOICE_{role.upper()}")
+    if env:
+        return env
+    if not _voices:
+        r = httpx.get(f"{BASE}/voices", headers=_headers(), timeout=30)
+        if r.status_code == 401:
+            raise RuntimeError(
+                f"No voice for '{role}': set ELEVENLABS_VOICE_{role.upper()} in .env, "
+                "or give the ElevenLabs key 'Voices: Read'."
+            )
+        r.raise_for_status()
+        voices = r.json()["voices"]
+        by_name = {v["name"].split()[0].split("-")[0]: v["voice_id"] for v in voices}
+        for rl, prefs in ROLES.items():
+            _voices[rl] = next((by_name[p] for p in prefs if p in by_name), voices[0]["voice_id"])
+    return _voices[role]
+
+tts_model: str | None = None
+stt_model: str | None = None
+
+
+def _headers() -> dict:
+    return {"xi-api-key": os.environ["ELEVENLABS_API_KEY"]}
+
+
+def _model_rejected(r: httpx.Response) -> bool:
+    return r.status_code in (400, 404, 422) and "model" in r.text.lower()
+
+
+def tts(text: str, voice: str = "narrator", emotion: str | None = None) -> bytes:
+    """Raw 16 kHz 16-bit mono PCM. `emotion` becomes a v3 audio tag, dropped on older models."""
+    global tts_model
+    vid = voice_id(voice) if voice in ROLES else voice
+    last = None
+    for m in [tts_model] if tts_model else TTS_MODELS:
+        body = f"[{emotion}] {text}" if emotion and m == "eleven_v3" else text
+        r = httpx.post(
+            f"{BASE}/text-to-speech/{vid}",
+            params={"output_format": f"pcm_{SAMPLE_RATE}"},
+            json={"text": body, "model_id": m},
+            headers=_headers(),
+            timeout=60,
+        )
+        if _model_rejected(r):
+            last = r
+            continue
+        r.raise_for_status()
+        tts_model = m
+        return r.content
+    raise RuntimeError(f"ElevenLabs TTS rejected all models: {last.status_code} {last.text[:300]}")
+
+
+def stt(audio: bytes, filename: str = "call.wav") -> dict:
+    """Transcript with word timings and speaker ids: {text, words: [{text, start, end, type, speaker_id}]}."""
+    global stt_model
+    last = None
+    for m in [stt_model] if stt_model else STT_MODELS:
+        r = httpx.post(
+            f"{BASE}/speech-to-text",
+            files={"file": (filename, audio)},
+            data={"model_id": m, "diarize": "true", "timestamps_granularity": "word", "tag_audio_events": "false"},
+            headers=_headers(),
+            timeout=180,
+        )
+        if _model_rejected(r):
+            last = r
+            continue
+        r.raise_for_status()
+        stt_model = m
+        return r.json()
+    raise RuntimeError(f"ElevenLabs STT rejected all models: {last.status_code} {last.text[:300]}")
