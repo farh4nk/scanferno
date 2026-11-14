@@ -89,10 +89,13 @@ Framework-free TypeScript toolkit that draws our data on the Matterport model, p
 
 ## Visuals and pitch (branch `ui`)
 
-**Redesign in progress (branch `ui-redesign-prototype`, not yet in `frontend/`)**
-- New direction chosen: "Guide Sign" world, fire palette (charcoal, fire orange, ember red only for life risk). Product brief in `PRODUCT.md`.
-- Clickable prototype: `.impeccable/mocks/prototype.html` (open in a browser, no backend needed; real Vibe Hobby data baked in). Home is the briefing itself: 5 key-fact signs on top, floor plan with the plan of attack drawn on it, 4 steps Arrive / Enter / Search / Get out, spoken briefing (Play) or text (Read), live call reshapes the plan. Tool pages (Call, Facts, Rescue, Entry, Hazards, Hose, Exterior, Aerial, Plan, Mayday, Evac, Ask) behind a small toolbar.
-- Next: port the prototype into `frontend/` (React) wired to the real API; convert detail pages to diagrams.
+**Redesign (branch `ui-guide-sign`): the real `frontend/` now uses the new UI**
+- "Guide Sign" world, fire palette (charcoal, fire orange, ember red only for life risk). Product brief in `PRODUCT.md`; clickable mock in `.impeccable/mocks/prototype.html`.
+- Home (`src/brief/Home.jsx`) is the briefing: 5 key-fact signs with pictograms, floor plan with the plan of attack drawn on it, 4 steps Arrive / Enter / Search / Get out with diagrams (building section, hose gauge, distance scale, search path, exit bars), Play (browser TTS + caption) or Read. Live/replayed calls reshape it as facts arrive.
+- One page per job behind `#hash` routes (`src/pages/Pages.jsx`): Call (replay + live mic), Dispatch facts, Rescue, Entry, Hazards, Hose, Exterior, Aerial, Floor plan (2D + 3D), Mayday (steps + speak), Evacuation, Ask, All tools.
+- Shared pieces: `src/brief/model.js` (derives the briefing facts from floorplan + briefing + record, no building-specific code), `src/brief/PlanSvg.jsx` (one plan renderer), `src/brief/Diagrams.jsx`, `src/ui/Icon.jsx`.
+- Removed the old panels (Briefing, Dispatch, Transcript, Mayday, Evac, Ask, Aerial, FloorPlan, SourceTags); kept AddressSearch, PropertyCard, LivePanel, Viewer3D.
+- Next: wire the rescue planner (`agent/rescue.py`) into the Search step once it has an endpoint; check the 3D tab with a Matterport SDK key.
 
 **Done**
 - React + Vite app in `frontend/` (`npm install && npm run dev`, http://localhost:5173; backend URL via `VITE_API_URL`, default http://localhost:8000).
@@ -132,3 +135,4 @@ Framework-free TypeScript toolkit that draws our data on the Matterport model, p
 - 2026-11-14: Search filters (status, city, kind, CoStar) with facet counts, paging, infinite-scroll dropdown; city typos folded (52 tests).
 - 2026-11-14: Rescue plan heat field + per-person in/out routes (`geometry/heat.py`, `agent/rescue.py`); cached Vexcel for several searched properties.
 - 2026-11-14: UI redesign prototype (Guide Sign, briefing-first home with diagrams, spoken/read briefing) in `.impeccable/mocks/prototype.html`; `PRODUCT.md` product brief (branch `ui-redesign-prototype`).
+- 2026-11-14: Frontend redesign landed (branch `ui-guide-sign`): briefing-first home with key-fact signs, plan of attack and diagrams; one page per tool; fire palette.
