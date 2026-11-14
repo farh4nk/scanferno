@@ -46,6 +46,27 @@ query { models(query: "demo:true", include: demo) { results { id name } } }
 """
 
 
+MODELS_PAGE_QUERY = """
+query listModels($offset: String) {
+  models(pageSize: 1000, offset: $offset, include: demo) {
+    totalResults
+    nextOffset
+    results {
+      id
+      name
+      created
+      demo
+      address { address streetAddressLines locality administrativeArea postalCode countryCode }
+      geolocation { lat long }
+      publication { address presentedBy }
+      rooms { count labels }
+      floors { count }
+    }
+  }
+}
+"""
+
+
 auth_mode: str | None = None
 
 
@@ -90,6 +111,19 @@ def gql(query: str, variables: dict | None = None) -> dict:
 
 def demo_models() -> list[dict]:
     return gql(DEMO_MODELS_QUERY)["models"]["results"]
+
+
+def list_models(progress=None) -> list[dict]:
+    """Every model the API key can see (address, geolocation, room/floor counts), 1000 per page."""
+    out, offset = [], None
+    while True:
+        page = gql(MODELS_PAGE_QUERY, {"offset": offset})["models"]
+        out.extend(page["results"])
+        if progress:
+            progress(len(out), page["totalResults"])
+        offset = page.get("nextOffset")
+        if not offset or not page["results"]:
+            return out
 
 
 def vector_data(model_id: str) -> dict:

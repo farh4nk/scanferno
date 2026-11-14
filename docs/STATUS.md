@@ -26,6 +26,32 @@ Living handoff doc. Update your role's section and add a changelog line in the s
 - Gemini main models overloaded; extraction runs on flash-lite, 3 to 12 s per update. Replay of cached calls hides this.
 - Messy call: the "hallway" match picks one of two scanned hallways.
 
+## Rescue plan (branch `rescue-plan`)
+
+**Done**
+- Fire heat field (`geometry/heat.py`) and per-person rescue plan (`agent/rescue.py`): place trapped people from the call, risk-weighted way in / way out (doors + exterior windows as breach options).
+
+**Next**
+1. Wire into briefing / live API and draw on floor plan + 3D.
+2. Tests.
+
+## Search (branch `search`)
+
+**Done**
+- Search covers every Matterport model our key can see: 14,946 models grouped into ~8,500 buildings (~5,700 with a location, mostly Houston and LA). `scripts/sync_catalog.py` pages the Model API (~20 s), groups scans by street address + ZIP (merges spelling variants like "1027 Wiltshire Blvd", folds amenity scans into the building within 60 m), names complexes from unit titles ("Skylux on Wilshire"), joins CoStar, writes `fixtures/catalog/*.json.gz` (offline).
+- Index: in-memory SQLite FTS5 (prefix + typo-expanded tokens) picks candidates, `score()` ranks; also matches unit/scan names, tenants and room labels (`match: "extra"`). 2-100 ms per query.
+- `GET /properties/{id}` accepts building id, CoStar id or any Matterport model id; returns all scans, CoStar facts, cached Vexcel. `GET /properties/{id}/vexcel` and `/aerial?view=` fetch Vexcel on first open (~1 s) and cache under `fixtures/catalog/vexcel/`. `GET /search/stats`.
+- Property card shows aerial, roof/footprint, CoStar facts and tenants, and a list of Matterport scans.
+- Filtered search: `/search` takes `status`, `city`, `kind` (commercial/residential/other, from CoStar type or scan names), `costar`, `offset`; returns `total` and `facets` (counts per filter value). Scored matches and facets are cached per query, so paging and filter toggles take ~10-40 ms. Header dropdown has live filter chips with counts and infinite scroll.
+
+**Next**
+1. Unzip the CoStar kit (password-protected zip) and re-run `python -m scripts.sync_catalog --offline`: links every scanned property in `commercial-properties.csv` to CoStar facts/tenants (now only the 100 cached candidates are linked).
+2. One-click onboarding: turn a scanned building into a "ready" briefing (vector data + Vexcel + CoStar fetch, like `fetch_fixtures`).
+3. 3D viewer for any scanned model (viewer3d takes a model id), not just heroes.
+
+**Open issues**
+- ~2,800 scans have no address or location (amenity scans like "Pool"); searchable by name only.
+
 ## Geometry (branch `geometry-agent`)
 
 **Done**
@@ -102,4 +128,7 @@ Framework-free TypeScript toolkit that draws our data on the Matterport model, p
 - 2026-11-14: Live call transcription: `/live/sessions` (mic via ElevenLabs, browser speech, typed lines, uploads), save live calls as replayable fixtures, frontend Live mode (47 tests).
 - 2026-11-14: 3D walk mode: click a room to fly into it; exit route follows the camera, visible through walls, with a turn arrow (branch `walk-route`).
 - 2026-11-14: All 5 calls re-voiced with ElevenLabs; speaker roles follow script order (fixes single-speaker mayday call); `--refresh` now re-transcribes too.
+- 2026-11-14: Search over all 14,946 Matterport models (~8,500 buildings) with SQLite FTS5 index, CoStar join, on-demand cached Vexcel roof + aerial per building; `/search/stats`, `/properties/{id}/vexcel`, `/properties/{id}/aerial` (51 tests).
+- 2026-11-14: Search filters (status, city, kind, CoStar) with facet counts, paging, infinite-scroll dropdown; city typos folded (52 tests).
+- 2026-11-14: Rescue plan heat field + per-person in/out routes (`geometry/heat.py`, `agent/rescue.py`); cached Vexcel for several searched properties.
 - 2026-11-14: UI redesign prototype (Guide Sign, briefing-first home with diagrams, spoken/read briefing) in `.impeccable/mocks/prototype.html`; `PRODUCT.md` product brief (branch `ui-redesign-prototype`).
