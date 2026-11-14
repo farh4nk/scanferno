@@ -1,44 +1,48 @@
-import json
-
 from agent import ask, briefing
-from data import cache
-from dispatch.extract import extract, rules_extract
+from data import cache, layers
+from dispatch.facts import extract, normalize, resolve_rooms, rules_extract
 from dispatch.locate import locate, side_from_text
-from data import layers
 
 
-def call(bid, cid):
-    return json.loads((cache.FIXTURES / bid / "calls" / f"{cid}.json").read_text())["transcript"]
+def script(cid):
+    s = cache.load_json("calls", cid, "script.json")
+    return s["lines"], s["building_id"]
 
 
 def test_clean_call():
-    d = extract(call("costar-239873", "call-1"), "costar-239873", use_llm=False)
-    assert d["floor"] == 1
-    assert d["side"] == "C"
-    assert "black smoke" in d["conditions"]
+    d = extract(*script("vibe-1-clean"), use_llm=False)
+    assert d["floor"] == 3 and d["side"] == "C"
+    assert "black smoke" in d["conditions"] and "oxygen cylinders" in d["hazards"]
     assert d["trapped"][0]["description"] == "coworker"
-    labels = {c["label"] for c in d["trapped"][0]["room_candidates"][:2]}
-    assert labels == {"Office 101", "Office 111"}
+    assert d["trapped"][0]["room_candidates"][0]["label"].startswith("Kitchen")
+    assert "fire_location" not in d["corrected"]
 
 
 def test_messy_call_corrections():
-    d = extract(call("costar-239873", "call-2-messy"), "costar-239873", use_llm=False)
-    assert d["floor"] == 1
-    assert d["side"] == "D"
-    assert {"floor", "side", "trapped"} <= set(d["corrected"])
-    assert "corner office" in d["trapped"][0]["near"]
-    assert "oxygen cylinders" in d["hazards"]
+    d = extract(*script("vibe-2-messy"), use_llm=False)
+    assert d["floor"] == 3 and "floor" in d["corrected"]
+    assert d["side"] == "B"
+    assert "copy machine" in d["trapped"][0]["near"]
+    assert "possible gas leak" in d["hazards"]
+
+
+def test_cached_gemini_record_maps_to_floorplan_ids():
+    bid = "costar-239873"
+    rec = cache.load_json("calls", "vibe-1-clean", "timeline.json")["timeline"][-1]["record"]
+    d = resolve_rooms(normalize(rec, bid), bid)
+    ids = {r["id"] for r in layers.floorplan(bid)["rooms"]}
+    assert d["trapped"][0]["room_id"] in ids and d["fire_room_ids"]
 
 
 def test_caller_location_does_not_move_fire_side():
-    t = [{"t": 0, "speaker": "caller", "text": "Smoke is coming out the back."},
-         {"t": 1, "speaker": "dispatcher", "text": "Where are you right now?"},
-         {"t": 2, "speaker": "caller", "text": "I'm in the front parking lot."}]
+    t = [{"role": "caller", "text": "Smoke is coming out the back."},
+         {"role": "dispatcher", "text": "Where are you right now?"},
+         {"role": "caller", "text": "I'm in the front parking lot."}]
     assert rules_extract(t)["side"] == "C"
 
 
 def test_needs_assist():
-    d = extract(call("costar-350372", "call-1"), "costar-350372", use_llm=False)
+    d = extract(*script("bellaire-1-patient"), use_llm=False)
     assert d["trapped"][0]["needs_assist"] is True
     assert d["trapped"][0]["room_id"]
 
@@ -58,7 +62,7 @@ def test_locate_open_area_and_labels():
 
 
 def test_briefing_contract():
-    d = extract(call("costar-239873", "call-1"), "costar-239873", use_llm=False)
+    d = extract(*script("vibe-1-clean"), use_llm=False)
     b = briefing.build("costar-239873", d, use_llm=False)
     for key in ("summary", "hazards", "entry_points", "ladder_positions", "search_plan", "exit_routes", "trapped", "images"):
         assert key in b

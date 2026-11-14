@@ -1,0 +1,34 @@
+{
+  "building_id": "costar-350372",
+  "title": "Medical office, patient in a wheelchair, oxygen on site",
+  "lines": [
+    {
+      "role": "dispatcher",
+      "text": "911, what is the address of your emergency?"
+    },
+    {
+      "role": "caller",
+      "text": "6550 Mapleridge Street, the Bellaire medical building. There's smoke in the hallway in the back, it's filling up fast!"
+    },
+    {
+      "role": "dispatcher",
+      "text": "Is everyone out?"
+    },
+    {
+      "role": "caller",
+      "text": "One of our patients is still inside, she uses a wheelchair. She was in an exam room near the storage closets."
+    },
+    {
+      "role": "dispatcher",
+      "text": "Any hazards we should know about?"
+    },
+    {
+      "role": "caller",
+      "text": "We keep oxygen tanks in the storage closet."
+    },
+    {
+      "role": "caller",
+      "text": "I'm in the parking lot out front."
+    }
+  ]
+}

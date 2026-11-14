@@ -20,17 +20,24 @@ def test_mayday_from_text():
 
 
 def test_dispatch_then_briefing():
-    calls = client.get(f"/buildings/{BID}/calls").json()
-    call = next(c for c in calls if c["id"] == "call-1")
-    d = client.post(f"/buildings/{BID}/dispatch", json={"transcript": call["transcript"], "use_llm": False}).json()
+    lines = client.get("/calls/vibe-1-clean").json()["script"]["lines"]
+    d = client.post(f"/buildings/{BID}/dispatch", json={"transcript": lines, "use_llm": False}).json()
     b = client.post(f"/buildings/{BID}/briefing", json={"dispatch": d, "use_llm": False}).json()
     assert b["trapped"] and b["search_plan"]
 
 
-def test_stream_replay():
-    with client.stream("GET", f"/buildings/{BID}/calls/call-1/stream", params={"speed": 1000, "use_llm": False}) as r:
+def test_briefing_accepts_raw_gemini_record():
+    rec = client.get("/calls/vibe-1-clean").json()["timeline"][-1]["record"]
+    b = client.post(f"/buildings/{BID}/briefing", json={"dispatch": rec, "use_llm": False}).json()
+    assert b["search_plan"]
+
+
+def test_live_stream():
+    with client.stream("GET", "/calls/vibe-1-clean/live", params={"speed": 1000, "use_llm": False}) as r:
         body = "".join(r.iter_text())
-    assert "event: transcript" in body and "event: briefing" in body and "event: done" in body
+    assert "event: utterance" in body and "event: record" in body and "event: briefing" in body and "event: done" in body
+    with client.stream("GET", "/calls/vibe-mayday/live", params={"speed": 1000, "use_llm": False}) as r:
+        assert "event: mayday" in "".join(r.iter_text())
 
 
 def test_unknown_building():
