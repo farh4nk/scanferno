@@ -47,3 +47,4 @@ Living handoff doc. Update your role's section and add a changelog line in the s
 - 2026-11-14: Dispatch pipeline, two scripted calls, call API with SSE replay.
 - 2026-11-14: AGENTS.md / CLAUDE.md / STATUS.md for teammates' agents.
 - 2026-11-14: Geometry (floorplan, routes, maze, mayday, evac, sides), briefing + Q&A agents, live call stream.
+- 2026-11-14: docs/FEATURES.md backend feature backlog (built, partial, ideas, priorities).
