@@ -178,8 +178,8 @@ export function AerialPage({ ctx, k }) {
 
 // ---------- Floor plan (2D / 3D) ----------
 const LAYERS = [['order', 'Search order'], ['routes', 'Exit routes'], ['doors', 'Doors'], ['heat', 'Maze heat']]
-export function PlanPage({ ctx, k, go }) {
-  const [mode, setMode] = useState('2d'); const [sel, setSel] = useState(null)
+export function PlanPage({ ctx, k, go, start3d = false }) {
+  const [mode, setMode] = useState(start3d || ctx.params.mode === '3d' ? '3d' : '2d'); const [sel, setSel] = useState(null)
   const [L, setL] = useState({ order: true, routes: true, doors: true, heat: false, windows: false })
   const order = L.order ? Object.fromEntries(k.plan_.map((s, i) => [s.room_id, i + 1])) : null
   const md = sel && ctx.plan.maze_detail?.[sel]
@@ -210,6 +210,9 @@ export function PlanPage({ ctx, k, go }) {
     </div>
   )
 }
+
+// 3D model: the same page, opened straight into the Matterport model
+export const ModelPage = (props) => <PlanPage {...props} start3d />
 
 // ---------- Mayday ----------
 export function MaydayPage({ ctx, k }) {
