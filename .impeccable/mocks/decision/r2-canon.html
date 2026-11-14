@@ -1,0 +1,89 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Scanferno · Standard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0d12;--side:#10131a;--p:#151922;--line:#232836;--t:#e7e9ee;--m:#8b93a5;--accent:#f97316;--red:#ef4444;--amber:#f59e0b;--green:#22c55e}
+*{box-sizing:border-box;margin:0}
+body{width:1440px;height:900px;overflow:hidden;background:var(--bg);color:var(--t);font:14px/1.5 Inter,sans-serif;font-variant-numeric:tabular-nums;display:grid;grid-template-columns:232px 1fr}
+aside{background:var(--side);border-right:1px solid var(--line);padding:18px 12px;display:flex;flex-direction:column;gap:2px}
+.mark{font-weight:700;font-size:15px;padding:4px 10px 18px}
+.search{height:34px;border-radius:8px;border:1px solid var(--line);display:flex;align-items:center;padding:0 10px;color:var(--m);margin-bottom:14px}
+aside a{display:flex;justify-content:space-between;padding:8px 10px;border-radius:8px;color:var(--m);font-weight:500}
+aside a.on{background:var(--p);color:var(--t)}aside a small{font-size:12px}
+.sp{flex:1}.inc{border:1px solid var(--line);border-radius:10px;padding:12px;font-size:13px}.inc b{display:block}.inc span{color:var(--red);font-size:12px}
+main{padding:28px 36px;display:flex;flex-direction:column;gap:20px;overflow:hidden}
+.top h1{font-size:22px;font-weight:600}.top p{color:var(--m);margin-top:2px}
+.grid{display:grid;grid-template-columns:1.2fr 1fr;gap:16px;flex:1}
+.card{background:var(--p);border:1px solid var(--line);border-radius:12px;padding:18px 20px}
+h3{font-size:13px;font-weight:600;margin-bottom:12px;display:flex;justify-content:space-between}h3 span{color:var(--m);font-weight:400}
+.callout{border-radius:10px;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);padding:12px 14px;margin-bottom:12px}.callout b{display:block;font-size:17px}.callout span{color:#fca5a5;font-size:12px}
+.row{display:grid;grid-template-columns:24px 1fr auto;gap:10px;padding:8px 0;border-top:1px solid var(--line);align-items:center}
+.row i{width:22px;height:22px;border-radius:6px;background:var(--line);font-style:normal;font-size:12px;font-weight:600;display:grid;place-items:center}
+.row small{color:var(--m);font-size:12px;display:block}.m{color:var(--m);font-size:12px}
+.row:has(.badge){grid-template-columns:52px 1fr auto}.badge{text-align:center;font-size:11px;font-weight:600;padding:2px 8px;border-radius:6px}.badge.h{background:rgba(239,68,68,.15);color:#fca5a5}.badge.md{background:rgba(245,158,11,.15);color:#fcd34d}
+svg.plan{width:100%;height:220px}
+.room{fill:#1a1f2b;stroke:#4b5366;stroke-width:4}.room.fire{fill:rgba(239,68,68,.3);stroke:var(--red)}.room.victim{fill:var(--red);stroke:var(--red)}
+.route{fill:none;stroke:var(--green);stroke-width:9;stroke-linecap:round}.exit{fill:var(--green)}
+.ord circle{fill:var(--t)}.ord text{font:600 18px Inter;fill:#111;text-anchor:middle}.lbl{display:none}
+.ask{height:44px;border-radius:10px;border:1px solid var(--line);background:var(--p);display:flex;align-items:center;padding:0 14px;color:var(--m)}
+</style></head><body>
+<aside><div class="mark">Scanferno</div><div class="search">Search address…</div>
+ <a>Call<small>live</small></a><a class="on">Briefing<small>4</small></a><a>Floor plan</a><a>Aerial</a><a>Mayday</a><a>Evacuation</a>
+ <div class="sp"></div><div class="inc"><b>Vibe Hobby</b>8866 Gulf Fwy<br><span>● Call live · 0:43</span></div></aside>
+<main>
+ <div class="top"><h1>Briefing</h1><p>5-story 1983 masonry office, sprinklered · fire Side C, floor 3</p></div>
+ <div class="grid">
+  <div class="card"><h3>Rescue <span>search order</span></h3>
+   <div class="callout"><span>Trapped · 75%</span><b>Coworker in Kitchen 106</b></div><svg class="plan" viewBox="0 0 901 678" xmlns="http://www.w3.org/2000/svg">
+<polygon class="room office fire" points="240,199 178,199 48,199 48,49 240,49"/>
+<polygon class="room office fire" points="386,178 386,199 240,199 240,49 320,49 320,81 345,81 345,49 386,49"/>
+<polygon class="room office" points="532,199 386,199 386,178 386,49 532,49 532,140"/>
+<polygon class="room office" points="532,49 665,48 665,163 665,199 532,199 532,140"/>
+<polygon class="room office" points="674,199 665,199 665,163 665,48 814,48 814,81 853,81 853,199 714,199"/>
+<polygon class="room kitchen victim" points="178,199 178,337 48,337 48,199"/>
+<polygon class="room hallway" points="238,268 327,268 327,356 327,397 327,510 238,510 238,337"/>
+<polygon class="room office" points="458,322 458,397 327,397 327,356 327,268 378,268 458,268"/>
+<polygon class="room office" points="458,268 588,268 588,397 458,397 458,322"/>
+<polygon class="room office" points="714,268 714,397 640,397 640,268"/>
+<polygon class="room office maze" points="714,397 714,268 714,199 853,199 852,397 798,397"/>
+<polygon class="room office" points="178,337 238,337 238,510 48,510 48,337"/>
+<polygon class="room office" points="588,397 588,629 326,629 327,571 345,571 345,557 327,557 327,510 327,397 458,397"/>
+<polygon class="room hallway" points="386,199 532,199 665,199 674,199 714,199 714,268 640,268 640,397 640,515 640,622 640,629 588,629 588,397 588,268 458,268 378,268 327,268 238,268 238,337 178,337 178,199 240,199"/>
+<polygon class="room office" points="640,397 714,397 798,397 852,397 852,516 640,515"/>
+<polygon class="room office" points="852,630 676,629 676,622 640,622 640,515 852,516"/>
+<polyline class="route" points="113,268 178,311 209,338 76,510"/>
+<rect class="exit" x="649" y="613" width="18" height="18"/>
+<rect class="exit" x="318" y="525" width="18" height="18"/>
+<rect class="exit" x="66" y="501" width="18" height="18"/>
+<rect class="exit" x="295" y="501" width="18" height="18"/>
+<g class="ord" transform="translate(144,124)"><circle r="17"/><text dy="6">2</text></g>
+<g class="ord" transform="translate(312,126)"><circle r="17"/><text dy="6">3</text></g>
+<g class="ord" transform="translate(459,124)"><circle r="17"/><text dy="6">5</text></g>
+<text class="lbl" x="599" y="124">104</text>
+<text class="lbl" x="755" y="126">105</text>
+<g class="ord" transform="translate(113,268)"><circle r="17"/><text dy="6">1</text></g>
+<text class="lbl" x="282" y="389">A</text>
+<text class="lbl" x="392" y="332">107</text>
+<text class="lbl" x="523" y="333">108</text>
+<text class="lbl" x="677" y="333">109</text>
+<g class="ord" transform="translate(783,298)"><circle r="17"/><text dy="6">6</text></g>
+<text class="lbl" x="143" y="424">111</text>
+<text class="lbl" x="458" y="513">112</text>
+<g class="ord" transform="translate(614,456)"><circle r="17"/><text dy="6">4</text></g>
+<text class="lbl" x="746" y="456">113</text>
+<text class="lbl" x="747" y="572">114</text>
+</svg>
+   <div class="row"><i>1</i><div>Kitchen 106<small>Reported coworker</small></div><span class="m">8.4 m</span></div>
+   <div class="row"><i>2</i><div>Office 101<small>Reported fire area</small></div><span class="m">11.4 m</span></div></div>
+  <div style="display:flex;flex-direction:column;gap:16px">
+   <div class="card"><h3>Entry <span>Side A</span></h3>
+    <div class="row"><i>A</i><div>Office 111 door<small>Search · 8 m to victim</small></div><span class="m">1.0 m</span></div>
+    <div class="row"><i>A</i><div>Hallway A door<small>Attack · hose 84 ft</small></div><span class="m">1.0 m</span></div></div>
+   <div class="card" style="flex:1"><h3>Hazards <span>4 high</span></h3>
+    <div class="row"><span class="badge h">High</span><div>Oxygen cylinders reported</div><span class="m">dispatch</span></div>
+    <div class="row"><span class="badge h">High</span><div>Office 110 dead end</div><span class="m">matterport</span></div>
+    <div class="row"><span class="badge h">High</span><div>Students may be inside</div><span class="m">costar</span></div>
+    <div class="row"><span class="badge md">Med</span><div>Aerial device, 19 m roof</div><span class="m">vexcel</span></div></div>
+  </div>
+ </div>
+ <div class="ask">Ask about this building…</div>
+</main></body></html>

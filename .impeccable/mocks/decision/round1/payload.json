@@ -1,0 +1,104 @@
+{
+  "title": "Choose the visual world for Scanferno",
+  "question": "The roll assigned Station Bay. Keep it, take an alternate, or re-roll.",
+  "options": [
+    {
+      "id": "assigned", "kind": "assigned", "label": "Station Bay", "kicker": "THE ROLL",
+      "lineage": "Apparatus bay floors: sealed oxide concrete, stencilled bay numerals, safety striping",
+      "thesis": "The briefing is marked out like an engine bay floor: stencilled numbers and painted lines tell you where to go.",
+      "palette": ["#1c1110", "#2b1b18", "#efe9df", "#f2c230", "#e5372b"],
+      "materials": ["sealed red-oxide concrete", "stencil paint", "yellow-black safety stripe"],
+      "viewport": "Top band: who is trapped and where to enter, full width. Left: call transcript with facts pinned to the line that said them. Center: floor plan with huge stencilled A-D at its edges and search order as stencil numerals. Right: hazards and routes.",
+      "risk": "Stencil type turns into costume if it spreads past numerals, side letters and section heads.",
+      "raised": [
+        {"from": "challenger-consumer", "raise": "Safety yellow is reserved for what you act on or walk: entry door, exit route, primary buttons."},
+        {"from": "challenger-feed", "raise": "The next decision (trapped person, entry door) owns a full-width band above everything."},
+        {"from": "challenger-saville", "raise": "The floor plan owns the field; chrome recedes into the oxide ground with no card borders."},
+        {"from": "challenger-laban", "raise": "Every dispatch fact is pinned to the utterance that produced it, on one time axis."},
+        {"from": "challenger-ikeda", "raise": "Every number (meters, feet, confidence, clear time) is tabular and right-aligned."}
+      ],
+      "html": ".impeccable/mocks/decision/assigned.html"
+    },
+    {
+      "id": "model-pick", "kind": "pick", "label": "Evacuation Plan", "kicker": "IMPECCABLE’S PICK",
+      "lineage": "ISO 23601 'You are here' evacuation plans posted beside every door",
+      "thesis": "The briefing reads like the evacuation plan on the wall, drawn for the crew going in instead of the people coming out.",
+      "palette": ["#f4f4f1", "#111111", "#00843d", "#d52b1e", "#ffd100"],
+      "materials": ["laminated plan print", "ISO safety pictograms", "photoluminescent green"],
+      "viewport": "Light laminated ground. Plan fills two-thirds with green egress arrows and red fire pictograms; a narrow legend column holds the call and briefing like the plan's key.",
+      "risk": "Wayfinding signage is where most runs in this category land, and a light screen glares in a dark cab at night.",
+      "html": ".impeccable/mocks/decision/model-pick.html"
+    },
+    {
+      "id": "challenger-ticket", "kind": "challenger", "catalogId": "vernacular-ephemera-jet-age-ticket-wallet",
+      "label": "Carbon Coupon Book", "verdict": "competitive",
+      "lineage": "Jet-age airline ticket wallets with carbon-copy coupons",
+      "thesis": "Each dispatch update is a carbon coupon; a corrected fact is stamped VOID, never silently replaced.",
+      "palette": ["#1d2a4d", "#f6f3ec", "#c8102e", "#4b3a8c"],
+      "materials": ["coupon stock", "carbon numerals", "VOID stamp"],
+      "viewport": "Coupon stack on the left (one per record update, old values struck), plan in a ruled field box center, briefing as tabbed coupons right.",
+      "case": "Fuses well on clarity: caller corrections become visible stamps. Loses on audience: officers don't identify with airline paper.",
+      "risk": "Reads as travel nostalgia; dark-cab use forces a dark rendition of a paper world.",
+      "html": ".impeccable/mocks/decision/challenger-ticket.html",
+      "hero": "https://impeccable.style/worlds/cards/vernacular-ephemera-jet-age-ticket-wallet-hero.webp"
+    },
+    {
+      "id": "challenger-consumer", "kind": "challenger", "catalogId": "digital-design-canon-warm-consumer-app-surface",
+      "label": "Warm Consumer App", "verdict": "declined",
+      "lineage": "Friendly consumer app cards", "thesis": "Soft cards, one action color.",
+      "palette": ["#f7efe6", "#ffffff", "#ff5a1f"], "materials": ["soft radii", "warm ground"],
+      "viewport": "Single column of cards with a bottom bar.", "risk": "Reads like a food-delivery app at a fire.",
+      "case": "Loses both: officers don't identify with it, and one column hides the plan.",
+      "kept": "Action color reserved strictly for things you can act on."
+    },
+    {
+      "id": "challenger-feed", "kind": "challenger", "catalogId": "pop-culture-shelf-vertical-video-feed-surface",
+      "label": "Vertical Feed", "verdict": "declined",
+      "lineage": "Full-screen vertical media feeds", "thesis": "One briefing item owns the screen at a time.",
+      "palette": ["#000000", "#ffffff"], "materials": ["full-bleed media", "bottom scrim"],
+      "viewport": "One fact per screen, snap to the next.", "risk": "Loses the plan and the live call side by side.",
+      "case": "Loses both: an officer needs plan, call and hazards at once.",
+      "kept": "The next decision owns a full-width band."
+    },
+    {
+      "id": "challenger-saville", "kind": "challenger", "catalogId": "brand-identity-canon-saville-catalog-sleeve",
+      "label": "Catalog Sleeve", "verdict": "declined",
+      "lineage": "Factory Records sleeves", "thesis": "Color codes stand in for words.",
+      "palette": ["#0b0b0b", "#ffffff", "#e63b2e", "#2f6fdb"], "materials": ["matte black", "white hairline plot"],
+      "viewport": "One plot owns a black field, labels decoded on hover.", "risk": "Hidden labels fail under stress.",
+      "case": "Loses both: coded labels are the opposite of glanceable.",
+      "kept": "One plot owns the field; chrome recedes."
+    },
+    {
+      "id": "challenger-laban", "kind": "challenger", "catalogId": "notation-diagram-systems-labanotation",
+      "label": "Dance Score", "verdict": "declined",
+      "lineage": "Labanotation", "thesis": "The call as a vertical score read upward.",
+      "palette": ["#ffffff", "#111111", "#d9d9d9"], "materials": ["score paper", "shaded blocks"],
+      "viewport": "Dispatcher and caller columns flank a time staff.", "risk": "Notation officers would have to learn.",
+      "case": "Loses both: unfamiliar notation, weak plan role.",
+      "kept": "Facts sit on one strict time axis with their source line."
+    },
+    {
+      "id": "challenger-ikeda", "kind": "challenger", "catalogId": "ikeda-datamatics",
+      "label": "Datamatics", "verdict": "declined",
+      "lineage": "Ryoji Ikeda data fields", "thesis": "Pure black and white data density.",
+      "palette": ["#000000", "#ffffff"], "materials": ["barcode bars", "monospace numerics"],
+      "viewport": "Barcode fields and tabular numbers.", "risk": "No room for hazard red; strobing is unsafe.",
+      "case": "Loses both: no state color, art over task.",
+      "kept": "Tabular, aligned numerics everywhere."
+    }
+  ],
+  "reroll": {"registers": ["safer", "bolder"]},
+  "buildPath": {"value": "code"},
+  "canon": true,
+  "canonCard": {
+    "kind": "canon", "label": "The category standard",
+    "thesis": "A dark incident-ops dashboard (Grafana / PagerDuty class) executed cleanly.",
+    "palette": ["#0f172a", "#1e293b", "#e2e8f0", "#3b82f6", "#ef4444"],
+    "materials": ["slate panels", "Inter-class UI sans"],
+    "viewport": "Top bar, three panels: call left, plan center, briefing right, at full craft.",
+    "risk": "Indistinguishable from every other ops tool, including today's build.",
+    "html": ".impeccable/mocks/decision/canon.html"
+  },
+  "steer": true
+}

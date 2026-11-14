@@ -89,6 +89,11 @@ Framework-free TypeScript toolkit that draws our data on the Matterport model, p
 
 ## Visuals and pitch (branch `ui`)
 
+**Redesign in progress (branch `ui-redesign-prototype`, not yet in `frontend/`)**
+- New direction chosen: "Guide Sign" world, fire palette (charcoal, fire orange, ember red only for life risk). Product brief in `PRODUCT.md`.
+- Clickable prototype: `.impeccable/mocks/prototype.html` (open in a browser, no backend needed; real Vibe Hobby data baked in). Home is the briefing itself: 5 key-fact signs on top, floor plan with the plan of attack drawn on it, 4 steps Arrive / Enter / Search / Get out, spoken briefing (Play) or text (Read), live call reshapes the plan. Tool pages (Call, Facts, Rescue, Entry, Hazards, Hose, Exterior, Aerial, Plan, Mayday, Evac, Ask) behind a small toolbar.
+- Next: port the prototype into `frontend/` (React) wired to the real API; convert detail pages to diagrams.
+
 **Done**
 - React + Vite app in `frontend/` (`npm install && npm run dev`, http://localhost:5173; backend URL via `VITE_API_URL`, default http://localhost:8000).
 - Live call view: SSE `/calls/{id}/live` drives transcript, dispatch record (changed fields flash), briefing, mayday; audio starts when the stream opens.
@@ -126,3 +131,4 @@ Framework-free TypeScript toolkit that draws our data on the Matterport model, p
 - 2026-11-14: Search over all 14,946 Matterport models (~8,500 buildings) with SQLite FTS5 index, CoStar join, on-demand cached Vexcel roof + aerial per building; `/search/stats`, `/properties/{id}/vexcel`, `/properties/{id}/aerial` (51 tests).
 - 2026-11-14: Search filters (status, city, kind, CoStar) with facet counts, paging, infinite-scroll dropdown; city typos folded (52 tests).
 - 2026-11-14: Rescue plan heat field + per-person in/out routes (`geometry/heat.py`, `agent/rescue.py`); cached Vexcel for several searched properties.
+- 2026-11-14: UI redesign prototype (Guide Sign, briefing-first home with diagrams, spoken/read briefing) in `.impeccable/mocks/prototype.html`; `PRODUCT.md` product brief (branch `ui-redesign-prototype`).
