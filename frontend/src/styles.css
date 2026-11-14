@@ -291,3 +291,4 @@ svg.mi { width: 22px; height: 22px; } .ip { fill: var(--white); } .iad { fill: v
 
 .caption.err { color: var(--hotfg); }
 .caption .vload { color: var(--fire); font-weight: 800; }
+.para .said { color: var(--dim); } .para mark { background: var(--fire); color: var(--ink); border-radius: 3px; padding: 0 2px; }

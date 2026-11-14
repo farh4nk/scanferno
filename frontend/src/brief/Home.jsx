@@ -207,7 +207,7 @@ export default function Home({ k, plan, briefing, feed, go, building }) {
             : <PlanSvg plan={plan} k={k} {...o} />}
         </div>
         {voiceErr && <p className="caption err">{voiceErr}</p>}
-        {narrating && caption ? (
+        {narrating && caption && !reading ? (
           <p className={`caption ${loadingVoice ? 'loading' : ''}`}>{loadingVoice && <span className="vload">Preparing voice… </span>}<span className="said">{caption.txt.slice(0, caption.at)}</span><mark>{caption.txt.slice(caption.at, caption.end)}</mark>{caption.txt.slice(caption.end)}</p>
         ) : live ? (
           <div className="ticker"><span className="dotlive" /><b>{last?.role || 'call'}</b>{last?.text || 'Connecting…'}</div>
@@ -218,7 +218,7 @@ export default function Home({ k, plan, briefing, feed, go, building }) {
           <div className="readp"><h2>Briefing <span>tap a step to show it on the plan</span></h2>
             {STEPS.map((s, i) => (
               <button key={s} className={`para ${i === step ? 'on' : ''}`} onClick={() => { stop(); setStep(i) }}>
-                <i>{i + 1}</i><div><b>{s}</b><p>{stepScript(k, i)}</p></div>
+                <i>{i + 1}</i><div><b>{s}</b><p>{narrating && i === step && caption ? <><span className="said">{caption.txt.slice(0, caption.at)}</span><mark>{caption.txt.slice(caption.at, caption.end)}</mark>{caption.txt.slice(caption.end)}</> : stepScript(k, i)}</p></div>
               </button>
             ))}
           </div>
