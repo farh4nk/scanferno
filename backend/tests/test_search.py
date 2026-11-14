@@ -40,3 +40,41 @@ def test_property_detail():
     assert p["onboard_hint"] and p["nearest_ready"]
     assert client.get("/properties/costar-239873").json()["status"] == "ready"
     assert client.get("/properties/nope").status_code == 404
+
+
+def test_catalog_covers_every_matterport_model():
+    s = client.get("/search/stats").json()
+    assert s["matterport_models"] > 10000 and s["located"] > 5000 and s["ready"] == 3
+
+
+def test_search_finds_complexes_by_unit_scan_names_and_typos():
+    sky = client.get("/search", params={"q": "skylux"}).json()["results"][0]
+    assert sky["status"] == "scanned" and sky["models_count"] > 10 and sky["scan"]["model_id"]
+    typo = client.get("/search", params={"q": "2001 westheimr rd"}).json()["results"][0]
+    assert typo["address"].startswith("2001 Westheimer") and typo["score"] >= directory.GOOD_SCORE
+
+
+def test_filters_facets_and_paging():
+    everything = client.get("/search", params={"limit": 5}).json()
+    assert everything["total"] > 8000 and everything["facets"]["status"]["ready"] == 3
+    ready = client.get("/search", params={"q": "houston", "status": "ready"}).json()
+    assert ready["total"] == 3 and all(r["status"] == "ready" for r in ready["results"])
+    la = client.get("/search", params={"city": "Los Angeles", "kind": "residential", "limit": 10}).json()
+    assert la["total"] > 500 and all(r["city"] == "Los Angeles" and r["kind"] == "residential" for r in la["results"])
+    page2 = client.get("/search", params={"city": "Los Angeles", "kind": "residential", "limit": 10, "offset": 10}).json()
+    assert page2["total"] == la["total"] and not {r["id"] for r in la["results"]} & {r["id"] for r in page2["results"]}
+    assert client.get("/search", params={"q": "suite", "costar": "true"}).json()["facets"]["costar"].get("yes")
+
+
+def test_property_by_matterport_model_id_merges_all_scans():
+    p = client.get("/properties/szdeKc4TjsE").json()
+    assert p["id"] == "costar-239873" and p["status"] == "ready"
+    assert {m["id"] for m in p["models"]} >= {"szdeKc4TjsE", "QB5AhU1bLSH"}
+
+
+def test_hero_vexcel_and_aerial_come_from_fixtures():
+    v = client.get("/properties/costar-239873/vexcel").json()
+    assert v["roof_material"] == "membrane" and v["footprint_area_m2"]
+    r = client.get("/properties/costar-239873/aerial", params={"view": "oblique-north"})
+    assert r.status_code == 200 and r.headers["content-type"] == "image/jpeg"
+    assert client.get("/properties/costar-239873/aerial", params={"view": "sideways"}).status_code == 422
