@@ -46,7 +46,7 @@ def costar_check():
 def gemini_check():
     from agent import llm
     reply = llm.generate("Reply with exactly: OK")
-    return f"model={llm.model()} replied {reply.strip()[:40]!r}"
+    return f"model={llm.last_model} (primary {llm.model()}) replied {reply.strip()[:40]!r}"
 
 
 if __name__ == "__main__":
