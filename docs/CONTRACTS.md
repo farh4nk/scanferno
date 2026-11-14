@@ -101,11 +101,17 @@ Sample: [fixtures/sample/briefing.json](../fixtures/sample/briefing.json)
   "session_id": "bd44f87367", "building_id": "costar-239873",
   "utterances": [{"role": "caller", "text": "...", "start": 0.0, "end": 2.1}],
   "record": {"...": "dispatch.json, plus corrections"},
-  "briefing": {"...": "briefing.json with changes"},
+  "briefing": {
+    "...": "briefing.json with changes",
+    "heat": {"minutes": 2.5, "spread_m": 7.8, "rooms": {"r-kitchen": {"danger": 0.82, "zone": "untenable"}}, "zones": {}},
+    "rescue": {"people": [{"id": "p1", "room_id": "...", "position": [0, 0], "entry": {"polyline": [], "text": "..."}, "extraction": {"polyline": [], "text": "..."}}]}
+  },
+  "building_match": {"query": "8866 Gulf Freeway", "hit": {"building_id": "costar-239873", "status": "ready", "score": 1.0}, "auto": true},
   "mayday": null,
+  "minutes": 2.5,
   "updates": 3,
   "extracted": true
 }
 ```
 
-`extracted` is false when the caller lines didn't change, so the record is the same as before. `mayday` is the section 5 response once someone says "mayday". `POST .../save` returns `{call_id}`. That call then works with `/calls/{id}`, `/replay` and `/live` like a scripted one (`script.json` has `"kind": "live"`).
+`extracted` is false when the caller lines didn't change, so the record is the same as before. `mayday` is the section 5 response once someone says "mayday". `heat` / `rescue` are nested on every live/replay briefing once fire or trapped facts exist (`agent/live_geometry.py`); cell grids are omitted from live payloads. `building_match.auto` is true only for a ready hit with score ≥ 0.75 — the UI may `POST /live/sessions/{sid}/building` to rebind. `POST .../tick` recomputes heat with elapsed minutes. `POST .../save` returns `{call_id}`. That call then works with `/calls/{id}`, `/replay` and `/live` like a scripted one (`script.json` has `"kind": "live"`). `/calls/{id}/live` also emits `building_match` SSE events.

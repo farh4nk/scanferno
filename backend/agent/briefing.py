@@ -379,7 +379,7 @@ def build(bid: str, dispatch: dict | None = None, use_llm: bool | None = None) -
         except Exception as e:
             trace.append({"step": "summary", "text": f"Gemini unavailable ({type(e).__name__}); template summary."})
 
-    return {
+    out = {
         "building_id": bid,
         "generated_at": dt.datetime.now(dt.UTC).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "building": {"name": b.get("name"), "address": b.get("address"), "lat": b.get("lat"), "lon": b.get("lon"),
@@ -402,3 +402,8 @@ def build(bid: str, dispatch: dict | None = None, use_llm: bool | None = None) -
         "caveats": caveats,
         "trace": trace,
     }
+    # Nest heat + rescue when dispatch facts are present (live/replay attach again with a real clock).
+    if d.get("fire_room_ids") or d.get("trapped"):
+        from agent import live_geometry
+        live_geometry.attach(bid, d, out, 0.0)
+    return out

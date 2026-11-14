@@ -106,7 +106,13 @@ svg.plan { width: 100%; height: 100%; display: block; }
 .rm.sel { stroke: var(--fire); stroke-width: 8; } .rm.de { stroke: var(--fire); stroke-width: 7; }
 .route { fill: none; stroke: var(--fire); stroke-width: 11; stroke-linecap: round; stroke-linejoin: round; }
 .route.thin { stroke-width: 5; opacity: .55; } .route.done { stroke: #6b5c52; }
+.route.in { stroke: #4dd0ff; } .route.out { stroke: #7dffb3; }
 .route.go { stroke-width: 14; stroke-dasharray: 2 22; animation: march 1s linear infinite; } @keyframes march { to { stroke-dashoffset: -24; } }
+.person-dot { fill: #fecaca; stroke: var(--red); stroke-width: 3; }
+.person-ring { fill: none; stroke: var(--red); stroke-width: 3; opacity: .7; }
+.person-lbl { font: 800 14px Overpass; fill: #fecaca; text-anchor: middle; }
+.addr-chip { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; padding: 10px 14px; background: #2a201c; border-bottom: 1px solid #4a3d35; }
+.addr-chip b { color: var(--white); } .addr-chip .muted { color: var(--dim); }
 .hoseln { fill: none; stroke: var(--white); stroke-width: 7; stroke-dasharray: 16 10; stroke-linecap: round; }
 .ex { fill: var(--white); stroke: var(--fire); stroke-width: 4; } .ex.hi { fill: var(--fire); stroke: var(--white); stroke-width: 5; }
 .ord circle { fill: var(--white); } .ord text { font: 800 20px Overpass; fill: var(--ink); text-anchor: middle; }

@@ -143,11 +143,14 @@ def _graph(nav: NavGraph, vid: str, point, windows: list[dict]) -> nx.Graph:
     return g
 
 
-def _cost(direction: str, danger: dict, vid: str):
+def _cost(direction: str, danger: dict, vid: str, risk: float = RISK, room_bump: dict | None = None):
+    bump = room_bump or {}
+
     def w(u, v, d):
-        z = danger.get(d.get("room"), 0.0)
-        t = d["weight"] / _speed(direction, z) * (1 + RISK * z)
-        if z >= heat_model.ZONES[0][1] and d.get("room") != vid:
+        rid = d.get("room")
+        z = min(1.0, danger.get(rid, 0.0) + bump.get(rid, 0.0))
+        t = d["weight"] / _speed(direction, z) * (1 + risk * z)
+        if z >= heat_model.ZONES[0][1] and rid != vid:
             t += UNTENABLE_PENALTY_S
         return t
     return w
@@ -172,7 +175,8 @@ def _expand(g: nx.Graph, nav: NavGraph, nodes: list, direction: str, danger: dic
             "door_ids": [n[1] for n in nodes if isinstance(n, tuple) and n[0] == "door"]}
 
 
-def _terminals(nav: NavGraph, windows: list[dict], direction: str, floor: int, danger: dict) -> dict:
+def _terminals(nav: NavGraph, windows: list[dict], direction: str, floor: int, danger: dict,
+               window_extra_s: float = 0.0) -> dict:
     """Ways in / out: exterior doors (no extra time) and windows (breach, plus a ladder above floor 1)."""
     out = {("door", d["id"]): {"kind": "door", "id": d["id"], "side": d.get("side"), "extra_s": 0.0, "width_m": d["width_m"],
                                "inferred": bool(d.get("inferred"))}
@@ -181,14 +185,15 @@ def _terminals(nav: NavGraph, windows: list[dict], direction: str, floor: int, d
         sill = (floor - 1) * STORY_M + (w.get("sill_m") or 0)
         ladder = window_ladder(sill)
         extra = WINDOW_S[direction] if ladder == "no ladder" else LADDER_S[direction] + PER_EXTRA_FLOOR_S * max(0, floor - 2)
+        extra += window_extra_s
         out[("window", w["id"])] = {"kind": "window", "id": w["id"], "side": w.get("side"), "extra_s": extra, "width_m": w["width_m"],
                                     "sill_above_ground_m": round(sill, 1), "ladder": ladder, "room_id": w["room_id"],
                                     "flow_path_warning": danger.get(w["room_id"], 0.0) >= heat_model.ZONES[1][1]}
     return out
 
 
-def _options(g, nav, vid, direction, danger, terms, top=3) -> list[dict]:
-    dist, paths = nx.single_source_dijkstra(g, "person", weight=_cost(direction, danger, vid))
+def _options(g, nav, vid, direction, danger, terms, top=3, risk: float = RISK, room_bump: dict | None = None) -> list[dict]:
+    dist, paths = nx.single_source_dijkstra(g, "person", weight=_cost(direction, danger, vid, risk, room_bump))
     opts = []
     for node, t in terms.items():
         if node not in dist:
@@ -220,11 +225,14 @@ def _describe(o: dict, labels: dict, direction: str) -> str:
     return head + tail + "."
 
 
-def plan(bid: str, d: dict, heat: dict | None = None) -> dict:
+def plan(bid: str, d: dict, heat: dict | None = None, *, risk_bump: float = 0.0,
+         room_bump: dict | None = None, window_extra_s: float = 0.0) -> dict:
     fp, nav = layers.floorplan(bid), layers.nav(bid)
     labels = {r["id"]: r["label"] for r in fp["rooms"]}
     danger = {rid: x["danger"] for rid, x in ((heat or {}).get("rooms") or {}).items()}
     floor = d.get("floor") or 1
+    risk = RISK + max(0.0, risk_bump)
+    bump = room_bump or {}
     windows = [w for w in fp.get("windows") or [] if w.get("exterior") and w["width_m"] >= MIN_WINDOW_M
                and danger.get(w["room_id"], 0.0) < heat_model.ZONES[0][1]]
     out = []
@@ -247,8 +255,10 @@ def plan(bid: str, d: dict, heat: dict | None = None) -> dict:
         top_conf = cands[0]["confidence"] if cands else (p.get("confidence") or 0.5)
         radius = math.sqrt(room.get("area_m2", 10) / math.pi)
         g = _graph(nav, rid, point, windows)
-        entry = _options(g, nav, rid, "in", danger, _terminals(nav, windows, "in", floor, danger))
-        exits = _options(g, nav, rid, "out", danger, _terminals(nav, windows, "out", floor, danger))
+        terms_in = _terminals(nav, windows, "in", floor, danger, window_extra_s)
+        terms_out = _terminals(nav, windows, "out", floor, danger, window_extra_s)
+        entry = _options(g, nav, rid, "in", danger, terms_in, risk=risk, room_bump=bump)
+        exits = _options(g, nav, rid, "out", danger, terms_out, risk=risk, room_bump=bump)
         for o in entry:
             o["text"] = _describe(o, labels, "in")
         for o in exits:
@@ -283,4 +293,5 @@ def plan(bid: str, d: dict, heat: dict | None = None) -> dict:
     return {"people": out, "floor": floor, "windows_considered": len(windows),
             "assumptions": ["Speeds: walk 1.2 m/s clear, crawl-search 0.5 m/s in smoke; drag 0.8 / 0.3 m/s.",
                             "Window removal adds breach time, plus a ground ladder above the first floor.",
-                            "Danger is a model of spread from the reported fire area, not a sensor reading."]}
+                            "Danger is a model of spread from the reported fire area, not a sensor reading.",
+                            "CoStar/Vexcel/maze factors nudge risk; they do not invent paths."]}

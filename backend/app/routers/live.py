@@ -48,6 +48,19 @@ def utterances(sid: str, utterances: list[dict] = Body(..., embed=True)):
     return _session(sid).update(utterances)
 
 
+@router.post("/sessions/{sid}/tick")
+def tick(sid: str):
+    """Grow heat with elapsed minutes without re-running extraction."""
+    return _session(sid).tick()
+
+
+@router.post("/sessions/{sid}/building")
+def set_building(sid: str, building_id: str = Body(..., embed=True)):
+    """Keep the transcript; rebind to another building and rebuild locate + briefing + rescue."""
+    deps.building(building_id)
+    return _session(sid).set_building(building_id)
+
+
 @router.post("/sessions/{sid}/save")
 def save(sid: str, title: str | None = Body(None, embed=True)):
     s = _session(sid)

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { createLiveSession, endLiveSession, liveAudio, liveUtterances, saveLiveSession } from '../api'
+import { createLiveSession, endLiveSession, liveAudio, liveTick, liveUtterances, saveLiveSession, setLiveBuilding } from '../api'
 
 // A call happening now, through a /live session. Same state shape as useLiveCall, so the transcript,
 // dispatch and briefing panels don't care which one feeds them. Inputs:
@@ -8,7 +8,11 @@ import { createLiveSession, endLiveSession, liveAudio, liveUtterances, saveLiveS
 //   typed    lines typed by hand (also works alongside browser mode)
 // plus uploadFile() for a recorded call.
 const UPLOAD_EVERY_MS = 4000
-const EMPTY = { utterances: [], interim: '', record: null, recordN: 0, briefing: null, mayday: null, status: 'idle', listening: false, error: null, savedCallId: null }
+const TICK_EVERY_MS = 20000
+const EMPTY = {
+  utterances: [], interim: '', record: null, recordN: 0, briefing: null, mayday: null,
+  building_match: null, status: 'idle', listening: false, error: null, savedCallId: null,
+}
 const MIME = ['audio/webm;codecs=opus', 'audio/webm', 'audio/ogg;codecs=opus', 'audio/mp4']
 
 export const SpeechRecognition = typeof window !== 'undefined' && (window.SpeechRecognition || window.webkitSpeechRecognition)
@@ -28,6 +32,8 @@ export function useListen(buildingId) {
   const media = useRef({ recorder: null, stream: null, chunks: [], timer: null })
   const recog = useRef(null)
   const pending = useRef({ busy: false, dirty: false })
+  const skipReset = useRef(false)
+  const tickTimer = useRef(null)
 
   const setRole = (r) => { role$.current = r; setRoleState(r) }
   const fail = (msg) => setState((s) => ({ ...s, error: msg }))
@@ -39,6 +45,7 @@ export function useListen(buildingId) {
     recordN: s.recordN + (r.extracted ? 1 : 0),
     briefing: r.briefing ?? s.briefing,
     mayday: r.mayday ?? s.mayday,
+    building_match: r.building_match !== undefined ? r.building_match : s.building_match,
     error: null,
   })), [])
 
@@ -131,7 +138,7 @@ export function useListen(buildingId) {
       fail(`Speech recognition: ${e.error}${e.error === 'network' ? ' (needs internet)' : ''}`)
       if (e.error === 'not-allowed' || e.error === 'service-not-allowed') active.current = false
     }
-    r.onend = () => { if (active.current) try { r.start() } catch { /* already restarting */ } } // stops after silence
+    r.onend = () => { if (active.current) try { r.start() } catch { /* already restarting */ } }
     recog.current = r
     r.start()
   }
@@ -157,6 +164,7 @@ export function useListen(buildingId) {
     active.current = false
     recog.current?.stop(); recog.current = null
     stopMic()
+    clearInterval(tickTimer.current)
     setState((s) => ({ ...s, interim: '', listening: false, status: s.status === 'idle' ? 'idle' : 'done' }))
   }, [])
 
@@ -179,6 +187,16 @@ export function useListen(buildingId) {
     } catch (e) { fail(e.message); return null }
   }, [])
 
+  const rebind = useCallback(async (newBuildingId) => {
+    if (!sid.current || !newBuildingId) return null
+    skipReset.current = true
+    try {
+      const r = await setLiveBuilding(sid.current, newBuildingId)
+      apply(r)
+      return r
+    } catch (e) { fail(e.message); skipReset.current = false; return null }
+  }, [apply])
+
   const reset = useCallback(() => {
     stop()
     if (sid.current) endLiveSession(sid.current).catch(() => {})
@@ -188,7 +206,22 @@ export function useListen(buildingId) {
     setState(EMPTY)
   }, [stop])
 
-  useEffect(() => reset, [buildingId, reset]) // a session belongs to one building
+  useEffect(() => {
+    if (skipReset.current) { skipReset.current = false; return }
+    reset()
+  }, [buildingId, reset])
 
-  return { ...state, role, setRole, start, stop, addLine, uploadFile, save, reset }
+  // Quiet heat growth while a live call is open and fire is known.
+  useEffect(() => {
+    clearInterval(tickTimer.current)
+    const live = state.status === 'live' || state.listening
+    if (!live || !sid.current || !(state.record?.fire_room_ids || []).length) return undefined
+    tickTimer.current = setInterval(() => {
+      if (!sid.current) return
+      liveTick(sid.current).then(apply).catch(() => {})
+    }, TICK_EVERY_MS)
+    return () => clearInterval(tickTimer.current)
+  }, [state.status, state.listening, state.record?.fire_room_ids, apply])
+
+  return { ...state, role, setRole, start, stop, addLine, uploadFile, save, reset, rebind, sessionId: sid.current }
 }

@@ -114,7 +114,7 @@ The core technical depth: turning raw Matterport geometry into decisions.
 | 7.2 | Unknown address -> nearest known buildings | ✅ | P1 | `GET /search?q=&geocode=true` geocodes with OpenStreetMap Nominatim (no key) only when nothing matches well; cached in `fixtures/geocode/` |
 | 7.3 | Property card for scanned-only buildings | ✅ | P1 | `GET /properties/{id or costar id}`: facts, scan stats, nearest buildings with a briefing, how to onboard |
 | 7.4 | Onboard a searched property | 💡 | P2 | Promote a `scanned` property into `buildings.json` and run `scripts.fetch_fixtures` from the API. Needs Matterport/Vexcel keys and the CoStar kit, plus a hand-set `front` |
-| 7.5 | Dispatch address drives the building | 💡 | P1 | When the live record's `address` arrives, run it through `/search` and confirm or switch the open building |
+| 7.5 | Dispatch address drives the building | ✅ | P1 | Live `building_match` from spoken address; auto-switch when ready + score ≥ 0.75; confirm chip otherwise; `POST /live/sessions/{sid}/building` rebinds |
 | 7.6 | Search by location | 🟡 | P2 | `GET /search?lat=&lon=` returns nearest buildings; no map picker in the UI yet |
 
 ## 8. Frontend (`frontend/`, owner: visuals and pitch)
@@ -131,6 +131,8 @@ The core technical depth: turning raw Matterport geometry into decisions.
 | 8.8 | Aerial annotations on obliques | 💡 | P1 | Needs 4.3 |
 | 8.9 | Evac bottleneck door marked on the plan | 💡 | P2 | |
 | 8.10 | Live call panel: mic / browser speech / typed lines, upload, save as replayable call | ✅ | P0 | Header Replay / Live toggle; `components/LivePanel.jsx`, `hooks/useListen.js`. Same transcript, record, briefing and mayday panels as replay |
+| 8.11 | Live heat / people / safest routes on map | ✅ | P0 | Nested `briefing.heat` + `briefing.rescue`; Rescue page overlays; CoStar/Vexcel risk modifiers |
+| 8.12 | Walk selected rescue route in 3D | ✅ | P1 | Enter → victim → exit sequence from Rescue “Walk rescue on 3D” |
 
 ---
 

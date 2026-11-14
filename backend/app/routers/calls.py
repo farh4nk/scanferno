@@ -6,7 +6,7 @@ from fastapi import APIRouter, HTTPException
 from fastapi.responses import StreamingResponse
 
 from agent import briefing as briefing_agent
-from agent import changes
+from agent import changes, live_geometry
 from app import sse
 from data import cache, layers
 from dispatch import facts, history, pipeline
@@ -101,13 +101,20 @@ def live(call_id: str, speed: float = 1.0, use_llm: bool | None = None):
             else:
                 record = facts.extract(utts[: i + 1], bid, use_llm, previous=record)
             record["corrections"] = history.track(hist, record, u["end"])
+            match = live_geometry.resolve_address(record.get("address"))
+            if match:
+                yield sse.event("building_match", match)
             yield sse.event("record", {"t": u["end"], "utterance_index": i, "record": record})
+            minutes = max(0.0, float(u.get("end") or 0) / 60.0)
             new = briefing_agent.build(bid, record, use_llm=False)
+            live_geometry.attach(bid, record, new, minutes)
             new["changes"] = changes.diff(brief, new)
             brief = new
             yield sse.event("briefing", brief)
         if record is not None and (use_llm if use_llm is not None else facts.llm_available()):
+            minutes = max(0.0, float(utts[-1].get("end") or 0) / 60.0) if utts else 0.0
             final = briefing_agent.build(bid, record, use_llm=True)
+            live_geometry.attach(bid, record, final, minutes)
             final["changes"] = changes.diff(brief, final)
             yield sse.event("briefing", final)
         yield sse.event("done", {"elapsed_s": round(time.monotonic() - start, 1)})

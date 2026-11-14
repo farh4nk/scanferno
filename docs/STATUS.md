@@ -26,14 +26,16 @@ Living handoff doc. Update your role's section and add a changelog line in the s
 - Gemini main models overloaded; extraction runs on flash-lite, 3 to 12 s per update. Replay of cached calls hides this.
 - Messy call: the "hallway" match picks one of two scanned hallways.
 
-## Rescue plan (branch `rescue-plan`)
+## Rescue plan / audio analysis (branch `audio-analysis`)
 
 **Done**
 - Fire heat field (`geometry/heat.py`) and per-person rescue plan (`agent/rescue.py`): place trapped people from the call, risk-weighted way in / way out (doors + exterior windows as breach options).
+- Live wire-up (`agent/live_geometry.py`): nest `heat` + `rescue` on live session + `/calls/{id}/live` briefings; CoStar/Vexcel/maze risk modifiers; address → `building_match` + session rebind; quiet `POST .../tick`.
+- Frontend: danger zones + person markers + in/out routes on Rescue 2D; Walk rescue on 3D (enter → victim → exit); spoken address auto-opens a ready building.
 
 **Next**
-1. Wire into briefing / live API and draw on floor plan + 3D.
-2. Tests.
+1. Multi-floor heat.
+2. Richer 3D heat raster if needed.
 
 ## Search (branch `search`)
 
@@ -138,3 +140,4 @@ Framework-free TypeScript toolkit that draws our data on the Matterport model, p
 - 2026-11-14: UI redesign prototype (Guide Sign, briefing-first home with diagrams, spoken/read briefing) in `.impeccable/mocks/prototype.html`; `PRODUCT.md` product brief (branch `ui-redesign-prototype`).
 - 2026-11-14: Frontend redesign landed (branch `ui-guide-sign`): briefing-first home with key-fact signs, plan of attack and diagrams; one page per tool; fire palette.
 - 2026-11-14: 3D model back up front: 2D/3D switch on the home briefing plan, `#model` page first in the toolbar.
+- 2026-11-14: Live audio → briefing heat/rescue + address auto-switch + 3D Walk enter/exit (branch `audio-analysis`, 58 tests).
