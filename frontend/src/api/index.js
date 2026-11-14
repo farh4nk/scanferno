@@ -33,6 +33,8 @@ export const createLiveSession = (buildingId) => post('/live/sessions', { buildi
 export const liveAudio = (sid, blob, filename, firstRole) =>
   postForm(`/live/sessions/${sid}/audio`, { file: [blob, filename], first_role: firstRole })
 export const liveUtterances = (sid, utterances) => post(`/live/sessions/${sid}/utterances`, { utterances })
+export const liveTick = (sid) => post(`/live/sessions/${sid}/tick`)
+export const setLiveBuilding = (sid, buildingId) => post(`/live/sessions/${sid}/building`, { building_id: buildingId })
 export const saveLiveSession = (sid, title) => post(`/live/sessions/${sid}/save`, { title })
 export const endLiveSession = (sid) => del(`/live/sessions/${sid}`)
 

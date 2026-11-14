@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { asset, liveUrl } from '../api'
 
-const EMPTY = { utterances: [], record: null, recordN: 0, briefing: null, mayday: null, status: 'idle', error: null }
+const EMPTY = { utterances: [], record: null, recordN: 0, briefing: null, mayday: null, building_match: null, status: 'idle', error: null }
 
 // Streams /calls/{id}/live (SSE) and plays the call audio when the stream opens.
 export function useLiveCall() {
@@ -36,6 +36,7 @@ export function useLiveCall() {
     on('utterance', (u) => setState((s) => ({ ...s, utterances: [...s.utterances, u] })))
     on('record', (r) => setState((s) => ({ ...s, record: r.record, recordN: s.recordN + 1 })))
     on('briefing', (b) => setState((s) => ({ ...s, briefing: b })))
+    on('building_match', (m) => setState((s) => ({ ...s, building_match: m })))
     on('mayday', (m) => setState((s) => ({ ...s, mayday: m })))
     on('done', () => { setState((s) => ({ ...s, status: 'done' })); src.close(); es.current = null })
     src.onerror = () => {

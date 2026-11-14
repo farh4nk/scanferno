@@ -12,21 +12,22 @@ const SDK_KEY = typeof __MP_SDK_KEY__ === 'string' ? __MP_SDK_KEY__ : ''
 setApiBase(API)
 
 const VIEWS = [['dollhouse', 'Dollhouse'], ['floorplan', 'Top'], ['inside', 'Walk']]
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 
 export default function Viewer3D({
   building, plan, layers, searchOrder, trapped, fireRooms, selected, onSelect, highlight, mayday, evac,
   clip, onClipEnd, onClipClose,
+  heat = null, rescuePeople = null, selectedRoute = null, walkToken = 0,
 }) {
   const box = useRef(null)
   const [viewer, setViewer] = useState(null)
   const [status, setStatus] = useState(SDK_KEY ? 'Loading 3D model…' : '')
   const [err, setErr] = useState(null)
   const [view, setView] = useState('dollhouse')
-  // where the camera stands in walk mode; room is kept from the last sweep that was inside a room
   const [here, setHere] = useState(null)
-  // the picked room and the sweep we flew to for it; that sweep can sit outside a room that was never scanned from inside
   const [anchor, setAnchor] = useState(null)
   const [heading, setHeading] = useState(null)
+  const [walkPhase, setWalkPhase] = useState(null)
   const player = useRef(null)
   // guided clip: the player for `clip`, its latest event, and whether captions are read aloud
   const tourRef = useRef(null)
@@ -42,21 +43,24 @@ export default function Viewer3D({
   const onSelectRef = useRef(onSelect)
   onSelectRef.current = onSelect
   const lastWalked = useRef(null)
-  // the viewer that is still connected; effects can run with a `viewer` that was destroyed in the same commit
   const liveViewer = useRef(null)
+  const walkGen = useRef(0)
 
   const walkTo = (v, roomId) => {
-    if (!v || v !== liveViewer.current) return
+    if (!v || v !== liveViewer.current || !roomId) return Promise.resolve(null)
     lastWalked.current = roomId
     setErr(null)
-    v.walkTo(roomId).then((sweepId) => {
-      if (v !== liveViewer.current) return
+    return v.walkTo(roomId).then((sweepId) => {
+      if (v !== liveViewer.current) return null
       if (sweepId) setAnchor({ roomId, sweepId })
       else setErr('No camera position found in that room')
-    }).catch((e) => { if (v === liveViewer.current) setErr(`Could not walk to that room: ${e.message || e}`) })
+      return sweepId
+    }).catch((e) => {
+      if (v === liveViewer.current) setErr(`Could not walk to that room: ${e.message || e}`)
+      return null
+    })
   }
 
-  // open the Matterport model for this building
   useEffect(() => {
     if (!SDK_KEY || !building || !plan) return undefined
     let cancelled = false
@@ -73,7 +77,6 @@ export default function Viewer3D({
           setHere((prev) => (h.room || h.mode !== 'inside' ? h : { ...h, room: prev?.room ?? null }))
         })
         opened.onHeading(setHeading)
-        // in walk mode a click is Matterport's own navigation; elsewhere it picks a room and flies into it
         opened.onPick((p) => {
           if (!p.room || viewRef.current === 'inside') return
           onSelectRef.current(p.room.id)
@@ -93,7 +96,6 @@ export default function Viewer3D({
     // eslint-disable-next-line
   }, [building?.id, plan])
 
-  // redraw a named overlay layer
   const draw = (name, visible, fn) => {
     if (!viewer) return
     const layer = viewer.overlay.layer(name)
@@ -103,7 +105,6 @@ export default function Viewer3D({
   }
 
   useEffect(() => { draw('rooms', true, (l, fp) => drawRooms(l, fp, layers.heat ? 'maze' : 'type')) }, [viewer, layers.heat])
-  // room labels float at eye height, so in walk mode they would fill the screen
   const walking = view === 'inside'
   useEffect(() => { draw('labels', !walking, (l, fp) => drawLabels(l, fp)); draw('outline', true, (l, fp) => drawOutline(l, fp)) }, [viewer, walking])
   useEffect(() => { draw('exits', layers.doors, (l, fp) => { drawDoors(l, fp); drawExits(l, fp) }) }, [viewer, layers.doors])
@@ -118,28 +119,37 @@ export default function Viewer3D({
   useEffect(() => {
     draw('incident', true, (l, fp) => {
       if (fireRooms?.length) highlightRooms(l, fp, fireRooms, '#ff7a1a', { pulse: true, label: 'FIRE' })
-      for (const t of trapped) {
+      const people = rescuePeople?.length ? rescuePeople : (trapped || []).map((t) => ({ ...t, position: null }))
+      for (const t of people) {
         const r = fp.rooms.find((x) => x.id === t.room_id)
         if (!r) continue
-        l.marker(r.centroid, { shape: 'cone', radius: 0.3, size: 0.8, height: 1.4, color: '#ff2a2a', xray: true })
-        l.label(r.centroid, 'TRAPPED', { height: 2.6, color: '#fecaca', size: 0.34 })
+        const at = t.position || r.centroid
+        l.marker(at, { shape: 'cone', radius: 0.3, height: 0.8, color: '#ff2a2a', xray: true })
+        l.label(at, (t.description || 'TRAPPED').split(' ')[0].toUpperCase(), { height: 2.6, color: '#fecaca', size: 0.34 })
       }
+      if (heat?.zones?.untenable?.length) highlightRooms(l, fp, heat.zones.untenable, '#7f1d1d', { pulse: false })
     })
-  }, [viewer, fireRooms, trapped])
+  }, [viewer, fireRooms, trapped, rescuePeople, heat])
 
-  // a room picked anywhere (2D plan, briefing, 3D click) flies the camera into it
   useEffect(() => {
-    if (viewer && selected && selected !== lastWalked.current && !clip) walkTo(viewer, selected)
+    if (viewer && selected && selected !== lastWalked.current && !clip && !walkToken) walkTo(viewer, selected)
     // eslint-disable-next-line
   }, [viewer, selected])
 
   const atAnchor = anchor && here?.sweepId === anchor.sweepId
-  const walkRoute = walking ? plan?.exit_routes?.[(atAnchor ? anchor.roomId : here?.room?.id) ?? selected] : null
+  const walkRoute = walking && !selectedRoute ? plan?.exit_routes?.[(atAnchor ? anchor.roomId : here?.room?.id) ?? selected] : null
   const walkFrom = walkRoute && here?.room?.id === walkRoute.from_room_id ? here.local : undefined
 
   useEffect(() => {
     draw('route', true, (l, fp) => {
       if (clip) return
+      if (selectedRoute?.entry?.polyline) {
+        drawRoute(l, { polyline: selectedRoute.entry.polyline, from_room_id: selectedRoute.person?.room_id }, fp, '#4dd0ff', { xray: walking })
+      }
+      if (selectedRoute?.extraction?.polyline) {
+        drawRoute(l, { polyline: selectedRoute.extraction.polyline, from_room_id: selectedRoute.person?.room_id }, fp, '#7dffb3', { xray: walking })
+      }
+      if (selectedRoute) return
       if (walking) {
         if (walkRoute) drawRoute(l, walkRoute, fp, undefined, { from: walkFrom, xray: true })
         return
@@ -148,7 +158,7 @@ export default function Viewer3D({
       if (selected) targets.push(selected)
       for (const id of new Set(targets)) { const rt = fp.exit_routes?.[id]; if (rt) drawRoute(l, rt, fp) }
     })
-  }, [viewer, selected, trapped, layers.routes, walking, walkRoute, walkFrom, clip])
+  }, [viewer, selected, trapped, layers.routes, walking, walkRoute, walkFrom, clip, selectedRoute])
 
   useEffect(() => {
     draw('mayday', true, (l, fp) => { if (mayday?.wall_path) drawMayday(l, mayday, fp) })
@@ -198,6 +208,46 @@ export default function Viewer3D({
     // eslint-disable-next-line
   }, [voice, capText])
 
+  // Walk rescue: enter to victim room, pause, then exit along extraction path.
+  useEffect(() => {
+    if (!viewer || !selectedRoute?.person?.room_id || !walkToken) return undefined
+    const gen = ++walkGen.current
+    const person = selectedRoute.person
+    const entryPath = selectedRoute.entry?.path || []
+    const exitPath = selectedRoute.extraction?.path || []
+    const enterRoom = entryPath[0] || person.room_id
+    const exitRoom = [...exitPath].reverse().find((r) => r !== person.room_id) || exitPath.at(-1) || person.room_id
+
+    ;(async () => {
+      try {
+        setWalkPhase('enter')
+        setView('inside')
+        try { await viewer.setView('inside') } catch { /* Showcase may refuse */ }
+        if (walkGen.current !== gen) return
+        await walkTo(viewer, enterRoom)
+        if (walkGen.current !== gen) return
+        if (enterRoom !== person.room_id) {
+          await sleep(900)
+          if (walkGen.current !== gen) return
+          await walkTo(viewer, person.room_id)
+        }
+        if (walkGen.current !== gen) return
+        setWalkPhase('save')
+        await sleep(1600)
+        if (walkGen.current !== gen) return
+        setWalkPhase('exit')
+        if (exitRoom && exitRoom !== person.room_id) await walkTo(viewer, exitRoom)
+        if (walkGen.current !== gen) return
+        setWalkPhase('done')
+        setStatus('Rescue walk complete')
+      } catch (e) {
+        if (walkGen.current === gen) setErr(`Rescue walk failed: ${e.message || e}`)
+      }
+    })()
+    return () => { walkGen.current += 1 }
+    // eslint-disable-next-line
+  }, [walkToken, viewer])
+
   const go = async (v) => {
     setView(v)
     setErr(null)
@@ -207,10 +257,15 @@ export default function Viewer3D({
 
   const exitSide = walkRoute && plan.doors.find((d) => d.id === walkRoute.exit_door_id)?.side
   const walkLine = walkRoute && (walkFrom ? [walkFrom, ...walkRoute.polyline.slice(1)] : walkRoute.polyline)
-  const walkInfo = walkRoute && `${plan.rooms.find((r) => r.id === walkRoute.from_room_id)?.label}: `
-    + `${(walkFrom ? pathLength(walkLine) : walkRoute.distance_m).toFixed(0)} m to exit${exitSide ? ` ${exitSide}` : ''}`
-  // point the way to the route 2 m ahead of the closest point on it, so it still helps when facing away
-  const hint = walkLine && here && heading != null
+  const walkInfo = selectedRoute
+    ? (walkPhase === 'enter' ? 'Walking in to the victim…'
+      : walkPhase === 'save' ? 'At victim — preparing exit…'
+        : walkPhase === 'exit' ? 'Exiting with the victim…'
+          : walkPhase === 'done' ? 'Rescue walk done'
+            : selectedRoute.entry?.text)
+    : walkRoute && `${plan.rooms.find((r) => r.id === walkRoute.from_room_id)?.label}: `
+      + `${(walkFrom ? pathLength(walkLine) : walkRoute.distance_m).toFixed(0)} m to exit${exitSide ? ` ${exitSide}` : ''}`
+  const hint = !selectedRoute && walkLine && here && heading != null
     && turnHint(heading, here.local, pointAlong(walkLine, Math.min(pathLength(walkLine), nearestAlong(walkLine, here.local) + 2)))
 
   if (!SDK_KEY) {

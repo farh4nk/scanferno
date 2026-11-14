@@ -73,29 +73,111 @@ export function FactsPage({ ctx }) {
   )
 }
 
+
+const routeHeadline = (o, dir) => {
+  if (!o) return ''
+  const via = o.kind === 'window' ? `side ${o.side || '?'} window` : `side ${o.side || '?'} door`
+  const verb = dir === 'in' ? (o.kind === 'window' ? 'Enter (VES)' : 'Enter') : (o.kind === 'window' ? 'Exit (VES)' : 'Out')
+  return `${verb} ${via} · ${o.distance_m ?? '?'} m · ~${o.time_s ?? '?'} s`
+}
+const routePath = (o, k) => {
+  if (!o?.path?.length) return ''
+  return o.path.map((id) => k.label(id)).join(' → ')
+}
+
 // ---------- Rescue ----------
 export function RescuePage({ ctx, k, go }) {
+  const people = k.rescuePeople || []
+  const [personId, setPersonId] = useState(people[0]?.id || null)
+  const [mode, setMode] = useState('2d')
+  const [walkTok, setWalkTok] = useState(0)
+  const person = people.find((p) => p.id === personId) || people[0] || null
+  const [entryId, setEntryId] = useState(null)
+  const [exitId, setExitId] = useState(null)
+  useEffect(() => {
+    if (!person) return
+    setPersonId(person.id)
+    setEntryId(person.entry?.id || null)
+    setExitId(person.extraction?.id || null)
+  }, [person?.id]) // eslint-disable-line react-hooks/exhaustive-deps
+  const entry = (person?.entry_options || []).find((o) => o.id === entryId) || person?.entry
+  const extraction = (person?.extraction_options || []).find((o) => o.id === exitId) || person?.extraction
+  const rescueRoutes = [
+    entry?.polyline && { polyline: entry.polyline, cls: 'in' },
+    extraction?.polyline && { polyline: extraction.polyline, cls: 'out' },
+  ].filter(Boolean)
+  const selectedRoute = entry && extraction ? { entry, extraction, person } : null
   const [picked, setPicked] = useState(ctx.params.room || null)
-  // follow the trapped person until the officer picks a room themselves
-  const sel = picked || k.victim || k.plan_[0]?.room_id; const setSel = setPicked
-  const rt = sel && k.routeOf(sel)
+  const sel = picked || person?.room_id || k.victim || k.plan_[0]?.room_id
   return (
-    <div className="page split" style={{ gridTemplateColumns: '500px 1fr' }}>
+    <div className="page split" style={{ gridTemplateColumns: '420px 1fr' }}>
       <div className="col">
-        {k.victim ? <div className="sign r"><div className="trow">{k.victimConf != null && <Ring p={k.victimConf} />}<div><small>Trapped · from the caller</small><div className="big">{k.victimLabel}</div>{k.victimWords && <div className="sub">“{k.victimWords}”</div>}</div></div></div>
-          : <div className="sign"><div><small>Trapped</small><div className="big">Not reported yet</div></div></div>}
-        <div className="panel grow"><h2>Search order <span>tap a room</span></h2>
-          {k.plan_.map((s, i) => (
-            <button key={s.room_id} className={`row ${s.room_id === sel ? 'sel' : ''}`} onClick={() => setSel(s.room_id)}>
-              <span className={`sh ${s.room_id === k.victim ? 'r' : ''}`}>{i + 1}</span><div><b>{k.label(s.room_id)}</b><small>{s.reason}</small></div>
-              <span className="d">{k.routeOf(s.room_id) ? `${k.routeOf(s.room_id).distance_m} m` : ''}</span>
-            </button>
-          ))}
+        {person ? (
+          <div className="sign r"><div className="trow">{person.room_confidence != null && <Ring p={person.room_confidence} />}
+            <div><small>Rescue · priority {person.priority}</small><div className="big">{person.label || k.label(person.room_id)}</div>
+              <div className="sub">{person.description}{person.zone ? ` · ${person.zone}` : ''}</div></div></div></div>
+        ) : k.victim ? (
+          <div className="sign r"><div className="trow">{k.victimConf != null && <Ring p={k.victimConf} />}<div><small>Trapped · from the caller</small><div className="big">{k.victimLabel}</div>{k.victimWords && <div className="sub">“{k.victimWords}”</div>}</div></div></div>
+        ) : <div className="sign"><div><small>Trapped</small><div className="big">Not reported yet</div></div></div>}
+
+        {people.length > 0 && (
+          <div className="panel"><h2>People <span>{people.length}</span></h2>
+            {people.map((p) => (
+              <button key={p.id} className={`row ${p.id === person?.id ? 'sel' : ''}`} onClick={() => setPersonId(p.id)}>
+                <span className="sh r">{p.priority}</span>
+                <div><b>{p.description}</b><small>{p.label} · {p.zone || 'clear'}{p.total_time_s ? ` · ~${p.total_time_s}s` : ''}</small></div>
+              </button>
+            ))}
+          </div>
+        )}
+
+        {person && (
+          <div className="panel grow"><h2>Routes <span>shortest + safest</span></h2>
+            <p className="note">Cyan = way in, green = way out. Grounded in heat + building data, not LLM geometry.</p>
+            {(person.entry_options || []).map((o) => (
+              <button key={`in-${o.kind}-${o.id}`} type="button" className={`row stack ${entry?.id === o.id && entry?.kind === o.kind ? 'sel' : ''}`} onClick={() => setEntryId(o.id)}>
+                <span className="sh in">IN</span>
+                <div><b>{routeHeadline(o, 'in')}</b>{routePath(o, k) && <small>{routePath(o, k)}</small>}</div>
+              </button>
+            ))}
+            {(person.extraction_options || []).map((o) => (
+              <button key={`out-${o.kind}-${o.id}`} type="button" className={`row stack ${extraction?.id === o.id && extraction?.kind === o.kind ? 'sel' : ''}`} onClick={() => setExitId(o.id)}>
+                <span className="sh out">OUT</span>
+                <div><b>{routeHeadline(o, 'out')}</b>{routePath(o, k) && <small>{routePath(o, k)}</small>}</div>
+              </button>
+            ))}
+            <div className="row-btns">
+              <button className="btn f wide" disabled={!selectedRoute} onClick={() => { setMode('3d'); setWalkTok((n) => n + 1) }}>Walk rescue on 3D</button>
+            </div>
+            {k.heatMinutes != null && <p className="note">Heat clock ~{k.heatMinutes} min into the call.</p>}
+          </div>
+        )}
+
+        {!people.length && (
+          <div className="panel grow"><h2>Search order <span>tap a room</span></h2>
+            {k.plan_.map((s, i) => (
+              <button key={s.room_id} className={`row ${s.room_id === sel ? 'sel' : ''}`} onClick={() => setPicked(s.room_id)}>
+                <span className={`sh ${s.room_id === k.victim ? 'r' : ''}`}>{i + 1}</span><div><b>{k.label(s.room_id)}</b><small>{s.reason}</small></div>
+                <span className="d">{k.routeOf(s.room_id) ? `${k.routeOf(s.room_id).distance_m} m` : ''}</span>
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+      <div className="panel col">
+        <div className="chips"><div className="seg"><button className={mode === '2d' ? 'on' : ''} onClick={() => setMode('2d')}>2D</button><button className={mode === '3d' ? 'on' : ''} onClick={() => setMode('3d')}>3D Walk</button></div></div>
+        <div className="grow">
+          {mode === '3d'
+            ? <Viewer3D building={ctx.building} plan={ctx.plan} layers={{ order: false, routes: true, doors: true, heat: false, windows: true }}
+                searchOrder={{}} trapped={ctx.briefing.trapped || []} fireRooms={ctx.briefing.fire_room_ids}
+                selected={person?.room_id || sel} onSelect={setPicked} highlight={null} mayday={null} evac={null}
+                heat={ctx.briefing.heat} rescuePeople={people} selectedRoute={selectedRoute} walkToken={walkTok} />
+            : <PlanSvg plan={ctx.plan} k={k} selected={sel} onSelect={setPicked}
+                rescueRoutes={rescueRoutes.length ? rescueRoutes : undefined}
+                routes={!rescueRoutes.length && sel && k.routeOf(sel) ? [k.routeOf(sel).polyline] : []}
+                order={Object.fromEntries(k.plan_.map((s, i) => [s.room_id, i + 1]))} />}
         </div>
       </div>
-      <div className="panel col"><h2>{k.label(sel)} <span>{rt ? `${rt.distance_m} m to the exit${rt.rerouted ? ', rerouted around the fire' : ''}` : 'no route'}</span></h2>
-        <div className="grow"><PlanSvg plan={ctx.plan} k={k} selected={sel} onSelect={setSel} routes={rt ? [rt.polyline] : []} order={Object.fromEntries(k.plan_.map((s, i) => [s.room_id, i + 1]))} /></div>
-        {sel && <button className="btn f wide" style={{ flex: 'none' }} onClick={() => go('model', { room: sel, clip: 'both' })}><Icon name="model" />Watch the way in and out in 3D<Icon name="arrow" /></button>}</div>
     </div>
   )
 }

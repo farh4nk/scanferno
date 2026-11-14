@@ -2,9 +2,9 @@
 
 Every update replaces the transcript so far (ElevenLabs STT of the audio so far, or utterances the browser
 recognized itself) and returns the same shapes as /calls/{id}/live: utterances, record (with `corrections`),
-briefing (with `changes`) and, when a caller says "mayday", wall-following directions. Extraction only reruns
-when a caller line changed, so re-sending the same audio is cheap. Sessions live in memory; `save` turns one
-into a replayable call under fixtures/calls/.
+briefing (with `changes`, plus nested `heat` / `rescue`) and, when a caller says "mayday", wall-following
+directions. Extraction only reruns when a caller line changed, so re-sending the same audio is cheap.
+Sessions live in memory; `save` turns one into a replayable call under fixtures/calls/.
 """
 import hashlib
 import re
@@ -12,7 +12,7 @@ import time
 import uuid
 
 from agent import briefing as briefing_agent
-from agent import changes
+from agent import changes, live_geometry
 from data import cache, layers
 from geometry import wallfollow
 
@@ -34,12 +34,17 @@ class Session:
         self.record: dict | None = None
         self.briefing: dict | None = None
         self.mayday: dict | None = None
+        self.building_match: dict | None = None
         self.timeline: list[dict] = []
         self.stt_result: dict | None = None
         self.audio: tuple[bytes, str] | None = None
         self._hist: dict = {}
         self._caller_key: str | None = None
         self._mayday_key: str | None = None
+        self._address_key: str | None = None
+
+    def minutes(self) -> float:
+        return max(0.0, (time.time() - self.created) / 60.0)
 
     def transcribe(self, audio: bytes, filename: str, first_role: str = "dispatcher") -> dict:
         """STT on the whole recording so far (MediaRecorder chunks concatenated, or an uploaded file)."""
@@ -66,10 +71,19 @@ class Session:
         bid = self.building_id
         self.record = facts.extract(self.utterances, bid, self.use_llm, previous=self.record)
         self.record["corrections"] = history.track(self._hist, self.record, u["end"])
+        self._resolve_address()
         new = briefing_agent.build(bid, self.record, use_llm=False)
+        live_geometry.attach(bid, self.record, new, self.minutes())
         new["changes"] = changes.diff(self.briefing, new)
         self.briefing = new
         self.timeline.append({"t": u["end"], "utterance_index": i, "record": self.record})
+
+    def _resolve_address(self):
+        addr = (self.record or {}).get("address")
+        if not addr or addr == self._address_key:
+            return
+        self._address_key = addr
+        self.building_match = live_geometry.resolve_address(addr)
 
     def _check_mayday(self, callers: list[tuple[int, dict]]):
         said = [u["text"] for _, u in callers if MAYDAY.search(u["text"])]
@@ -81,10 +95,35 @@ class Session:
         if c:
             self.mayday = wallfollow.mayday(layers.floorplan(bid), c[0]["room_id"], layers.nav(bid), layers.sides(bid).of_local)
 
+    def tick(self) -> dict:
+        """Recompute heat/rescue with elapsed minutes without re-extracting (quiet fire growth)."""
+        if self.record and self.briefing:
+            live_geometry.attach(self.building_id, self.record, self.briefing, self.minutes())
+        return self.state()
+
+    def set_building(self, building_id: str) -> dict:
+        """Rebind the session to another building; keep utterances and re-run locate + briefing."""
+        if building_id == self.building_id:
+            return self.state()
+        self.building_id = building_id
+        self.mayday = None
+        self._mayday_key = None
+        self.briefing = None
+        self._caller_key = None
+        self._hist = {}
+        callers = [(i, u) for i, u in enumerate(self.utterances) if u["role"] != "dispatcher"]
+        if callers:
+            self._caller_key = hashlib.sha1(repr([(u["role"], u["text"]) for _, u in callers]).encode()).hexdigest()
+            self._extract(callers[-1])
+            self._check_mayday(callers)
+            return self.state(True)
+        return self.state()
+
     def state(self, extracted: bool = False) -> dict:
         return {"session_id": self.id, "building_id": self.building_id, "utterances": self.utterances,
                 "record": self.record, "briefing": self.briefing, "mayday": self.mayday,
-                "updates": len(self.timeline), "extracted": extracted}
+                "building_match": self.building_match, "minutes": round(self.minutes(), 2),
+                "started_at": self.created, "updates": len(self.timeline), "extracted": extracted}
 
     def save(self, title: str | None = None) -> str:
         """Write the session as fixtures/calls/live-<id>/ so /calls/{id}/live replays it offline."""

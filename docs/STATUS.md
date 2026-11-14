@@ -20,6 +20,18 @@ Living handoff doc. Update your role's section and add a changelog line in the s
 - Gemini main models overloaded; extraction runs on flash-lite, 3 to 12 s per update. Replay of cached calls hides this.
 - Messy call: the "hallway" match picks one of two scanned hallways.
 
+
+## Rescue plan / audio analysis (branch `audio-analysis`)
+
+**Done**
+- Fire heat field (`geometry/heat.py`) and per-person rescue plan (`agent/rescue.py`).
+- Live wire-up (`agent/live_geometry.py`): nest `heat` + `rescue` on live/SSE briefings; CoStar/Vexcel/maze risk modifiers; address `building_match` + session rebind; `POST .../tick`.
+- Frontend: danger zones + person markers + in/out routes on Rescue; Walk rescue on 3D; spoken address auto-opens a ready building.
+
+**Next**
+1. Multi-floor heat.
+2. Richer 3D heat raster if needed.
+
 ## Geometry (branch `geometry-agent`)
 
 **Done**
@@ -36,8 +48,6 @@ Living handoff doc. Update your role's section and add a changelog line in the s
 
 ## Visuals and pitch (branch `ui`)
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 **Redesign (branch `ui-guide-sign`): the real `frontend/` now uses the new UI**
 - "Guide Sign" world, fire palette (charcoal, fire orange, ember red only for life risk). Product brief in `PRODUCT.md`; clickable mock in `.impeccable/mocks/prototype.html`.
 - Home (`src/brief/Home.jsx`) is the briefing: 5 key-fact signs with pictograms, floor plan with the plan of attack drawn on it, 4 steps Arrive / Enter / Search / Get out with diagrams (building section, hose gauge, distance scale, search path, exit bars), Play (browser TTS + caption) or Read. Live/replayed calls reshape it as facts arrive.
@@ -50,10 +60,6 @@ Living handoff doc. Update your role's section and add a changelog line in the s
 - Removed the old panels (Briefing, Dispatch, Transcript, Mayday, Evac, Ask, Aerial, FloorPlan, SourceTags); kept AddressSearch, PropertyCard, LivePanel, Viewer3D.
 - Next: wire the rescue planner (`agent/rescue.py`) into the Search step once it has an endpoint; check the 3D tab with a Matterport SDK key.
 
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 **Done**
 - React + Vite app in `frontend/` (`npm install && npm run dev`, http://localhost:5173; backend URL via `VITE_API_URL`, default http://localhost:8000).
 - Live call view: SSE `/calls/{id}/live` drives transcript, dispatch record (changed fields flash), briefing, mayday; audio starts when the stream opens.
@@ -86,14 +92,9 @@ Living handoff doc. Update your role's section and add a changelog line in the s
 - 2026-11-14: Rescue plan heat field + per-person in/out routes (`geometry/heat.py`, `agent/rescue.py`); cached Vexcel for several searched properties.
 - 2026-11-14: UI redesign prototype (Guide Sign, briefing-first home with diagrams, spoken/read briefing) in `.impeccable/mocks/prototype.html`; `PRODUCT.md` product brief (branch `ui-redesign-prototype`).
 - 2026-11-14: Frontend redesign landed (branch `ui-guide-sign`): briefing-first home with key-fact signs, plan of attack and diagrams; one page per tool; fire palette.
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 - 2026-11-14: 3D model back up front: 2D/3D switch on the home briefing plan, `#model` page first in the toolbar.
 - 2026-11-14: Live call highlights back on the 2D plan: live mode, flashing rooms per update, NEW banner, key signs flash on change.
 - 2026-11-14: Seekable calls: `GET /calls/{id}/frames` + call transport bar (scrub, skip to next fact, speed); skip steps in the spoken briefing (54 tests).
 - 2026-11-14: ElevenLabs voice for the spoken briefing and mayday steps (`POST /speech`, word-timed captions, cached); Office 110 mayday lines pre-generated (55 tests).
 - 2026-11-14: Briefing voice: Bill on ElevenLabs flash at max speed, dispatch radio script with phonetic sides, background pre-generation so Play is instant.
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
+- 2026-11-14: Live audio → briefing heat/rescue + address auto-switch + 3D Walk enter/exit (branch `audio-analysis`).

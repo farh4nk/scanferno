@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { getBuildings, getCalls, health } from './api'
 import { useCallPlayer } from './hooks/useCallPlayer'
 import CallBar from './brief/CallBar'
@@ -76,11 +76,43 @@ export default function App() {
     window.history.replaceState(null, '', url)
   }, [buildingId])
 
+  const [addressHint, setAddressHint] = useState(null)
+  const adopting = useRef(false)
+
   const openBuilding = useCallback((id) => {
     setProperty(null)
+    setAddressHint(null)
     if (!id || id === buildingId) return
     live.reset(); listen.stop(); setBuildingId(id); go('home')
   }, [buildingId, live, listen, go])
+
+  const adoptBuilding = useCallback(async (id, { auto = false } = {}) => {
+    setProperty(null)
+    if (!id || id === buildingId) { setAddressHint(null); return }
+    if (source === 'live' && listen.sessionId) {
+      adopting.current = true
+      const r = await listen.rebind(id)
+      if (!r) { adopting.current = false; return }
+      setBuildingId(id)
+      setAddressHint(null)
+      go(auto ? 'rescue' : 'home')
+      return
+    }
+    live.reset(); listen.stop(); setBuildingId(id); setAddressHint(null); go('home')
+  }, [buildingId, source, listen, live, go])
+
+  // Spoken address → switch building when search is confident + ready.
+  useEffect(() => {
+    const m = feed.building_match
+    if (!m?.hit) return
+    const bid = m.hit.building_id
+    if (!bid || bid === buildingId) { setAddressHint(null); return }
+    if (m.auto && m.hit.status === 'ready') {
+      adoptBuilding(bid, { auto: true })
+    } else {
+      setAddressHint(m)
+    }
+  }, [feed.building_match, buildingId, adoptBuilding])
 
   const building = buildings.find((b) => b.id === buildingId)
   const buildingCalls = useMemo(() => calls.filter((c) => c.building_id === buildingId), [calls, buildingId])
@@ -124,6 +156,15 @@ export default function App() {
       {source === 'replay' && live.loaded && <CallBar player={live} />}
 
       {(error || dataError || feed.error) && <div className="banner" role="alert">{error || dataError || feed.error}</div>}
+      {addressHint?.hit && (
+        <div className="addr-chip" role="status">
+          <span>Heard <b>{addressHint.query}</b> <span className="muted">→ {addressHint.hit.name || addressHint.hit.address}</span></span>
+          {addressHint.hit.building_id
+            ? <button className="btn f" onClick={() => adoptBuilding(addressHint.hit.building_id)}>Open briefing</button>
+            : <button className="btn" onClick={() => setProperty({ id: addressHint.hit.id })}>View property</button>}
+          <button className="chip" onClick={() => setAddressHint(null)}>Dismiss</button>
+        </div>
+      )}
 
       <main className="main">
         {!k ? <div className="page"><p className="empty">{error ? 'Waiting for the backend…' : 'Loading the building…'}</p></div>
