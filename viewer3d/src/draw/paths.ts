@@ -20,6 +20,26 @@ export function pathLength(points: XY[]): number {
   return L
 }
 
+/** Distance along a path to the point on it closest to `p`. */
+export function nearestAlong(points: XY[], p: XY): number {
+  let best = Infinity
+  let bestS = 0
+  let s = 0
+  for (let i = 1; i < points.length; i++) {
+    const [ax, ay] = points[i - 1]
+    const [bx, by] = points[i]
+    const seg = Math.hypot(bx - ax, by - ay)
+    const t = seg > 0 ? Math.max(0, Math.min(1, ((p[0] - ax) * (bx - ax) + (p[1] - ay) * (by - ay)) / (seg * seg))) : 0
+    const d = Math.hypot(ax + (bx - ax) * t - p[0], ay + (by - ay) * t - p[1])
+    if (d < best) {
+      best = d
+      bestS = s + t * seg
+    }
+    s += seg
+  }
+  return bestS
+}
+
 /** Animate `count` evenly spaced dots flowing along a path at `speed` m/s. */
 export function flow(layer: Layer, points: XY[], opts: { color?: string; speed?: number; count?: number; radius?: number } = {}) {
   const L = pathLength(points)
@@ -32,12 +52,24 @@ export function flow(layer: Layer, points: XY[], opts: { color?: string; speed?:
   })
 }
 
-export function drawRoute(layer: Layer, route: Route, fp?: Floorplan, color = '#22d3ee') {
-  layer.path(route.polyline, { color, radius: 0.08, opacity: 0.95 })
-  flow(layer, route.polyline, { color: '#ecfeff' })
+/**
+ * `from` starts the route at a point inside its first room (where the camera stands) instead of the room
+ * center. `xray` adds a faint copy drawn through walls plus an exit beacon, so the way out stays visible
+ * from anywhere in walk mode.
+ */
+export function drawRoute(layer: Layer, route: Route, fp?: Floorplan, color = '#22d3ee', opts: { from?: XY; xray?: boolean } = {}) {
+  const line = opts.from && route.polyline.length > 1 ? [opts.from, ...route.polyline.slice(1)] : route.polyline
+  const end = line[line.length - 1]
+  layer.path(line, { color, radius: 0.08, opacity: 0.95 })
+  flow(layer, line, { color: '#ecfeff' })
+  if (opts.xray) {
+    layer.path(line, { color, radius: 0.05, opacity: 0.35, xray: true })
+    layer.marker(end, { shape: 'pillar', radius: 0.25, size: 2.2, color: '#22c55e', opacity: 0.45, xray: true })
+  }
   const exit = fp?.doors.find((d) => d.id === route.exit_door_id)
-  layer.label(route.polyline[route.polyline.length - 1], `${route.distance_m.toFixed(0)} m to exit${exit?.side ? ` ${exit.side}` : ''}`,
-    { height: 1.0, color, size: 0.3 })
+  const dist = opts.from ? pathLength(line) : route.distance_m
+  layer.label(end, `${dist.toFixed(0)} m to exit${exit?.side ? ` ${exit.side}` : ''}`,
+    { height: opts.xray ? 2.5 : 1.0, color, size: 0.3 })
 }
 
 export function drawMayday(layer: Layer, m: Mayday, fp?: Floorplan, color = '#f97316') {
