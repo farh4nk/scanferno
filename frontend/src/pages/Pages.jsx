@@ -72,6 +72,18 @@ export function FactsPage({ ctx }) {
   )
 }
 
+
+const routeHeadline = (o, dir) => {
+  if (!o) return ''
+  const via = o.kind === 'window' ? `side ${o.side || '?'} window` : `side ${o.side || '?'} door`
+  const verb = dir === 'in' ? (o.kind === 'window' ? 'Enter (VES)' : 'Enter') : (o.kind === 'window' ? 'Exit (VES)' : 'Out')
+  return `${verb} ${via} · ${o.distance_m ?? '?'} m · ~${o.time_s ?? '?'} s`
+}
+const routePath = (o, k) => {
+  if (!o?.path?.length) return ''
+  return o.path.map((id) => k.label(id)).join(' → ')
+}
+
 // ---------- Rescue ----------
 export function RescuePage({ ctx, k }) {
   const people = k.rescuePeople || []
@@ -120,15 +132,17 @@ export function RescuePage({ ctx, k }) {
 
         {person && (
           <div className="panel grow"><h2>Routes <span>shortest + safest</span></h2>
-            <p className="note">In (cyan) / out (green). Risk uses fire heat plus CoStar/Vexcel/maze factors — not LLM geometry.</p>
+            <p className="note">Cyan = way in, green = way out. Grounded in heat + building data, not LLM geometry.</p>
             {(person.entry_options || []).map((o) => (
-              <button key={`in-${o.kind}-${o.id}`} className={`row ${entry?.id === o.id && entry?.kind === o.kind ? 'sel' : ''}`} onClick={() => setEntryId(o.id)}>
-                <span className="sh">IN</span><div><b>{o.text}</b></div>
+              <button key={`in-${o.kind}-${o.id}`} type="button" className={`row stack ${entry?.id === o.id && entry?.kind === o.kind ? 'sel' : ''}`} onClick={() => setEntryId(o.id)}>
+                <span className="sh in">IN</span>
+                <div><b>{routeHeadline(o, 'in')}</b>{routePath(o, k) && <small>{routePath(o, k)}</small>}</div>
               </button>
             ))}
             {(person.extraction_options || []).map((o) => (
-              <button key={`out-${o.kind}-${o.id}`} className={`row ${extraction?.id === o.id && extraction?.kind === o.kind ? 'sel' : ''}`} onClick={() => setExitId(o.id)}>
-                <span className="sh">OUT</span><div><b>{o.text}</b></div>
+              <button key={`out-${o.kind}-${o.id}`} type="button" className={`row stack ${extraction?.id === o.id && extraction?.kind === o.kind ? 'sel' : ''}`} onClick={() => setExitId(o.id)}>
+                <span className="sh out">OUT</span>
+                <div><b>{routeHeadline(o, 'out')}</b>{routePath(o, k) && <small>{routePath(o, k)}</small>}</div>
               </button>
             ))}
             <div className="row-btns">
