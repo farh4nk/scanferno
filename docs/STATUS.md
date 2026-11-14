@@ -141,4 +141,4 @@ Framework-free TypeScript toolkit that draws our data on the Matterport model, p
 - 2026-11-14: Frontend redesign landed (branch `ui-guide-sign`): briefing-first home with key-fact signs, plan of attack and diagrams; one page per tool; fire palette.
 - 2026-11-14: 3D model back up front: 2D/3D switch on the home briefing plan, `#model` page first in the toolbar.
 - 2026-11-14: Live call highlights back on the 2D plan: live mode, flashing rooms per update, NEW banner, key signs flash on change.
-- 2026-11-14: Seekable calls: `GET /calls/{id}/frames` + call transport bar (scrub, skip to next fact, speed); skip steps in the spoken briefing (56 tests).
+- 2026-11-14: Seekable calls: `GET /calls/{id}/frames` + call transport bar (scrub, skip to next fact, speed); skip steps in the spoken briefing (54 tests).
