@@ -20,7 +20,7 @@ export interface Here {
 
 const sweepCache = new WeakMap<Showcase, Promise<Sweep.ObservableSweepData[]>>()
 
-function sweeps(showcase: Showcase) {
+export function sweeps(showcase: Showcase) {
   let s = sweepCache.get(showcase)
   if (!s) {
     s = collection<Sweep.ObservableSweepData>(showcase.sdk.Sweep.data).then((all) => {

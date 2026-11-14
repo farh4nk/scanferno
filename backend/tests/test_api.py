@@ -42,3 +42,20 @@ def test_live_stream():
 
 def test_unknown_building():
     assert client.get("/buildings/nope/floorplan").status_code == 404
+
+
+def test_tour_clips_in_and_out():
+    t = client.get(f"/buildings/{BID}/tour", params={"to_room": "Office 110"}).json()
+    assert t["room_id"] == "r-tx2gws" and t["entries"]
+    start = t["in"]["polyline"][0]
+    assert abs(start[0] - t["entry"]["position"][0]) < 0.02 and abs(start[1] - t["entry"]["position"][1]) < 0.02
+    assert t["in"]["rooms"][-1] == t["room_id"]
+    assert t["out"]["polyline"][0] != t["out"]["polyline"][-1] and t["out"]["rooms"][0] == t["room_id"]
+    for leg in (t["in"], t["out"]):
+        s = [x["at_m"] for x in leg["steps"]]
+        assert s == sorted(s) and s[0] == 0 and abs(s[-1] - leg["distance_m"]) < 0.2
+    # a chosen entry door is honored for the way in, and the way out can be routed around a room
+    other = t["entries"][-1]["door_id"]
+    t2 = client.get(f"/buildings/{BID}/tour", params={"to_room": "Office 110", "entry": other, "avoid": "Hallway B"}).json()
+    assert t2["entry"]["door_id"] == other and t2["in"]["door_id"] == other
+    assert client.get(f"/buildings/{BID}/tour", params={"to_room": "zzz nowhere"}).status_code == 404

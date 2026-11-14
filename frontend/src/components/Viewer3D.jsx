@@ -4,6 +4,7 @@ import {
   drawRoute, drawMayday, highlightRooms, evacPlayer, pathLength, pointAlong, nearestAlong, turnHint,
 } from '@viewer3d/index'
 import { API } from '../api'
+import Icon from '../ui/Icon'
 
 // __MP_SDK_KEY__ is injected by vite.config.js from MATTERPORT_SDK_KEY in the repo-root .env
 // eslint-disable-next-line no-undef
@@ -14,6 +15,7 @@ const VIEWS = [['dollhouse', 'Dollhouse'], ['floorplan', 'Top'], ['inside', 'Wal
 
 export default function Viewer3D({
   building, plan, layers, searchOrder, trapped, fireRooms, selected, onSelect, highlight, mayday, evac,
+  clip, onClipEnd, onClipClose,
 }) {
   const box = useRef(null)
   const [viewer, setViewer] = useState(null)
@@ -26,6 +28,15 @@ export default function Viewer3D({
   const [anchor, setAnchor] = useState(null)
   const [heading, setHeading] = useState(null)
   const player = useRef(null)
+  // guided clip: the player for `clip`, its latest event, and whether captions are read aloud
+  const tourRef = useRef(null)
+  const [tourEv, setTourEv] = useState(null)
+  const [speed, setSpeed] = useState(1)
+  const [voice, setVoice] = useState(false)
+  const speedRef = useRef(speed)
+  speedRef.current = speed
+  const onClipEndRef = useRef(onClipEnd)
+  onClipEndRef.current = onClipEnd
   const viewRef = useRef(view)
   viewRef.current = view
   const onSelectRef = useRef(onSelect)
@@ -118,7 +129,7 @@ export default function Viewer3D({
 
   // a room picked anywhere (2D plan, briefing, 3D click) flies the camera into it
   useEffect(() => {
-    if (viewer && selected && selected !== lastWalked.current) walkTo(viewer, selected)
+    if (viewer && selected && selected !== lastWalked.current && !clip) walkTo(viewer, selected)
     // eslint-disable-next-line
   }, [viewer, selected])
 
@@ -128,6 +139,7 @@ export default function Viewer3D({
 
   useEffect(() => {
     draw('route', true, (l, fp) => {
+      if (clip) return
       if (walking) {
         if (walkRoute) drawRoute(l, walkRoute, fp, undefined, { from: walkFrom, xray: true })
         return
@@ -136,7 +148,7 @@ export default function Viewer3D({
       if (selected) targets.push(selected)
       for (const id of new Set(targets)) { const rt = fp.exit_routes?.[id]; if (rt) drawRoute(l, rt, fp) }
     })
-  }, [viewer, selected, trapped, layers.routes, walking, walkRoute, walkFrom])
+  }, [viewer, selected, trapped, layers.routes, walking, walkRoute, walkFrom, clip])
 
   useEffect(() => {
     draw('mayday', true, (l, fp) => { if (mayday?.wall_path) drawMayday(l, mayday, fp) })
@@ -157,6 +169,34 @@ export default function Viewer3D({
       if (evac) { player.current = evacPlayer(l, fp, evac); player.current.play() }
     })
   }, [viewer, evac])
+
+  // a guided clip: the camera walks the route by itself, captions and controls come from the player
+  useEffect(() => {
+    if (!viewer || !clip) return undefined
+    const p = viewer.tour(clip.data)
+    tourRef.current = p
+    p.speed = speedRef.current
+    setTourEv({ state: 'loading', step: 0, progress: 0 })
+    const off = p.onChange((e) => { setTourEv(e); if (e.state === 'done') onClipEndRef.current?.() })
+    p.play()
+    return () => {
+      off()
+      try { p.stop() } catch { /* viewer already destroyed */ }
+      if (tourRef.current === p) tourRef.current = null
+      window.speechSynthesis?.cancel()
+      setTourEv(null)
+    }
+  }, [viewer, clip])
+
+  useEffect(() => { if (tourRef.current) tourRef.current.speed = speed }, [speed])
+
+  const capText = clip && tourEv && clip.data.steps[tourEv.step]?.text
+  useEffect(() => {
+    if (!voice || !capText || tourEv?.state !== 'playing') return
+    window.speechSynthesis?.cancel()
+    window.speechSynthesis?.speak(new SpeechSynthesisUtterance(capText))
+    // eslint-disable-next-line
+  }, [voice, capText])
 
   const go = async (v) => {
     setView(v)
@@ -186,12 +226,37 @@ export default function Viewer3D({
     <div className="viewer3d">
       <div className="viewer3d-bar">
         {VIEWS.map(([k, l]) => <button key={k} className={k === view ? 'on' : ''} disabled={!viewer} onClick={() => go(k)}>{l}</button>)}
-        {hint && <span className="walk-hint" title={`Exit route: ${hint.text}`}>{hint.arrow} <small>{hint.text}</small></span>}
-        {walkInfo && <span className="walk-info small">{walkInfo}</span>}
-        <span className="muted small">{err ? '' : viewer ? (walkInfo ? '' : status) : 'Loading 3D model…'}</span>
+        {hint && !clip && <span className="walk-hint" title={`Exit route: ${hint.text}`}>{hint.arrow} <small>{hint.text}</small></span>}
+        {walkInfo && !clip && <span className="walk-info small">{walkInfo}</span>}
+        <span className="muted small">{err ? '' : viewer ? (walkInfo && !clip ? '' : status) : 'Loading 3D model…'}</span>
         {err && <span className="err small">{err}</span>}
       </div>
       <div className="viewer3d-box" ref={box} />
+      {clip && tourEv && (() => {
+        const p = tourRef.current; const steps = clip.data.steps; const st = tourEv.state
+        const bad = st === 'error'
+        return (
+          <div className={`tour-bar ${clip.data.kind}`} role="region" aria-label="Guided clip">
+            <div className="tour-head">
+              <b>{clip.label}</b><span>{clip.data.title} · {Math.round(clip.data.distance_m)} m · {clip.data.rooms.length} room{clip.data.rooms.length === 1 ? '' : 's'}</span>
+              <button className="x" onClick={onClipClose} aria-label="Close clip">✕</button>
+            </div>
+            <div className="tour-cap" aria-live="polite">{bad ? tourEv.message : st === 'loading' ? 'Finding camera positions…' : steps[tourEv.step]?.text}</div>
+            <div className="tour-prog"><i style={{ width: `${(st === 'done' ? 1 : tourEv.progress) * 100}%` }} /></div>
+            <div className="tour-ctl">
+              <button disabled={!p || bad} onClick={() => p.seekStep(Math.max(0, tourEv.step - 1))} aria-label="Previous step"><Icon name="back" /></button>
+              {st === 'playing' || st === 'loading'
+                ? <button className="f" disabled={st === 'loading'} onClick={() => p.pause()} aria-label="Pause"><Icon name="pause" /></button>
+                : <button className="f" disabled={!p} onClick={() => (st === 'done' ? p.restart() : p.play())} aria-label={st === 'done' ? 'Replay' : 'Play'}><Icon name="play" /></button>}
+              <button disabled={!p || bad || tourEv.step >= steps.length - 1} onClick={() => p.seekStep(tourEv.step + 1)} aria-label="Next step"><Icon name="arrow" /></button>
+              <span className="muted small">{Math.min(tourEv.step + 1, steps.length)}/{steps.length}</span>
+              <span className="sp" />
+              <button className={voice ? 'on' : ''} onClick={() => { setVoice(!voice); window.speechSynthesis?.cancel() }} aria-pressed={voice} aria-label="Read steps aloud"><Icon name="speak" /></button>
+              {[1, 2].map((v) => <button key={v} className={speed === v ? 'on' : ''} onClick={() => setSpeed(v)}>{v}×</button>)}
+            </div>
+          </div>
+        )
+      })()}
     </div>
   )
 }

@@ -107,3 +107,46 @@ export interface Evac {
   frames: EvacFrame[]
   agent_rooms: string[]
 }
+
+export interface TourStep {
+  /** Distance along the clip's polyline where this caption applies, meters. */
+  at_m: number
+  xy: XY
+  text: string
+  room_id: string | null
+  door_id: string | null
+  /** Heading change at this step in degrees, positive = left. */
+  turn_deg: number | null
+}
+
+export interface TourDoor {
+  door_id: string
+  side: string
+  position: XY
+  width_m: number
+  inferred: boolean
+}
+
+/** One clip: the way in (entry door to room) or the way out (room to exit). */
+export interface TourClip {
+  kind: 'in' | 'out'
+  title: string
+  distance_m: number
+  polyline: XY[]
+  rooms: string[]
+  steps: TourStep[]
+  door_id: string | null
+}
+
+export interface Tour {
+  building_id: string
+  room_id: string
+  room_label: string
+  entry: TourDoor
+  exit: TourDoor
+  in: TourClip
+  out: TourClip
+  /** Every exit door that reaches the room, nearest first: the choices for "which way in". */
+  entries: (TourDoor & { distance_m: number })[]
+  avoided: string[]
+}

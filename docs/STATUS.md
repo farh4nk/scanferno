@@ -7,50 +7,18 @@ Living handoff doc. Update your role's section and add a changelog line in the s
 **Done**
 - Access to all sources verified: CoStar kit, Matterport GraphQL, Vexcel REST + MCP, Gemini, ElevenLabs STT (`scripts/check_access`).
 - 3 hero buildings picked by verified scan quality; all data cached in `fixtures/` (`scripts/pick_heroes`, `scripts/fetch_fixtures`).
-- Dispatch pipeline: audio -> diarized transcript -> live dispatch records via Gemini, with deterministic room matching (`dispatch/`).
-- All 5 calls voiced with ElevenLabs (eleven_v3, emotion tags) and processed: `vibe-1-clean`, `vibe-2-messy`, `bellaire-1-patient`, `piney-1-storage`, `vibe-mayday`. Mayday call verified on `/calls/vibe-mayday/live` (emits the `mayday` event).
-- API: buildings, calls, SSE replay, typed extract, transcribe, static fixtures. Split into `app/routers/` (buildings, calls, dispatch, search) with shared lookups in `app/deps.py`; paths unchanged.
-- Address search: `GET /search` over 3 hero + 97 scanned CoStar properties, with a cached OpenStreetMap geocoder fallback; `GET /properties/{id}` (`data/directory.py`).
-- Briefing: every claim carries `sources`; exit routes avoid the fire area (`rerouted`, `through_avoided`); `hose_stretch` vs a 200 ft preconnect (`GET /buildings/{id}/hose`).
-- Live stream: briefing `changes` since the last update (`agent/changes.py`), record `corrections` for what the caller changed (`dispatch/history.py`).
-- Live transcription: `/live/sessions` (`dispatch/session.py`, `app/routers/live.py`) takes mic audio (ElevenLabs STT, re-transcribed whole each upload) or ready-made lines (browser speech / typed), re-extracts when caller lines change, returns record + briefing + mayday, and can save the call as `fixtures/calls/live-<id>/`. `/health` reports `stt`; without a key audio endpoints return 503.
+- Dispatch pipeline: audio -> diarized transcript -> live dispatch records via Gemini, with deterministic room matching (`dispatch/`). Two Vibe Hobby calls processed: `vibe-1-clean`, `vibe-2-messy`.
+- API: buildings, calls, SSE replay, typed extract, transcribe, static fixtures (`app/main.py`).
 
 **Next**
-1. ~~Regenerate call audio with real ElevenLabs voices~~ done.
+1. Regenerate call audio with real ElevenLabs voices (waiting on Voices: Read for the key).
 2. ~~Briefing agent~~ done on `geometry-agent`: `POST /buildings/{id}/briefing` (`agent/briefing.py`).
 3. ~~Commander Q&A~~ done on `geometry-agent`: `POST /buildings/{id}/ask` (`agent/ask.py`, Gemini tool calling, rules fallback).
 4. Mayday TTS: speak the `directions` from `GET /buildings/{id}/mayday` (or the `mayday` event on `/calls/{id}/live`).
 
 **Open issues**
-- Server mic transcription only tested with a stubbed STT so far (ElevenLabs key works on the Mac; needs a real run).
 - Gemini main models overloaded; extraction runs on flash-lite, 3 to 12 s per update. Replay of cached calls hides this.
 - Messy call: the "hallway" match picks one of two scanned hallways.
-
-## Rescue plan (branch `rescue-plan`)
-
-**Done**
-- Fire heat field (`geometry/heat.py`) and per-person rescue plan (`agent/rescue.py`): place trapped people from the call, risk-weighted way in / way out (doors + exterior windows as breach options).
-
-**Next**
-1. Wire into briefing / live API and draw on floor plan + 3D.
-2. Tests.
-
-## Search (branch `search`)
-
-**Done**
-- Search covers every Matterport model our key can see: 14,946 models grouped into ~8,500 buildings (~5,700 with a location, mostly Houston and LA). `scripts/sync_catalog.py` pages the Model API (~20 s), groups scans by street address + ZIP (merges spelling variants like "1027 Wiltshire Blvd", folds amenity scans into the building within 60 m), names complexes from unit titles ("Skylux on Wilshire"), joins CoStar, writes `fixtures/catalog/*.json.gz` (offline).
-- Index: in-memory SQLite FTS5 (prefix + typo-expanded tokens) picks candidates, `score()` ranks; also matches unit/scan names, tenants and room labels (`match: "extra"`). 2-100 ms per query.
-- `GET /properties/{id}` accepts building id, CoStar id or any Matterport model id; returns all scans, CoStar facts, cached Vexcel. `GET /properties/{id}/vexcel` and `/aerial?view=` fetch Vexcel on first open (~1 s) and cache under `fixtures/catalog/vexcel/`. `GET /search/stats`.
-- Property card shows aerial, roof/footprint, CoStar facts and tenants, and a list of Matterport scans.
-- Filtered search: `/search` takes `status`, `city`, `kind` (commercial/residential/other, from CoStar type or scan names), `costar`, `offset`; returns `total` and `facets` (counts per filter value). Scored matches and facets are cached per query, so paging and filter toggles take ~10-40 ms. Header dropdown has live filter chips with counts and infinite scroll.
-
-**Next**
-1. Unzip the CoStar kit (password-protected zip) and re-run `python -m scripts.sync_catalog --offline`: links every scanned property in `commercial-properties.csv` to CoStar facts/tenants (now only the 100 cached candidates are linked).
-2. One-click onboarding: turn a scanned building into a "ready" briefing (vector data + Vexcel + CoStar fetch, like `fetch_fixtures`).
-3. 3D viewer for any scanned model (viewer3d takes a model id), not just heroes.
-
-**Open issues**
-- ~2,800 scans have no address or location (amenity scans like "Pool"); searchable by name only.
 
 ## Geometry (branch `geometry-agent`)
 
@@ -64,31 +32,11 @@ Living handoff doc. Update your role's section and add a changelog line in the s
 
 **Open issues**
 - Piney Point and Bellaire exits are inferred from aerials (`floorplan_overrides` in buildings.json); scan has no exterior doorways.
-- ~~New scripts have no audio yet~~ all voiced and processed (agent-data).
-
-## 3D model overlays (branch `matterport-3d`, folder `viewer3d/`)
-
-Framework-free TypeScript toolkit that draws our data on the Matterport model, plus a bare dev bench (`npm run dev`) to test layers and tune alignment. Not the product UI: the website imports `viewer3d/src` later.
-
-**Done**
-- Self-hosted Showcase **Bundle SDK** (`@matterport/webcomponent`, copied to `public/bundle` on install); all 3 hero models load with the SDK key on localhost (`showcase.ts`).
-- Auto-calibration floor plan -> world by matching Showcase `Room.data` ids to `matterport_id` (`frame.ts`): Vibe 8 rooms / 0.05 m RMS, Bellaire 22 / 0.12 m, Piney Point 11 / 0.17 m. Hand overrides in `calibrations.ts`; the dev bench has nudge inputs + "Copy JSON".
-- Overlay layers in Showcase's three.js scene, in floor plan meters (`overlay.ts`): `polygon`, `volume`, `path`, `marker`, `label`, instanced `dots`, per-frame `tick`. Named layers, independent clear/hide.
-- Click picking -> floor plan point + room via `Renderer.getWorldPositionData` on the floor plane (`picking.ts`); 16/16 Vibe rooms resolve correctly.
-- Ready drawers (`draw/`): rooms by type or maze score, labels, outline, doors, exits (inferred marked), exterior windows, room highlight (pulsing), route to exit with flow dots, mayday wall path with walker, evac sim player (interpolated occupants, door queue discs, bottleneck ring; play/pause/seek/speed).
-- `openBuilding(el, building, {sdkKey})` wires it all: mount, calibrate, overlay, picking.
-- Walk mode (`walk.ts`): `walkTo(roomId)` flies to the best sweep in a room (Matterport room tag, then inside the polygon, then nearest; Office 110 has none inside) facing its way out; `onMove`/`onHeading` follow the camera. In the website, picking a room anywhere flies into it, and in Walk the exit route is redrawn from the room you stand in, x-rayed through walls with an exit beacon and a turn arrow in the bar.
-
-**Next**
-1. Integration branch: import `viewer3d/src` into the website, feed it `/calls/{id}/live` events (briefing search plan -> `highlightRooms`, `mayday` event -> `drawMayday`).
-2. Fire / victim / crew markers and a smoke-spread layer once the backend emits them.
-
-**Open issues**
-- Bellaire refuses `Mode.moveTo(dollhouse)` right after load (stays inside); overlays still render inside. Piney Point has no floor plan view.
-- Geometry: `floorplan.py` keeps only the largest piece of multi-part rooms (Bellaire Open area B is 9x17 m vs 18x21 m in Showcase; Offices 101, 111, 113 too). Calibration ignores those rooms.
+- New scripts `bellaire-1-patient`, `piney-1-storage`, `vibe-mayday` have no audio yet: run `scripts.process_calls`.
 
 ## Visuals and pitch (branch `ui`)
 
+<<<<<<< Updated upstream
 **Redesign (branch `ui-guide-sign`): the real `frontend/` now uses the new UI**
 - "Guide Sign" world, fire palette (charcoal, fire orange, ember red only for life risk). Product brief in `PRODUCT.md`; clickable mock in `.impeccable/mocks/prototype.html`.
 - Home (`src/brief/Home.jsx`) is the briefing: 5 key-fact signs with pictograms, floor plan with the plan of attack drawn on it, 4 steps Arrive / Enter / Search / Get out with diagrams (building section, hose gauge, distance scale, search path, exit bars), Play (browser TTS + caption) or Read. Live/replayed calls reshape it as facts arrive.
@@ -101,19 +49,16 @@ Framework-free TypeScript toolkit that draws our data on the Matterport model, p
 - Removed the old panels (Briefing, Dispatch, Transcript, Mayday, Evac, Ask, Aerial, FloorPlan, SourceTags); kept AddressSearch, PropertyCard, LivePanel, Viewer3D.
 - Next: wire the rescue planner (`agent/rescue.py`) into the Search step once it has an endpoint; check the 3D tab with a Matterport SDK key.
 
+=======
+>>>>>>> Stashed changes
 **Done**
 - React + Vite app in `frontend/` (`npm install && npm run dev`, http://localhost:5173; backend URL via `VITE_API_URL`, default http://localhost:8000).
 - Live call view: SSE `/calls/{id}/live` drives transcript, dispatch record (changed fields flash), briefing, mayday; audio starts when the stream opens.
 - SVG floor plan: maze heat, search order, trapped marker, fire area, exit routes, doors/windows, sides A-D, room click shows route + maze reasons.
-- 3D tab: mounts `viewer3d/` (Matterport Bundle SDK) via Vite alias `@viewer3d`; draws maze rooms, exits, fire, trapped, search order, routes, mayday and evac in the model. Needs `MATTERPORT_SDK_KEY` in repo-root `.env`.
 - Briefing tabs, Vexcel aerial viewer, Ask-the-plan (highlights answer on the plan), mayday panel (wall path + browser TTS), evac sim animation.
-- Structure: `src/api/` (one function per endpoint, mirrors `backend/app/routers/`), `src/hooks/` (`useLiveCall`, `useBuildingData`, `useDebounced`), `src/components/search/`.
-- Header address search replaces the building dropdown: matches known buildings, opens a property card for scanned-only ones, Enter geocodes unknown addresses; open building kept in `?building=`.
-- Live mode (header Replay / Live): `LivePanel` with ElevenLabs mic, browser speech recognition (Chrome/Edge) or typed lines, recording upload, "First voice is the" / "Speaking as" role toggle, save as a replayable call.
-- Source tags on briefing claims, "Changed" box in the summary, hose stretch in the Entry tab, struck-through caller corrections, floor plan draws rerouted exit routes.
 
 **Next**
-1. Visual polish and pitch flow; test the 3D tab with a real `MATTERPORT_SDK_KEY` (untested without a key).
+1. Visual polish and pitch flow; Matterport 3D viewer (needs `MATTERPORT_SDK_KEY`).
 2. Indoor-to-aerial overlay; mark evac bottleneck door on the plan.
 
 **Unblocked by:** aerial images at `/fixtures/<id>/vexcel/*.jpg`, calls at `/calls/{id}` and `/calls/{id}/replay` (SSE), sample briefing at `fixtures/sample/briefing.json`.
@@ -127,8 +72,6 @@ Framework-free TypeScript toolkit that draws our data on the Matterport model, p
 - 2026-11-14: Dispatch pipeline, two scripted calls, call API with SSE replay.
 - 2026-11-14: AGENTS.md / CLAUDE.md / STATUS.md for teammates' agents.
 - 2026-11-14: Geometry (floorplan, routes, maze, mayday, evac, sides), briefing + Q&A agents, live call stream.
-- 2026-11-14: `viewer3d/`: Matterport Bundle SDK viewer with auto-calibrated overlay layers (rooms, exits, routes, mayday, evac sim), picking, dev bench.
-- 2026-11-14: docs/FEATURES.md backend feature backlog (built, partial, ideas, priorities).
 - 2026-11-14: Frontend scaffold: live call, floor plan, briefing, aerials, Q&A, mayday, evac (React + Vite).
 - 2026-11-14: Frontend 3D model tab using viewer3d overlays.
 - 2026-11-14: Address search (`/search`, `/properties`, header search UI); backend routers + frontend `api/` and `hooks/` restructure; fire rerouting, hose stretch, briefing sources, live `changes` and caller `corrections`; FEATURES.md covers frontend + search (41 tests).
@@ -140,8 +83,11 @@ Framework-free TypeScript toolkit that draws our data on the Matterport model, p
 - 2026-11-14: Rescue plan heat field + per-person in/out routes (`geometry/heat.py`, `agent/rescue.py`); cached Vexcel for several searched properties.
 - 2026-11-14: UI redesign prototype (Guide Sign, briefing-first home with diagrams, spoken/read briefing) in `.impeccable/mocks/prototype.html`; `PRODUCT.md` product brief (branch `ui-redesign-prototype`).
 - 2026-11-14: Frontend redesign landed (branch `ui-guide-sign`): briefing-first home with key-fact signs, plan of attack and diagrams; one page per tool; fire palette.
+<<<<<<< Updated upstream
 - 2026-11-14: 3D model back up front: 2D/3D switch on the home briefing plan, `#model` page first in the toolbar.
 - 2026-11-14: Live call highlights back on the 2D plan: live mode, flashing rooms per update, NEW banner, key signs flash on change.
 - 2026-11-14: Seekable calls: `GET /calls/{id}/frames` + call transport bar (scrub, skip to next fact, speed); skip steps in the spoken briefing (54 tests).
 - 2026-11-14: ElevenLabs voice for the spoken briefing and mayday steps (`POST /speech`, word-timed captions, cached); Office 110 mayday lines pre-generated (55 tests).
 - 2026-11-14: Briefing voice: Bill on ElevenLabs flash at max speed, dispatch radio script with phonetic sides, background pre-generation so Play is instant.
+=======
+>>>>>>> Stashed changes

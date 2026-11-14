@@ -3,6 +3,7 @@ from fastapi import APIRouter, Body, HTTPException, Query
 
 from agent import ask as ask_agent
 from agent import briefing as briefing_agent
+from agent import tour as tour_agent
 from app import deps
 from data import cache, layers
 from dispatch import facts
@@ -47,6 +48,21 @@ def routes(bid: str, from_room: str = Query(..., description="room id, label or 
         r["rerouted"] = bool(default) and default["path"] != r["path"]
         r["avoided"] = avoid_ids
     return r
+
+
+@router.get("/{bid}/tour")
+def tour(bid: str, to_room: str = Query(..., description="target room id, label or description"),
+         entry: str | None = Query(None, description="entry door id or side letter A-D (default: nearest exit door)"),
+         exit: str | None = Query(None, description="exit door id or side letter for the way out (default: nearest)"),
+         avoid: str | None = Query(None, description="comma-separated rooms to route the way out around (fire, smoke)")):
+    """Clip data for the 3D viewer: the way in from an entry door to a room, and the way out, with step captions."""
+    deps.building(bid)
+    rid = deps.room_id(bid, to_room)
+    t = tour_agent.Tour(layers.floorplan(bid), layers.nav(bid), layers.sides(bid).of_local)
+    out = t.build(rid, entry, exit, deps.room_ids(bid, avoid))
+    if out is None:
+        raise HTTPException(404, "No route between an exit and that room")
+    return {"building_id": bid, **out}
 
 
 @router.get("/{bid}/mayday")
