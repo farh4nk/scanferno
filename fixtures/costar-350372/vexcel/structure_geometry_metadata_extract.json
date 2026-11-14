@@ -1,0 +1,21 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "metadata.camera-technology": null,
+        "metadata.gsd": 0.074422,
+        "metadata.image-id": null,
+        "metadata.ortho-date-estimate": 1767139200000,
+        "metadata.version": "6.0.1",
+        "metadata.layer-name": "urban",
+        "metadata.collection": "us-tx-houston-2026",
+        "metadata.is-ortho-image": true,
+        "primary-structure": true,
+        "footprint.area": 3703.4424486497073
+      },
+      "geometry": "MULTIPOLYGON (((-95.474511 29.710089, -95.474505 29.709549, -95.475142 29.709544, -95.475153 29.710083, -95.474511 29.710089)))"
+    }
+  ]
+}

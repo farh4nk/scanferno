@@ -104,3 +104,28 @@ class VexcelMCP:
 
     def call(self, name: str, arguments: dict) -> dict:
         return self._post("tools/call", {"name": name, "arguments": arguments})
+
+    def call_json(self, name: str, arguments: dict):
+        """Call a tool and parse its text content as JSON (falls back to the raw result)."""
+        result = self.call(name, arguments)
+        if result.get("isError"):
+            raise RuntimeError(f"Vexcel MCP {name}: {str(result.get('content'))[:300]}")
+        texts = [c["text"] for c in result.get("content") or [] if c.get("type") == "text"]
+        if len(texts) == 1:
+            try:
+                return json.loads(texts[0])
+            except ValueError:
+                return {"text": texts[0]}
+        return result
+
+
+# Roof material/condition/solar (structure_metadata) and footprint polygon (structure_geometry).
+STRUCTURE_TOOLS = ["structure_metadata_extract", "structure_geometry_metadata_extract"]
+_mcp: VexcelMCP | None = None
+
+
+def structure(lat: float, lon: float, tool: str = "structure_metadata_extract", buffer_m: int = 15):
+    global _mcp
+    if _mcp is None:
+        _mcp = VexcelMCP().connect()
+    return _mcp.call_json(tool, {"wkt": point(lat, lon), "srid": 4326, "buffer-meter": buffer_m, "latest": True, "unit-system": "metric"})

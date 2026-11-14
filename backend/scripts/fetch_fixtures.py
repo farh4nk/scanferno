@@ -44,6 +44,10 @@ def fetch(b: dict, refresh: bool):
         out = cache.FIXTURES / bid / "vexcel" / "elevation.json"
         step("vexcel elevation", out, refresh,
              lambda: cache.save_json(vexcel.elevation(b["lat"], b["lon"]), bid, "vexcel", "elevation.json"))
+        for tool in vexcel.STRUCTURE_TOOLS:
+            out = cache.FIXTURES / bid / "vexcel" / f"{tool}.json"
+            step(f"vexcel {tool}", out, refresh,
+                 lambda t=tool: cache.save_json(vexcel.structure(b["lat"], b["lon"], t), bid, "vexcel", f"{t}.json"))
     else:
         print("  todo  set lat/lon")
 

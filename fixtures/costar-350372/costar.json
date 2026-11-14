@@ -1,0 +1,187 @@
+{
+  "costar_property_id": 350372,
+  "building_name": "Bellaire Medical Professional Building",
+  "address": "6550 Mapleridge St, Houston, TX",
+  "lat": 29.709744,
+  "lon": -95.474863,
+  "property_type": "Office",
+  "year_built": 1979,
+  "year_renovated": 2018,
+  "stories": 2,
+  "height_ft": 26.0,
+  "rba_sqft": 65014.0,
+  "construction_material": "Metal",
+  "has_sprinklers": null,
+  "sprinkler_type": "Unknown",
+  "floors": [
+    {
+      "id": 217996,
+      "name": "SecondFloor",
+      "sqft": 31881.0
+    },
+    {
+      "id": 221169,
+      "name": "FirstFloor",
+      "sqft": 31881.0
+    },
+    {
+      "id": 1538820,
+      "name": "UnknownFloor",
+      "sqft": 36796.0
+    }
+  ],
+  "current_tenant_count": 16,
+  "vacant": false,
+  "tenants": [
+    {
+      "name": "Healthy Hair Firm",
+      "industry": "PersonalServices",
+      "employees": 1,
+      "floor": "SecondFloor",
+      "suite": "215",
+      "sqft": 1010.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "DM Clinical Research",
+      "industry": "ProfessionalScientificAndTechnicalServices",
+      "employees": 30,
+      "floor": "SecondFloor",
+      "suite": "201, 206, 216, 220",
+      "sqft": 3000.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Alliance Healthcare Group",
+      "industry": "HealthCareAndSocialAssistance",
+      "employees": 4,
+      "floor": "FirstFloor",
+      "suite": "117",
+      "sqft": 1000.0,
+      "space_use": "Medical"
+    },
+    {
+      "name": "Medicus Rx Pharmacy, Inc",
+      "industry": "RetailersOrWholesalers",
+      "employees": 10,
+      "floor": "SecondFloor",
+      "suite": "225",
+      "sqft": 1440.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Houston Pediatric Therapy",
+      "industry": "HealthCareAndSocialAssistance",
+      "employees": 4,
+      "floor": "SecondFloor",
+      "suite": "214",
+      "sqft": 867.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "The Lice Place",
+      "industry": "PersonalServices",
+      "employees": 1,
+      "floor": "SecondFloor",
+      "suite": "229",
+      "sqft": 1070.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Aesthetica Organic Spa",
+      "industry": "PersonalServices",
+      "employees": 12,
+      "floor": "FirstFloor",
+      "suite": "124",
+      "sqft": 1865.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Leidos QTC Health Services",
+      "industry": "HealthCareAndSocialAssistance",
+      "employees": 52,
+      "floor": "FirstFloor",
+      "suite": "105",
+      "sqft": 7993.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Innovative Allergy",
+      "industry": "HealthCareAndSocialAssistance",
+      "employees": 15,
+      "floor": "FirstFloor",
+      "suite": "115",
+      "sqft": 4021.0,
+      "space_use": "Medical"
+    },
+    {
+      "name": "Modern Eye Vision & Surgery",
+      "industry": "HealthCareAndSocialAssistance",
+      "employees": 28,
+      "floor": "FirstFloor",
+      "suite": "118",
+      "sqft": 4201.0,
+      "space_use": "Medical"
+    },
+    {
+      "name": "Barbara Bush Internal Medicine",
+      "industry": "HealthCareAndSocialAssistance",
+      "employees": 2,
+      "floor": "FirstFloor",
+      "suite": "101a",
+      "sqft": 1594.0,
+      "space_use": "Medical"
+    },
+    {
+      "name": "opSolutions",
+      "industry": "Manufacturing",
+      "employees": 10,
+      "floor": "FirstFloor",
+      "suite": "120",
+      "sqft": 1594.0,
+      "space_use": "Medical"
+    },
+    {
+      "name": "Prestige Pharmacy",
+      "industry": "RetailersOrWholesalers",
+      "employees": 10,
+      "floor": "FirstFloor",
+      "suite": "116",
+      "sqft": 1594.0,
+      "space_use": "Medical"
+    },
+    {
+      "name": "Heart of Houston",
+      "industry": "HealthCareAndSocialAssistance",
+      "employees": 10,
+      "floor": "FirstFloor",
+      "suite": "100",
+      "sqft": 1594.0,
+      "space_use": "Medical"
+    },
+    {
+      "name": "Permanent Makeup by Kim",
+      "industry": "PersonalServices",
+      "employees": 10,
+      "floor": "FirstFloor",
+      "suite": "102",
+      "sqft": 1594.0,
+      "space_use": "Medical"
+    },
+    {
+      "name": "Unknown tenant",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "SecondFloor",
+      "suite": null,
+      "sqft": 5673.0,
+      "space_use": "Medical"
+    }
+  ],
+  "photo_url": "https://ahprd1cdn.csgpimgs.com/i2/nuNfJL0inIZgoMpi3qDdY0pKNi66bqqFz4LEpRu2U4A/112/image.jpg",
+  "matterport_model_ids": [
+    "THASDAsdrw3",
+    "i8Q5pWYiYvf",
+    "mtUS93XRggA"
+  ]
+}
