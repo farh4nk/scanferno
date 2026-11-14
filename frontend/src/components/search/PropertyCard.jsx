@@ -1,18 +1,18 @@
 import { useEffect, useState } from 'react'
-import { getProperty, getPropertyVexcel, propertyAerialUrl } from '../../api'
+import { getProperty, getPropertyVexcel, prepareOnDemand, propertyAerialUrl } from '../../api'
 
-// Facts for a searched property that has no cached briefing yet: Matterport scans, CoStar facts,
-// Vexcel roof + aerial (fetched on open, cached by the backend), and a jump to the nearest briefing.
+// Facts for a searched property. "Open briefing" onboards on demand (same process as heroes), then opens the floor plan / 3D view.
 export default function PropertyCard({ property, onClose, onOpenBuilding }) {
   const [p, setP] = useState(property)
   const [err, setErr] = useState(null)
   const [vx, setVx] = useState(null)
   const [vxErr, setVxErr] = useState(null)
   const [imgOk, setImgOk] = useState(true)
+  const [busy, setBusy] = useState(false)
   const key = property.id ?? property.costar_property_id
 
   useEffect(() => {
-    setP(property); setErr(null); setVx(null); setVxErr(null); setImgOk(true)
+    setP(property); setErr(null); setVx(null); setVxErr(null); setImgOk(true); setBusy(false)
     getProperty(key).then(setP).catch((e) => setErr(e.message))
     if (property.lat != null) getPropertyVexcel(key).then(setVx).catch((e) => setVxErr(e.message))
   }, [property, key])
@@ -22,6 +22,20 @@ export default function PropertyCard({ property, onClose, onOpenBuilding }) {
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
   }, [onClose])
+
+  const openReady = async () => {
+    if (p.status === 'ready' && p.building_id) {
+      onOpenBuilding(p.building_id)
+      return
+    }
+    setBusy(true); setErr(null)
+    try {
+      const r = await prepareOnDemand(key)
+      onOpenBuilding(r.building_id)
+    } catch (e) {
+      setErr(e.message); setBusy(false)
+    }
+  }
 
   const c = p.costar || {}
   const roof = vx || p.vexcel
@@ -69,14 +83,12 @@ export default function PropertyCard({ property, onClose, onOpenBuilding }) {
           <p className="small"><a href={`https://www.openstreetmap.org/?mlat=${p.lat}&mlon=${p.lon}#map=18/${p.lat}/${p.lon}`} target="_blank" rel="noreferrer">
             Open on map ({p.lat.toFixed(5)}, {p.lon.toFixed(5)})</a></p>
         )}
-        {p.status === 'ready'
-          ? <button className="primary" onClick={() => onOpenBuilding(p.building_id)}>Open briefing</button>
-          : (
-            <>
-              <p className="small warn">No interior plan cached for this building yet, so there's no briefing.</p>
-              {p.onboard_hint && <p className="small muted">To add it: {p.onboard_hint}</p>}
-            </>
-          )}
+        <button className="primary" disabled={busy || !p.scan?.model_id} onClick={openReady}>
+          {busy ? 'Loading interior…' : 'Open briefing'}
+        </button>
+        {p.status !== 'ready' && !busy && (
+          <p className="small muted">First open fetches the Matterport floor plan (a few seconds), then works offline like the hero buildings.</p>
+        )}
         {p.nearest_ready?.length > 0 && (
           <>
             <h4>Nearest buildings with a briefing</h4>

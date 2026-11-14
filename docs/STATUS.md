@@ -35,6 +35,18 @@ Living handoff doc. Update your role's section and add a changelog line in the s
 1. Wire into briefing / live API and draw on floor plan + 3D.
 2. Tests.
 
+## On-demand ready (branch `ondemand`)
+
+**Done**
+- `backend/ondemand/`: `prepare(key)` fetches Matterport vector, registers the building, builds floorplan (same layout as heroes). Registry in `fixtures/ondemand/ready.json`.
+- API: `GET/POST /ondemand/{key}`. `layers.building` and `GET /buildings` include onboarded rows.
+- Frontend: property card "Open briefing" onboards on demand (loading state), then opens floor plan / 3D.
+- Live: when the dispatch record gets an address for another known building, the session onboards it and switches `building_id` (`building_changed`); UI follows without killing the call.
+
+**Next**
+1. Prefetch a shortlist (Houston commercial) overnight for zero-wait demos.
+2. Better default `front` / exits when the scan has no exterior doorways.
+
 ## Search (branch `search`)
 
 **Done**
@@ -46,7 +58,6 @@ Living handoff doc. Update your role's section and add a changelog line in the s
 
 **Next**
 1. Unzip the CoStar kit (password-protected zip) and re-run `python -m scripts.sync_catalog --offline`: links every scanned property in `commercial-properties.csv` to CoStar facts/tenants (now only the 100 cached candidates are linked).
-2. One-click onboarding: turn a scanned building into a "ready" briefing (vector data + Vexcel + CoStar fetch, like `fetch_fixtures`).
 3. 3D viewer for any scanned model (viewer3d takes a model id), not just heroes.
 
 **Open issues**
@@ -126,3 +137,4 @@ Framework-free TypeScript toolkit that draws our data on the Matterport model, p
 - 2026-11-14: Search over all 14,946 Matterport models (~8,500 buildings) with SQLite FTS5 index, CoStar join, on-demand cached Vexcel roof + aerial per building; `/search/stats`, `/properties/{id}/vexcel`, `/properties/{id}/aerial` (51 tests).
 - 2026-11-14: Search filters (status, city, kind, CoStar) with facet counts, paging, infinite-scroll dropdown; city typos folded (52 tests).
 - 2026-11-14: Rescue plan heat field + per-person in/out routes (`geometry/heat.py`, `agent/rescue.py`); cached Vexcel for several searched properties.
+- 2026-11-14: On-demand ready (`backend/ondemand/`): POST /ondemand/{key}, property-card open, live address→building switch (57 tests).

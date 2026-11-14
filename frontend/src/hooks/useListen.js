@@ -8,7 +8,7 @@ import { createLiveSession, endLiveSession, liveAudio, liveUtterances, saveLiveS
 //   typed    lines typed by hand (also works alongside browser mode)
 // plus uploadFile() for a recorded call.
 const UPLOAD_EVERY_MS = 4000
-const EMPTY = { utterances: [], interim: '', record: null, recordN: 0, briefing: null, mayday: null, status: 'idle', listening: false, error: null, savedCallId: null }
+const EMPTY = { utterances: [], interim: '', record: null, recordN: 0, briefing: null, mayday: null, status: 'idle', listening: false, error: null, savedCallId: null, sessionBuildingId: null, buildingChanged: false }
 const MIME = ['audio/webm;codecs=opus', 'audio/webm', 'audio/ogg;codecs=opus', 'audio/mp4']
 
 export const SpeechRecognition = typeof window !== 'undefined' && (window.SpeechRecognition || window.webkitSpeechRecognition)
@@ -32,6 +32,8 @@ export function useListen(buildingId) {
   const setRole = (r) => { role$.current = r; setRoleState(r) }
   const fail = (msg) => setState((s) => ({ ...s, error: msg }))
 
+  const syncBuilding = useRef(false) // session switched building; don't tear down the live session
+
   const apply = useCallback((r) => setState((s) => ({
     ...s,
     utterances: mode.current === 'server' ? indexed(r.utterances) : s.utterances,
@@ -39,6 +41,8 @@ export function useListen(buildingId) {
     recordN: s.recordN + (r.extracted ? 1 : 0),
     briefing: r.briefing ?? s.briefing,
     mayday: r.mayday ?? s.mayday,
+    sessionBuildingId: r.building_id || s.sessionBuildingId,
+    buildingChanged: !!r.building_changed,
     error: null,
   })), [])
 
@@ -188,7 +192,13 @@ export function useListen(buildingId) {
     setState(EMPTY)
   }, [stop])
 
-  useEffect(() => reset, [buildingId, reset]) // a session belongs to one building
+  useEffect(() => {
+    if (syncBuilding.current) { syncBuilding.current = false; return }
+    reset()
+  }, [buildingId, reset]) // a session belongs to one building (unless the session itself switched)
 
-  return { ...state, role, setRole, start, stop, addLine, uploadFile, save, reset }
+  // Tell App the live call moved to another building without resetting the session.
+  const acceptBuildingSync = useCallback(() => { syncBuilding.current = true }, [])
+
+  return { ...state, role, setRole, start, stop, addLine, uploadFile, save, reset, acceptBuildingSync }
 }

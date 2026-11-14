@@ -64,7 +64,18 @@ export default function App() {
     if (!id || id === buildingId) return
     live.reset(); setSelected(null); setHighlight(null); setMayday(null); setEvacFrame(null); setEvac(null)
     setBuildingId(id)
+    getBuildings().then(setBuildings).catch(() => {})
   }, [buildingId, live])
+
+  // Live call named a different address → session onboarded it; follow without killing the session.
+  useEffect(() => {
+    if (source !== 'live' || !listen.buildingChanged || !listen.sessionBuildingId) return
+    if (listen.sessionBuildingId === buildingId) return
+    listen.acceptBuildingSync()
+    setSelected(null); setHighlight(null); setMayday(null); setEvacFrame(null); setEvac(null)
+    setBuildingId(listen.sessionBuildingId)
+    getBuildings().then(setBuildings).catch(() => {})
+  }, [source, listen.buildingChanged, listen.sessionBuildingId, buildingId, listen])
 
   const building = buildings.find((b) => b.id === buildingId)
   const buildingCalls = useMemo(() => calls.filter((c) => c.building_id === buildingId), [calls, buildingId])

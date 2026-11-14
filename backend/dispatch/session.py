@@ -40,6 +40,8 @@ class Session:
         self._hist: dict = {}
         self._caller_key: str | None = None
         self._mayday_key: str | None = None
+        self._address_key: str | None = None
+        self.building_changed: bool = False
 
     def transcribe(self, audio: bytes, filename: str, first_role: str = "dispatcher") -> dict:
         """STT on the whole recording so far (MediaRecorder chunks concatenated, or an uploaded file)."""
@@ -66,10 +68,34 @@ class Session:
         bid = self.building_id
         self.record = facts.extract(self.utterances, bid, self.use_llm, previous=self.record)
         self.record["corrections"] = history.track(self._hist, self.record, u["end"])
+        self._maybe_switch_building()
+        bid = self.building_id
         new = briefing_agent.build(bid, self.record, use_llm=False)
         new["changes"] = changes.diff(self.briefing, new)
         self.briefing = new
         self.timeline.append({"t": u["end"], "utterance_index": i, "record": self.record})
+
+    def _maybe_switch_building(self):
+        """If the caller gave an address for a different known building, onboard it and switch."""
+        addr = (self.record or {}).get("address")
+        if not addr or addr == self._address_key:
+            return
+        self._address_key = addr
+        from ondemand import OnboardError, resolve
+        try:
+            out = resolve.prepare_for_address(addr)
+        except OnboardError:
+            return
+        if not out or out["building_id"] == self.building_id:
+            return
+        self.building_id = out["building_id"]
+        self.building_changed = True
+        self.mayday = None
+        self._mayday_key = None
+        # Re-resolve rooms against the new floor plan
+        self.record = facts.extract(self.utterances, self.building_id, self.use_llm, previous=None)
+        self.record["corrections"] = []
+        self.briefing = None
 
     def _check_mayday(self, callers: list[tuple[int, dict]]):
         said = [u["text"] for _, u in callers if MAYDAY.search(u["text"])]
@@ -82,9 +108,11 @@ class Session:
             self.mayday = wallfollow.mayday(layers.floorplan(bid), c[0]["room_id"], layers.nav(bid), layers.sides(bid).of_local)
 
     def state(self, extracted: bool = False) -> dict:
-        return {"session_id": self.id, "building_id": self.building_id, "utterances": self.utterances,
-                "record": self.record, "briefing": self.briefing, "mayday": self.mayday,
-                "updates": len(self.timeline), "extracted": extracted}
+        changed = self.building_changed
+        self.building_changed = False
+        return {"session_id": self.id, "building_id": self.building_id, "building_changed": changed,
+                "utterances": self.utterances, "record": self.record, "briefing": self.briefing,
+                "mayday": self.mayday, "updates": len(self.timeline), "extracted": extracted}
 
     def save(self, title: str | None = None) -> str:
         """Write the session as fixtures/calls/live-<id>/ so /calls/{id}/live replays it offline."""

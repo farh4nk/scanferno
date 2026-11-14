@@ -20,6 +20,10 @@ def building(bid: str) -> dict:
     for b in cache.buildings():
         if b["id"] == bid:
             return b
+    from ondemand import registry  # local import: ondemand depends on layers for floorplan
+    row = registry.get(bid)
+    if row is not None:
+        return row
     raise KeyError(f"Unknown building {bid}")
 
 
@@ -27,7 +31,7 @@ def building(bid: str) -> dict:
 def costar(bid: str) -> dict:
     data = cache.load_json(bid, "costar.json")
     if data is None:
-        raise FileNotFoundError(f"No CoStar fixture for {bid}; run scripts.fetch_fixtures")
+        raise FileNotFoundError(f"No CoStar fixture for {bid}; run scripts.fetch_fixtures or POST /ondemand/{{id}}")
     return data
 
 

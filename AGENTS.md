@@ -66,6 +66,7 @@ One router file per area (`buildings.py`, `calls.py`, `dispatch.py`, `search.py`
 | `GET /search/stats` | buildings, located, CoStar-linked and Matterport model counts |
 | `GET /properties/{id}` | one building (building id, CoStar id or any Matterport model id): all scans, CoStar facts, cached Vexcel, nearest briefings |
 | `GET /properties/{id}/vexcel`, `/aerial?view=` | Vexcel roof/footprint and aerial JPEG, fetched on first use then cached in `fixtures/catalog/vexcel/` |
+| `GET/POST /ondemand/{key}` | make a catalog building ready (Matterport vector + floorplan); idempotent cache under `fixtures/<id>/` |
 | `GET /buildings/{id}/mayday?room=` | wall-following directions out (room id, label or mayday text) |
 | `GET /buildings/{id}/evac?occupants=` | evacuation sim: clear time, bottleneck door, frames |
 | `POST /buildings/{id}/dispatch` | `{transcript, use_llm}` -> dispatch record with room candidates (Gemini or offline rules) |

@@ -11,3 +11,4 @@ dist/
 .claude/
 *.log
 costar-kit/
+fixtures/ondemand/

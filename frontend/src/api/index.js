@@ -41,3 +41,8 @@ export const getProperty = (key) => get(`/properties/${enc(key)}`)
 export const getPropertyVexcel = (key) => get(`/properties/${enc(key)}/vexcel`)
 export const propertyAerialUrl = (key, view = 'nadir') => `${API}/properties/${enc(key)}/aerial?view=${view}`
 export const searchStats = () => get('/search/stats')
+
+// routers/ondemand.py — catalog building → ready floor plan (same cache as heroes)
+export const getOnDemand = (key) => get(`/ondemand/${enc(key)}`)
+export const prepareOnDemand = (key, { refresh = false, outside = true } = {}) =>
+  post(`/ondemand/${enc(key)}?refresh=${refresh ? 'true' : 'false'}&outside=${outside ? 'true' : 'false'}`, {})
