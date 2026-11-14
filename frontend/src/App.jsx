@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { getBuildings, getCalls, health } from './api'
-import { useLiveCall } from './hooks/useLiveCall'
+import { useCallPlayer } from './hooks/useCallPlayer'
+import CallBar from './brief/CallBar'
 import { useListen } from './hooks/useListen'
 import { useBuildingData } from './hooks/useBuildingData'
 import { deriveBrief } from './brief/model'
@@ -58,7 +59,7 @@ export default function App() {
   const [callId, setCallId] = useState('')
   const [speed, setSpeed] = useState(1)
   const [error, setError] = useState(null)
-  const live = useLiveCall()
+  const live = useCallPlayer()
   const listen = useListen(buildingId)
   const feed = source === 'live' ? listen : live
   const { plan, briefing: baseBriefing, error: dataError } = useBuildingData(buildingId)
@@ -88,7 +89,7 @@ export default function App() {
   const briefing = feed.briefing || baseBriefing
   const k = useMemo(() => deriveBrief(plan, briefing, feed.record), [plan, briefing, feed.record])
   const call = calls.find((c) => c.call_id === callId)
-  const running = live.status === 'connecting' || live.status === 'live'
+  const running = ['connecting', 'live', 'paused'].includes(live.status)
   const listening = listen.listening || listen.status === 'connecting'
   const startCall = () => { if (call) { if (source !== 'replay') setSource('replay'); live.start(call, speed) } }
   const switchSource = (s) => { live.reset(); listen.stop(); setSource(s) }
@@ -96,14 +97,14 @@ export default function App() {
 
   const ctx = {
     plan, briefing, feed, building, buildingId, params: route.params, source, switchSource, calls: buildingCalls, callId,
-    setCallId: (id) => { live.reset(); setCallId(id) }, speed, setSpeed, startCall, stopCall: live.reset, running, listen, caps, onSaved,
+    setCallId: (id) => { live.reset(); setCallId(id) }, speed, setSpeed: (s) => { setSpeed(s); if (live.loaded) live.setRate(s) }, seek: live.loaded ? live.seek : null, startCall, stopCall: live.reset, running, listen, caps, onSaved,
   }
   const page = PAGES.find((p) => p.id === route.id)
   const next = page && PAGES[PAGES.indexOf(page) + 1]
   const name = briefing?.building?.name || building?.name || 'Loading…'
   const address = briefing?.building?.address?.replace(/, [A-Z]{2}$/, '') || building?.address || ''
   const callBtn = running || listening
-    ? <button className="btn" onClick={() => { live.reset(); listen.stop() }}><span className="dotlive" />{source === 'live' ? 'Live call' : 'Call playing'}<Icon name="stop" /></button>
+    ? (source === 'live' ? <button className="btn" onClick={() => listen.stop()}><span className="dotlive" />Live call<Icon name="stop" /></button> : null)
     : <button className="btn" onClick={startCall} disabled={!call}><Icon name="play" />{feed.utterances.length ? 'Replay call' : 'Play call'}</button>
 
   return (
@@ -119,6 +120,8 @@ export default function App() {
           ? <nav className="tools ml">{TOOLS.map((t) => <button key={t} onClick={() => go(t)}>{PAGES.find((p) => p.id === t).name.replace('Aerial photos', 'Photos').replace('Floor plan', 'Plan')}</button>)}<button onClick={() => go('all')}>All</button></nav>
           : next && <button className="btn f ml" onClick={() => go(next.id)}>Next: {next.name}<Icon name="arrow" /></button>}
       </header>
+
+      {source === 'replay' && live.loaded && <CallBar player={live} />}
 
       {(error || dataError || feed.error) && <div className="banner" role="alert">{error || dataError || feed.error}</div>}
 

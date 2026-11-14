@@ -68,3 +68,22 @@ def test_save_makes_a_replayable_call(monkeypatch):
 def test_unknown_session_and_building():
     assert client.get("/live/sessions/nope").status_code == 404
     assert client.post("/live/sessions", json={"building_id": "nope"}).status_code == 404
+
+
+def test_call_frames_are_seekable():
+    from fastapi.testclient import TestClient
+    from app.main import app
+    r = TestClient(app).get("/calls/vibe-1-clean/frames").json()
+    assert r["utterances"] and r["frames"] and r["duration"] > 0
+    ts = [f["t"] for f in r["frames"]]
+    assert ts == sorted(ts)
+    last = r["frames"][-1]["briefing"]
+    assert last["trapped"] and last["fire_room_ids"]
+    assert any(c["kind"] == "trapped" for f in r["frames"] for c in f["briefing"]["changes"])
+
+
+def test_mayday_call_frames_carry_directions():
+    from fastapi.testclient import TestClient
+    from app.main import app
+    r = TestClient(app).get("/calls/vibe-mayday/frames").json()
+    assert any(f.get("mayday", {}).get("directions") for f in r["frames"])

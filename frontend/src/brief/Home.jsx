@@ -116,7 +116,7 @@ export default function Home({ k, plan, briefing, feed, go, building }) {
   const [view, setView] = useState('2d')
   const [follow, setFollow] = useState(true)
   const [flash, setFlash] = useState(null)
-  const live = feed.status === 'live' || feed.status === 'connecting'
+  const live = ['live', 'connecting', 'paused'].includes(feed.status)
   const [narrating, setNarrating] = useState(false)
   const [reading, setReading] = useState(false)
   const [caption, setCaption] = useState(null)
@@ -129,9 +129,10 @@ export default function Home({ k, plan, briefing, feed, go, building }) {
     const txt = stepScript(k, i); const u = new SpeechSynthesisUtterance(txt); u.rate = 1.05
     setCaption({ txt, at: 0, end: 0 })
     u.onboundary = (ev) => { const b = txt.indexOf(' ', ev.charIndex + 1); setCaption({ txt, at: ev.charIndex, end: b < 0 ? txt.length : b }) }
-    u.onend = () => setTimeout(() => narrate(i + 1), 350)
+    u.onend = () => { if (alive.current) setTimeout(() => narrate(i + 1), 350) }
     window.speechSynthesis.speak(u)
   }
+  const jump = (i) => { window.speechSynthesis?.cancel(); alive.current = false; setTimeout(() => { alive.current = true; setNarrating(true); setFollow(false); narrate(Math.max(0, Math.min(STEPS.length - 1, i))) }, 60) }
   const toggle = () => { if (narrating) stop(); else { window.speechSynthesis?.cancel(); setFollow(false); alive.current = true; setNarrating(true); narrate(0) } }
   useEffect(() => () => { alive.current = false; window.speechSynthesis?.cancel() }, [])
   useEffect(() => {
@@ -149,7 +150,7 @@ export default function Home({ k, plan, briefing, feed, go, building }) {
   // flash the rooms each briefing update names, with the change as a banner
   useEffect(() => {
     const ch = briefing.changes || []
-    if (!ch.length) return undefined
+    if (!ch.length || feed.jumped) return undefined
     const ids = [...new Set(ch.flatMap((c) => (c.kind === 'fire' ? k.fireIds : c.room_id ? [c.room_id] : [])))]
     const items = ch.filter((c) => c.kind !== 'search_plan' || ch.length === 1)
     setFlash({ ids, items, key: briefing.generated_at })
@@ -181,7 +182,7 @@ export default function Home({ k, plan, briefing, feed, go, building }) {
         </div>
         {narrating && caption ? (
           <p className="caption"><span className="said">{caption.txt.slice(0, caption.at)}</span><mark>{caption.txt.slice(caption.at, caption.end)}</mark>{caption.txt.slice(caption.end)}</p>
-        ) : feed.status === 'live' || feed.status === 'connecting' ? (
+        ) : live ? (
           <div className="ticker"><span className="dotlive" /><b>{last?.role || 'call'}</b>{last?.text || 'Connecting…'}</div>
         ) : null}
       </div>
@@ -198,8 +199,10 @@ export default function Home({ k, plan, briefing, feed, go, building }) {
       </div>
       <div className="stepper">
         {STEPS.map((s, i) => (
-          <button key={s} className={`stp ${!livePlan && i === step ? 'on' : ''} ${!livePlan && i < step ? 'past' : ''}`} onClick={() => { stop(); setFollow(false); setStep(i) }}><i>{i + 1}</i>{s}</button>
+          <button key={s} className={`stp ${!livePlan && i === step ? 'on' : ''} ${!livePlan && i < step ? 'past' : ''}`} onClick={() => { if (narrating) jump(i); else { stop(); setFollow(false); setStep(i) } }}><i>{i + 1}</i>{s}</button>
         ))}
+        {narrating && <button className="btn play skip" onClick={() => jump(step - 1)} disabled={step === 0} aria-label="Previous step"><Icon name="prev" /></button>}
+        {narrating && <button className="btn play skip" onClick={() => jump(step + 1)} disabled={step === STEPS.length - 1} aria-label="Next step"><Icon name="next" /></button>}
         <button className="btn f play" onClick={toggle}><Icon name={narrating ? 'pause' : 'speak'} />{narrating ? 'Stop' : 'Play'}</button>
         <button className={`btn play ${reading ? 'on' : ''}`} onClick={() => setReading((r) => !r)}><Icon name="facts" />{reading ? 'Close text' : 'Read'}</button>
       </div>

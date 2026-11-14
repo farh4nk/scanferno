@@ -66,6 +66,53 @@ def _script_utterances(script: dict) -> list[dict]:
     return out
 
 
+_FRAMES: dict[str, dict] = {}
+
+
+@router.get("/calls/{call_id}/frames")
+def frames(call_id: str, refresh: bool = False):
+    """The whole call precomputed, for a player that can seek: every utterance, plus one frame per caller line
+    with the dispatch record, the rebuilt briefing (with `changes` since the previous frame) and, for mayday
+    calls, the wall-following directions. Same logic as /live without the waiting; the client plays the audio
+    and shows the last frame whose `t` has passed. Offline rules only, so it returns in a second or two."""
+    if call_id in _FRAMES and not refresh:
+        return _FRAMES[call_id]
+    script = cache.load_json("calls", call_id, "script.json")
+    if not script:
+        raise HTTPException(404, f"no call {call_id}")
+    bid = script["building_id"]
+    data = cache.load_json("calls", call_id, "timeline.json")
+    utts = data["utterances"] if data else _script_utterances(script)
+    cached = {s["utterance_index"]: s["record"] for s in data["timeline"]} if data else {}
+    out, record, brief, hist = [], None, None, {}
+    for i, u in enumerate(utts):
+        if u["role"] == "dispatcher":
+            continue
+        if script.get("kind") == "mayday":
+            c = locate(u["text"], layers.floorplan(bid), layers.nav(bid), top=1)
+            if c:
+                m = wallfollow.mayday(layers.floorplan(bid), c[0]["room_id"], layers.nav(bid), layers.sides(bid).of_local)
+                out.append({"t": u["end"], "utterance_index": i, "mayday": m})
+            continue
+        if i in cached:
+            record = facts.resolve_rooms(facts.normalize(cached[i], bid), bid)
+            record["extractor"] = "cached timeline"
+        else:
+            record = facts.extract(utts[: i + 1], bid, False, previous=record)
+        record["corrections"] = history.track(hist, record, u["end"])
+        new = briefing_agent.build(bid, record, use_llm=False)
+        new["changes"] = changes.diff(brief, new)
+        brief = new
+        out.append({"t": u["end"], "utterance_index": i, "record": record, "briefing": brief})
+    res = {
+        "call_id": call_id, "building_id": bid, "kind": script.get("kind", "dispatch"), "title": script.get("title"),
+        "audio_url": pipeline.audio_url(call_id), "duration": round(utts[-1]["end"], 2) if utts else 0.0,
+        "utterances": utts, "frames": out,
+    }
+    _FRAMES[call_id] = res
+    return res
+
+
 @router.get("/calls/{call_id}/live")
 def live(call_id: str, speed: float = 1.0, use_llm: bool | None = None):
     """The full demo stream for any call. Same `utterance` / `record` events as /replay, plus `briefing`

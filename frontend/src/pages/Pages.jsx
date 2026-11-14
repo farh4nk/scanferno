@@ -20,7 +20,7 @@ export function CallPage({ ctx }) {
       <div className="panel" ref={box}>
         <h2>Transcript <span>{feed.status}</span></h2>
         {feed.utterances.length ? feed.utterances.map((u, i) => (
-          <div key={i} className={`utt ${u.role}`}><span className="t">{u.start != null ? fmt(u.start) : ''}</span><div><div className="who">{u.role}</div>{u.text}</div></div>
+          <div key={i} className={`utt ${u.role} ${ctx.seek ? 'seekable' : ''}`} onClick={ctx.seek ? () => ctx.seek(u.start) : undefined} title={ctx.seek ? 'Jump here' : undefined}><span className="t">{u.start != null ? fmt(u.start) : ''}</span><div><div className="who">{u.role}</div>{u.text}</div></div>
         )) : <p className="empty">{source === 'live' ? 'Listen with the mic, upload a recording, or type a line.' : 'Pick a call and press Play. Lines appear as the caller speaks, and every page updates as facts come in.'}</p>}
         {feed.interim && <div className="utt caller interim"><span className="t" /><div><div className="who">…</div>{feed.interim}</div></div>}
       </div>
@@ -34,7 +34,7 @@ export function CallPage({ ctx }) {
               {calls.map((c) => <option key={c.call_id} value={c.call_id}>{c.title.replace(/^[^:]+: /, '')}{c.has_audio ? '' : ' (no audio)'}</option>)}
             </select>
             <div className="row-btns">
-              {running ? <button className="btn wide" onClick={stopCall}><Icon name="stop" />Stop</button>
+              {running ? <button className="btn wide" onClick={stopCall}><Icon name="stop" />Close call</button>
                 : <button className="btn f wide" onClick={startCall} disabled={!callId}><Icon name="play" />Play call</button>}
               <div className="seg">{[1, 2, 4].map((s) => <button key={s} className={speed === s ? 'on' : ''} onClick={() => setSpeed(s)}>{s}×</button>)}</div>
             </div>

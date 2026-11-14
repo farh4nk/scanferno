@@ -92,6 +92,7 @@ Framework-free TypeScript toolkit that draws our data on the Matterport model, p
 **Redesign (branch `ui-guide-sign`): the real `frontend/` now uses the new UI**
 - "Guide Sign" world, fire palette (charcoal, fire orange, ember red only for life risk). Product brief in `PRODUCT.md`; clickable mock in `.impeccable/mocks/prototype.html`.
 - Home (`src/brief/Home.jsx`) is the briefing: 5 key-fact signs with pictograms, floor plan with the plan of attack drawn on it, 4 steps Arrive / Enter / Search / Get out with diagrams (building section, hose gauge, distance scale, search path, exit bars), Play (browser TTS + caption) or Read. Live/replayed calls reshape it as facts arrive.
+- Calls replay from `GET /calls/{id}/frames` (`src/hooks/useCallPlayer.js`) with a transport bar under the top strip (`src/brief/CallBar.jsx`): play/pause, previous/next fact, scrub bar with Fire / Trapped / Hazard markers, 1–2× speed, Space and arrow keys. Click a transcript line to jump there. The spoken briefing can skip steps (⏮ ⏭, or click a step while it plays).
 - During a call the home plan goes live: everything known so far is drawn at once, rooms named in each update flash, and a NEW banner quotes the change (from the stream's `changes`). Clicking a step takes over; when the call ends it lands on Search.
 - 3D model is first-class: a 2D/3D switch on the home plan (briefing overlays follow the step) and a `#model` page, first in the toolbar.
 - One page per job behind `#hash` routes (`src/pages/Pages.jsx`): 3D model, Call (replay + live mic), Dispatch facts, Rescue, Entry, Hazards, Hose, Exterior, Aerial, Floor plan (2D + 3D), Mayday (steps + speak), Evacuation, Ask, All tools.
@@ -140,3 +141,4 @@ Framework-free TypeScript toolkit that draws our data on the Matterport model, p
 - 2026-11-14: Frontend redesign landed (branch `ui-guide-sign`): briefing-first home with key-fact signs, plan of attack and diagrams; one page per tool; fire palette.
 - 2026-11-14: 3D model back up front: 2D/3D switch on the home briefing plan, `#model` page first in the toolbar.
 - 2026-11-14: Live call highlights back on the 2D plan: live mode, flashing rooms per update, NEW banner, key signs flash on change.
+- 2026-11-14: Seekable calls: `GET /calls/{id}/frames` + call transport bar (scrub, skip to next fact, speed); skip steps in the spoken briefing (56 tests).

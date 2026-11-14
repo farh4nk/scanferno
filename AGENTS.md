@@ -52,6 +52,7 @@ One router file per area (`buildings.py`, `calls.py`, `dispatch.py`, `search.py`
 | `GET /fixtures/<path>` | any cached file (images, audio, JSON) |
 | `GET /calls` | scripted calls |
 | `GET /calls/{id}` | script, `audio_url`, `utterances`, `timeline` of dispatch records |
+| `GET /calls/{id}/frames` | whole call precomputed for a seekable player: `utterances`, `duration`, `audio_url`, and `frames[]` (`t`, `record`, `briefing` with `changes`, or `mayday`). The frontend replays calls from this |
 | `GET /calls/{id}/replay?speed=1` | SSE in call time: `utterance`, `record`, `done` events. Start the audio when the stream opens |
 | `POST /dispatch/extract` | `{building_id, transcript:[{role,text}], previous}` -> updated dispatch record (typed fallback) |
 | `POST /dispatch/transcribe` | upload audio (+ `first_role`) -> speaker-separated utterances; 503 without `ELEVENLABS_API_KEY` |
