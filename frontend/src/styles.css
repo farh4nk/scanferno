@@ -109,6 +109,18 @@ main { flex: 1; min-height: 0; display: grid; grid-template-columns: 330px minma
 .sr-item mark { background: rgba(255,176,46,.3); color: inherit; border-radius: 2px; }
 .sr-status { flex: none; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: .8px; padding: 2px 6px; border-radius: 4px; margin-top: 2px; background: var(--panel2); color: var(--muted); border: 1px solid var(--line); }
 .sr-status.ready { background: rgba(46,204,113,.15); color: var(--green); border-color: rgba(46,204,113,.5); }
+.sr-filters { position: sticky; top: -6px; z-index: 1; background: var(--panel); margin: -6px -6px 4px; padding: 8px 8px 6px; border-bottom: 1px solid var(--line); }
+.sr-frow { display: flex; flex-wrap: wrap; }
+.sr-frow:empty { display: none; }
+.sr-chip { display: inline-flex; align-items: center; gap: 5px; cursor: pointer; background: var(--panel2); color: var(--text, inherit); border: 1px solid var(--line); }
+.sr-chip.on { border-color: var(--cyan); background: rgba(77,208,255,.15); color: var(--cyan); }
+.sr-chip:disabled { opacity: .35; cursor: default; }
+.sr-count { font-size: 10px; color: var(--muted); }
+.sr-chip.on .sr-count { color: inherit; }
+.sr-clear { cursor: pointer; background: none; border: 1px dashed var(--line); color: var(--muted); }
+.sr-head { display: flex; justify-content: space-between; }
+.sr-total { text-transform: none; letter-spacing: 0; }
+.sr-more { text-align: center; }
 
 /* property card */
 .modal-bg { position: fixed; inset: 0; z-index: 30; background: rgba(5,7,12,.7); display: grid; place-items: center; padding: 20px; }

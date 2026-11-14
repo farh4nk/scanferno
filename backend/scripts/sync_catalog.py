@@ -31,6 +31,7 @@ MERGE_M = 60
 SAME_PLACE_M = 300  # scan geotags are noisy; number + ZIP + street spelling already agree
 STATES = {"texas": "TX", "tx": "TX", "california": "CA", "ca": "CA", "new jersey": "NJ", "nj": "NJ"}
 ZIP = re.compile(r"\b(\d{5})(?:-\d{4})?\b")
+UNIT_TEXT = re.compile(r"^\d+(\.\d)?\s*(br|ba|bd|bed|bath|sf|sq)|\d\s*(sf|sq\.? ?ft)\b|\bbed(room)?s?\b|\bbath", re.I)
 
 
 def _street_line(m: dict) -> str | None:
@@ -39,7 +40,7 @@ def _street_line(m: dict) -> str | None:
     parts = list(a.get("streetAddressLines") or []) + (a.get("address") or "").split(",")
     for p in parts:
         p = p.strip()
-        if re.match(r"^\d+[a-zA-Z]?\s+\S", p) and not re.match(r"^\d{5}$", p):
+        if re.match(r"^\d+[a-zA-Z]?\s+\S", p) and not re.match(r"^\d{5}$", p) and not UNIT_TEXT.search(p):
             return re.sub(r"\s+", " ", p)
     return None
 

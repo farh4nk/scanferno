@@ -26,6 +26,7 @@ USER_AGENT = "Scanferno/0.1 (HackPrinceton 2026 fire pre-plan demo)"
 MIN_SCORE = 0.6
 GOOD_SCORE = 0.75
 CANDIDATES = 400
+MAX_CANDIDATES = 5000  # find() scores every full-text match up to this, so totals and filters are exact (<250 ms)
 EXTRA_WEIGHT = 0.85  # a hit on a unit name, tenant or room label counts a bit less than the name/address
 
 # Canonical short forms so "8866 Gulf Freeway" matches "8866 Gulf Fwy"
@@ -112,7 +113,48 @@ def entries() -> tuple[dict, ...]:
         extra += [(e.get("costar") or {}).get("building_name") or "", (e.get("costar") or {}).get("address") or ""]
         e["_extra"] = list(dict.fromkeys(t for x in extra for t in tokens(x)))
         e["_size"] = sum(m.get("rooms") or 0 for m in e["models"]) or (e["scan"] or {}).get("rooms") or 0
+        e["kind"] = _kind(e)
+        if not e["city"] and e["address"] and e["address"].count(",") >= 2:
+            city = e["address"].split(",")[1].strip()
+            e["city"] = city if re.fullmatch(r"[A-Za-z .'-]+", city) else None
+    _clean_cities(out)
     return tuple(out)
+
+
+def _clean_cities(out: list[dict]) -> None:
+    """'houston', 'Houston14', 'Housotn' -> 'Houston': typos in scan addresses fold into a common city."""
+    for e in out:
+        if e["city"]:
+            e["city"] = re.sub(r"[\d\s]+$", "", e["city"]).strip().title() or None
+    counts: dict[str, int] = {}
+    for e in out:
+        if e["city"]:
+            counts[e["city"]] = counts.get(e["city"], 0) + 1
+    common = [c for c, n in counts.items() if n >= 20]
+    fix = {c: (get_close_matches(c, common, n=1, cutoff=0.8) or [c])[0] for c in counts if c not in common}
+    for e in out:
+        if e["city"] in fix:
+            e["city"] = fix[e["city"]]
+
+
+COMMERCIAL_TYPES = {"Office", "Industrial", "Flex", "GeneralRetail", "Retail", "MixedUse", "Healthcare", "Hospitality"}
+RESIDENTIAL = re.compile(r"\b(\d(\.\d)? ?(br|ba|bd|bed|bath)s?\b|bedroom|bathroom|studio|apartment|apt|townhome|townhouse|condo|"
+                         r"loft|penthouse|residence|home|house|bachelor|primary bedroom|kitchen)", re.I)
+COMMERCIAL = re.compile(r"\b(suite|ste|office|warehouse|retail|conference|reception|lobby|break ?room|clinic|medical|"
+                        r"restaurant|store|showroom|industrial|plaza|tower|ctr|center)\b", re.I)
+
+
+def _kind(e: dict) -> str:
+    """commercial | residential | other, from the CoStar type, else from scan names and room labels."""
+    if e["property_type"] in COMMERCIAL_TYPES or e["costar_property_id"] is not None:
+        return "commercial"
+    text = " ".join([m.get("name") or "" for m in e["models"]] + e["room_labels"] + [e["name"] or ""])
+    res, com = len(RESIDENTIAL.findall(text)), len(COMMERCIAL.findall(text))
+    if res > com:
+        return "residential"
+    if com:
+        return "commercial"
+    return "other"
 
 
 @lru_cache
@@ -137,13 +179,13 @@ def _fts_query(q: list[str]) -> str:
     return " OR ".join(parts)
 
 
-def candidates(query: str) -> list[dict]:
+def candidates(query: str, limit: int = CANDIDATES) -> list[dict]:
     q = tokens(query)
     if not q:
         return []
     db, _ = _index()
     rows = db.execute("SELECT rowid FROM b WHERE b MATCH ? ORDER BY bm25(b, 4.0, 3.0, 1.0) LIMIT ?",
-                      (_fts_query(q), CANDIDATES)).fetchall()
+                      (_fts_query(q), limit)).fetchall()
     es = entries()
     return [es[r[0]] for r in rows]
 
@@ -159,9 +201,10 @@ def _token_score(q: str, hay: list[str]) -> float:
     if len(q) >= 2 and any(h.startswith(q) for h in hay):
         return 0.85
     if len(q) >= 4 and not q.isdigit():
-        best = max((SequenceMatcher(None, q, h).ratio() for h in hay), default=0)
-        if best >= 0.8:
-            return 0.6
+        for h in hay:
+            sm = SequenceMatcher(None, q, h)
+            if sm.real_quick_ratio() >= 0.8 and sm.quick_ratio() >= 0.8 and sm.ratio() >= 0.8:
+                return 0.6
     return 0.0
 
 
@@ -205,17 +248,82 @@ def _rank(e: dict) -> tuple:
     return (e["status"] != "ready", e["costar_property_id"] is None, e["lat"] is None, -e["_size"])
 
 
-def search(query: str, limit: int = 8, lat: float | None = None, lon: float | None = None) -> list[dict]:
-    """Ranked matches. With lat/lon, equal scores go to the closer building."""
+FILTERS = ("status", "city", "kind", "costar")
+
+
+def _passes(e: dict, f: dict, skip: str | None = None) -> bool:
+    """f: status (ready|scanned), city, kind (commercial|residential|other), costar (True: has CoStar facts)."""
+    return all((
+        skip == "status" or not f.get("status") or e["status"] == f["status"],
+        skip == "city" or not f.get("city") or (e["city"] or "").lower() == f["city"].lower(),
+        skip == "kind" or not f.get("kind") or e["kind"] == f["kind"],
+        skip == "costar" or f.get("costar") is None or (e["costar_property_id"] is not None) == f["costar"],
+    ))
+
+
+@lru_cache(maxsize=256)
+def _facets_cached(query: str, f_items: tuple) -> dict:
+    return _facets([e for _, _, e in _scored(query)], dict(f_items))
+
+
+def _facets(pool: list[dict], f: dict) -> dict:
+    """Counts per filter value over the matches, each ignoring its own filter (so chips show what you'd get)."""
+    out = {}
+    for name, key in (("status", lambda e: e["status"]), ("city", lambda e: e["city"]), ("kind", lambda e: e["kind"]),
+                      ("costar", lambda e: "yes" if e["costar_property_id"] is not None else "no")):
+        counts: dict = {}
+        for e in pool:
+            if _passes(e, f, skip=name):
+                v = key(e)
+                if v:
+                    counts[v] = counts.get(v, 0) + 1
+        out[name] = dict(sorted(counts.items(), key=lambda kv: -kv[1])[:10 if name == "city" else None])
+    return out
+
+
+def find(query: str = "", filters: dict | None = None, limit: int = 8, offset: int = 0,
+         lat: float | None = None, lon: float | None = None) -> dict:
+    """One page of ranked matches plus `total` and `facets`. Empty query browses everything (heroes, then
+    CoStar-linked, then biggest scans; nearest first with lat/lon). With a query, equal scores go to the closer."""
+    f = {k: v for k, v in (filters or {}).items() if k in FILTERS and v not in (None, "")}
+    near = lat is not None and lon is not None
+    far = (lambda e: distance_m(lat, lon, e["lat"], e["lon"]) if e["lat"] is not None else math.inf) if near else (lambda e: 0)
+    query = query.strip()
+    if near:
+        scored = sorted(_scored(query), key=lambda h: ((-h[0] if h[0] is not None else 0), far(h[2]), _rank(h[2])))
+        facets = _facets([e for _, _, e in scored], f)
+    else:
+        scored = _scored(query)
+        facets = _facets_cached(query, tuple(sorted(f.items())))
+    hits = [h for h in scored if _passes(h[2], f)]
+    page = []
+    for s, field, e in hits[offset:offset + limit]:
+        extra = {"match": field}
+        if s is not None:
+            extra["score"] = s
+        if near and e["lat"] is not None:
+            extra["distance_m"] = round(far(e))
+        page.append(public(e, **extra))
+    return {"results": page, "total": len(hits), "facets": facets, "filters": f}
+
+
+@lru_cache(maxsize=128)
+def _scored(query: str) -> tuple:
+    """(score, field, entry) for every match, best first; the empty query browses everything by _rank.
+    Cached so paging and filter toggles on the same query don't re-score."""
+    if not query:
+        return tuple((None, "browse", e) for e in sorted(entries(), key=_rank))
     hits = []
-    for e in candidates(query):
+    for e in candidates(query, MAX_CANDIDATES):
         s, field = score(query, e)
         if s >= MIN_SCORE:
-            far = distance_m(lat, lon, e["lat"], e["lon"]) if lat is not None and e["lat"] is not None else 0
-            hits.append((s, _rank(e), far, e, field))
-    hits.sort(key=lambda h: (-h[0], h[2] if lat is not None else 0, h[1]))
-    return [public(e, score=s, match=field, **({"distance_m": round(far)} if lat is not None and e["lat"] is not None else {}))
-            for s, _, far, e, field in hits[:limit]]
+            hits.append((s, field, e))
+    hits.sort(key=lambda h: (-h[0], _rank(h[2])))
+    return tuple(hits)
+
+
+def search(query: str, limit: int = 8, lat: float | None = None, lon: float | None = None) -> list[dict]:
+    return find(query, None, limit, 0, lat, lon)["results"]
 
 
 def nearby(lat: float, lon: float, limit: int = 5, status: str | None = None) -> list[dict]:
@@ -226,7 +334,7 @@ def nearby(lat: float, lon: float, limit: int = 5, status: str | None = None) ->
 
 def browse(limit: int = 8) -> list[dict]:
     """Empty query: hero buildings first, then CoStar-linked scans, then the biggest scans."""
-    return [public(e, match="browse") for e in sorted(entries(), key=_rank)[:limit]]
+    return find("", None, limit)["results"]
 
 
 @lru_cache

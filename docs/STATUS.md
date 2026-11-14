@@ -33,6 +33,7 @@ Living handoff doc. Update your role's section and add a changelog line in the s
 - Index: in-memory SQLite FTS5 (prefix + typo-expanded tokens) picks candidates, `score()` ranks; also matches unit/scan names, tenants and room labels (`match: "extra"`). 2-100 ms per query.
 - `GET /properties/{id}` accepts building id, CoStar id or any Matterport model id; returns all scans, CoStar facts, cached Vexcel. `GET /properties/{id}/vexcel` and `/aerial?view=` fetch Vexcel on first open (~1 s) and cache under `fixtures/catalog/vexcel/`. `GET /search/stats`.
 - Property card shows aerial, roof/footprint, CoStar facts and tenants, and a list of Matterport scans.
+- Filtered search: `/search` takes `status`, `city`, `kind` (commercial/residential/other, from CoStar type or scan names), `costar`, `offset`; returns `total` and `facets` (counts per filter value). Scored matches and facets are cached per query, so paging and filter toggles take ~10-40 ms. Header dropdown has live filter chips with counts and infinite scroll.
 
 **Next**
 1. Unzip the CoStar kit (password-protected zip) and re-run `python -m scripts.sync_catalog --offline`: links every scanned property in `commercial-properties.csv` to CoStar facts/tenants (now only the 100 cached candidates are linked).
@@ -114,3 +115,4 @@ Framework-free TypeScript toolkit that draws our data on the Matterport model, p
 - 2026-11-14: 3D walk mode: click a room to fly into it; exit route follows the camera, visible through walls, with a turn arrow (branch `walk-route`).
 - 2026-11-14: All 5 calls re-voiced with ElevenLabs; speaker roles follow script order (fixes single-speaker mayday call); `--refresh` now re-transcribes too.
 - 2026-11-14: Search over all 14,946 Matterport models (~8,500 buildings) with SQLite FTS5 index, CoStar join, on-demand cached Vexcel roof + aerial per building; `/search/stats`, `/properties/{id}/vexcel`, `/properties/{id}/aerial` (51 tests).
+- 2026-11-14: Search filters (status, city, kind, CoStar) with facet counts, paging, infinite-scroll dropdown; city typos folded (52 tests).

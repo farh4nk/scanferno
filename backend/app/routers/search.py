@@ -7,21 +7,26 @@ router = APIRouter(tags=["search"])
 
 
 @router.get("/search")
-def search(q: str = "", limit: int = Query(8, ge=1, le=50), geocode: bool = False,
-           lat: float | None = None, lon: float | None = None):
+def search(q: str = "", limit: int = Query(8, ge=1, le=100), offset: int = Query(0, ge=0), geocode: bool = False,
+           lat: float | None = None, lon: float | None = None,
+           status: str | None = Query(None, description="ready | scanned"),
+           city: str | None = None,
+           kind: str | None = Query(None, description="commercial | residential | other"),
+           costar: bool | None = Query(None, description="true: only buildings with CoStar facts")):
     """Results ranked by match: `status` "ready" has a full briefing (`building_id`), "scanned" has a
     Matterport 3D scan (`scan.model_id`, `models_count`) and CoStar facts where linked, but no cached
     interior. `match` says what hit: name, address, or extra (a unit/scan name, tenant or room label).
-    With `lat`/`lon`, equal matches go to the closer building; with no `q`, `nearby` lists the closest.
+    Filters narrow results; `total` counts every filtered match (page with `offset`), `facets` counts each
+    filter value. Empty `q` browses everything (nearest first with `lat`/`lon`; `nearby` lists the closest).
     With `geocode=true` and no good match, the query is geocoded and `nearby` lists the closest buildings."""
-    out = {"query": q, "results": [], "geocoded": None, "nearby": []}
-    if lat is not None and lon is not None and not q.strip():
-        out["nearby"] = directory.nearby(lat, lon, limit)
+    filters = {"status": status, "city": city, "kind": kind, "costar": costar}
+    out = {"query": q, "results": [], "geocoded": None, "nearby": [],
+           **directory.find(q, filters, limit, offset, lat, lon)}
+    if lat is not None and lon is not None and not q.strip() and not offset:
+        out["nearby"], out["results"] = out["results"], []
         return out
-    if not q.strip():
-        out["results"] = directory.browse(limit)
+    if not q.strip() or offset:
         return out
-    out["results"] = directory.search(q, limit, lat, lon)
     if geocode and not any(r["score"] >= directory.GOOD_SCORE for r in out["results"]):
         try:
             g = directory.geocode(q)

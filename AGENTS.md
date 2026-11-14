@@ -62,7 +62,7 @@ One router file per area (`buildings.py`, `calls.py`, `dispatch.py`, `search.py`
 | `GET /buildings/{id}/floorplan` | `floorplan.json` with `maze_score`, `maze_detail`, `exit_routes`, sides |
 | `GET /buildings/{id}/routes?from_room=&avoid=` | shortest route to an exit (room id, label or description), optionally around rooms (fire) |
 | `GET /buildings/{id}/hose?to_room=` | hose length from each exterior door to a room vs a 200 ft preconnect |
-| `GET /search?q=&geocode=&lat=&lon=` | address/name/unit/tenant search over hero buildings (`ready`) and every Matterport-scanned building (`scanned`, ~8,500 from `fixtures/catalog/`, rebuilt by `scripts.sync_catalog`); unknown addresses geocoded to the nearest known buildings |
+| `GET /search?q=&geocode=&lat=&lon=&status=&city=&kind=&costar=&offset=` | address/name/unit/tenant search over hero buildings (`ready`) and every Matterport-scanned building (`scanned`, ~8,500 from `fixtures/catalog/`, rebuilt by `scripts.sync_catalog`); returns `total` + `facets` for filter chips; unknown addresses geocoded to the nearest known buildings |
 | `GET /search/stats` | buildings, located, CoStar-linked and Matterport model counts |
 | `GET /properties/{id}` | one building (building id, CoStar id or any Matterport model id): all scans, CoStar facts, cached Vexcel, nearest briefings |
 | `GET /properties/{id}/vexcel`, `/aerial?view=` | Vexcel roof/footprint and aerial JPEG, fetched on first use then cached in `fixtures/catalog/vexcel/` |
