@@ -6,7 +6,7 @@ import { makeView } from './model'
 export default function PlanSvg({
   plan, k, selected, onSelect, heat = false, order = null, routes = [], walked = null,
   dashed = null, hose = null, tags = [], victim = true, fire = true, doors = true, bigExits = false,
-  hiDoors = [], agents = null, dim = false, deadEnd = null, sides = true, pulse = null,
+  hiDoors = [], agents = null, dim = false, deadEnd = null, sides = true, pulse = null, flash = [],
 }) {
   const v = useMemo(() => makeView(plan), [plan])
   const fireSet = new Set(fire ? k?.fireIds || [] : [])
@@ -29,7 +29,7 @@ export default function PlanSvg({
       </defs>
       {plan.rooms.map((r) => {
         const cls = ['rm', dim && 'dim', fireSet.has(r.id) && 'hf', r.id === vid && 'victim',
-          r.id === selected && 'sel', r.id === deadEnd && 'de', onSelect && 'click'].filter(Boolean).join(' ')
+          r.id === selected && 'sel', r.id === deadEnd && 'de', flash.includes(r.id) && 'flash', onSelect && 'click'].filter(Boolean).join(' ')
         const style = heat && !fireSet.has(r.id) && r.id !== vid ? { fill: `rgba(255,90,31,${(plan.maze_score?.[r.id] || 0) * 0.75})` } : undefined
         return <polygon key={r.id} className={cls} style={style} points={v.str(r.polygon)} onClick={onSelect ? () => onSelect(r.id) : undefined}><title>{r.label}</title></polygon>
       })}
