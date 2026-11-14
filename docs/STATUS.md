@@ -34,6 +34,26 @@ Living handoff doc. Update your role's section and add a changelog line in the s
 - Piney Point and Bellaire exits are inferred from aerials (`floorplan_overrides` in buildings.json); scan has no exterior doorways.
 - New scripts `bellaire-1-patient`, `piney-1-storage`, `vibe-mayday` have no audio yet: run `scripts.process_calls`.
 
+## 3D model overlays (branch `matterport-3d`, folder `viewer3d/`)
+
+Framework-free TypeScript toolkit that draws our data on the Matterport model, plus a bare dev bench (`npm run dev`) to test layers and tune alignment. Not the product UI: the website imports `viewer3d/src` later.
+
+**Done**
+- Self-hosted Showcase **Bundle SDK** (`@matterport/webcomponent`, copied to `public/bundle` on install); all 3 hero models load with the SDK key on localhost (`showcase.ts`).
+- Auto-calibration floor plan -> world by matching Showcase `Room.data` ids to `matterport_id` (`frame.ts`): Vibe 8 rooms / 0.05 m RMS, Bellaire 22 / 0.12 m, Piney Point 11 / 0.17 m. Hand overrides in `calibrations.ts`; the dev bench has nudge inputs + "Copy JSON".
+- Overlay layers in Showcase's three.js scene, in floor plan meters (`overlay.ts`): `polygon`, `volume`, `path`, `marker`, `label`, instanced `dots`, per-frame `tick`. Named layers, independent clear/hide.
+- Click picking -> floor plan point + room via `Renderer.getWorldPositionData` on the floor plane (`picking.ts`); 16/16 Vibe rooms resolve correctly.
+- Ready drawers (`draw/`): rooms by type or maze score, labels, outline, doors, exits (inferred marked), exterior windows, room highlight (pulsing), route to exit with flow dots, mayday wall path with walker, evac sim player (interpolated occupants, door queue discs, bottleneck ring; play/pause/seek/speed).
+- `openBuilding(el, building, {sdkKey})` wires it all: mount, calibrate, overlay, picking.
+
+**Next**
+1. Integration branch: import `viewer3d/src` into the website, feed it `/calls/{id}/live` events (briefing search plan -> `highlightRooms`, `mayday` event -> `drawMayday`).
+2. Fire / victim / crew markers and a smoke-spread layer once the backend emits them.
+
+**Open issues**
+- Bellaire refuses `Mode.moveTo(dollhouse)` right after load (stays inside); overlays still render inside. Piney Point has no floor plan view.
+- Geometry: `floorplan.py` keeps only the largest piece of multi-part rooms (Bellaire Open area B is 9x17 m vs 18x21 m in Showcase; Offices 101, 111, 113 too). Calibration ignores those rooms.
+
 ## Visuals and pitch (branch `ui`)
 
 **Unblocked by:** aerial images at `/fixtures/<id>/vexcel/*.jpg`, calls at `/calls/{id}` and `/calls/{id}/replay` (SSE), sample briefing at `fixtures/sample/briefing.json`.
@@ -47,3 +67,5 @@ Living handoff doc. Update your role's section and add a changelog line in the s
 - 2026-11-14: Dispatch pipeline, two scripted calls, call API with SSE replay.
 - 2026-11-14: AGENTS.md / CLAUDE.md / STATUS.md for teammates' agents.
 - 2026-11-14: Geometry (floorplan, routes, maze, mayday, evac, sides), briefing + Q&A agents, live call stream.
+- 2026-11-14: `viewer3d/`: Matterport Bundle SDK viewer with auto-calibrated overlay layers (rooms, exits, routes, mayday, evac sim), picking, dev bench.
+- 2026-11-14: docs/FEATURES.md backend feature backlog (built, partial, ideas, priorities).
