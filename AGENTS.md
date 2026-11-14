@@ -51,13 +51,22 @@ Per building: `matterport_vector.json` (raw floor plan), `costar.json` (building
 | `GET /calls/{id}/replay?speed=1` | SSE in call time: `utterance`, `record`, `done` events. Start the audio when the stream opens |
 | `POST /dispatch/extract` | `{building_id, transcript:[{role,text}], previous}` -> updated dispatch record (typed fallback) |
 | `POST /dispatch/transcribe` | upload audio -> speaker-separated utterances |
+| `GET /calls/{id}/live?speed=1` | SSE like `/replay` plus `briefing` after each record and `mayday` (wall-following directions) for mayday calls |
+| `GET /buildings/{id}` | building + CoStar + Vexcel summary (roof, footprint, sides, images) |
+| `GET /buildings/{id}/floorplan` | `floorplan.json` with `maze_score`, `maze_detail`, `exit_routes`, sides |
+| `GET /buildings/{id}/routes?from_room=` | shortest route to an exit (room id, label or description) |
+| `GET /buildings/{id}/mayday?room=` | wall-following directions out (room id, label or mayday text) |
+| `GET /buildings/{id}/evac?occupants=` | evacuation sim: clear time, bottleneck door, frames |
+| `POST /buildings/{id}/dispatch` | `{transcript, use_llm}` -> dispatch record with room candidates (Gemini or offline rules) |
+| `POST /buildings/{id}/briefing` | `{dispatch, use_llm}` -> `briefing.json` |
+| `POST /buildings/{id}/ask` | `{question, dispatch}` -> answer + highlight |
 
 ## Data quirks that will bite you
 
 - **Matterport vector data** (`matterport_vector.json`): `floors[]` and `rooms[]` are separate lists; rooms have no floor id. Each room has `boundary.edges[]` with `vertices[].position {x,y}` (2D, relative to model center; units look like meters but the docs don't say) and `openings[]` (`type` "doorway" or "opening", `width`, `relativeCenter` 0..1 along the edge). Edge `type` is "wall" or "invisible". Room type is `classifications[].label`; skip rooms typed only "Void". Room `label` is usually missing.
 - **Every hero scan covers one floor** (a single suite), even in multi-story buildings. No stairs between floors.
 - **No hero building has solar panels** (Vexcel `roof-objects.solar.value` is false).
-- **Building sides** (A front/street, B left, C rear, D right) aren't computed yet: needs the Vexcel footprint plus the street direction.
+- **Building sides** (A front/street, B left, C rear, D right) come from `front` (compass side facing the street) and `scan_rotation_deg` in buildings.json (`geometry/sides.py`); both are set by hand per building.
 - **CoStar enums** are ints in the kit; `data/costar.py` decodes them to names (`FirstFloor`, `Masonry`). Many tenants are "Unknown tenant".
 - **Vexcel** REST needs `X-API-KEY`; WKT is lon first: `POINT(-95.39 29.74)`. Other tools go through MCP (`data/vexcel.py` `VexcelMCP`); full tool list in `fixtures/vexcel_mcp_tools.json`.
 - **Matterport auth** is HTTP Basic (API key : API token). The Showcase SDK key is separate (frontend 3D viewer, domain-locked to localhost).

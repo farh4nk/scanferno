@@ -1,0 +1,2175 @@
+{
+  "building_id": "costar-239873",
+  "units": "meters",
+  "floors": [
+    {
+      "id": "tsmq1wak12rhgn0mawksxcwcd",
+      "label": "Floor 1",
+      "sequence": 0
+    }
+  ],
+  "rooms": [
+    {
+      "id": "r-tt6gm2",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "label": "Office 101",
+      "type": "office",
+      "type_inferred": false,
+      "polygon": [
+        [
+          -1.277,
+          6.443
+        ],
+        [
+          -2.817,
+          6.444
+        ],
+        [
+          -6.075,
+          6.445
+        ],
+        [
+          -6.074,
+          10.203
+        ],
+        [
+          -1.275,
+          10.201
+        ]
+      ],
+      "holes": [],
+      "centroid": [
+        -3.675,
+        8.323
+      ],
+      "area_m2": 18.0,
+      "matterport_id": "tt6gm2a0463x9wmnx7rn6gugc",
+      "side": "C",
+      "exterior_sides": [
+        "B",
+        "C"
+      ]
+    },
+    {
+      "id": "r-a5f9ag",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "label": "Office 102",
+      "type": "office",
+      "type_inferred": false,
+      "polygon": [
+        [
+          2.362,
+          6.961
+        ],
+        [
+          2.362,
+          6.442
+        ],
+        [
+          -1.277,
+          6.443
+        ],
+        [
+          -1.275,
+          10.201
+        ],
+        [
+          0.722,
+          10.201
+        ],
+        [
+          0.721,
+          9.384
+        ],
+        [
+          1.335,
+          9.384
+        ],
+        [
+          1.335,
+          10.2
+        ],
+        [
+          2.363,
+          10.2
+        ]
+      ],
+      "holes": [],
+      "centroid": [
+        0.525,
+        8.266
+      ],
+      "area_m2": 13.2,
+      "matterport_id": "a5f9age4zzxewres6iqux2emc",
+      "side": "C",
+      "exterior_sides": [
+        "C"
+      ]
+    },
+    {
+      "id": "r-t1taph",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "label": "Office 103",
+      "type": "office",
+      "type_inferred": false,
+      "polygon": [
+        [
+          6.032,
+          6.441
+        ],
+        [
+          2.362,
+          6.442
+        ],
+        [
+          2.362,
+          6.961
+        ],
+        [
+          2.363,
+          10.2
+        ],
+        [
+          6.033,
+          10.199
+        ],
+        [
+          6.032,
+          7.924
+        ]
+      ],
+      "holes": [],
+      "centroid": [
+        4.198,
+        8.32
+      ],
+      "area_m2": 13.8,
+      "matterport_id": "t1taphhwblw",
+      "side": "C",
+      "exterior_sides": [
+        "C"
+      ]
+    },
+    {
+      "id": "r-7hvcwd",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "label": "Office 104",
+      "type": "office",
+      "type_inferred": false,
+      "polygon": [
+        [
+          6.033,
+          10.199
+        ],
+        [
+          9.349,
+          10.219
+        ],
+        [
+          9.348,
+          7.351
+        ],
+        [
+          9.348,
+          6.439
+        ],
+        [
+          6.032,
+          6.441
+        ],
+        [
+          6.032,
+          7.924
+        ]
+      ],
+      "holes": [],
+      "centroid": [
+        7.692,
+        8.324
+      ],
+      "area_m2": 12.5,
+      "matterport_id": "7hvcwdjeuah",
+      "side": "C",
+      "exterior_sides": [
+        "C"
+      ]
+    },
+    {
+      "id": "r-egk053",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "label": "Office 105",
+      "type": "office",
+      "type_inferred": false,
+      "polygon": [
+        [
+          9.573,
+          6.439
+        ],
+        [
+          9.348,
+          6.439
+        ],
+        [
+          9.348,
+          7.351
+        ],
+        [
+          9.349,
+          10.219
+        ],
+        [
+          13.071,
+          10.218
+        ],
+        [
+          13.07,
+          9.402
+        ],
+        [
+          14.047,
+          9.402
+        ],
+        [
+          14.037,
+          6.438
+        ],
+        [
+          10.575,
+          6.439
+        ]
+      ],
+      "holes": [],
+      "centroid": [
+        11.608,
+        8.259
+      ],
+      "area_m2": 16.9,
+      "matterport_id": "egk053xbvci",
+      "side": "C",
+      "exterior_sides": [
+        "C",
+        "D"
+      ]
+    },
+    {
+      "id": "r-2qdmc5",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "label": "Kitchen 106",
+      "type": "kitchen",
+      "type_inferred": false,
+      "polygon": [
+        [
+          -2.817,
+          6.444
+        ],
+        [
+          -2.818,
+          2.984
+        ],
+        [
+          -6.077,
+          2.985
+        ],
+        [
+          -6.075,
+          6.445
+        ]
+      ],
+      "holes": [],
+      "centroid": [
+        -4.447,
+        4.714
+      ],
+      "area_m2": 11.3,
+      "matterport_id": "2qdmc5i9byxi79ry1pxdkqzea",
+      "side": "B",
+      "exterior_sides": [
+        "B"
+      ]
+    },
+    {
+      "id": "r-3m54yf",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "label": "Hallway A",
+      "type": "hallway",
+      "type_inferred": false,
+      "polygon": [
+        [
+          -1.337,
+          4.728
+        ],
+        [
+          0.888,
+          4.728
+        ],
+        [
+          0.887,
+          2.525
+        ],
+        [
+          0.887,
+          1.487
+        ],
+        [
+          0.886,
+          -1.329
+        ],
+        [
+          -1.339,
+          -1.328
+        ],
+        [
+          -1.338,
+          2.983
+        ]
+      ],
+      "holes": [],
+      "centroid": [
+        -0.226,
+        1.7
+      ],
+      "area_m2": 13.5,
+      "matterport_id": "3m54yff1z7crxaywd8if9rb0d",
+      "side": "A",
+      "exterior_sides": [
+        "A"
+      ]
+    },
+    {
+      "id": "r-m8npxs",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "label": "Office 107",
+      "type": "office",
+      "type_inferred": false,
+      "polygon": [
+        [
+          4.18,
+          3.364
+        ],
+        [
+          4.179,
+          1.486
+        ],
+        [
+          0.887,
+          1.487
+        ],
+        [
+          0.887,
+          2.525
+        ],
+        [
+          0.888,
+          4.728
+        ],
+        [
+          2.161,
+          4.727
+        ],
+        [
+          4.181,
+          4.727
+        ]
+      ],
+      "holes": [],
+      "centroid": [
+        2.534,
+        3.107
+      ],
+      "area_m2": 10.7,
+      "matterport_id": "m8npxsuk79xy21dd09x9wtped",
+      "side": "A",
+      "exterior_sides": []
+    },
+    {
+      "id": "r-19ab05",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "label": "Office 108",
+      "type": "office",
+      "type_inferred": false,
+      "polygon": [
+        [
+          4.181,
+          4.727
+        ],
+        [
+          7.415,
+          4.725
+        ],
+        [
+          7.413,
+          1.484
+        ],
+        [
+          4.179,
+          1.486
+        ],
+        [
+          4.18,
+          3.364
+        ]
+      ],
+      "holes": [],
+      "centroid": [
+        5.797,
+        3.106
+      ],
+      "area_m2": 10.5,
+      "matterport_id": "19ab05tns5h6y4qm42esqqpea",
+      "side": "A",
+      "exterior_sides": []
+    },
+    {
+      "id": "r-mvjcxe",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "label": "Office 109",
+      "type": "office",
+      "type_inferred": false,
+      "polygon": [
+        [
+          10.575,
+          4.724
+        ],
+        [
+          10.573,
+          1.485
+        ],
+        [
+          8.726,
+          1.484
+        ],
+        [
+          8.727,
+          4.725
+        ]
+      ],
+      "holes": [],
+      "centroid": [
+        9.65,
+        3.105
+      ],
+      "area_m2": 6.0,
+      "matterport_id": "mvjcxe543c8",
+      "side": "D",
+      "exterior_sides": []
+    },
+    {
+      "id": "r-tx2gws",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "label": "Office 110",
+      "type": "office",
+      "type_inferred": false,
+      "polygon": [
+        [
+          10.573,
+          1.485
+        ],
+        [
+          10.575,
+          4.724
+        ],
+        [
+          10.575,
+          6.439
+        ],
+        [
+          14.037,
+          6.438
+        ],
+        [
+          14.021,
+          1.484
+        ],
+        [
+          12.666,
+          1.484
+        ]
+      ],
+      "holes": [],
+      "centroid": [
+        12.302,
+        3.963
+      ],
+      "area_m2": 17.1,
+      "matterport_id": "tx2gws7yuhq",
+      "side": "D",
+      "exterior_sides": [
+        "D"
+      ]
+    },
+    {
+      "id": "r-xy2x8m",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "label": "Office 111",
+      "type": "office",
+      "type_inferred": false,
+      "polygon": [
+        [
+          -2.818,
+          2.984
+        ],
+        [
+          -1.338,
+          2.983
+        ],
+        [
+          -1.339,
+          -1.328
+        ],
+        [
+          -6.078,
+          -1.326
+        ],
+        [
+          -6.077,
+          2.985
+        ]
+      ],
+      "holes": [],
+      "centroid": [
+        -3.708,
+        0.828
+      ],
+      "area_m2": 20.4,
+      "matterport_id": "xy2x8mpaaqknp7q2c3nnbw1ma",
+      "side": "A",
+      "exterior_sides": [
+        "A",
+        "B"
+      ]
+    },
+    {
+      "id": "r-cdz3fk",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "label": "Office 112",
+      "type": "office",
+      "type_inferred": false,
+      "polygon": [
+        [
+          7.413,
+          1.484
+        ],
+        [
+          7.411,
+          -4.317
+        ],
+        [
+          0.884,
+          -4.314
+        ],
+        [
+          0.885,
+          -2.857
+        ],
+        [
+          1.345,
+          -2.857
+        ],
+        [
+          1.345,
+          -2.504
+        ],
+        [
+          0.885,
+          -2.504
+        ],
+        [
+          0.886,
+          -1.329
+        ],
+        [
+          0.887,
+          1.487
+        ],
+        [
+          4.179,
+          1.486
+        ]
+      ],
+      "holes": [],
+      "centroid": [
+        4.162,
+        -1.41
+      ],
+      "area_m2": 37.7,
+      "matterport_id": "cdz3fkt38kae7tapstpt0eaeb",
+      "side": "A",
+      "exterior_sides": [
+        "A",
+        "B"
+      ]
+    },
+    {
+      "id": "r-5yms5n",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "label": "Hallway B",
+      "type": "hallway",
+      "type_inferred": false,
+      "polygon": [
+        [
+          2.362,
+          6.442
+        ],
+        [
+          6.032,
+          6.441
+        ],
+        [
+          9.348,
+          6.439
+        ],
+        [
+          9.573,
+          6.439
+        ],
+        [
+          10.575,
+          6.439
+        ],
+        [
+          10.575,
+          4.724
+        ],
+        [
+          8.727,
+          4.725
+        ],
+        [
+          8.726,
+          1.484
+        ],
+        [
+          8.724,
+          -1.468
+        ],
+        [
+          8.724,
+          -4.133
+        ],
+        [
+          8.724,
+          -4.318
+        ],
+        [
+          7.411,
+          -4.317
+        ],
+        [
+          7.413,
+          1.484
+        ],
+        [
+          7.415,
+          4.725
+        ],
+        [
+          4.181,
+          4.727
+        ],
+        [
+          2.161,
+          4.727
+        ],
+        [
+          0.888,
+          4.728
+        ],
+        [
+          -1.337,
+          4.728
+        ],
+        [
+          -1.338,
+          2.983
+        ],
+        [
+          -2.818,
+          2.984
+        ],
+        [
+          -2.817,
+          6.444
+        ],
+        [
+          -1.277,
+          6.443
+        ]
+      ],
+      "holes": [],
+      "centroid": [
+        8.069,
+        0.008
+      ],
+      "area_m2": 37.4,
+      "matterport_id": "5yms5n9507q",
+      "side": "A",
+      "exterior_sides": [
+        "A"
+      ]
+    },
+    {
+      "id": "r-e5hvvg",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "label": "Office 113",
+      "type": "office",
+      "type_inferred": false,
+      "polygon": [
+        [
+          8.726,
+          1.484
+        ],
+        [
+          10.573,
+          1.485
+        ],
+        [
+          12.666,
+          1.484
+        ],
+        [
+          14.021,
+          1.484
+        ],
+        [
+          14.02,
+          -1.469
+        ],
+        [
+          8.724,
+          -1.468
+        ]
+      ],
+      "holes": [],
+      "centroid": [
+        11.373,
+        0.008
+      ],
+      "area_m2": 15.6,
+      "matterport_id": "e5hvvg0nftm",
+      "side": "D",
+      "exterior_sides": [
+        "D"
+      ]
+    },
+    {
+      "id": "r-jidf3f",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "label": "Office 114",
+      "type": "office",
+      "type_inferred": false,
+      "polygon": [
+        [
+          14.019,
+          -4.32
+        ],
+        [
+          9.616,
+          -4.318
+        ],
+        [
+          9.616,
+          -4.133
+        ],
+        [
+          8.724,
+          -4.133
+        ],
+        [
+          8.724,
+          -1.468
+        ],
+        [
+          14.02,
+          -1.469
+        ]
+      ],
+      "holes": [],
+      "centroid": [
+        11.396,
+        -2.879
+      ],
+      "area_m2": 14.9,
+      "matterport_id": "jidf3fcv23d",
+      "side": "A",
+      "exterior_sides": [
+        "A",
+        "D"
+      ]
+    }
+  ],
+  "doors": [
+    {
+      "id": "d-e0seq4",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "rooms": [
+        "r-jidf3f",
+        "outside"
+      ],
+      "position": [
+        9.172,
+        -4.133
+      ],
+      "width_m": 0.8,
+      "type": "doorway",
+      "is_exit": true,
+      "side": "A"
+    },
+    {
+      "id": "d-dif6cq",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "rooms": [
+        "r-5yms5n",
+        "r-jidf3f"
+      ],
+      "position": [
+        8.724,
+        -3.567
+      ],
+      "width_m": 0.91,
+      "type": "doorway",
+      "is_exit": false
+    },
+    {
+      "id": "d-3n252a",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "rooms": [
+        "r-t1taph",
+        "r-5yms5n"
+      ],
+      "position": [
+        3.07,
+        6.442
+      ],
+      "width_m": 0.89,
+      "type": "doorway",
+      "is_exit": false
+    },
+    {
+      "id": "d-5z35s2",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "rooms": [
+        "r-5yms5n",
+        "r-tt6gm2"
+      ],
+      "position": [
+        -1.957,
+        6.444
+      ],
+      "width_m": 0.91,
+      "type": "doorway",
+      "is_exit": false
+    },
+    {
+      "id": "d-740ms2",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "rooms": [
+        "r-5yms5n",
+        "r-3m54yf"
+      ],
+      "position": [
+        0.244,
+        4.728
+      ],
+      "width_m": 0.9,
+      "type": "doorway",
+      "is_exit": false
+    },
+    {
+      "id": "d-t2dgsb",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "rooms": [
+        "r-5yms5n",
+        "r-19ab05"
+      ],
+      "position": [
+        7.414,
+        3.864
+      ],
+      "width_m": 0.89,
+      "type": "doorway",
+      "is_exit": false
+    },
+    {
+      "id": "d-0c7c2s",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "rooms": [
+        "r-5yms5n",
+        "r-cdz3fk"
+      ],
+      "position": [
+        7.413,
+        0.741
+      ],
+      "width_m": 0.87,
+      "type": "doorway",
+      "is_exit": false
+    },
+    {
+      "id": "d-1qnq5a",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "rooms": [
+        "r-xy2x8m",
+        "r-5yms5n"
+      ],
+      "position": [
+        -2.059,
+        2.984
+      ],
+      "width_m": 0.9,
+      "type": "doorway",
+      "is_exit": false
+    },
+    {
+      "id": "d-5nrx4r",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "rooms": [
+        "r-7hvcwd",
+        "r-5yms5n"
+      ],
+      "position": [
+        8.721,
+        6.44
+      ],
+      "width_m": 0.92,
+      "type": "doorway",
+      "is_exit": false
+    },
+    {
+      "id": "d-s2fz2p",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "rooms": [
+        "r-mvjcxe",
+        "r-5yms5n"
+      ],
+      "position": [
+        8.726,
+        3.836
+      ],
+      "width_m": 0.91,
+      "type": "doorway",
+      "is_exit": false
+    },
+    {
+      "id": "d-uuwpkg",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "rooms": [
+        "r-5yms5n",
+        "r-2qdmc5"
+      ],
+      "position": [
+        -2.818,
+        3.643
+      ],
+      "width_m": 0.89,
+      "type": "doorway",
+      "is_exit": false
+    },
+    {
+      "id": "d-st5210",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "rooms": [
+        "r-5yms5n",
+        "r-egk053"
+      ],
+      "position": [
+        10.133,
+        6.439
+      ],
+      "width_m": 0.91,
+      "type": "doorway",
+      "is_exit": false
+    },
+    {
+      "id": "d-e3pn9h",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "rooms": [
+        "r-tx2gws",
+        "r-5yms5n"
+      ],
+      "position": [
+        10.575,
+        5.571
+      ],
+      "width_m": 0.91,
+      "type": "doorway",
+      "is_exit": false
+    },
+    {
+      "id": "d-byxzbz",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "rooms": [
+        "r-a5f9ag",
+        "r-5yms5n"
+      ],
+      "position": [
+        1.717,
+        6.442
+      ],
+      "width_m": 0.9,
+      "type": "doorway",
+      "is_exit": false
+    },
+    {
+      "id": "d-6a1y1a",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "rooms": [
+        "r-cdz3fk",
+        "outside"
+      ],
+      "position": [
+        0.885,
+        -1.925
+      ],
+      "width_m": 1.07,
+      "type": "doorway",
+      "is_exit": true,
+      "side": "B"
+    },
+    {
+      "id": "d-a49sw5",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "rooms": [
+        "r-xy2x8m",
+        "outside"
+      ],
+      "position": [
+        -5.395,
+        -1.327
+      ],
+      "width_m": 1.04,
+      "type": "doorway",
+      "is_exit": true,
+      "side": "A"
+    },
+    {
+      "id": "d-x612kr",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "rooms": [
+        "r-3m54yf",
+        "r-m8npxs"
+      ],
+      "position": [
+        0.887,
+        2.072
+      ],
+      "width_m": 0.88,
+      "type": "doorway",
+      "is_exit": false
+    },
+    {
+      "id": "d-rweck8",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "rooms": [
+        "r-3m54yf",
+        "outside"
+      ],
+      "position": [
+        0.321,
+        -1.329
+      ],
+      "width_m": 1.02,
+      "type": "doorway",
+      "is_exit": true,
+      "side": "A"
+    },
+    {
+      "id": "d-assumed-e5hvvg",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "rooms": [
+        "r-e5hvvg",
+        "r-jidf3f"
+      ],
+      "position": [
+        11.372,
+        -1.469
+      ],
+      "width_m": 0.9,
+      "type": "doorway",
+      "is_exit": false,
+      "inferred": true
+    }
+  ],
+  "windows": [
+    {
+      "id": "w-142th3",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "room_id": "r-jidf3f",
+      "position": [
+        14.019,
+        -3.526
+      ],
+      "width_m": 0.86,
+      "sill_m": 0.56,
+      "exterior": true,
+      "side": "D"
+    },
+    {
+      "id": "w-wn2x27",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "room_id": "r-jidf3f",
+      "position": [
+        14.02,
+        -1.918
+      ],
+      "width_m": 0.85,
+      "sill_m": 0.5,
+      "exterior": true,
+      "side": "D"
+    },
+    {
+      "id": "w-pb2mhq",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "room_id": "r-e5hvvg",
+      "position": [
+        14.02,
+        -0.197
+      ],
+      "width_m": 2.36,
+      "sill_m": 0.58,
+      "exterior": true,
+      "side": "D"
+    },
+    {
+      "id": "w-81k07u",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "room_id": "r-t1taph",
+      "position": [
+        3.599,
+        10.2
+      ],
+      "width_m": 2.39,
+      "sill_m": 0.65,
+      "exterior": true,
+      "side": "C"
+    },
+    {
+      "id": "w-rzbkn9",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "room_id": "r-egk053",
+      "position": [
+        11.952,
+        10.218
+      ],
+      "width_m": 2.15,
+      "sill_m": 0.65,
+      "exterior": true,
+      "side": "C"
+    },
+    {
+      "id": "w-cdm18w",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "room_id": "r-egk053",
+      "position": [
+        14.04,
+        7.402
+      ],
+      "width_m": 2.87,
+      "sill_m": 0.65,
+      "exterior": true,
+      "side": "D"
+    },
+    {
+      "id": "w-314f4w",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "room_id": "r-cdz3fk",
+      "position": [
+        0.884,
+        -3.588
+      ],
+      "width_m": 1.33,
+      "sill_m": 0.03,
+      "exterior": true,
+      "side": "B"
+    },
+    {
+      "id": "w-u6ecpa",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "room_id": "r-xy2x8m",
+      "position": [
+        -4.1,
+        -1.327
+      ],
+      "width_m": 1.25,
+      "sill_m": 0.01,
+      "exterior": true,
+      "side": "A"
+    },
+    {
+      "id": "w-fkrart",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "room_id": "r-tt6gm2",
+      "position": [
+        -4.278,
+        10.203
+      ],
+      "width_m": 3.5,
+      "sill_m": 0.63,
+      "exterior": true,
+      "side": "C"
+    },
+    {
+      "id": "w-0x22zm",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "room_id": "r-3m54yf",
+      "position": [
+        -0.606,
+        -1.328
+      ],
+      "width_m": 0.68,
+      "sill_m": 0.19,
+      "exterior": true,
+      "side": "A"
+    },
+    {
+      "id": "w-mruhat",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "room_id": "r-a5f9ag",
+      "position": [
+        -0.27,
+        10.201
+      ],
+      "width_m": 1.81,
+      "sill_m": 0.63,
+      "exterior": true,
+      "side": "C"
+    }
+  ],
+  "stairs": [],
+  "voids": [],
+  "outline": [
+    [
+      0.885,
+      -2.857
+    ],
+    [
+      0.885,
+      -2.857
+    ],
+    [
+      0.886,
+      -1.329
+    ],
+    [
+      -1.339,
+      -1.328
+    ],
+    [
+      -6.078,
+      -1.326
+    ],
+    [
+      -6.077,
+      2.985
+    ],
+    [
+      -6.075,
+      6.445
+    ],
+    [
+      -6.074,
+      10.203
+    ],
+    [
+      -1.275,
+      10.201
+    ],
+    [
+      0.722,
+      10.201
+    ],
+    [
+      0.721,
+      9.384
+    ],
+    [
+      1.335,
+      9.384
+    ],
+    [
+      1.335,
+      10.2
+    ],
+    [
+      2.363,
+      10.2
+    ],
+    [
+      6.033,
+      10.199
+    ],
+    [
+      9.349,
+      10.219
+    ],
+    [
+      13.071,
+      10.218
+    ],
+    [
+      13.07,
+      9.402
+    ],
+    [
+      14.047,
+      9.402
+    ],
+    [
+      14.037,
+      6.438
+    ],
+    [
+      14.021,
+      1.484
+    ],
+    [
+      14.02,
+      -1.469
+    ],
+    [
+      14.019,
+      -4.32
+    ],
+    [
+      9.616,
+      -4.318
+    ],
+    [
+      9.616,
+      -4.133
+    ],
+    [
+      8.724,
+      -4.133
+    ],
+    [
+      8.724,
+      -4.318
+    ],
+    [
+      7.411,
+      -4.317
+    ],
+    [
+      0.884,
+      -4.314
+    ]
+  ],
+  "maze_score": {
+    "r-tt6gm2": 0.65,
+    "r-a5f9ag": 0.7,
+    "r-t1taph": 0.66,
+    "r-7hvcwd": 0.74,
+    "r-egk053": 0.78,
+    "r-2qdmc5": 0.55,
+    "r-3m54yf": 0.18,
+    "r-m8npxs": 0.58,
+    "r-19ab05": 0.67,
+    "r-mvjcxe": 0.72,
+    "r-tx2gws": 0.9,
+    "r-xy2x8m": 0.17,
+    "r-cdz3fk": 0.18,
+    "r-5yms5n": 0.24,
+    "r-e5hvvg": 0.52,
+    "r-jidf3f": 0.17
+  },
+  "maze_detail": {
+    "r-tt6gm2": {
+      "distance_m": 11.4,
+      "second_exit_m": 11.5,
+      "turns": 1,
+      "decisions": 2,
+      "dead_end": true,
+      "windowless": false,
+      "single_exit": false,
+      "components": {
+        "distance": 0.82,
+        "turns": 0.33,
+        "decisions": 1.0,
+        "dead_end": 1.0,
+        "single_exit": 0.0,
+        "windowless": 0.0
+      },
+      "why": [
+        "11 m to the nearest exit",
+        "2 branching rooms to pick through",
+        "one door only (dead end)"
+      ]
+    },
+    "r-a5f9ag": {
+      "distance_m": 10.5,
+      "second_exit_m": 13.4,
+      "turns": 2,
+      "decisions": 2,
+      "dead_end": true,
+      "windowless": false,
+      "single_exit": false,
+      "components": {
+        "distance": 0.76,
+        "turns": 0.67,
+        "decisions": 1.0,
+        "dead_end": 1.0,
+        "single_exit": 0.0,
+        "windowless": 0.0
+      },
+      "why": [
+        "10 m to the nearest exit",
+        "2 branching rooms to pick through",
+        "one door only (dead end)"
+      ]
+    },
+    "r-t1taph": {
+      "distance_m": 11.6,
+      "second_exit_m": 14.6,
+      "turns": 1,
+      "decisions": 2,
+      "dead_end": true,
+      "windowless": false,
+      "single_exit": false,
+      "components": {
+        "distance": 0.83,
+        "turns": 0.33,
+        "decisions": 1.0,
+        "dead_end": 1.0,
+        "single_exit": 0.0,
+        "windowless": 0.0
+      },
+      "why": [
+        "12 m to the nearest exit",
+        "2 branching rooms to pick through",
+        "one door only (dead end)"
+      ]
+    },
+    "r-7hvcwd": {
+      "distance_m": 12.9,
+      "second_exit_m": 15.0,
+      "turns": 1,
+      "decisions": 2,
+      "dead_end": true,
+      "windowless": true,
+      "single_exit": false,
+      "components": {
+        "distance": 0.93,
+        "turns": 0.33,
+        "decisions": 1.0,
+        "dead_end": 1.0,
+        "single_exit": 0.0,
+        "windowless": 1.0
+      },
+      "why": [
+        "13 m to the nearest exit",
+        "2 branching rooms to pick through",
+        "one door only (dead end)",
+        "no outside window"
+      ]
+    },
+    "r-egk053": {
+      "distance_m": 13.9,
+      "second_exit_m": 16.0,
+      "turns": 2,
+      "decisions": 2,
+      "dead_end": true,
+      "windowless": false,
+      "single_exit": false,
+      "components": {
+        "distance": 1.0,
+        "turns": 0.67,
+        "decisions": 1.0,
+        "dead_end": 1.0,
+        "single_exit": 0.0,
+        "windowless": 0.0
+      },
+      "why": [
+        "14 m to the nearest exit",
+        "2 branching rooms to pick through",
+        "one door only (dead end)"
+      ]
+    },
+    "r-2qdmc5": {
+      "distance_m": 8.4,
+      "second_exit_m": 11.7,
+      "turns": 1,
+      "decisions": 1,
+      "dead_end": true,
+      "windowless": true,
+      "single_exit": false,
+      "components": {
+        "distance": 0.6,
+        "turns": 0.33,
+        "decisions": 0.5,
+        "dead_end": 1.0,
+        "single_exit": 0.0,
+        "windowless": 1.0
+      },
+      "why": [
+        "8 m to the nearest exit",
+        "one door only (dead end)",
+        "no outside window"
+      ]
+    },
+    "r-3m54yf": {
+      "distance_m": 3.1,
+      "second_exit_m": 12.5,
+      "turns": 0,
+      "decisions": 0,
+      "dead_end": false,
+      "windowless": false,
+      "single_exit": true,
+      "components": {
+        "distance": 0.22,
+        "turns": 0.0,
+        "decisions": 0.0,
+        "dead_end": 0.0,
+        "single_exit": 1.0,
+        "windowless": 0.0
+      },
+      "why": [
+        "no practical second way out"
+      ]
+    },
+    "r-m8npxs": {
+      "distance_m": 5.4,
+      "second_exit_m": 14.1,
+      "turns": 1,
+      "decisions": 1,
+      "dead_end": true,
+      "windowless": true,
+      "single_exit": true,
+      "components": {
+        "distance": 0.39,
+        "turns": 0.33,
+        "decisions": 0.5,
+        "dead_end": 1.0,
+        "single_exit": 1.0,
+        "windowless": 1.0
+      },
+      "why": [
+        "one door only (dead end)",
+        "no practical second way out",
+        "no outside window"
+      ]
+    },
+    "r-19ab05": {
+      "distance_m": 10.1,
+      "second_exit_m": 12.0,
+      "turns": 1,
+      "decisions": 2,
+      "dead_end": true,
+      "windowless": true,
+      "single_exit": false,
+      "components": {
+        "distance": 0.73,
+        "turns": 0.33,
+        "decisions": 1.0,
+        "dead_end": 1.0,
+        "single_exit": 0.0,
+        "windowless": 1.0
+      },
+      "why": [
+        "10 m to the nearest exit",
+        "2 branching rooms to pick through",
+        "one door only (dead end)",
+        "no outside window"
+      ]
+    },
+    "r-mvjcxe": {
+      "distance_m": 9.3,
+      "second_exit_m": 11.6,
+      "turns": 2,
+      "decisions": 2,
+      "dead_end": true,
+      "windowless": true,
+      "single_exit": false,
+      "components": {
+        "distance": 0.67,
+        "turns": 0.67,
+        "decisions": 1.0,
+        "dead_end": 1.0,
+        "single_exit": 0.0,
+        "windowless": 1.0
+      },
+      "why": [
+        "9 m to the nearest exit",
+        "2 branching rooms to pick through",
+        "one door only (dead end)",
+        "no outside window"
+      ]
+    },
+    "r-tx2gws": {
+      "distance_m": 13.9,
+      "second_exit_m": 16.0,
+      "turns": 3,
+      "decisions": 2,
+      "dead_end": true,
+      "windowless": true,
+      "single_exit": false,
+      "components": {
+        "distance": 1.0,
+        "turns": 1.0,
+        "decisions": 1.0,
+        "dead_end": 1.0,
+        "single_exit": 0.0,
+        "windowless": 1.0
+      },
+      "why": [
+        "14 m to the nearest exit",
+        "3 turns on the way out",
+        "2 branching rooms to pick through",
+        "one door only (dead end)",
+        "no outside window"
+      ]
+    },
+    "r-xy2x8m": {
+      "distance_m": 2.7,
+      "second_exit_m": 12.8,
+      "turns": 0,
+      "decisions": 0,
+      "dead_end": false,
+      "windowless": false,
+      "single_exit": true,
+      "components": {
+        "distance": 0.19,
+        "turns": 0.0,
+        "decisions": 0.0,
+        "dead_end": 0.0,
+        "single_exit": 1.0,
+        "windowless": 0.0
+      },
+      "why": [
+        "no practical second way out"
+      ]
+    },
+    "r-cdz3fk": {
+      "distance_m": 3.3,
+      "second_exit_m": 9.1,
+      "turns": 0,
+      "decisions": 0,
+      "dead_end": false,
+      "windowless": false,
+      "single_exit": true,
+      "components": {
+        "distance": 0.24,
+        "turns": 0.0,
+        "decisions": 0.0,
+        "dead_end": 0.0,
+        "single_exit": 1.0,
+        "windowless": 0.0
+      },
+      "why": [
+        "no practical second way out"
+      ]
+    },
+    "r-5yms5n": {
+      "distance_m": 4.4,
+      "second_exit_m": 8.0,
+      "turns": 0,
+      "decisions": 1,
+      "dead_end": false,
+      "windowless": true,
+      "single_exit": false,
+      "components": {
+        "distance": 0.32,
+        "turns": 0.0,
+        "decisions": 0.5,
+        "dead_end": 0.0,
+        "single_exit": 0.0,
+        "windowless": 1.0
+      },
+      "why": [
+        "no outside window"
+      ]
+    },
+    "r-e5hvvg": {
+      "distance_m": 4.9,
+      "second_exit_m": 16.4,
+      "turns": 1,
+      "decisions": 1,
+      "dead_end": true,
+      "windowless": false,
+      "single_exit": true,
+      "components": {
+        "distance": 0.35,
+        "turns": 0.33,
+        "decisions": 0.5,
+        "dead_end": 1.0,
+        "single_exit": 1.0,
+        "windowless": 0.0
+      },
+      "why": [
+        "one door only (dead end)",
+        "no practical second way out"
+      ]
+    },
+    "r-jidf3f": {
+      "distance_m": 2.6,
+      "second_exit_m": 14.3,
+      "turns": 0,
+      "decisions": 0,
+      "dead_end": false,
+      "windowless": false,
+      "single_exit": true,
+      "components": {
+        "distance": 0.19,
+        "turns": 0.0,
+        "decisions": 0.0,
+        "dead_end": 0.0,
+        "single_exit": 1.0,
+        "windowless": 0.0
+      },
+      "why": [
+        "no practical second way out"
+      ]
+    }
+  },
+  "exit_routes": {
+    "r-tt6gm2": {
+      "path": [
+        "r-tt6gm2",
+        "r-5yms5n",
+        "r-3m54yf"
+      ],
+      "door_ids": [
+        "d-5z35s2",
+        "d-740ms2"
+      ],
+      "distance_m": 11.4,
+      "polyline": [
+        [
+          -3.67,
+          8.32
+        ],
+        [
+          -1.96,
+          6.44
+        ],
+        [
+          0.24,
+          4.73
+        ],
+        [
+          0.32,
+          -1.33
+        ]
+      ],
+      "from_room_id": "r-tt6gm2",
+      "exit_door_id": "d-rweck8"
+    },
+    "r-a5f9ag": {
+      "path": [
+        "r-a5f9ag",
+        "r-5yms5n",
+        "r-3m54yf"
+      ],
+      "door_ids": [
+        "d-byxzbz",
+        "d-740ms2"
+      ],
+      "distance_m": 10.5,
+      "polyline": [
+        [
+          0.53,
+          8.27
+        ],
+        [
+          1.72,
+          6.44
+        ],
+        [
+          0.24,
+          4.73
+        ],
+        [
+          0.32,
+          -1.33
+        ]
+      ],
+      "from_room_id": "r-a5f9ag",
+      "exit_door_id": "d-rweck8"
+    },
+    "r-t1taph": {
+      "path": [
+        "r-t1taph",
+        "r-5yms5n",
+        "r-3m54yf"
+      ],
+      "door_ids": [
+        "d-3n252a",
+        "d-740ms2"
+      ],
+      "distance_m": 11.6,
+      "polyline": [
+        [
+          4.2,
+          8.32
+        ],
+        [
+          3.07,
+          6.44
+        ],
+        [
+          0.24,
+          4.73
+        ],
+        [
+          0.32,
+          -1.33
+        ]
+      ],
+      "from_room_id": "r-t1taph",
+      "exit_door_id": "d-rweck8"
+    },
+    "r-7hvcwd": {
+      "path": [
+        "r-7hvcwd",
+        "r-5yms5n",
+        "r-jidf3f"
+      ],
+      "door_ids": [
+        "d-5nrx4r",
+        "d-dif6cq"
+      ],
+      "distance_m": 12.9,
+      "polyline": [
+        [
+          7.69,
+          8.32
+        ],
+        [
+          8.72,
+          6.44
+        ],
+        [
+          8.72,
+          -3.57
+        ],
+        [
+          9.17,
+          -4.13
+        ]
+      ],
+      "from_room_id": "r-7hvcwd",
+      "exit_door_id": "d-e0seq4"
+    },
+    "r-egk053": {
+      "path": [
+        "r-egk053",
+        "r-5yms5n",
+        "r-jidf3f"
+      ],
+      "door_ids": [
+        "d-st5210",
+        "d-dif6cq"
+      ],
+      "distance_m": 13.9,
+      "polyline": [
+        [
+          11.61,
+          8.26
+        ],
+        [
+          10.13,
+          6.44
+        ],
+        [
+          8.43,
+          5.03
+        ],
+        [
+          8.72,
+          -3.57
+        ],
+        [
+          9.17,
+          -4.13
+        ]
+      ],
+      "from_room_id": "r-egk053",
+      "exit_door_id": "d-e0seq4"
+    },
+    "r-2qdmc5": {
+      "path": [
+        "r-2qdmc5",
+        "r-5yms5n",
+        "r-xy2x8m"
+      ],
+      "door_ids": [
+        "d-uuwpkg",
+        "d-1qnq5a"
+      ],
+      "distance_m": 8.4,
+      "polyline": [
+        [
+          -4.45,
+          4.71
+        ],
+        [
+          -2.82,
+          3.64
+        ],
+        [
+          -2.06,
+          2.98
+        ],
+        [
+          -5.39,
+          -1.33
+        ]
+      ],
+      "from_room_id": "r-2qdmc5",
+      "exit_door_id": "d-a49sw5"
+    },
+    "r-3m54yf": {
+      "path": [
+        "r-3m54yf"
+      ],
+      "door_ids": [],
+      "distance_m": 3.1,
+      "polyline": [
+        [
+          -0.23,
+          1.7
+        ],
+        [
+          0.32,
+          -1.33
+        ]
+      ],
+      "from_room_id": "r-3m54yf",
+      "exit_door_id": "d-rweck8"
+    },
+    "r-m8npxs": {
+      "path": [
+        "r-m8npxs",
+        "r-3m54yf"
+      ],
+      "door_ids": [
+        "d-x612kr"
+      ],
+      "distance_m": 5.4,
+      "polyline": [
+        [
+          2.53,
+          3.11
+        ],
+        [
+          0.89,
+          2.07
+        ],
+        [
+          0.32,
+          -1.33
+        ]
+      ],
+      "from_room_id": "r-m8npxs",
+      "exit_door_id": "d-rweck8"
+    },
+    "r-19ab05": {
+      "path": [
+        "r-19ab05",
+        "r-5yms5n",
+        "r-jidf3f"
+      ],
+      "door_ids": [
+        "d-t2dgsb",
+        "d-dif6cq"
+      ],
+      "distance_m": 10.1,
+      "polyline": [
+        [
+          5.8,
+          3.11
+        ],
+        [
+          7.41,
+          3.86
+        ],
+        [
+          8.72,
+          -3.57
+        ],
+        [
+          9.17,
+          -4.13
+        ]
+      ],
+      "from_room_id": "r-19ab05",
+      "exit_door_id": "d-e0seq4"
+    },
+    "r-mvjcxe": {
+      "path": [
+        "r-mvjcxe",
+        "r-5yms5n",
+        "r-jidf3f"
+      ],
+      "door_ids": [
+        "d-s2fz2p",
+        "d-dif6cq"
+      ],
+      "distance_m": 9.3,
+      "polyline": [
+        [
+          9.65,
+          3.1
+        ],
+        [
+          8.73,
+          3.84
+        ],
+        [
+          8.72,
+          -3.57
+        ],
+        [
+          9.17,
+          -4.13
+        ]
+      ],
+      "from_room_id": "r-mvjcxe",
+      "exit_door_id": "d-e0seq4"
+    },
+    "r-tx2gws": {
+      "path": [
+        "r-tx2gws",
+        "r-5yms5n",
+        "r-jidf3f"
+      ],
+      "door_ids": [
+        "d-e3pn9h",
+        "d-dif6cq"
+      ],
+      "distance_m": 13.9,
+      "polyline": [
+        [
+          12.3,
+          3.96
+        ],
+        [
+          10.57,
+          5.57
+        ],
+        [
+          8.43,
+          5.03
+        ],
+        [
+          8.72,
+          -3.57
+        ],
+        [
+          9.17,
+          -4.13
+        ]
+      ],
+      "from_room_id": "r-tx2gws",
+      "exit_door_id": "d-e0seq4"
+    },
+    "r-xy2x8m": {
+      "path": [
+        "r-xy2x8m"
+      ],
+      "door_ids": [],
+      "distance_m": 2.7,
+      "polyline": [
+        [
+          -3.71,
+          0.83
+        ],
+        [
+          -5.39,
+          -1.33
+        ]
+      ],
+      "from_room_id": "r-xy2x8m",
+      "exit_door_id": "d-a49sw5"
+    },
+    "r-cdz3fk": {
+      "path": [
+        "r-cdz3fk"
+      ],
+      "door_ids": [],
+      "distance_m": 3.3,
+      "polyline": [
+        [
+          4.16,
+          -1.41
+        ],
+        [
+          0.89,
+          -1.93
+        ]
+      ],
+      "from_room_id": "r-cdz3fk",
+      "exit_door_id": "d-6a1y1a"
+    },
+    "r-5yms5n": {
+      "path": [
+        "r-5yms5n",
+        "r-jidf3f"
+      ],
+      "door_ids": [
+        "d-dif6cq"
+      ],
+      "distance_m": 4.4,
+      "polyline": [
+        [
+          8.07,
+          0.01
+        ],
+        [
+          8.72,
+          -3.57
+        ],
+        [
+          9.17,
+          -4.13
+        ]
+      ],
+      "from_room_id": "r-5yms5n",
+      "exit_door_id": "d-e0seq4"
+    },
+    "r-e5hvvg": {
+      "path": [
+        "r-e5hvvg",
+        "r-jidf3f"
+      ],
+      "door_ids": [
+        "d-assumed-e5hvvg"
+      ],
+      "distance_m": 4.9,
+      "polyline": [
+        [
+          11.37,
+          0.01
+        ],
+        [
+          11.37,
+          -1.47
+        ],
+        [
+          9.17,
+          -4.13
+        ]
+      ],
+      "from_room_id": "r-e5hvvg",
+      "exit_door_id": "d-e0seq4"
+    },
+    "r-jidf3f": {
+      "path": [
+        "r-jidf3f"
+      ],
+      "door_ids": [],
+      "distance_m": 2.6,
+      "polyline": [
+        [
+          11.4,
+          -2.88
+        ],
+        [
+          9.17,
+          -4.13
+        ]
+      ],
+      "from_room_id": "r-jidf3f",
+      "exit_door_id": "d-e0seq4"
+    }
+  }
+}
