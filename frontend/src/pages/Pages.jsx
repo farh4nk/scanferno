@@ -1,6 +1,6 @@
 // One page per job. Each page does one thing; the home briefing links here for detail.
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { ask, asset, getEvac, getMayday } from '../api'
+import { ask, asset, getEvac, getMayday, getTour } from '../api'
 import PlanSvg from '../brief/PlanSvg'
 import { HoseGauge, Ring, Section } from '../brief/Diagrams'
 import LivePanel from '../components/LivePanel'
@@ -74,7 +74,7 @@ export function FactsPage({ ctx }) {
 }
 
 // ---------- Rescue ----------
-export function RescuePage({ ctx, k }) {
+export function RescuePage({ ctx, k, go }) {
   const [picked, setPicked] = useState(ctx.params.room || null)
   // follow the trapped person until the officer picks a room themselves
   const sel = picked || k.victim || k.plan_[0]?.room_id; const setSel = setPicked
@@ -94,13 +94,14 @@ export function RescuePage({ ctx, k }) {
         </div>
       </div>
       <div className="panel col"><h2>{k.label(sel)} <span>{rt ? `${rt.distance_m} m to the exit${rt.rerouted ? ', rerouted around the fire' : ''}` : 'no route'}</span></h2>
-        <div className="grow"><PlanSvg plan={ctx.plan} k={k} selected={sel} onSelect={setSel} routes={rt ? [rt.polyline] : []} order={Object.fromEntries(k.plan_.map((s, i) => [s.room_id, i + 1]))} /></div></div>
+        <div className="grow"><PlanSvg plan={ctx.plan} k={k} selected={sel} onSelect={setSel} routes={rt ? [rt.polyline] : []} order={Object.fromEntries(k.plan_.map((s, i) => [s.room_id, i + 1]))} /></div>
+        {sel && <button className="btn f wide" style={{ flex: 'none' }} onClick={() => go('model', { room: sel, clip: 'both' })}><Icon name="model" />Watch the way in and out in 3D<Icon name="arrow" /></button>}</div>
     </div>
   )
 }
 
 // ---------- Entry ----------
-export function EntryPage({ ctx, k }) {
+export function EntryPage({ ctx, k, go }) {
   const [sel, setSel] = useState(k.search?.door_id)
   const e = ctx.briefing.entry_points || []
   return (
@@ -114,7 +115,8 @@ export function EntryPage({ ctx, k }) {
           </button>
         ))}
       </div>
-      <div className="panel col"><h2>Doors <span>white squares are exits</span></h2><div className="grow"><PlanSvg plan={ctx.plan} k={k} hiDoors={[sel]} bigExits /></div></div>
+      <div className="panel col"><h2>Doors <span>white squares are exits</span></h2><div className="grow"><PlanSvg plan={ctx.plan} k={k} hiDoors={[sel]} bigExits /></div>
+        {sel && k.victim && <button className="btn f wide" style={{ flex: 'none' }} onClick={() => go('model', { room: k.victim, entry: sel, clip: 'in' })}><Icon name="model" />Watch this door to {k.victimLabel} in 3D<Icon name="arrow" /></button>}</div>
     </div>
   )
 }
@@ -180,7 +182,26 @@ export function AerialPage({ ctx, k }) {
 // ---------- Floor plan (2D / 3D) ----------
 const LAYERS = [['order', 'Search order'], ['routes', 'Exit routes'], ['doors', 'Doors'], ['heat', 'Maze heat']]
 export function PlanPage({ ctx, k, go, start3d = false }) {
-  const [mode, setMode] = useState(start3d || ctx.params.mode === '3d' ? '3d' : '2d'); const [sel, setSel] = useState(null)
+  const [mode, setMode] = useState(start3d || ctx.params.clip || ctx.params.mode === '3d' ? '3d' : '2d'); const [sel, setSelRoom] = useState(ctx.params.room || null)
+  // guided clips: which door to enter by, the clip data for the picked room, and what is playing now
+  const [entry, setEntry] = useState(ctx.params.entry || null); const [tour, setTour] = useState(null); const [run, setRun] = useState(null)
+  const setSel = (id) => { setSelRoom(id); setRun(null) }
+  const roleOf = Object.fromEntries((ctx.briefing.entry_points || []).map((e) => [e.door_id, e.role]))
+  const recommended = sel && sel === k.victim ? (ctx.briefing.entry_points || []).find((e) => e.role === 'search')?.door_id : null
+  useEffect(() => {
+    if (!sel) { setTour(null); return undefined }
+    let alive = true; setTour(null)
+    getTour(ctx.buildingId, sel, { entry: entry || recommended || undefined, avoid: ctx.briefing.fire_room_ids || [] })
+      .then((d) => alive && setTour(d)).catch(() => alive && setTour(null))
+    return () => { alive = false }
+  }, [sel, entry, recommended, ctx.buildingId]) // eslint-disable-line react-hooks/exhaustive-deps
+  const play = (legs) => { setMode('3d'); setRun({ legs, i: 0 }) }
+  const clip = useMemo(() => (run && tour ? { data: tour[run.legs[run.i]], label: tour.room_label } : null), [run, tour])
+  const clipEnd = () => setTimeout(() => setRun((r) => (r && r.i + 1 < r.legs.length ? { ...r, i: r.i + 1 } : r)), 1200)
+  const autoplayed = useRef(false)
+  useEffect(() => {
+    if (tour && ctx.params.clip && !autoplayed.current) { autoplayed.current = true; play(ctx.params.clip === 'both' ? ['in', 'out'] : [ctx.params.clip]) }
+  }, [tour]) // eslint-disable-line react-hooks/exhaustive-deps
   const [L, setL] = useState({ order: true, routes: true, doors: true, heat: false, windows: false })
   const order = L.order ? Object.fromEntries(k.plan_.map((s, i) => [s.room_id, i + 1])) : null
   const md = sel && ctx.plan.maze_detail?.[sel]
@@ -195,7 +216,8 @@ export function PlanPage({ ctx, k, go, start3d = false }) {
         <div className="grow panel flat">
           {mode === '3d'
             ? <Viewer3D building={ctx.building} plan={ctx.plan} layers={L} searchOrder={order || {}} trapped={ctx.briefing.trapped || []} fireRooms={ctx.briefing.fire_room_ids}
-                selected={sel} onSelect={setSel} highlight={null} mayday={ctx.feed.mayday} evac={null} />
+                selected={sel} onSelect={setSel} highlight={null} mayday={ctx.feed.mayday} evac={null}
+                clip={clip} onClipEnd={clipEnd} onClipClose={() => setRun(null)} />
             : <PlanSvg plan={ctx.plan} k={k} selected={sel} onSelect={setSel} order={order} doors={L.doors} heat={L.heat} routes={routes} />}
         </div>
       </div>
@@ -205,6 +227,20 @@ export function PlanPage({ ctx, k, go, start3d = false }) {
           <p className="note">{k.R[sel].type} · {k.R[sel].area_m2} m² · side {k.R[sel].side}</p>
           <div className="maze"><span>Maze score</span><div className="bar big"><i style={{ width: `${(ctx.plan.maze_score?.[sel] || 0) * 100}%` }} /></div><b>{(ctx.plan.maze_score?.[sel] || 0).toFixed(2)}</b></div>
           {(md?.why || []).map((w, i) => <div key={i} className="row one"><span>{w}</span></div>)}
+          {tour && (
+            <div className="tourpick">
+              <h2>Guided clips <span>the camera walks it for you</span></h2>
+              <label className="note" htmlFor="tour-entry">Enter by</label>
+              <select id="tour-entry" className="sel" style={{ margin: 0 }} value={tour.entry.door_id} onChange={(e) => setEntry(e.target.value)}>
+                {tour.entries.map((e) => <option key={e.door_id} value={e.door_id}>Side {e.side} door · {Math.round(e.distance_m)} m{roleOf[e.door_id] ? ` · ${roleOf[e.door_id]}` : ''}</option>)}
+              </select>
+              <div className="btns">
+                <button className="btn f" onClick={() => play(['in'])}><Icon name="play" />Way in <small>{Math.round(tour.in.distance_m)} m</small></button>
+                <button className="btn" onClick={() => play(['out'])}><Icon name="play" />Way out <small>{Math.round(tour.out.distance_m)} m</small></button>
+              </div>
+              <button className="btn wide" style={{ height: 44, flex: 'none' }} onClick={() => play(['in', 'out'])}><Icon name="play" />In and out</button>
+            </div>
+          )}
           <button className="btn red wide" onClick={() => go('mayday', { room: sel })}>Mayday from here<Icon name="arrow" /></button>
         </> : <><h2>Floor plan</h2><p className="note big">Tap any room for its maze score, exit route and mayday directions.</p></>}
       </div>

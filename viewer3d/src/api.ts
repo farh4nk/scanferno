@@ -1,5 +1,5 @@
 // Minimal fetchers for the backend endpoints the 3D layers draw. Paths are proxied to :8000 in dev.
-import type { Building, Evac, Floorplan, Mayday, Route } from './types'
+import type { Building, Evac, Floorplan, Mayday, Route, Tour } from './types'
 
 let base = ''
 
@@ -21,5 +21,7 @@ export const api = {
   floorplan: (bid: string) => get<Floorplan>(`/buildings/${bid}/floorplan`),
   route: (bid: string, fromRoom: string) => get<Route>(`/buildings/${bid}/routes?from_room=${q(fromRoom)}`),
   mayday: (bid: string, room: string) => get<Mayday>(`/buildings/${bid}/mayday?room=${q(room)}`),
+  tour: (bid: string, toRoom: string, o: { entry?: string; exit?: string; avoid?: string[] } = {}) =>
+    get<Tour>(`/buildings/${bid}/tour?to_room=${q(toRoom)}${o.entry ? `&entry=${q(o.entry)}` : ''}${o.exit ? `&exit=${q(o.exit)}` : ''}${o.avoid?.length ? `&avoid=${q(o.avoid.join(','))}` : ''}`),
   evac: (bid: string, occupants?: number) => get<Evac>(`/buildings/${bid}/evac${occupants ? `?occupants=${occupants}` : ''}`),
 }

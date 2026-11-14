@@ -18,6 +18,8 @@ import { Overlay } from './overlay'
 import { onPick, type Pick } from './picking'
 import { mountShowcase, setView, type Showcase, type View } from './showcase'
 import type { Building, Floorplan, XY } from './types'
+import { tourPlayer, type TourPlayer } from './tour'
+import type { TourClip } from './types'
 import { followCamera, followHeading, walkToRoom, type Here } from './walk'
 
 export * from './api'
@@ -29,6 +31,7 @@ export * from './frame'
 export * from './overlay'
 export * from './picking'
 export * from './showcase'
+export * from './tour'
 export * from './types'
 export * from './walk'
 
@@ -43,6 +46,8 @@ export interface BuildingViewer {
   setView(view: View): Promise<void>
   /** Fly into a room in walk mode, facing its way out (or `toward`). Resolves to the sweep landed on, or null. */
   walkTo(roomId: string, toward?: XY): Promise<string | null>
+  /** A guided clip: the camera walks `clip` (from `api.tour`) by itself. Call `.play()`; `.stop()` removes the route. */
+  tour(clip: TourClip): TourPlayer
   /** Called on every new sweep or view change with where the camera is. */
   onMove(cb: (h: Here) => void): () => void
   /** Called when the camera turns, with its facing on the floor plan in degrees (counterclockwise from +x). */
@@ -76,6 +81,7 @@ export async function openBuilding(container: HTMLElement, building: Building,
     // the SDK rejects every call once disconnected, so calls after destroy() are no-ops
     setView: async (view) => { if (!destroyed) await setView(showcase.sdk, view) },
     walkTo: async (roomId, toward) => (destroyed ? null : walkToRoom(showcase, overlay, floorplan, roomId, toward)),
+    tour: (clip) => tourPlayer(showcase, overlay, floorplan, clip),
     onMove(cb) {
       const u = followCamera(showcase, overlay, floorplan, cb)
       unsubs.push(u)

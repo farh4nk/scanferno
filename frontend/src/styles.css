@@ -246,13 +246,14 @@ svg.mi { width: 22px; height: 22px; } .ip { fill: var(--white); } .iad { fill: v
 .livepanel button:not(.chip) { height: 40px; border-radius: 6px; background: var(--road2); padding: 0 14px; font-weight: 700; font-size: 14px; }
 .livepanel button.primary { background: var(--fire); color: var(--ink); } .livepanel .seg button { height: auto; background: none; } .livepanel .seg button.on { background: var(--white); }
 .dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; background: var(--dim); } .dot.live { background: var(--fire); animation: blink 1s infinite; }
-.viewer3d { flex: 1; min-height: 360px; width: 100%; display: flex; flex-direction: column; border-radius: 10px; overflow: hidden; background: #000; }
+.viewer3d { position: relative; flex: 1; min-height: 360px; width: 100%; display: flex; flex-direction: column; border-radius: 10px; overflow: hidden; background: #000; }
 .viewer3d-bar { display: flex; gap: 6px; align-items: center; padding: 8px; background: var(--road2); flex-wrap: wrap; }
 .viewer3d-bar button { height: 34px; border-radius: 6px; background: var(--road); padding: 0 12px; font-weight: 700; font-size: 13px; } .viewer3d-bar button.on { background: var(--fire); color: var(--ink); }
 .viewer3d-bar .walk-info { color: var(--fire); font-weight: 700; } .viewer3d-bar .walk-hint { color: var(--ink); background: var(--fire); border-radius: 6px; padding: 1px 8px; font-weight: 800; font-size: 16px; }
 .viewer3d-box { flex: 1; min-height: 0; position: relative; }
 .viewer3d-msg { flex: 1; display: grid; place-content: center; padding: 24px; text-align: center; color: var(--dim); border: 1px dashed var(--rule); border-radius: 10px; }
 
+<<<<<<< Updated upstream
 /* ---------- live call highlights ---------- */
 .rm.flash { stroke: var(--fire); stroke-width: 9; animation: roomflash 1s ease-in-out 6; }
 @keyframes roomflash { 50% { fill: rgba(255, 90, 31, .45); } }
@@ -292,3 +293,19 @@ svg.mi { width: 22px; height: 22px; } .ip { fill: var(--white); } .iad { fill: v
 .caption.err { color: var(--hotfg); }
 .caption .vload { color: var(--fire); font-weight: 800; }
 .para .said { color: var(--dim); } .para mark { background: var(--fire); color: var(--ink); border-radius: 3px; padding: 0 2px; }
+=======
+>>>>>>> Stashed changes
+/* guided clips: caption and controls over the 3D model */
+.tour-bar { position: absolute; left: 12px; right: 12px; bottom: 12px; max-width: 640px; margin: 0 auto; padding: 10px 14px 12px; border-radius: 10px; background: rgba(15,17,21,.9); border: 2px solid #38bdf8; backdrop-filter: blur(6px); display: flex; flex-direction: column; gap: 8px; }
+.tour-bar.out { border-color: #22c55e; }
+.tour-head { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--dim); } .tour-head b { color: var(--white); font-size: 14px; } .tour-head .x { margin-left: auto; width: 28px; height: 28px; border-radius: 6px; background: var(--road); color: var(--white); }
+.tour-cap { font-size: 20px; font-weight: 800; line-height: 1.25; min-height: 2.5em; color: var(--white); }
+.tour-prog { height: 6px; border-radius: 3px; background: var(--road); overflow: hidden; } .tour-prog i { display: block; height: 100%; background: #38bdf8; transition: width .6s linear; } .tour-bar.out .tour-prog i { background: #22c55e; }
+.tour-ctl { display: flex; align-items: center; gap: 6px; } .tour-ctl .sp { flex: 1; }
+.tour-ctl button { height: 38px; min-width: 38px; padding: 0 10px; border-radius: 6px; background: var(--road); color: var(--white); font-weight: 800; font-size: 13px; display: inline-flex; align-items: center; justify-content: center; }
+.tour-ctl button.f, .tour-ctl button.on { background: var(--fire); color: var(--ink); } .tour-ctl button:disabled { opacity: .4; }
+.tour-ctl svg { width: 18px; height: 18px; }
+/* picker in the room panel */
+.tourpick { display: flex; flex-direction: column; gap: 8px; margin: 14px 0; padding-top: 12px; border-top: 1px solid var(--rule); }
+.tourpick .btns { display: flex; gap: 8px; } .tourpick .btns .btn { flex: 1; height: 44px; }
+.tourpick .btn small { font-weight: 600; opacity: .75; }
