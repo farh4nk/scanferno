@@ -26,6 +26,15 @@ Living handoff doc. Update your role's section and add a changelog line in the s
 - Gemini main models overloaded; extraction runs on flash-lite, 3 to 12 s per update. Replay of cached calls hides this.
 - Messy call: the "hallway" match picks one of two scanned hallways.
 
+## Rescue plan (branch `rescue-plan`)
+
+**Done**
+- Fire heat field (`geometry/heat.py`) and per-person rescue plan (`agent/rescue.py`): place trapped people from the call, risk-weighted way in / way out (doors + exterior windows as breach options).
+
+**Next**
+1. Wire into briefing / live API and draw on floor plan + 3D.
+2. Tests.
+
 ## Search (branch `search`)
 
 **Done**
@@ -116,3 +125,4 @@ Framework-free TypeScript toolkit that draws our data on the Matterport model, p
 - 2026-11-14: All 5 calls re-voiced with ElevenLabs; speaker roles follow script order (fixes single-speaker mayday call); `--refresh` now re-transcribes too.
 - 2026-11-14: Search over all 14,946 Matterport models (~8,500 buildings) with SQLite FTS5 index, CoStar join, on-demand cached Vexcel roof + aerial per building; `/search/stats`, `/properties/{id}/vexcel`, `/properties/{id}/aerial` (51 tests).
 - 2026-11-14: Search filters (status, city, kind, CoStar) with facet counts, paging, infinite-scroll dropdown; city typos folded (52 tests).
+- 2026-11-14: Rescue plan heat field + per-person in/out routes (`geometry/heat.py`, `agent/rescue.py`); cached Vexcel for several searched properties.
