@@ -84,7 +84,8 @@ One router file per area (`buildings.py`, `calls.py`, `dispatch.py`, `search.py`
 ## LLM and speech
 
 - LLM is **Gemini** via `backend/agent/llm.py` `generate(prompt, system, json_schema)`. Main models are often overloaded, so it falls back through `gemini-3.5-flash` -> `3.5-flash-lite` -> `3.1-flash-lite`, 20 s max per model. Don't call the SDK directly; use the wrapper.
-- **ElevenLabs** (`backend/dispatch/elevenlabs.py`): STT `scribe_v2` with speaker diarization; TTS needs voice ids (see `.env.example`), otherwise scripted calls fall back to macOS `say`.
+- **ElevenLabs** (`backend/dispatch/elevenlabs.py`): STT `scribe_v2` with speaker diarization; TTS `eleven_v3` (understands `emotion` tags like panicked). Voices by role, auto-picked from the account: dispatcher Daniel, caller Sarah, caller2 Adam, firefighter Harry (mayday radio), narrator Alice (spoken directions). Without TTS access, calls fall back to macOS `say`.
+- **Call scripts** (`fixtures/calls/<id>/script.json`): each line has `role` (dispatcher | caller), optional `voice` (a role above) and `emotion`. Speakers in the audio get roles in the order they first appear in the script, so a single-speaker `"kind": "mayday"` call is the caller, not the dispatcher. After adding or editing a script, run `python -m scripts.process_calls <id>` (add `--refresh` to redo audio, transcript and timeline).
 
 ## Rules
 

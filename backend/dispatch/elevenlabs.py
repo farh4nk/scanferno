@@ -13,10 +13,11 @@ STT_MODELS = ["scribe_v2", "scribe_v1"]
 TTS_MODELS = ["eleven_v3", "eleven_multilingual_v2"]  # v3 understands [panicked]-style tags
 # Preferred voice names per role when auto-picking from the account.
 ROLES = {
-    "dispatcher": ["George", "Brian", "Daniel", "Bill"],
+    "dispatcher": ["Daniel", "Eric", "George", "Brian"],
     "caller": ["Sarah", "Jessica", "Laura", "Lily"],
     "caller2": ["Adam", "Charlie", "Liam", "Will"],
-    "narrator": ["Rachel", "Alice", "Matilda", "River"],
+    "firefighter": ["Harry", "Callum", "Roger", "Bill"],  # mayday radio calls
+    "narrator": ["Alice", "Matilda", "River", "Bella"],   # spoken mayday directions
 }
 SAMPLE_RATE = 16000  # pcm_16000 output: 16-bit mono
 _voices: dict[str, str] = {}

@@ -3,6 +3,6 @@
   "title": "Vibe Hobby: Engine 23 crew disoriented in a dead-end office",
   "kind": "mayday",
   "lines": [
-    {"role": "caller", "voice": "narrator", "emotion": "breathless", "text": "Mayday, mayday, mayday. Engine 23, crew of two, we're lost in zero visibility. Last known position Office 110 on the Delta side. Low air."}
+    {"role": "caller", "voice": "firefighter", "emotion": "breathless", "text": "Mayday, mayday, mayday. Engine 23, crew of two, we're lost in zero visibility. Last known position Office 110 on the Delta side. Low air."}
   ]
 }

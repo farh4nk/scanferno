@@ -7,7 +7,8 @@ Living handoff doc. Update your role's section and add a changelog line in the s
 **Done**
 - Access to all sources verified: CoStar kit, Matterport GraphQL, Vexcel REST + MCP, Gemini, ElevenLabs STT (`scripts/check_access`).
 - 3 hero buildings picked by verified scan quality; all data cached in `fixtures/` (`scripts/pick_heroes`, `scripts/fetch_fixtures`).
-- Dispatch pipeline: audio -> diarized transcript -> live dispatch records via Gemini, with deterministic room matching (`dispatch/`). Two Vibe Hobby calls processed: `vibe-1-clean`, `vibe-2-messy`.
+- Dispatch pipeline: audio -> diarized transcript -> live dispatch records via Gemini, with deterministic room matching (`dispatch/`).
+- All 5 calls voiced with ElevenLabs (eleven_v3, emotion tags) and processed: `vibe-1-clean`, `vibe-2-messy`, `bellaire-1-patient`, `piney-1-storage`, `vibe-mayday`. Mayday call verified on `/calls/vibe-mayday/live` (emits the `mayday` event).
 - API: buildings, calls, SSE replay, typed extract, transcribe, static fixtures. Split into `app/routers/` (buildings, calls, dispatch, search) with shared lookups in `app/deps.py`; paths unchanged.
 - Address search: `GET /search` over 3 hero + 97 scanned CoStar properties, with a cached OpenStreetMap geocoder fallback; `GET /properties/{id}` (`data/directory.py`).
 - Briefing: every claim carries `sources`; exit routes avoid the fire area (`rerouted`, `through_avoided`); `hose_stretch` vs a 200 ft preconnect (`GET /buildings/{id}/hose`).
@@ -15,13 +16,13 @@ Living handoff doc. Update your role's section and add a changelog line in the s
 - Live transcription: `/live/sessions` (`dispatch/session.py`, `app/routers/live.py`) takes mic audio (ElevenLabs STT, re-transcribed whole each upload) or ready-made lines (browser speech / typed), re-extracts when caller lines change, returns record + briefing + mayday, and can save the call as `fixtures/calls/live-<id>/`. `/health` reports `stt`; without a key audio endpoints return 503.
 
 **Next**
-1. Regenerate call audio with real ElevenLabs voices (waiting on Voices: Read for the key).
+1. ~~Regenerate call audio with real ElevenLabs voices~~ done.
 2. ~~Briefing agent~~ done on `geometry-agent`: `POST /buildings/{id}/briefing` (`agent/briefing.py`).
 3. ~~Commander Q&A~~ done on `geometry-agent`: `POST /buildings/{id}/ask` (`agent/ask.py`, Gemini tool calling, rules fallback).
 4. Mayday TTS: speak the `directions` from `GET /buildings/{id}/mayday` (or the `mayday` event on `/calls/{id}/live`).
 
 **Open issues**
-- Server mic transcription only tested with a stubbed STT (no ElevenLabs key on the Windows machine).
+- Server mic transcription only tested with a stubbed STT so far (ElevenLabs key works on the Mac; needs a real run).
 - Gemini main models overloaded; extraction runs on flash-lite, 3 to 12 s per update. Replay of cached calls hides this.
 - Messy call: the "hallway" match picks one of two scanned hallways.
 
@@ -37,7 +38,7 @@ Living handoff doc. Update your role's section and add a changelog line in the s
 
 **Open issues**
 - Piney Point and Bellaire exits are inferred from aerials (`floorplan_overrides` in buildings.json); scan has no exterior doorways.
-- New scripts `bellaire-1-patient`, `piney-1-storage`, `vibe-mayday` have no audio yet: run `scripts.process_calls`.
+- ~~New scripts have no audio yet~~ all voiced and processed (agent-data).
 
 ## 3D model overlays (branch `matterport-3d`, folder `viewer3d/`)
 
@@ -95,3 +96,4 @@ Framework-free TypeScript toolkit that draws our data on the Matterport model, p
 - 2026-11-14: Address search (`/search`, `/properties`, header search UI); backend routers + frontend `api/` and `hooks/` restructure; fire rerouting, hose stretch, briefing sources, live `changes` and caller `corrections`; FEATURES.md covers frontend + search (41 tests).
 - 2026-11-14: Live call transcription: `/live/sessions` (mic via ElevenLabs, browser speech, typed lines, uploads), save live calls as replayable fixtures, frontend Live mode (47 tests).
 - 2026-11-14: 3D walk mode: click a room to fly into it; exit route follows the camera, visible through walls, with a turn arrow (branch `walk-route`).
+- 2026-11-14: All 5 calls re-voiced with ElevenLabs; speaker roles follow script order (fixes single-speaker mayday call); `--refresh` now re-transcribes too.
