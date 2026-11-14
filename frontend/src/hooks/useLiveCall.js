@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { API, liveUrl } from './api'
+import { asset, liveUrl } from '../api'
 
 const EMPTY = { utterances: [], record: null, recordN: 0, briefing: null, mayday: null, status: 'idle', error: null }
 
@@ -26,8 +26,8 @@ export function useLiveCall() {
 
     src.onopen = () => {
       setState((s) => ({ ...s, status: 'live' }))
-      if (call.has_audio) {
-        const a = new Audio(`${API}/fixtures/calls/${call.call_id}/audio.wav`)
+      if (call.audio_url) {
+        const a = new Audio(asset(call.audio_url))
         a.playbackRate = speed
         a.play().catch(() => {}) // autoplay may be blocked; the click that started the call normally allows it
         audio.current = a

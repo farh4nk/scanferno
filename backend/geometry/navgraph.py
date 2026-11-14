@@ -16,6 +16,7 @@ from shapely.prepared import prep
 
 OUTSIDE = "outside"
 WALL_CLEARANCE_M = 0.3
+AVOID_PENALTY_M = 1000.0
 
 
 class RoomSpace:
@@ -135,18 +136,26 @@ class NavGraph:
             "polyline": [[round(x, 2), round(y, 2)] for x, y in pts],
         }
 
-    def to_exit(self, rid: str, exit_door_id: str | None = None) -> dict | None:
-        """Shortest route from a room to the nearest exit (or a specific exit door)."""
+    def to_exit(self, rid: str, exit_door_id: str | None = None, avoid=()) -> dict | None:
+        """Shortest route from a room to the nearest exit (or a specific exit door).
+
+        `avoid`: rooms to route around (fire, smoke). Walking through one costs AVOID_PENALTY_M extra, so
+        the route only crosses it when there is no other way out; `through_avoided` lists those rooms.
+        The start room is never avoided (the crew or victim is already in it)."""
         target = ("door", exit_door_id) if exit_door_id else OUTSIDE
         graph = self.inside if exit_door_id else self.g
+        avoid = set(avoid) - {rid}
+        weight = (lambda u, v, d: d["weight"] + (AVOID_PENALTY_M if d.get("room") in avoid else 0.0)) if avoid else "weight"
         try:
-            nodes = nx.shortest_path(graph, ("room", rid), target, weight="weight")
+            nodes = nx.shortest_path(graph, ("room", rid), target, weight=weight)
         except (nx.NetworkXNoPath, nx.NodeNotFound):
             return None
         out = self.route(nodes)
         exit_id = exit_door_id or next(n[1] for n in reversed(nodes) if isinstance(n, tuple) and n[0] == "door")
         out.update({"from_room_id": rid, "exit_door_id": exit_id, "nodes": nodes})
         out["door_ids"] = [d for d in out["door_ids"] if d != exit_id]
+        if avoid:
+            out["through_avoided"] = [r for r in out["path"] if r in avoid]
         return out
 
     def between(self, a: str, b: str) -> dict | None:

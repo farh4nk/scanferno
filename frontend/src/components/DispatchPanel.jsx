@@ -1,11 +1,20 @@
 const CONF = ['address', 'floor', 'side', 'trapped', 'hazards']
+const FIELDS = [
+  ['address', 'Address', true], ['floor', 'Floor', true], ['side', 'Side', true], ['fire_location', 'Fire location'],
+  ['conditions', 'Conditions'], ['hazards', 'Hazards', true], ['caller_location', 'Caller at'], ['cross_street', 'Cross street'],
+]
 
-function Field({ label, value, changed, conf, n }) {
+const show = (v) => (Array.isArray(v) ? v.join(', ') : String(v))
+
+function Field({ label, value, changed, conf, was, n }) {
   const empty = value == null || value === '' || (Array.isArray(value) && value.length === 0)
   return (
     <div className={`field ${changed ? 'changed' : ''}`} key={changed ? n : 0}>
       <span className="k">{label}</span>
-      <span className={empty ? 'v muted' : 'v'}>{empty ? '–' : Array.isArray(value) ? value.join(', ') : String(value)}</span>
+      <span className={empty ? 'v muted' : 'v'}>
+        {was != null && <s className="was" title="caller corrected this">{show(was)}</s>}
+        {empty ? '–' : show(value)}
+      </span>
       {conf != null && !empty && <span className="conf" title={`confidence ${Math.round(conf * 100)}%`}><i style={{ width: `${conf * 100}%` }} /></span>}
     </div>
   )
@@ -15,22 +24,20 @@ export default function DispatchPanel({ record, n }) {
   const r = record
   const ch = new Set(r?.changed || [])
   const c = r?.confidence || {}
+  const corr = r?.corrections || {}
+  const was = (k) => corr[k]?.[corr[k].length - 1]?.from
   return (
     <div className="card">
       <h3>Dispatch record <span className="muted small">{r ? `update #${n}` : 'waiting for call'}</span></h3>
       <div className="fields">
-        <Field label="Address" value={r?.address} changed={ch.has('address')} conf={c.address} n={n} />
-        <Field label="Floor" value={r?.floor} changed={ch.has('floor')} conf={c.floor} n={n} />
-        <Field label="Side" value={r?.side} changed={ch.has('side')} conf={c.side} n={n} />
-        <Field label="Fire location" value={r?.fire_location} changed={ch.has('fire_location')} n={n} />
-        <Field label="Conditions" value={r?.conditions} changed={ch.has('conditions')} n={n} />
-        <Field label="Hazards" value={r?.hazards} changed={ch.has('hazards')} conf={c.hazards} n={n} />
-        <Field label="Caller at" value={r?.caller_location} changed={ch.has('caller_location')} n={n} />
-        <Field label="Cross street" value={r?.cross_street} changed={ch.has('cross_street')} n={n} />
+        {FIELDS.map(([k, label, hasConf]) => (
+          <Field key={k} label={label} value={r?.[k]} changed={ch.has(k)} conf={hasConf ? c[k] : null} was={was(k)} n={n} />
+        ))}
       </div>
       {r?.trapped?.length > 0 && (
         <div className={`trapped ${ch.has('trapped') ? 'changed' : ''}`} key={`t${n}`}>
           <b>Trapped</b>
+          {was('trapped') && <span className="small muted"> · caller corrected: <s className="was">{show(was('trapped'))}</s></span>}
           {r.trapped.map((t, i) => (
             <div key={i} className="t-item">
               <span>{t.description}</span>

@@ -158,7 +158,10 @@ def entry_points(fp: dict, nav, d: dict, sides) -> list:
             text += f", {to_fire:.0f} m to the fire area"
         if x.get("inferred"):
             text += " (inferred from aerial, verify on arrival)"
-        out.append({"side": side, "door_id": x["id"], "text": text + ".",
+        sources = ["vexcel", "matterport"] if x.get("inferred") else ["matterport"]
+        if (to_victim is not None and to_victim < 1e9) or (to_fire is not None and to_fire < 1e9):
+            sources.append("dispatch")
+        out.append({"side": side, "door_id": x["id"], "text": text + ".", "sources": sources,
                     "_victim": to_victim if to_victim is not None else 1e9, "_fire": to_fire if to_fire is not None else 1e9,
                     "_unburned": side != fire_side})
     if victims:
@@ -186,7 +189,8 @@ def ladder_positions(o: dict, fp: dict, d: dict, floor: int | None) -> list:
         if not info:
             continue
         out.append({"side": s, "text": f"Side {s} ({SIDE_NAMES[s]}): {_ladder_for(h)}.", "lat": info["staging_lat"], "lon": info["staging_lon"],
-                    "purpose": "roof access / ventilation" if s != "A" else "aerial staging"})
+                    "purpose": "roof access / ventilation" if s != "A" else "aerial staging",
+                    "sources": ["vexcel", "dispatch"] if s != "A" else ["vexcel"]})
     victim_rooms = {p["room_id"] for p in d.get("trapped") or [] if p.get("room_id")}
     level = ((floor or 1) - 1) * STORY_M
     for w in fp.get("windows") or []:
@@ -196,7 +200,8 @@ def ladder_positions(o: dict, fp: dict, d: dict, floor: int | None) -> list:
             reach = "ground-level window, no ladder needed" if sill < 1.5 else f"sill about {sill:.1f} m up, {_ladder_for(sill + 1)}"
             info = asides.get(w.get("side"), {})
             out.append({"side": w.get("side"), "text": f"VES: window into {room['label']} on side {w.get('side')} ({reach}).",
-                        "lat": info.get("staging_lat"), "lon": info.get("staging_lon"), "purpose": "vent-enter-search", "window_id": w["id"]})
+                        "lat": info.get("staging_lat"), "lon": info.get("staging_lon"), "purpose": "vent-enter-search", "window_id": w["id"],
+                        "sources": ["matterport", "dispatch", "vexcel"]})
             break
     return out
 
@@ -206,25 +211,71 @@ def search_plan(fp: dict, d: dict, limit: int = 8) -> list:
     adj = neighbors(fp)
     plan, seen = [], set()
 
-    def add(rid, reason):
+    def add(rid, reason, sources):
         if rid in rooms and rid not in seen and len(plan) < limit:
             seen.add(rid)
-            plan.append({"room_id": rid, "label": rooms[rid]["label"], "reason": reason})
+            plan.append({"room_id": rid, "label": rooms[rid]["label"], "reason": reason, "sources": sources})
 
     for p in sorted(d.get("trapped") or [], key=lambda p: -p.get("confidence", 0)):
         for i, c in enumerate(p.get("room_candidates") or []):
             if i == 0 or c["confidence"] >= 0.5 * p["room_candidates"][0]["confidence"]:
                 add(c["room_id"], f"Reported {p['description']} ({c['why']}, {c['confidence']:.0%})" if i == 0
-                    else f"Alternate location for {p['description']} ({c['why']})")
+                    else f"Alternate location for {p['description']} ({c['why']})", ["dispatch", "matterport"])
     for rid in d.get("fire_room_ids") or []:
-        add(rid, "Reported fire area")
+        add(rid, "Reported fire area", ["dispatch"])
     for rid in d.get("fire_room_ids") or []:
         for n in sorted(adj.get(rid, ())):
-            add(n, f"Next to the fire area ({rooms[rid]['label']})")
+            add(n, f"Next to the fire area ({rooms[rid]['label']})", ["dispatch", "matterport"])
     for rid, score in sorted((fp.get("maze_score") or {}).items(), key=lambda kv: -kv[1]):
         if rooms[rid]["type"] not in ("hallway", "open_area"):
-            add(rid, f"Hard to self-evacuate (maze score {score:.2f})")
+            add(rid, f"Hard to self-evacuate (maze score {score:.2f})", ["matterport"])
     return plan
+
+
+def exit_routes(fp: dict, nav, plan: list, fire: list) -> list:
+    """Exit route for each search-plan room, routed around the fire area when one is known."""
+    cached = fp.get("exit_routes") or {}
+    out = []
+    for p in plan:
+        rid = p["room_id"]
+        default = cached.get(rid)
+        if not fire:
+            if default:
+                out.append({**{k: v for k, v in default.items() if k != "nodes"}, "sources": ["matterport"]})
+            continue
+        r = nav.to_exit(rid, avoid=fire)
+        if r is None:
+            continue
+        r.pop("nodes", None)
+        r["rerouted"] = bool(default) and default["path"] != r["path"]
+        r["sources"] = ["matterport", "dispatch"]
+        out.append(r)
+    return out
+
+
+PRECONNECT_FT = 200
+APPARATUS_SETBACK_M = 15.0  # pump panel to the entry door, assumed
+
+
+def hose_stretch(fp: dict, nav, fire: list, sides) -> list:
+    """Hose length from each exterior door to the nearest fire room, against a 200 ft preconnect."""
+    rooms = {r["id"]: r for r in fp["rooms"]}
+    best: dict[str, tuple[float, str]] = {}
+    for rid in fire:
+        for door_id, m in nav.exit_distances(rid).items():
+            if door_id not in best or m < best[door_id][0]:
+                best[door_id] = (m, rid)
+    out = []
+    for door_id, (m, rid) in sorted(best.items(), key=lambda kv: kv[1][0]):
+        door = nav.doors[door_id]
+        ft = round((m + APPARATUS_SETBACK_M) * 3.281)
+        fits = ft <= PRECONNECT_FT
+        side = door.get("side") or sides.of_local(door["position"])
+        out.append({"door_id": door_id, "side": side, "to_room_id": rid, "interior_m": m, "total_ft": ft, "fits_preconnect": fits,
+                    "text": f"Side {side} door to {rooms[rid]['label']}: about {ft} ft of hose"
+                            + ("" if fits else f", beyond a {PRECONNECT_FT} ft preconnect") + ".",
+                    "sources": ["matterport", "dispatch"]})
+    return out
 
 
 def _summary_template(b, c, o, d, occ, plan, hazards) -> str:
@@ -285,8 +336,20 @@ def build(bid: str, dispatch: dict | None = None, use_llm: bool | None = None) -
     hazards = dispatch_hazards(d) + vexcel_hazards(o) + matterport_hazards(fp) + ch
     hazards.sort(key=lambda h: SEVERITY_ORDER[h["severity"]])
     plan = search_plan(fp, d)
-    routes = fp.get("exit_routes") or {}
-    exit_routes = [{k: v for k, v in routes[p["room_id"]].items() if k != "nodes"} for p in plan if p["room_id"] in routes]
+    fire = [r for r in d.get("fire_room_ids") or [] if r in nav.rooms]
+    routes = exit_routes(fp, nav, plan, fire)
+    hose = hose_stretch(fp, nav, fire, sides)
+    rooms = {r["id"]: r["label"] for r in fp["rooms"]}
+    for r in routes:
+        if r.get("rerouted"):
+            trace.append({"step": "reroute", "text": f"Exit route from {rooms[r['from_room_id']]} rerouted around the fire area ({r['distance_m']} m)."})
+        if r.get("through_avoided"):
+            hazards.append(_hz("egress", "high", f"Only way out of {rooms[r['from_room_id']]} passes the fire area "
+                               f"({', '.join(rooms[x] for x in r['through_avoided'])}).", "matterport", room_id=r["from_room_id"]))
+    if hose and not hose[0]["fits_preconnect"]:
+        hazards.append(_hz("hose", "med", f"Fire area is about {hose[0]['total_ft']} ft of hose from the nearest door (side {hose[0]['side']}): "
+                           f"a {PRECONNECT_FT} ft preconnect won't reach; extend the line.", "matterport"))
+    hazards.sort(key=lambda h: SEVERITY_ORDER[h["severity"]])
     trapped = [{"room_id": p.get("room_id"), "description": p["description"], "confidence": p.get("confidence"),
                 "needs_assist": p.get("needs_assist", False), "candidates": p.get("room_candidates", [])}
                for p in d.get("trapped") or []]
@@ -328,7 +391,8 @@ def build(bid: str, dispatch: dict | None = None, use_llm: bool | None = None) -
         "entry_points": entries,
         "ladder_positions": ladders,
         "search_plan": plan,
-        "exit_routes": exit_routes,
+        "exit_routes": routes,
+        "hose_stretch": hose,
         "trapped": trapped,
         "fire_room_ids": d.get("fire_room_ids") or [],
         "occupancy": occ,

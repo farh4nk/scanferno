@@ -14,8 +14,10 @@ const SIDE_POS = { N: [0, -1], S: [0, 1], E: [1, 0], W: [-1, 0] }
 
 export default function FloorPlan({
   plan, layers, searchOrder, trapped, fireRooms, selected, onSelect,
-  highlight, mayday, evacFrame, sides, previewRoute,
+  highlight, mayday, evacFrame, sides, previewRoute, routes,
 }) {
+  // briefing routes (rerouted around the fire) win over the static per-room routes in the plan
+  const routeFor = (rid) => routes?.[rid]?.polyline || plan.exit_routes?.[rid]?.polyline
   const [hover, setHover] = useState(null)
 
   const bbox = useMemo(() => {
@@ -39,7 +41,7 @@ export default function FloorPlan({
     return '#1d2330'
   }
 
-  const routePoly = previewRoute || (selected && plan.exit_routes?.[selected]?.polyline)
+  const routePoly = previewRoute || (selected && routeFor(selected))
   const fs = Math.max(0.55, w / 55) // label size scales with the plan
 
   return (
@@ -109,7 +111,7 @@ export default function FloorPlan({
         {/* exit route for selected room / Q&A highlight / briefing trapped routes */}
         {routePoly && <polyline points={pts(routePoly)} fill="none" stroke="#4dd0ff" strokeWidth="0.4" strokeDasharray="0.9 0.5" markerEnd="url(#arrow)" />}
         {layers.routes && trapped.map((t) => {
-          const route = plan.exit_routes?.[t.room_id]?.polyline
+          const route = routeFor(t.room_id)
           return route ? <polyline key={`tr-${t.room_id}`} points={pts(route)} fill="none" stroke="#4dd0ff" strokeWidth="0.45" strokeDasharray="0.9 0.5" markerEnd="url(#arrow)" /> : null
         })}
         {(highlight?.polylines || []).map((pl, i) => (
