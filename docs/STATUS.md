@@ -50,6 +50,7 @@ Framework-free TypeScript toolkit that draws our data on the Matterport model, p
 - Click picking -> floor plan point + room via `Renderer.getWorldPositionData` on the floor plane (`picking.ts`); 16/16 Vibe rooms resolve correctly.
 - Ready drawers (`draw/`): rooms by type or maze score, labels, outline, doors, exits (inferred marked), exterior windows, room highlight (pulsing), route to exit with flow dots, mayday wall path with walker, evac sim player (interpolated occupants, door queue discs, bottleneck ring; play/pause/seek/speed).
 - `openBuilding(el, building, {sdkKey})` wires it all: mount, calibrate, overlay, picking.
+- Walk mode (`walk.ts`): `walkTo(roomId)` flies to the best sweep in a room (Matterport room tag, then inside the polygon, then nearest; Office 110 has none inside) facing its way out; `onMove`/`onHeading` follow the camera. In the website, picking a room anywhere flies into it, and in Walk the exit route is redrawn from the room you stand in, x-rayed through walls with an exit beacon and a turn arrow in the bar.
 
 **Next**
 1. Integration branch: import `viewer3d/src` into the website, feed it `/calls/{id}/live` events (briefing search plan -> `highlightRooms`, `mayday` event -> `drawMayday`).
@@ -93,3 +94,4 @@ Framework-free TypeScript toolkit that draws our data on the Matterport model, p
 - 2026-11-14: Frontend 3D model tab using viewer3d overlays.
 - 2026-11-14: Address search (`/search`, `/properties`, header search UI); backend routers + frontend `api/` and `hooks/` restructure; fire rerouting, hose stretch, briefing sources, live `changes` and caller `corrections`; FEATURES.md covers frontend + search (41 tests).
 - 2026-11-14: Live call transcription: `/live/sessions` (mic via ElevenLabs, browser speech, typed lines, uploads), save live calls as replayable fixtures, frontend Live mode (47 tests).
+- 2026-11-14: 3D walk mode: click a room to fly into it; exit route follows the camera, visible through walls, with a turn arrow (branch `walk-route`).
