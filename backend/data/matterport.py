@@ -1,12 +1,11 @@
 """Matterport Model API (GraphQL) client.
 
 Docs: https://developers.matterport.com/api/property-intelligence/vector-data/
-Credentials: Token ID + Token Secret from https://my.matterport.com/settings/account/devtools
-Vector data (rooms/walls/doors) needs an Enterprise account; ask the CoStar sponsor table.
+Credentials: MATTERPORT_API_KEY + MATTERPORT_API_TOKEN in .env (backend only, never ship to the browser).
 
-Auth is sent as HTTP Basic (token id : token secret). The docs page we read didn't
-state the header format, so if you get 401s, check the GraphiQL console at
-https://api.matterport.com/api/graphiql/ and adjust _auth().
+The docs don't pin down the header format, so gql() tries the likely schemes in order
+(Basic key:token, Basic token:key, Bearer token, Bearer key) and remembers the first one
+that isn't rejected. check_access prints which one worked.
 """
 import os
 
@@ -47,17 +46,46 @@ query { models(query: "demo:true", include: demo) { results { id name } } }
 """
 
 
-def _auth() -> tuple[str, str]:
-    return os.environ["MATTERPORT_TOKEN_ID"], os.environ["MATTERPORT_TOKEN_SECRET"]
+auth_mode: str | None = None
+
+
+def _auth_options() -> list[tuple[str, dict]]:
+    key, token = os.environ["MATTERPORT_API_KEY"], os.environ["MATTERPORT_API_TOKEN"]
+    return [
+        ("basic key:token", {"auth": (key, token)}),
+        ("basic token:key", {"auth": (token, key)}),
+        ("bearer token", {"headers": {"Authorization": f"Bearer {token}"}}),
+        ("bearer key", {"headers": {"Authorization": f"Bearer {key}"}}),
+    ]
+
+
+def _is_auth_error(r: httpx.Response) -> bool:
+    if r.status_code in (401, 403):
+        return True
+    try:
+        errs = r.json().get("errors") or []
+    except ValueError:
+        return False
+    return any("auth" in str(e).lower() or "unauthorized" in str(e).lower() for e in errs)
 
 
 def gql(query: str, variables: dict | None = None) -> dict:
-    r = httpx.post(ENDPOINT, json={"query": query, "variables": variables or {}}, auth=_auth(), timeout=60)
-    r.raise_for_status()
-    body = r.json()
-    if body.get("errors"):
-        raise RuntimeError(f"Matterport GraphQL errors: {body['errors']}")
-    return body["data"]
+    global auth_mode
+    options = [o for o in _auth_options() if auth_mode in (None, o[0])]
+    payload = {"query": query, "variables": variables or {}}
+    last = None
+    for name, kwargs in options:
+        r = httpx.post(ENDPOINT, json=payload, timeout=60, **kwargs)
+        if _is_auth_error(r):
+            last = r
+            continue
+        r.raise_for_status()
+        auth_mode = name
+        body = r.json()
+        if body.get("errors"):
+            raise RuntimeError(f"Matterport GraphQL errors: {body['errors']}")
+        return body["data"]
+    raise RuntimeError(f"Matterport rejected every auth scheme (last {last.status_code}): {last.text[:300]}")
 
 
 def demo_models() -> list[dict]:

@@ -30,9 +30,9 @@ Sample: [fixtures/sample/dispatch.json](../fixtures/sample/dispatch.json)
 
 Updated live as the transcript grows. `side` uses fireground sides: A = street front, then B, C (rear), D clockwise. `confidence` is 0..1 per field. `room_id` is set once a phrase is matched to the floor plan.
 
-## 3. costar.json (Agent saves from the CoStar sponsor data)
+## 3. costar.json (built from the CoStar kit by `data/costar.py`)
 
-Sample: [fixtures/sample/costar.json](../fixtures/sample/costar.json)
+Sample: [fixtures/sample/costar.json](../fixtures/sample/costar.json). Built per building from the kit: property facts (year built, stories, construction, sprinklers), floors, and current tenants with industry, floor, suite and square feet. Enum names come straight from the kit (`FirstFloor`, `Masonry`, `HealthCareAndSocialAssistance`). `vacant: true` is a hazard flag in itself.
 
 ## 4. briefing.json (Agent produces, Visuals renders)
 

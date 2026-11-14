@@ -1,4 +1,4 @@
-"""Check access to all three data sources. Run from backend/:  python -m scripts.check_access"""
+"""Check access to every data source and the LLM. Run from backend/:  python -m scripts.check_access"""
 import os
 import sys
 from pathlib import Path
@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 load_dotenv(Path(__file__).resolve().parents[2] / ".env")
 
-from data import cache, matterport, vexcel  # noqa: E402
+from data import cache, costar, matterport, vexcel  # noqa: E402
 
 
 def check(name: str, keys: list[str], fn) -> bool:
@@ -20,13 +20,16 @@ def check(name: str, keys: list[str], fn) -> bool:
         print(f"[OK]      {name}: {fn()}")
         return True
     except Exception as e:  # report and keep going
-        print(f"[FAIL]    {name}: {type(e).__name__}: {e}")
+        print(f"[FAIL]    {name}: {type(e).__name__}: {str(e)[:400]}")
         return False
 
 
 def matterport_check():
-    models = matterport.demo_models()
-    return f"{len(models)} demo model(s): {[m['id'] for m in models][:5]}"
+    # Use a real kit model so we test vector data access, not just login.
+    pid, models = next(iter(costar.matterport_models().items()))
+    v = matterport.vector_data(models[0])
+    return (f"auth={matterport.auth_mode}; model {models[0]} (property {pid}): "
+            f"{len(v.get('floors') or [])} floors, {len(v.get('rooms') or [])} rooms")
 
 
 def vexcel_check():
@@ -36,14 +39,21 @@ def vexcel_check():
 
 
 def costar_check():
-    have = [b["id"] for b in cache.buildings() if cache.load_json(b["id"], "costar.json")]
-    return f"local CoStar data for: {have or 'none yet (get it from the sponsor table)'}"
+    kit = costar.kit_dir()
+    return f"kit at {kit}, {len(costar.matterport_models())} properties with Matterport models"
+
+
+def gemini_check():
+    from agent import llm
+    reply = llm.generate("Reply with exactly: OK")
+    return f"model={llm.model()} replied {reply.strip()[:40]!r}"
 
 
 if __name__ == "__main__":
     results = [
-        check("Matterport", ["MATTERPORT_TOKEN_ID", "MATTERPORT_TOKEN_SECRET"], matterport_check),
+        check("CoStar kit", [], costar_check),
+        check("Matterport", ["MATTERPORT_API_KEY", "MATTERPORT_API_TOKEN"], matterport_check),
         check("Vexcel", ["VEXCEL_API_KEY"], vexcel_check),
-        check("CoStar", [], costar_check),
+        check("Gemini", ["GEMINI_API_KEY"], gemini_check),
     ]
     sys.exit(0 if all(results) else 1)

@@ -47,10 +47,14 @@ uvicorn app.main:app --reload  # http://localhost:8000/health
 
 ## Data workflow
 
+Setup once: unzip the CoStar hackathon kit to `costar-kit/` in the repo root (gitignored, 404 MB), then `cp .env.example .env` and fill in keys. LLM is Gemini (free key at https://aistudio.google.com/apikey).
+
 ```bash
 cd backend
-python -m scripts.check_access     # which of Matterport / Vexcel / CoStar work
-python -m scripts.fetch_fixtures   # cache raw data for buildings in fixtures/buildings.json
+python -m scripts.check_access                 # CoStar kit / Matterport / Vexcel / Gemini status
+python -m scripts.pick_heroes                  # rank kit buildings as hero candidates
+python -m scripts.pick_heroes --check-matterport 15 --write 3   # verify scans, write top 3 to buildings.json
+python -m scripts.fetch_fixtures               # cache Matterport, Vexcel and CoStar data per building
 ```
 
 Data shapes shared between roles: [docs/CONTRACTS.md](docs/CONTRACTS.md). Sample data to build against: `fixtures/sample/`.

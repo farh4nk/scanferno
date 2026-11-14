@@ -1,0 +1,381 @@
+{
+  "costar_property_id": 239890,
+  "building_name": "Denmark House",
+  "address": "12777 Jones Rd, Houston, TX",
+  "lat": 29.9581009,
+  "lon": -95.5859031,
+  "property_type": "Office",
+  "year_built": 1982,
+  "year_renovated": 2005,
+  "stories": 4,
+  "height_ft": null,
+  "rba_sqft": 119388.0,
+  "construction_material": "Steel",
+  "has_sprinklers": false,
+  "sprinkler_type": "Unknown",
+  "floors": [
+    {
+      "id": 530142,
+      "name": "SecondFloor",
+      "sqft": 29784.0
+    },
+    {
+      "id": 530143,
+      "name": "FourthFloor",
+      "sqft": 29784.0
+    },
+    {
+      "id": 530247,
+      "name": "ThirdFloor",
+      "sqft": 29784.0
+    },
+    {
+      "id": 532922,
+      "name": "FirstFloor",
+      "sqft": 29784.0
+    },
+    {
+      "id": 1449040,
+      "name": "UnknownFloor",
+      "sqft": 29847.0
+    }
+  ],
+  "current_tenant_count": 36,
+  "vacant": false,
+  "tenants": [
+    {
+      "name": "FDI Creative Services",
+      "industry": "ProfessionalScientificAndTechnicalServices",
+      "employees": 6,
+      "floor": "FirstFloor",
+      "suite": "102",
+      "sqft": 596.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Advent Global Solutions Inc",
+      "industry": "ProfessionalScientificAndTechnicalServices",
+      "employees": 25,
+      "floor": "FourthFloor",
+      "suite": "445",
+      "sqft": 2681.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Regan Armstrong & Associates, PLLC",
+      "industry": "ProfessionalScientificAndTechnicalServices",
+      "employees": 5,
+      "floor": "FirstFloor",
+      "suite": "150",
+      "sqft": 2720.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Trust Guss Injury Lawyers",
+      "industry": "ProfessionalScientificAndTechnicalServices",
+      "employees": 24,
+      "floor": "SecondFloor",
+      "suite": "297",
+      "sqft": 10025.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "The Fleming - Bruce Law Firm, P.L.L.C.",
+      "industry": "ProfessionalScientificAndTechnicalServices",
+      "employees": 2,
+      "floor": "FirstFloor",
+      "suite": "110",
+      "sqft": 894.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "State Farm",
+      "industry": "FinancialInstitutions",
+      "employees": 5,
+      "floor": "FirstFloor",
+      "suite": "125",
+      "sqft": 1300.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Aplomb Real Estate",
+      "industry": "RealEstate",
+      "employees": 4,
+      "floor": "FirstFloor",
+      "suite": "171",
+      "sqft": 894.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Advisors Commercial Real Estate",
+      "industry": "RealEstate",
+      "employees": 7,
+      "floor": "FirstFloor",
+      "suite": "106",
+      "sqft": 1191.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Gentiva Hospice",
+      "industry": "HealthCareAndSocialAssistance",
+      "employees": 8,
+      "floor": "ThirdFloor",
+      "suite": "375-395",
+      "sqft": 1489.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Kathryn P. Peltier, C.P.A.",
+      "industry": "ProfessionalScientificAndTechnicalServices",
+      "employees": 4,
+      "floor": "FirstFloor",
+      "suite": "155",
+      "sqft": 1250.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Bayou City Breastfeeding",
+      "industry": "HealthCareAndSocialAssistance",
+      "employees": 4,
+      "floor": "FourthFloor",
+      "suite": "455",
+      "sqft": 2100.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Currier & Martin PLLC",
+      "industry": "ProfessionalScientificAndTechnicalServices",
+      "employees": 5,
+      "floor": "FirstFloor",
+      "suite": "165",
+      "sqft": 894.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Liberty Litigation Support",
+      "industry": "ProfessionalScientificAndTechnicalServices",
+      "employees": 21,
+      "floor": "SecondFloor",
+      "suite": "280",
+      "sqft": 4900.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Momentum Capital Funding",
+      "industry": "AdministrativeAndSupportServices",
+      "employees": null,
+      "floor": "FirstFloor",
+      "suite": "185",
+      "sqft": null,
+      "space_use": "Office"
+    },
+    {
+      "name": "Check 'n Go",
+      "industry": "FinancialInstitutions",
+      "employees": 8,
+      "floor": "FirstFloor",
+      "suite": "175",
+      "sqft": 596.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Windsor Consultants",
+      "industry": "AdministrativeAndSupportServices",
+      "employees": 5,
+      "floor": "FourthFloor",
+      "suite": "405",
+      "sqft": 1258.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "The Lincoln Law Firm",
+      "industry": "ProfessionalScientificAndTechnicalServices",
+      "employees": 8,
+      "floor": "FourthFloor",
+      "suite": "475",
+      "sqft": 1195.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Natural Remedes, LLC",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "FirstFloor",
+      "suite": "195",
+      "sqft": 1489.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Cypress Pediatric OT",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "ThirdFloor",
+      "suite": "345",
+      "sqft": 2294.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "TradeMark Insurance Agency, LLC",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "ThirdFloor",
+      "suite": "325",
+      "sqft": 1489.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "The Aaron's Company",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "FourthFloor",
+      "suite": "485",
+      "sqft": 1410.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Belvoir Asset Management, LLC",
+      "industry": null,
+      "employees": null,
+      "floor": "FirstFloor",
+      "suite": "135, 135A",
+      "sqft": 1764.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Stewart J. Guss, Attorney at Law",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "SecondFloor",
+      "suite": "297",
+      "sqft": 1489.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "JMC Investments, LP",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "FirstFloor",
+      "suite": "170",
+      "sqft": 894.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "CR Diamond USA, Inc.",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "FirstFloor",
+      "suite": "114",
+      "sqft": 894.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Horrocks",
+      "industry": "ProfessionalScientificAndTechnicalServices",
+      "employees": 60,
+      "floor": "SecondFloor",
+      "suite": "210",
+      "sqft": 8935.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "MSC Oil Corp",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "FourthFloor",
+      "suite": "440",
+      "sqft": 1489.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Proincident Inc",
+      "industry": "ProfessionalScientificAndTechnicalServices",
+      "employees": null,
+      "floor": "FirstFloor",
+      "suite": "o",
+      "sqft": null,
+      "space_use": "Office"
+    },
+    {
+      "name": "Jacobsen Hardy Golf Design",
+      "industry": "ProfessionalScientificAndTechnicalServices",
+      "employees": null,
+      "floor": "FirstFloor",
+      "suite": "150",
+      "sqft": null,
+      "space_use": "Office"
+    },
+    {
+      "name": "Action Collision Center Llc",
+      "industry": "PersonalServices",
+      "employees": null,
+      "floor": "FirstFloor",
+      "suite": "165",
+      "sqft": null,
+      "space_use": "Office"
+    },
+    {
+      "name": "Unknown tenant",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "FirstFloor",
+      "suite": null,
+      "sqft": 717.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Unknown tenant",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "FourthFloor",
+      "suite": null,
+      "sqft": 819.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Unknown tenant",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "ThirdFloor",
+      "suite": null,
+      "sqft": 1758.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Unknown tenant",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "FirstFloor",
+      "suite": null,
+      "sqft": 439.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Unknown tenant",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "FirstFloor",
+      "suite": null,
+      "sqft": 1265.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Unknown tenant",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "FourthFloor",
+      "suite": null,
+      "sqft": 3948.0,
+      "space_use": "Office"
+    }
+  ],
+  "photo_url": "https://ahprd1cdn.csgpimgs.com/i2/3lJ7k5UN6O9esWHUh_dJ0-blg2z5xK-m3pTacdiPp5o/112/image.jpg",
+  "matterport_model_ids": [
+    "4z2y8ayqrWs",
+    "6BLGvbbHy6R",
+    "6M3cEZ6EXbM",
+    "L27mebZzrMW",
+    "cMyqySGEaPd",
+    "eQ284JtaJy4",
+    "vx2K8Srqg5N"
+  ]
+}

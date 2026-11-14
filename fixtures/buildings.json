@@ -1,12 +1,29 @@
 [
   {
-    "id": "hero-1",
-    "name": "TODO: building name",
-    "address": "TODO: street address",
-    "lat": null,
-    "lon": null,
-    "matterport_model_id": null,
-    "costar_property_id": null,
-    "notes": "Pick buildings with a good multi-room Matterport scan first; that's the scarce data."
+    "id": "costar-23551",
+    "name": "Harwin Plaza II Bldg",
+    "address": "7457 Harwin Dr, Houston, TX",
+    "lat": 29.7164302,
+    "lon": -95.5148383,
+    "matterport_model_id": "4AGeBia6uPA",
+    "costar_property_id": 23551
+  },
+  {
+    "id": "costar-23573",
+    "name": "Harwin Plaza I Bldg",
+    "address": "7447 Harwin Dr, Houston, TX",
+    "lat": 29.7171285,
+    "lon": -95.5147201,
+    "matterport_model_id": "2y9vzVj7S5w",
+    "costar_property_id": 23573
+  },
+  {
+    "id": "costar-239890",
+    "name": "Denmark House",
+    "address": "12777 Jones Rd, Houston, TX",
+    "lat": 29.9581009,
+    "lon": -95.5859031,
+    "matterport_model_id": "4z2y8ayqrWs",
+    "costar_property_id": 239890
   }
 ]

@@ -1,7 +1,7 @@
 """Pull and cache raw data for every hero building in fixtures/buildings.json.
 
 Run from backend/:  python -m scripts.fetch_fixtures [building_id] [--refresh]
-Writes fixtures/<id>/matterport_vector.json, vexcel/<view>.jpg, vexcel/elevation.json.
+Writes fixtures/<id>/matterport_vector.json, vexcel/<view>.jpg, vexcel/elevation.json, costar.json.
 Skips anything already cached unless --refresh.
 """
 import sys
@@ -12,7 +12,7 @@ from dotenv import load_dotenv
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 load_dotenv(Path(__file__).resolve().parents[2] / ".env")
 
-from data import cache, matterport, vexcel  # noqa: E402
+from data import cache, costar, matterport, vexcel  # noqa: E402
 
 
 def step(label: str, out: Path, refresh: bool, fn):
@@ -47,8 +47,11 @@ def fetch(b: dict, refresh: bool):
     else:
         print("  todo  set lat/lon")
 
-    if not (cache.FIXTURES / bid / "costar.json").exists():
-        print("  todo  save CoStar data to costar.json (shape: fixtures/sample/costar.json)")
+    if b.get("costar_property_id"):
+        out = cache.FIXTURES / bid / "costar.json"
+        step("costar summary", out, refresh, lambda: costar.get(b, refresh=True))
+    else:
+        print("  todo  set costar_property_id")
 
 
 if __name__ == "__main__":

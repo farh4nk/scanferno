@@ -5,4 +5,4 @@ python-dotenv
 httpx
 networkx
 shapely
-anthropic
+google-genai

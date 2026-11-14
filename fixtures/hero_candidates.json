@@ -1,0 +1,1598 @@
+[
+  {
+    "costar_property_id": 23551,
+    "name": "Harwin Plaza II Bldg",
+    "address": "7457 Harwin Dr, Houston, TX",
+    "lat": 29.7164302,
+    "lon": -95.5148383,
+    "type": "Office",
+    "stories": 3,
+    "current_tenants": 53,
+    "matterport_model_ids": [
+      "4AGeBia6uPA",
+      "8DW9Tug1jxw",
+      "R5KgZDtKVdA",
+      "XSzS7Tbp1Jq",
+      "afdok4vuHZ2",
+      "b7HBcRyZUBt",
+      "hu9LX64osUN",
+      "qWnbmx87VTG",
+      "xH3GSAxmmht",
+      "zDYYFhPQqHC"
+    ],
+    "score": 37
+  },
+  {
+    "costar_property_id": 23573,
+    "name": "Harwin Plaza I Bldg",
+    "address": "7447 Harwin Dr, Houston, TX",
+    "lat": 29.7171285,
+    "lon": -95.5147201,
+    "type": "Office",
+    "stories": 2,
+    "current_tenants": 83,
+    "matterport_model_ids": [
+      "2y9vzVj7S5w",
+      "MyBLfmX2KxC",
+      "Sf4ax2BXsoN",
+      "X7PNurupPWJ",
+      "a2P3KaD3tva",
+      "a5mSkdXF7es"
+    ],
+    "score": 37
+  },
+  {
+    "costar_property_id": 239890,
+    "name": "Denmark House",
+    "address": "12777 Jones Rd, Houston, TX",
+    "lat": 29.9581009,
+    "lon": -95.5859031,
+    "type": "Office",
+    "stories": 4,
+    "current_tenants": 36,
+    "matterport_model_ids": [
+      "4z2y8ayqrWs",
+      "6BLGvbbHy6R",
+      "6M3cEZ6EXbM",
+      "L27mebZzrMW",
+      "cMyqySGEaPd",
+      "eQ284JtaJy4",
+      "vx2K8Srqg5N"
+    ],
+    "score": 37
+  },
+  {
+    "costar_property_id": 240022,
+    "name": "3934 FM-1960, Houston, TX",
+    "address": "3934 FM-1960, Houston, TX",
+    "lat": 29.9931132,
+    "lon": -95.4899963,
+    "type": "Office",
+    "stories": 3,
+    "current_tenants": 16,
+    "matterport_model_ids": [
+      "CyZvCnFNFw4",
+      "E72L9EuCtKc",
+      "EYiYt45sywu",
+      "GcncA1RghMN",
+      "TEosnU22on4",
+      "Yuzpjsb8zDq",
+      "tXGXgSZhRCQ",
+      "z61niNxSM3a"
+    ],
+    "score": 37
+  },
+  {
+    "costar_property_id": 235123,
+    "name": "1113 Vine St, Houston, TX",
+    "address": "1113 Vine St, Houston, TX",
+    "lat": 29.768557,
+    "lon": -95.357148,
+    "type": "Office",
+    "stories": 3,
+    "current_tenants": 29,
+    "matterport_model_ids": [
+      "BX54kKDUE9E",
+      "EXBCDf5VFiT",
+      "GicaHwHVx8e",
+      "RLhHDfrcy3N"
+    ],
+    "score": 35
+  },
+  {
+    "costar_property_id": 239873,
+    "name": "Vibe Hobby",
+    "address": "8866 Gulf Fwy, Houston, TX",
+    "lat": 29.6623127,
+    "lon": -95.2589941,
+    "type": "Office",
+    "stories": 5,
+    "current_tenants": 40,
+    "matterport_model_ids": [
+      "PgQxLGrVujC",
+      "QB5AhU1bLSH",
+      "bptKZKChzrE",
+      "szdeKc4TjsE"
+    ],
+    "score": 35
+  },
+  {
+    "costar_property_id": 239915,
+    "name": "Rockstar Building",
+    "address": "5700 Central Dr, Houston, TX",
+    "lat": 29.8490131,
+    "lon": -95.4942376,
+    "type": "Office",
+    "stories": 4,
+    "current_tenants": 15,
+    "matterport_model_ids": [
+      "HiEPzBGtAN1",
+      "SeopdNigQ8v",
+      "o3MxwzEsiWP",
+      "qn9Xcmg3TSq"
+    ],
+    "score": 35
+  },
+  {
+    "costar_property_id": 10060757,
+    "name": "18211 Katy Fwy, Houston, TX",
+    "address": "18211 Katy Fwy, Houston, TX",
+    "lat": 29.7838751,
+    "lon": -95.6938104,
+    "type": "Office",
+    "stories": 4,
+    "current_tenants": 13,
+    "matterport_model_ids": [
+      "41bTijRQFAA",
+      "SWKbYMUxPHt",
+      "Zw2dte7mCYt",
+      "q2UkJ27FHcc",
+      "vMWevYUHth9"
+    ],
+    "score": 35
+  },
+  {
+    "costar_property_id": 23553,
+    "name": "Piney Point Offices II",
+    "address": "2500 Fondren Rd, Houston, TX",
+    "lat": 29.7403587,
+    "lon": -95.5221355,
+    "type": "Office",
+    "stories": 3,
+    "current_tenants": 15,
+    "matterport_model_ids": [
+      "9xZApYqePUx",
+      "fEqu4q25qYs",
+      "vwvigaJjyV8"
+    ],
+    "score": 33
+  },
+  {
+    "costar_property_id": 239944,
+    "name": "Woodway Center",
+    "address": "4801 Woodway Dr, Houston, TX",
+    "lat": 29.7635027,
+    "lon": -95.4602233,
+    "type": "Office",
+    "stories": 4,
+    "current_tenants": 55,
+    "matterport_model_ids": [
+      "1J9YKR5rPqk",
+      "p6k7AhDKLiV",
+      "r1NyoGS9Ebb"
+    ],
+    "score": 33
+  },
+  {
+    "costar_property_id": 240089,
+    "name": "10700 Richmond Ave, Houston, TX",
+    "address": "10700 Richmond Ave, Houston, TX",
+    "lat": 29.7285491,
+    "lon": -95.5646285,
+    "type": "Office",
+    "stories": 3,
+    "current_tenants": 67,
+    "matterport_model_ids": [
+      "44PkZCbzNdR",
+      "6FWhwBkLgyU",
+      "7gvxscLPz1Q"
+    ],
+    "score": 33
+  },
+  {
+    "costar_property_id": 248905,
+    "name": "Carthay Campus 30",
+    "address": "6330 San Vicente Blvd, Los Angeles, CA",
+    "lat": 34.0608618,
+    "lon": -118.3682216,
+    "type": "Office",
+    "stories": 5,
+    "current_tenants": 18,
+    "matterport_model_ids": [
+      "3n7niwMjM7L",
+      "LAsmpGYaESn",
+      "snW23qPjxFX"
+    ],
+    "score": 33
+  },
+  {
+    "costar_property_id": 349486,
+    "name": "The Center",
+    "address": "8313 Southwest Fwy, Houston, TX",
+    "lat": 29.6882701,
+    "lon": -95.5279597,
+    "type": "Office",
+    "stories": 3,
+    "current_tenants": 34,
+    "matterport_model_ids": [
+      "55h2zWD3Px1",
+      "GXfemwjSgbN",
+      "yAsnTE5YZYL"
+    ],
+    "score": 33
+  },
+  {
+    "costar_property_id": 350372,
+    "name": "Bellaire Medical Professional Building",
+    "address": "6550 Mapleridge St, Houston, TX",
+    "lat": 29.709744,
+    "lon": -95.474863,
+    "type": "Office",
+    "stories": 2,
+    "current_tenants": 16,
+    "matterport_model_ids": [
+      "THASDAsdrw3",
+      "i8Q5pWYiYvf",
+      "mtUS93XRggA"
+    ],
+    "score": 33
+  },
+  {
+    "costar_property_id": 578727,
+    "name": "East Houston MOB",
+    "address": "1140 Westmont Dr, Houston, TX",
+    "lat": 29.7721178,
+    "lon": -95.1954986,
+    "type": "Office",
+    "stories": 5,
+    "current_tenants": 13,
+    "matterport_model_ids": [
+      "UdmygrcyrKh",
+      "Vko45ku6Sbb",
+      "cBUW9fva82D",
+      "tQUWwdMxffZ"
+    ],
+    "score": 33
+  },
+  {
+    "costar_property_id": 5528958,
+    "name": "LA Fashion Mart",
+    "address": "800 12th St, Los Angeles, CA",
+    "lat": 34.0319516,
+    "lon": -118.2505928,
+    "type": "Office",
+    "stories": 4,
+    "current_tenants": 30,
+    "matterport_model_ids": [
+      "BuBsfc9H3EZ",
+      "LyLxfcp8tDV",
+      "R4f4QsQp5w4"
+    ],
+    "score": 33
+  },
+  {
+    "costar_property_id": 7328477,
+    "name": "951 Crocker St, Los Angeles, CA",
+    "address": "951 Crocker St, Los Angeles, CA",
+    "lat": 34.0354959,
+    "lon": -118.2501539,
+    "type": "GeneralRetail",
+    "stories": 2,
+    "current_tenants": 38,
+    "matterport_model_ids": [
+      "9JVEYsUzXcy",
+      "aQaoH3Wsrzh",
+      "xqbWYd7cVjn"
+    ],
+    "score": 33
+  },
+  {
+    "costar_property_id": 362982,
+    "name": "Legacy Pointe",
+    "address": "9700 Bissonnet St, Houston, TX",
+    "lat": 29.6774165,
+    "lon": -95.5453569,
+    "type": "Office",
+    "stories": 2,
+    "current_tenants": 12,
+    "matterport_model_ids": [
+      "FNC3RNdVtoP",
+      "RSZxCrMMr4j",
+      "XAPubuV3kUT",
+      "umQgfzR2kyL"
+    ],
+    "score": 32
+  },
+  {
+    "costar_property_id": 1254240,
+    "name": "1001 Towne Ave, Los Angeles, CA",
+    "address": "1001 Towne Ave, Los Angeles, CA",
+    "lat": 34.0341946,
+    "lon": -118.2499818,
+    "type": "GeneralRetail",
+    "stories": 4,
+    "current_tenants": 14,
+    "matterport_model_ids": [
+      "C3JYiY97kaX",
+      "G1kyDkpGfci",
+      "MkDBiXAzQp3"
+    ],
+    "score": 32
+  },
+  {
+    "costar_property_id": 23568,
+    "name": "450 Sam Houston Pky, Houston, TX",
+    "address": "450 Sam Houston Pky, Houston, TX",
+    "lat": 29.937409,
+    "lon": -95.395025,
+    "type": "Office",
+    "stories": 2,
+    "current_tenants": 15,
+    "matterport_model_ids": [
+      "MBnYBa7whdC",
+      "P3jar2bWE3w"
+    ],
+    "score": 31
+  },
+  {
+    "costar_property_id": 27422,
+    "name": "640 South",
+    "address": "640 San Vicente Blvd, Los Angeles, CA",
+    "lat": 34.0654668,
+    "lon": -118.3724308,
+    "type": "Office",
+    "stories": 5,
+    "current_tenants": 39,
+    "matterport_model_ids": [
+      "1Gu1PWojCPH",
+      "vpZPAH9DSBM"
+    ],
+    "score": 31
+  },
+  {
+    "costar_property_id": 238032,
+    "name": "Ironworks",
+    "address": "711 Milby St, Houston, TX",
+    "lat": 29.744695,
+    "lon": -95.339118,
+    "type": "Office",
+    "stories": 2,
+    "current_tenants": 37,
+    "matterport_model_ids": [
+      "C9TBU32gzAs",
+      "fbvG2CdaanN"
+    ],
+    "score": 31
+  },
+  {
+    "costar_property_id": 239618,
+    "name": "Southwest Center",
+    "address": "6671 Southwest Fwy, houston, TX",
+    "lat": 29.7145739,
+    "lon": -95.4989982,
+    "type": "Office",
+    "stories": 8,
+    "current_tenants": 61,
+    "matterport_model_ids": [
+      "BfYuPVALqi5",
+      "FVmmzAFuqT5",
+      "PFd5sKbeQXg",
+      "Q3JzZM5cp5V",
+      "x1tEW1Gdu8x"
+    ],
+    "score": 31
+  },
+  {
+    "costar_property_id": 239782,
+    "name": "1250 Wood Branch Park Dr, Houston, TX",
+    "address": "1250 Wood Branch Park Dr, Houston, TX",
+    "lat": 29.7881129,
+    "lon": -95.5990711,
+    "type": "Office",
+    "stories": 6,
+    "current_tenants": 24,
+    "matterport_model_ids": [
+      "3aKDUHBV54c",
+      "KtFzGJbUFTS",
+      "hQLHJpeLXMS",
+      "m9pvy7aUFCM",
+      "n9dyKCxLKjx"
+    ],
+    "score": 31
+  },
+  {
+    "costar_property_id": 239912,
+    "name": "The Meadows at Interwood",
+    "address": "14950 Heathrow Forest Pky, Houston, TX",
+    "lat": 29.9353851,
+    "lon": -95.3233397,
+    "type": "Office",
+    "stories": 5,
+    "current_tenants": 37,
+    "matterport_model_ids": [
+      "ErFdUtzdUej",
+      "pM5jJEEzEjQ"
+    ],
+    "score": 31
+  },
+  {
+    "costar_property_id": 239914,
+    "name": "York Centre",
+    "address": "10235 Little York Rd, Houston, TX",
+    "lat": 29.8673927,
+    "lon": -95.5511049,
+    "type": "Office",
+    "stories": 4,
+    "current_tenants": 19,
+    "matterport_model_ids": [
+      "S8Mbgjc2vqQ",
+      "jbR6PcGEELD"
+    ],
+    "score": 31
+  },
+  {
+    "costar_property_id": 239920,
+    "name": "Augusta Place",
+    "address": "2400 Augusta Dr, Houston, TX",
+    "lat": 29.7414986,
+    "lon": -95.4833002,
+    "type": "Office",
+    "stories": 4,
+    "current_tenants": 70,
+    "matterport_model_ids": [
+      "NXYVeGtmPHp",
+      "aqUYXA8s1Bv"
+    ],
+    "score": 31
+  },
+  {
+    "costar_property_id": 239921,
+    "name": "Two Bering Park",
+    "address": "800 Bering Dr, Houston, TX",
+    "lat": 29.7578818,
+    "lon": -95.4806279,
+    "type": "Office",
+    "stories": 4,
+    "current_tenants": 45,
+    "matterport_model_ids": [
+      "ANXH68X64Gj",
+      "anYwjj7Pe2W"
+    ],
+    "score": 31
+  },
+  {
+    "costar_property_id": 240038,
+    "name": "Sage Park Office Building",
+    "address": "2121 Sage Rd, Houston, TX",
+    "lat": 29.745295,
+    "lon": -95.4665119,
+    "type": "Office",
+    "stories": 3,
+    "current_tenants": 28,
+    "matterport_model_ids": [
+      "9yCsDfRs1QK",
+      "w8xkD9SCzQo"
+    ],
+    "score": 31
+  },
+  {
+    "costar_property_id": 240085,
+    "name": "Timberway II",
+    "address": "15995 Barkers Landing Rd, Houston, TX",
+    "lat": 29.7801853,
+    "lon": -95.6414534,
+    "type": "Office",
+    "stories": 3,
+    "current_tenants": 34,
+    "matterport_model_ids": [
+      "ESAEmU1Ur2s",
+      "ockue63jzNt"
+    ],
+    "score": 31
+  },
+  {
+    "costar_property_id": 240262,
+    "name": "Greenbriar Atrium I",
+    "address": "16630 Imperial Valley Dr, Houston, TX",
+    "lat": 29.9415732,
+    "lon": -95.3954711,
+    "type": "Office",
+    "stories": 2,
+    "current_tenants": 20,
+    "matterport_model_ids": [
+      "Qo8RAcWhyaG",
+      "cvcUKq4RNH4"
+    ],
+    "score": 31
+  },
+  {
+    "costar_property_id": 246948,
+    "name": "Bundy Olympic",
+    "address": "11900 Olympic Blvd, Los Angeles, CA",
+    "lat": 34.0323716,
+    "lon": -118.4522483,
+    "type": "Office",
+    "stories": 8,
+    "current_tenants": 27,
+    "matterport_model_ids": [
+      "Gq5yHCcffyL",
+      "MocRC6tyWqy",
+      "RPCw2QpnW8p",
+      "cuJmzqr2kD3",
+      "gvXRMqdgt8U",
+      "htrzwTzmueN",
+      "nrVMX7grm3H",
+      "tv7pX1SC884"
+    ],
+    "score": 31
+  },
+  {
+    "costar_property_id": 246954,
+    "name": "Brentwood Saltair",
+    "address": "11999 San Vicente Blvd, Los Angeles, CA",
+    "lat": 34.052633,
+    "lon": -118.4728461,
+    "type": "Office",
+    "stories": 4,
+    "current_tenants": 16,
+    "matterport_model_ids": [
+      "J32x1oWiYKn",
+      "uEhG6yzmYPw"
+    ],
+    "score": 31
+  },
+  {
+    "costar_property_id": 247256,
+    "name": "Westwood Terrace Bldg",
+    "address": "1640 Sepulveda Blvd, Los Angeles, CA",
+    "lat": 34.0487511,
+    "lon": -118.4448098,
+    "type": "Office",
+    "stories": 5,
+    "current_tenants": 20,
+    "matterport_model_ids": [
+      "kpdF1dt7jo2",
+      "vJ9B7S5NuSM"
+    ],
+    "score": 31
+  },
+  {
+    "costar_property_id": 247451,
+    "name": "Cornerstone Plaza",
+    "address": "1990 Bundy Dr, Los Angeles, CA",
+    "lat": 34.0345304,
+    "lon": -118.455478,
+    "type": "Office",
+    "stories": 8,
+    "current_tenants": 30,
+    "matterport_model_ids": [
+      "GRqGVchuLTF",
+      "fgy8jWyWwDB",
+      "hLR2zAFV1tK",
+      "rBDFhKMRHny",
+      "t9ou5L2emMy"
+    ],
+    "score": 31
+  },
+  {
+    "costar_property_id": 253005,
+    "name": "8228 Sunset Blvd, Los Angeles, CA",
+    "address": "8228 Sunset Blvd, Los Angeles, CA",
+    "lat": 34.0973846,
+    "lon": -118.3683921,
+    "type": "Office",
+    "stories": 3,
+    "current_tenants": 22,
+    "matterport_model_ids": [
+      "VocQsqrAtfi",
+      "wjznjitiU8H"
+    ],
+    "score": 31
+  },
+  {
+    "costar_property_id": 253765,
+    "name": "Hollywood Production Center 1",
+    "address": "1149 Gower St, Los Angeles, CA",
+    "lat": 34.0921271,
+    "lon": -118.32262,
+    "type": "Office",
+    "stories": 2,
+    "current_tenants": 18,
+    "matterport_model_ids": [
+      "K6X5Tk8UBn9",
+      "zgsqUTPAKxh"
+    ],
+    "score": 31
+  },
+  {
+    "costar_property_id": 120125,
+    "name": "The Granada Buildings",
+    "address": "672 La Fayette Park Pl, Los Angeles, CA",
+    "lat": 34.0603131,
+    "lon": -118.2836021,
+    "type": "Office",
+    "stories": 4,
+    "current_tenants": 8,
+    "matterport_model_ids": [
+      "5LSByZUGBkU",
+      "5t632etbD5v",
+      "DzDwPd5j7gR",
+      "KtK1GN87oX5",
+      "QC6ELeM7EtZ",
+      "jBdzc5ZwCzJ"
+    ],
+    "score": 30
+  },
+  {
+    "costar_property_id": 249810,
+    "name": "Downtown Executive Multiplex",
+    "address": "221 12th St, Los Angeles, CA",
+    "lat": 34.0366236,
+    "lon": -118.2575057,
+    "type": "Office",
+    "stories": 4,
+    "current_tenants": 14,
+    "matterport_model_ids": [
+      "FrsMPZwTsng",
+      "vEkPG1xZiqf"
+    ],
+    "score": 30
+  },
+  {
+    "costar_property_id": 354635,
+    "name": "Exchange Emnora",
+    "address": "9050 Emnora Ln, Houston, TX",
+    "lat": 29.8164067,
+    "lon": -95.515171,
+    "type": "Industrial",
+    "stories": 1,
+    "current_tenants": 25,
+    "matterport_model_ids": [
+      "B9b1hGuh61v",
+      "HjEyXryhRLk",
+      "cpBz4ivmcTN"
+    ],
+    "score": 30
+  },
+  {
+    "costar_property_id": 23564,
+    "name": "Piney Point Offices I",
+    "address": "2450 Fondren Rd, Houston, TX",
+    "lat": 29.740858,
+    "lon": -95.5219659,
+    "type": "Office",
+    "stories": 3,
+    "current_tenants": 30,
+    "matterport_model_ids": [
+      "fEqu4q25qYs"
+    ],
+    "score": 29
+  },
+  {
+    "costar_property_id": 239606,
+    "name": "One Park 10",
+    "address": "16225 Park Ten Pl, Houston, TX",
+    "lat": 29.786281,
+    "lon": -95.6638164,
+    "type": "Office",
+    "stories": 8,
+    "current_tenants": 32,
+    "matterport_model_ids": [
+      "RLtSVR9nXwz",
+      "RP84X6jCNoK",
+      "pEV51oMtt1H",
+      "tWkT129a2QB"
+    ],
+    "score": 29
+  },
+  {
+    "costar_property_id": 239748,
+    "name": "2646 Loop, Houston, TX",
+    "address": "2646 Loop, Houston, TX",
+    "lat": 29.6794344,
+    "lon": -95.4207655,
+    "type": "Office",
+    "stories": 6,
+    "current_tenants": 53,
+    "matterport_model_ids": [
+      "KNjFtmNVFhd",
+      "PSHJavrY2qy",
+      "fDZ27gS1Qkr",
+      "upzMqrEqy2f"
+    ],
+    "score": 29
+  },
+  {
+    "costar_property_id": 239773,
+    "name": "2500 Wilcrest Dr, Houston, TX",
+    "address": "2500 Wilcrest Dr, Houston, TX",
+    "lat": 29.7383522,
+    "lon": -95.5724508,
+    "type": "Office",
+    "stories": 6,
+    "current_tenants": 27,
+    "matterport_model_ids": [
+      "89ZfuXUfteK",
+      "VaYyHerJFpr",
+      "ZZRkmZ3crtP",
+      "bXoD96AbYjy"
+    ],
+    "score": 29
+  },
+  {
+    "costar_property_id": 239891,
+    "name": "14340 Torrey Chase Blvd, Houston, TX",
+    "address": "14340 Torrey Chase Blvd, Houston, TX",
+    "lat": 29.9881173,
+    "lon": -95.4909402,
+    "type": "Office",
+    "stories": 4,
+    "current_tenants": 15,
+    "matterport_model_ids": [
+      "S5rgSTufory"
+    ],
+    "score": 29
+  },
+  {
+    "costar_property_id": 239939,
+    "name": "Ashford Place",
+    "address": "1500 Dairy Ashford Rd, Houston, TX",
+    "lat": 29.752915,
+    "lon": -95.606777,
+    "type": "Office",
+    "stories": 4,
+    "current_tenants": 75,
+    "matterport_model_ids": [
+      "yV8VtKtAAPY"
+    ],
+    "score": 29
+  },
+  {
+    "costar_property_id": 240025,
+    "name": "Torrey Chase I",
+    "address": "14425 Torrey Chase Blvd, Houston, TX",
+    "lat": 29.9851052,
+    "lon": -95.4925017,
+    "type": "Office",
+    "stories": 3,
+    "current_tenants": 9,
+    "matterport_model_ids": [
+      "4VqcKP8VSXX",
+      "Twy1Lfadjkf",
+      "U6VdcuYJtAb",
+      "wXHP1att9GT"
+    ],
+    "score": 29
+  },
+  {
+    "costar_property_id": 240079,
+    "name": "12621 Featherwood Dr, Houston, TX",
+    "address": "12621 Featherwood Dr, Houston, TX",
+    "lat": 29.6172598,
+    "lon": -95.2117739,
+    "type": "Office",
+    "stories": 3,
+    "current_tenants": 21,
+    "matterport_model_ids": [
+      "ikwzReQLKZ6"
+    ],
+    "score": 29
+  },
+  {
+    "costar_property_id": 240122,
+    "name": "Westchase I",
+    "address": "3000 Wilcrest Dr, Houston, TX",
+    "lat": 29.7309649,
+    "lon": -95.5724936,
+    "type": "Office",
+    "stories": 3,
+    "current_tenants": 22,
+    "matterport_model_ids": [
+      "ZQaj8goPb8q"
+    ],
+    "score": 29
+  },
+  {
+    "costar_property_id": 240468,
+    "name": "Westpark Plaza",
+    "address": "6220 Westpark Dr, Houston, TX",
+    "lat": 29.7241758,
+    "lon": -95.4933897,
+    "type": "Office",
+    "stories": 2,
+    "current_tenants": 116,
+    "matterport_model_ids": [
+      "WfG39bZsbai"
+    ],
+    "score": 29
+  },
+  {
+    "costar_property_id": 248899,
+    "name": "6310 San Vicente Blvd, Los Angeles, CA",
+    "address": "6310 San Vicente Blvd, Los Angeles, CA",
+    "lat": 34.0606018,
+    "lon": -118.36761,
+    "type": "Office",
+    "stories": 5,
+    "current_tenants": 27,
+    "matterport_model_ids": [
+      "JswS8miVU6X"
+    ],
+    "score": 29
+  },
+  {
+    "costar_property_id": 256760,
+    "name": "5757 Century Blvd, Los Angeles, CA",
+    "address": "5757 Century Blvd, Los Angeles, CA",
+    "lat": 33.945941,
+    "lon": -118.3826554,
+    "type": "Office",
+    "stories": 8,
+    "current_tenants": 99,
+    "matterport_model_ids": [
+      "FfaKwwGL7ni",
+      "HTBzS5NNWod",
+      "R3Nj53ps6f9",
+      "aCNHNZRbpfZ"
+    ],
+    "score": 29
+  },
+  {
+    "costar_property_id": 275290,
+    "name": "915 Mateo St, Los Angeles, CA",
+    "address": "915 Mateo St, Los Angeles, CA",
+    "lat": 34.0318643,
+    "lon": -118.2326104,
+    "type": "Office",
+    "stories": 3,
+    "current_tenants": 16,
+    "matterport_model_ids": [
+      "kzjwhdhvo5S"
+    ],
+    "score": 29
+  },
+  {
+    "costar_property_id": 361291,
+    "name": "Steeplechase Corner Professional Building",
+    "address": "11301 Fallbrook Dr, Houston, TX",
+    "lat": 29.9249856,
+    "lon": -95.5893886,
+    "type": "Office",
+    "stories": 3,
+    "current_tenants": 26,
+    "matterport_model_ids": [
+      "dts1Hjut1rG"
+    ],
+    "score": 29
+  },
+  {
+    "costar_property_id": 361403,
+    "name": "Red Oak South",
+    "address": "16903 Red Oak Dr, Houston, TX",
+    "lat": 30.0147426,
+    "lon": -95.4429991,
+    "type": "Office",
+    "stories": 2,
+    "current_tenants": 38,
+    "matterport_model_ids": [
+      "RbHQCUFYTVm"
+    ],
+    "score": 29
+  },
+  {
+    "costar_property_id": 388877,
+    "name": "550 Greens Pky, Houston, TX",
+    "address": "550 Greens Pky, Houston, TX",
+    "lat": 29.9468818,
+    "lon": -95.4229474,
+    "type": "Office",
+    "stories": 2,
+    "current_tenants": 31,
+    "matterport_model_ids": [
+      "8K46PuLu1tU"
+    ],
+    "score": 29
+  },
+  {
+    "costar_property_id": 6550930,
+    "name": "7900 Fannin",
+    "address": "7900 Fannin St, Houston, TX",
+    "lat": 29.6915081,
+    "lon": -95.4034524,
+    "type": "Office",
+    "stories": 4,
+    "current_tenants": 22,
+    "matterport_model_ids": [
+      "YJLLXyw1xbf"
+    ],
+    "score": 29
+  },
+  {
+    "costar_property_id": 11283467,
+    "name": "The Ion",
+    "address": "4201 Main St, Houston, TX",
+    "lat": 29.7343621,
+    "lon": -95.3822238,
+    "type": "Office",
+    "stories": 5,
+    "current_tenants": 26,
+    "matterport_model_ids": [
+      "CHUheq99ibg"
+    ],
+    "score": 29
+  },
+  {
+    "costar_property_id": 235044,
+    "name": "3330 Audley St, Houston, TX",
+    "address": "3330 Audley St, Houston, TX",
+    "lat": 29.734985,
+    "lon": -95.426833,
+    "type": "GeneralRetail",
+    "stories": 2,
+    "current_tenants": 14,
+    "matterport_model_ids": [
+      "GpFkvxKtRrp"
+    ],
+    "score": 28
+  },
+  {
+    "costar_property_id": 238125,
+    "name": "Aldine Business Center",
+    "address": "2021 Aldine Mail Route Rd, Houston, TX",
+    "lat": 29.903492,
+    "lon": -95.353454,
+    "type": "Industrial",
+    "stories": 1,
+    "current_tenants": 28,
+    "matterport_model_ids": [
+      "PDSropogrFx",
+      "mDTVypQhRFd"
+    ],
+    "score": 28
+  },
+  {
+    "costar_property_id": 240048,
+    "name": "Plaza at Commerce Park North",
+    "address": "222 Pennbright Dr, Houston, TX",
+    "lat": 29.9929178,
+    "lon": -95.4272633,
+    "type": "Office",
+    "stories": 3,
+    "current_tenants": 8,
+    "matterport_model_ids": [
+      "3myzz1GKxaj",
+      "Cf2qUEaKCGo",
+      "bC6qQ2geFYb",
+      "kUkfN4Mseqg"
+    ],
+    "score": 28
+  },
+  {
+    "costar_property_id": 242089,
+    "name": "9777 Gulf Bank Rd, Houston, TX",
+    "address": "9777 Gulf Bank Rd, Houston, TX",
+    "lat": 29.8771131,
+    "lon": -95.5437217,
+    "type": "Industrial",
+    "stories": 1,
+    "current_tenants": 16,
+    "matterport_model_ids": [
+      "8zpBFidjjov",
+      "RMajcRPgsVR"
+    ],
+    "score": 28
+  },
+  {
+    "costar_property_id": 256963,
+    "name": "Barrington Plaza Commercial",
+    "address": "11704 Wilshire Blvd, Los Angeles, CA",
+    "lat": 34.0488889,
+    "lon": -118.4610623,
+    "type": "Office",
+    "stories": 2,
+    "current_tenants": 14,
+    "matterport_model_ids": [
+      "pMe3VYvpCCU"
+    ],
+    "score": 28
+  },
+  {
+    "costar_property_id": 363919,
+    "name": "Building 3",
+    "address": "14518 Hempstead Hwy, Houston, TX",
+    "lat": 29.860602,
+    "lon": -95.54168,
+    "type": "Industrial",
+    "stories": 1,
+    "current_tenants": 17,
+    "matterport_model_ids": [
+      "wGTFuoyL5U8",
+      "zZyURu3pzLm"
+    ],
+    "score": 28
+  },
+  {
+    "costar_property_id": 9327528,
+    "name": "1800 26th St, Houston, TX",
+    "address": "1800 26th St, Houston, TX",
+    "lat": 29.809348,
+    "lon": -95.4311061,
+    "type": "Office",
+    "stories": 5,
+    "current_tenants": 8,
+    "matterport_model_ids": [
+      "EUZYEodTU1a",
+      "cFvcTsQtnQF",
+      "gTtcJPfYtwn",
+      "ojWF8LWfgAy"
+    ],
+    "score": 28
+  },
+  {
+    "costar_property_id": 11104240,
+    "name": "The Preserve",
+    "address": "1370 St Andrews Pl, Los Angeles, CA",
+    "lat": 34.0965929,
+    "lon": -118.3105767,
+    "type": "Office",
+    "stories": 2,
+    "current_tenants": 6,
+    "matterport_model_ids": [
+      "EK3qrodh9EF",
+      "cZXYFyyqr9c",
+      "ou1PqTrY3Vg",
+      "uu1ohNfXirS",
+      "w2JcUVybv9c"
+    ],
+    "score": 28
+  },
+  {
+    "costar_property_id": 239731,
+    "name": "Brookhollow Two",
+    "address": "9800 Northwest Fwy, Houston, TX",
+    "lat": 29.804894,
+    "lon": -95.451614,
+    "type": "Office",
+    "stories": 6,
+    "current_tenants": 35,
+    "matterport_model_ids": [
+      "8SQkDA3Fz5a",
+      "BfjYay5KMPo",
+      "YnZqEwSebtw"
+    ],
+    "score": 27
+  },
+  {
+    "costar_property_id": 240001,
+    "name": "397 Sam Houston Pky, Houston, TX",
+    "address": "397 Sam Houston Pky, Houston, TX",
+    "lat": 29.940281,
+    "lon": -95.397279,
+    "type": "Office",
+    "stories": 4,
+    "current_tenants": 7,
+    "matterport_model_ids": [
+      "Kamop9QengW",
+      "Tnf2k4rxaJY",
+      "hXsQLNJ9589",
+      "oY3UunDxzch"
+    ],
+    "score": 27
+  },
+  {
+    "costar_property_id": 240419,
+    "name": "Grant Road Office Complex",
+    "address": "10601 Grant Rd, Houston, TX",
+    "lat": 29.9662042,
+    "lon": -95.5770935,
+    "type": "Office",
+    "stories": 2,
+    "current_tenants": 11,
+    "matterport_model_ids": [
+      "2bnBGuo9TdS",
+      "7o4thD2BQuA"
+    ],
+    "score": 27
+  },
+  {
+    "costar_property_id": 349493,
+    "name": "53 West",
+    "address": "5373 Alabama St, Houston, TX",
+    "lat": 29.7375634,
+    "lon": -95.4700402,
+    "type": "Office",
+    "stories": 6,
+    "current_tenants": 21,
+    "matterport_model_ids": [
+      "8o8GBUGUSWB",
+      "PEWVexvkDsD",
+      "ZfuPmrJewFN"
+    ],
+    "score": 27
+  },
+  {
+    "costar_property_id": 363799,
+    "name": "Art Square",
+    "address": "2315 Commerce St, Houston, TX",
+    "lat": 29.7573094,
+    "lon": -95.3480102,
+    "type": "Office",
+    "stories": 2,
+    "current_tenants": 13,
+    "matterport_model_ids": [
+      "Nw3EHeJLinh"
+    ],
+    "score": 27
+  },
+  {
+    "costar_property_id": 617344,
+    "name": "8927 Exposition Blvd, Los Angeles, CA",
+    "address": "8927 Exposition Blvd, Los Angeles, CA",
+    "lat": 34.0285311,
+    "lon": -118.3916266,
+    "type": "Flex",
+    "stories": 2,
+    "current_tenants": 10,
+    "matterport_model_ids": [
+      "5RYmbtMAuEV"
+    ],
+    "score": 27
+  },
+  {
+    "costar_property_id": 850750,
+    "name": "Presidential Plaza",
+    "address": "15655 John F Kennedy Blvd, Houston, TX",
+    "lat": 29.9441156,
+    "lon": -95.3325744,
+    "type": "GeneralRetail",
+    "stories": 1,
+    "current_tenants": 15,
+    "matterport_model_ids": [
+      "X5e1j6u6Jka",
+      "ZgCx24QU2z3",
+      "sUAwE47v2wc"
+    ],
+    "score": 27
+  },
+  {
+    "costar_property_id": 9292799,
+    "name": "10605 Grant Rd, Houston, TX",
+    "address": "10605 Grant Rd, Houston, TX",
+    "lat": 29.9663703,
+    "lon": -95.5776023,
+    "type": "Office",
+    "stories": 2,
+    "current_tenants": 11,
+    "matterport_model_ids": [
+      "2bnBGuo9TdS",
+      "7o4thD2BQuA"
+    ],
+    "score": 27
+  },
+  {
+    "costar_property_id": 234542,
+    "name": "Central Park Northwest",
+    "address": "2500 Central Pky, Houston, TX",
+    "lat": 29.8106844,
+    "lon": -95.4646955,
+    "type": "Industrial",
+    "stories": 1,
+    "current_tenants": 15,
+    "matterport_model_ids": [
+      "pKxwhSK22MX"
+    ],
+    "score": 26
+  },
+  {
+    "costar_property_id": 239956,
+    "name": "Green Bank Bldg",
+    "address": "9545 Katy Fwy, Houston, TX",
+    "lat": 29.7832393,
+    "lon": -95.5291399,
+    "type": "Office",
+    "stories": 4,
+    "current_tenants": 12,
+    "matterport_model_ids": [
+      "AoUK8zJ79E5"
+    ],
+    "score": 26
+  },
+  {
+    "costar_property_id": 240231,
+    "name": "14420 Sylvanfield Dr, Houston, TX",
+    "address": "14420 Sylvanfield Dr, Houston, TX",
+    "lat": 29.9850888,
+    "lon": -95.4936361,
+    "type": "Office",
+    "stories": 2,
+    "current_tenants": 6,
+    "matterport_model_ids": [
+      "59JezsMiYmC",
+      "XTvxrWxKhVg",
+      "mBGsyogJPCH",
+      "weWCyx9YQc7"
+    ],
+    "score": 26
+  },
+  {
+    "costar_property_id": 240517,
+    "name": "KSF Orthopaedic Center",
+    "address": "17270 Red Oak Dr, Houston, TX",
+    "lat": 30.022529,
+    "lon": -95.447002,
+    "type": "Office",
+    "stories": 2,
+    "current_tenants": 6,
+    "matterport_model_ids": [
+      "Hq6Dca1G95S",
+      "R1gryzA25GH",
+      "hmWcZjPsMJ7",
+      "wuo98sT4MZc"
+    ],
+    "score": 26
+  },
+  {
+    "costar_property_id": 249226,
+    "name": "7083 Hollywood Blvd, Los Angeles, CA",
+    "address": "7083 Hollywood Blvd, Los Angeles, CA",
+    "lat": 34.1018316,
+    "lon": -118.3443787,
+    "type": "Office",
+    "stories": 6,
+    "current_tenants": 12,
+    "matterport_model_ids": [
+      "EdazNayWsZ3",
+      "MZWWLvPLEAr",
+      "v8AXxybCpbS",
+      "zyag7oVcxaA"
+    ],
+    "score": 26
+  },
+  {
+    "costar_property_id": 255843,
+    "name": "530 8th St, Los Angeles, CA",
+    "address": "530 8th St, Los Angeles, CA",
+    "lat": 34.039364,
+    "lon": -118.249988,
+    "type": "Flex",
+    "stories": 6,
+    "current_tenants": 18,
+    "matterport_model_ids": [
+      "Cazdko3zF9J"
+    ],
+    "score": 26
+  },
+  {
+    "costar_property_id": 354261,
+    "name": "6720 Sands Point Dr, Houston, TX",
+    "address": "6720 Sands Point Dr, Houston, TX",
+    "lat": 29.7113728,
+    "lon": -95.4997246,
+    "type": "Office",
+    "stories": 2,
+    "current_tenants": 12,
+    "matterport_model_ids": [
+      "MqzHn9Nzyrv"
+    ],
+    "score": 26
+  },
+  {
+    "costar_property_id": 643549,
+    "name": "940 Gemini St, Houston, TX",
+    "address": "940 Gemini St, Houston, TX",
+    "lat": 29.551404,
+    "lon": -95.116611,
+    "type": "Office",
+    "stories": 2,
+    "current_tenants": 6,
+    "matterport_model_ids": [
+      "8PT6XLSLRCQ",
+      "Vf3kdLNeKfi",
+      "uAvKad4Ryv3",
+      "z2GNDCNYdoE"
+    ],
+    "score": 26
+  },
+  {
+    "costar_property_id": 5759436,
+    "name": "Bldg I",
+    "address": "10603 Sam Houston Pky, Houston, TX",
+    "lat": 29.919707,
+    "lon": -95.557372,
+    "type": "Office",
+    "stories": 4,
+    "current_tenants": 12,
+    "matterport_model_ids": [
+      "V6i6zmjFnHB"
+    ],
+    "score": 26
+  },
+  {
+    "costar_property_id": 23347,
+    "name": "333 Northbelt",
+    "address": "333 Sam Houston Pky, Houston, TX",
+    "lat": 29.9407608,
+    "lon": -95.3982479,
+    "type": "Office",
+    "stories": 12,
+    "current_tenants": 23,
+    "matterport_model_ids": [
+      "NLpW1UAp1HJ",
+      "NgGvLZnbEMM",
+      "VKkfYGTqZAx",
+      "WSYTQt3istC",
+      "w63JtBJm3gt"
+    ],
+    "score": 25
+  },
+  {
+    "costar_property_id": 27120,
+    "name": "Culver Connect",
+    "address": "3000 Robertson Blvd, Los Angeles, CA",
+    "lat": 34.0324178,
+    "lon": -118.3894581,
+    "type": "Office",
+    "stories": 4,
+    "current_tenants": 7,
+    "matterport_model_ids": [
+      "ZSPaQbkGcJJ",
+      "bMvhEqFSFbm",
+      "hjSoaugLyHY"
+    ],
+    "score": 25
+  },
+  {
+    "costar_property_id": 233899,
+    "name": "Wells Fargo Plaza",
+    "address": "1000 Louisiana St, Houston, TX",
+    "lat": 29.7584604,
+    "lon": -95.3682126,
+    "type": "Office",
+    "stories": 71,
+    "current_tenants": 28,
+    "matterport_model_ids": [
+      "3K5rnFt1P6B",
+      "Gj2E4uqqdfU",
+      "Ry9V96reQ77",
+      "jUnF84zghQk",
+      "kDmRpp4ypA1",
+      "qVqBanbJQze",
+      "tzDLoMcCjuC"
+    ],
+    "score": 25
+  },
+  {
+    "costar_property_id": 233928,
+    "name": "1415 Louisiana",
+    "address": "1415 Louisiana St, Houston, TX",
+    "lat": 29.7547798,
+    "lon": -95.3698082,
+    "type": "Office",
+    "stories": 43,
+    "current_tenants": 25,
+    "matterport_model_ids": [
+      "LJn59uoV759",
+      "qgHrw7d3MJ1",
+      "sEmBqaiPBba",
+      "tMswvfbZK8C",
+      "vh1XhRJyZPW",
+      "yPnykGhkJf6"
+    ],
+    "score": 25
+  },
+  {
+    "costar_property_id": 234088,
+    "name": "2100 West Loop, Houston, TX",
+    "address": "2100 West Loop, Houston, TX",
+    "lat": 29.7460487,
+    "lon": -95.4576844,
+    "type": "Office",
+    "stories": 16,
+    "current_tenants": 34,
+    "matterport_model_ids": [
+      "AEaxTxjZrPo",
+      "L3266YcPPvd",
+      "Lcv4jEgL8kk",
+      "SvozpTBRLYx",
+      "n4cvv69aXz1",
+      "rEpuTTQ1zEv",
+      "wqArVfdgo17",
+      "xStDhmrtbP5",
+      "y3QUWwgxvsw"
+    ],
+    "score": 25
+  },
+  {
+    "costar_property_id": 236191,
+    "name": "17449 Village Green Dr, Houston, TX",
+    "address": "17449 Village Green Dr, Houston, TX",
+    "lat": 29.891907,
+    "lon": -95.582637,
+    "type": "Flex",
+    "stories": 1,
+    "current_tenants": 14,
+    "matterport_model_ids": [
+      "PLPZJBUixWt"
+    ],
+    "score": 25
+  },
+  {
+    "costar_property_id": 237365,
+    "name": "Northwest Commerce Building",
+    "address": "14405 Walters Rd, Houston, TX",
+    "lat": 29.9927255,
+    "lon": -95.4844296,
+    "type": "Office",
+    "stories": 10,
+    "current_tenants": 43,
+    "matterport_model_ids": [
+      "ThfCq6T7tLX",
+      "Zu81BS8tJw9"
+    ],
+    "score": 25
+  },
+  {
+    "costar_property_id": 237993,
+    "name": "Westheimer Central Plaza",
+    "address": "11200 Westheimer Rd, Houston, TX",
+    "lat": 29.737322,
+    "lon": -95.5740042,
+    "type": "Office",
+    "stories": 10,
+    "current_tenants": 28,
+    "matterport_model_ids": [
+      "jtfVRiouTPW",
+      "yn8RZv9QB2W"
+    ],
+    "score": 25
+  },
+  {
+    "costar_property_id": 239603,
+    "name": "Wells Fargo Building",
+    "address": "13201 Northwest Fwy, Houston, TX",
+    "lat": 29.8480853,
+    "lon": -95.5067373,
+    "type": "Office",
+    "stories": 8,
+    "current_tenants": 67,
+    "matterport_model_ids": [
+      "E7xRXzkjMSE",
+      "MnXUqTokRqk"
+    ],
+    "score": 25
+  },
+  {
+    "costar_property_id": 239605,
+    "name": "One Northwind Plaza",
+    "address": "7600 Tidwell Rd, Houston, TX",
+    "lat": 29.8522108,
+    "lon": -95.5052095,
+    "type": "Office",
+    "stories": 8,
+    "current_tenants": 22,
+    "matterport_model_ids": [
+      "718TtwtiCse",
+      "XieJvP3kj4s"
+    ],
+    "score": 25
+  },
+  {
+    "costar_property_id": 239621,
+    "name": "Westwood Green",
+    "address": "9494 Southwest Fwy, Houston, TX",
+    "lat": 29.6782095,
+    "lon": -95.5403311,
+    "type": "Office",
+    "stories": 8,
+    "current_tenants": 18,
+    "matterport_model_ids": [
+      "9jbwyKjkvSz",
+      "mZkUmV1wXg3"
+    ],
+    "score": 25
+  },
+  {
+    "costar_property_id": 239712,
+    "name": "1919 Loop, Houston, TX",
+    "address": "1919 Loop, Houston, TX",
+    "lat": 29.810614,
+    "lon": -95.4341986,
+    "type": "Office",
+    "stories": 6,
+    "current_tenants": 39,
+    "matterport_model_ids": [
+      "CdKz33bz83S",
+      "N3uVi69rxbp"
+    ],
+    "score": 25
+  },
+  {
+    "costar_property_id": 239774,
+    "name": "Westchase Square",
+    "address": "2825 Wilcrest Dr, Houston, TX",
+    "lat": 29.7337741,
+    "lon": -95.5708694,
+    "type": "Office",
+    "stories": 6,
+    "current_tenants": 66,
+    "matterport_model_ids": [
+      "SgKbPPm1YYW",
+      "dqAzgcvs42P"
+    ],
+    "score": 25
+  },
+  {
+    "costar_property_id": 239781,
+    "name": "Dairy Ashford Plaza",
+    "address": "2000 Dairy Ashford Rd, Houston, TX",
+    "lat": 29.744861,
+    "lon": -95.6066742,
+    "type": "Office",
+    "stories": 6,
+    "current_tenants": 30,
+    "matterport_model_ids": [
+      "dnTP8ULgTbb",
+      "tFvtfFhhA9a"
+    ],
+    "score": 25
+  },
+  {
+    "costar_property_id": 241215,
+    "name": "Westchase Place",
+    "address": "11200 Richmond Ave, Houston, TX",
+    "lat": 29.728236,
+    "lon": -95.574077,
+    "type": "Office",
+    "stories": 6,
+    "current_tenants": 13,
+    "matterport_model_ids": [
+      "hjq3MpwugZX",
+      "mFyRZVxWNcZ",
+      "zVehUd71QNy"
+    ],
+    "score": 25
+  },
+  {
+    "costar_property_id": 246819,
+    "name": "10801 National Blvd, Los Angeles, CA",
+    "address": "10801 National Blvd, Los Angeles, CA",
+    "lat": 34.0312422,
+    "lon": -118.4203608,
+    "type": "Office",
+    "stories": 6,
+    "current_tenants": 72,
+    "matterport_model_ids": [
+      "pD14rf4q9uM",
+      "thbhAbKBg7E"
+    ],
+    "score": 25
+  },
+  {
+    "costar_property_id": 246826,
+    "name": "The Oppenheimer Tower",
+    "address": "10880 Wilshire Blvd, Los Angeles, CA",
+    "lat": 34.058653,
+    "lon": -118.443137,
+    "type": "Office",
+    "stories": 24,
+    "current_tenants": 66,
+    "matterport_model_ids": [
+      "bVXwu8yqp2D",
+      "cBrcpZjX3Uz",
+      "cEvQ8q5GKZd",
+      "vaR5MNrZPtX",
+      "zULWLZCBVYq"
+    ],
+    "score": 25
+  }
+]

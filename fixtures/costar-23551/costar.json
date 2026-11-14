@@ -1,0 +1,541 @@
+{
+  "costar_property_id": 23551,
+  "building_name": "Harwin Plaza II Bldg",
+  "address": "7457 Harwin Dr, Houston, TX",
+  "lat": 29.7164302,
+  "lon": -95.5148383,
+  "property_type": "Office",
+  "year_built": 1983,
+  "year_renovated": 1999,
+  "stories": 3,
+  "height_ft": null,
+  "rba_sqft": 105717.0,
+  "construction_material": "Masonry",
+  "has_sprinklers": true,
+  "sprinkler_type": "Unknown",
+  "floors": [
+    {
+      "id": 275321,
+      "name": "SecondFloor",
+      "sqft": 35239.0
+    },
+    {
+      "id": 276057,
+      "name": "ThirdFloor",
+      "sqft": 35239.0
+    },
+    {
+      "id": 276586,
+      "name": "FirstFloor",
+      "sqft": 35239.0
+    },
+    {
+      "id": 1214139,
+      "name": "UnknownFloor",
+      "sqft": 34893.0
+    }
+  ],
+  "current_tenant_count": 53,
+  "vacant": false,
+  "tenants": [
+    {
+      "name": "Structural & Enviromental Consultants",
+      "industry": "ProfessionalScientificAndTechnicalServices",
+      "employees": null,
+      "floor": "SecondFloor",
+      "suite": "230",
+      "sqft": 500.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Amya Tax Services",
+      "industry": "ProfessionalScientificAndTechnicalServices",
+      "employees": 8,
+      "floor": "FirstFloor",
+      "suite": "150",
+      "sqft": 1217.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Columbus E. Anyanwu Attorney At Law",
+      "industry": "ProfessionalScientificAndTechnicalServices",
+      "employees": null,
+      "floor": "SecondFloor",
+      "suite": "232",
+      "sqft": 975.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Caisson Real Estate Brokerage, LLC",
+      "industry": "RealEstate",
+      "employees": 13,
+      "floor": "FirstFloor",
+      "suite": "100",
+      "sqft": 1977.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "FCM Consulting, LLC",
+      "industry": "ProfessionalScientificAndTechnicalServices",
+      "employees": 5,
+      "floor": "SecondFloor",
+      "suite": "216",
+      "sqft": 1245.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Lebanon Times",
+      "industry": "Information",
+      "employees": 4,
+      "floor": "ThirdFloor",
+      "suite": "345",
+      "sqft": 106.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Harris County",
+      "industry": "PublicAdministration",
+      "employees": 139,
+      "floor": "ThirdFloor",
+      "suite": "130",
+      "sqft": 11250.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Harris County",
+      "industry": "PublicAdministration",
+      "employees": 139,
+      "floor": "FirstFloor",
+      "suite": "130",
+      "sqft": 13265.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "MD Pools And Spas Inc",
+      "industry": "AgriculturalOrMiningOrUtilities",
+      "employees": 4,
+      "floor": "ThirdFloor",
+      "suite": "303J",
+      "sqft": 153.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Friendship Care Home Enterprises, LLC",
+      "industry": "HealthCareAndSocialAssistance",
+      "employees": 5,
+      "floor": "ThirdFloor",
+      "suite": "303K",
+      "sqft": 695.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Fancy Faces By Lala",
+      "industry": "PersonalServices",
+      "employees": 1,
+      "floor": "ThirdFloor",
+      "suite": "327 D",
+      "sqft": 300.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Set Free DAT",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "FirstFloor",
+      "suite": "120B",
+      "sqft": 150.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "We Answer Llc",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "SecondFloor",
+      "suite": "251",
+      "sqft": 1637.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Bagetti TWWINC",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "FirstFloor",
+      "suite": "120C",
+      "sqft": 273.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "The Future Beyond Charity",
+      "industry": "PersonalServices",
+      "employees": null,
+      "floor": "SecondFloor",
+      "suite": "250",
+      "sqft": 1762.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "The Spaeth Law Firm",
+      "industry": "ProfessionalScientificAndTechnicalServices",
+      "employees": 2,
+      "floor": "SecondFloor",
+      "suite": "226",
+      "sqft": 1063.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "True Mental Health Services",
+      "industry": "HealthCareAndSocialAssistance",
+      "employees": 2,
+      "floor": "SecondFloor",
+      "suite": "240",
+      "sqft": 411.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Lumen Tax & Social Services",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "ThirdFloor",
+      "suite": "335",
+      "sqft": 1057.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "The Texas Law Firm",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "SecondFloor",
+      "suite": "212",
+      "sqft": 785.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Pop Up Print, Inc",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "FirstFloor",
+      "suite": "135",
+      "sqft": 1057.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Hou-Tex EMS Inc.",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "ThirdFloor",
+      "suite": "303",
+      "sqft": 352.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Chemland International",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "ThirdFloor",
+      "suite": "300",
+      "sqft": 1762.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Law Office Of Elia M Lopez",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "ThirdFloor",
+      "suite": "338",
+      "sqft": 1057.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "S M & Y Communications LLC",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "FirstFloor",
+      "suite": "134",
+      "sqft": 705.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Mernero Llc",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "ThirdFloor",
+      "suite": "303F",
+      "sqft": 352.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Excel Sport And Family Chiropractic",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "FirstFloor",
+      "suite": "101",
+      "sqft": 1057.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Paramount Import Export",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "ThirdFloor",
+      "suite": "364",
+      "sqft": 1057.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Bell Tax Services & Associates",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "ThirdFloor",
+      "suite": "327F",
+      "sqft": 175.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Houlue Counseling Services",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "SecondFloor",
+      "suite": "217",
+      "sqft": 705.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Heir of Grace",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "SecondFloor",
+      "suite": "228",
+      "sqft": 705.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "En-Her-Gy Accessories",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "SecondFloor",
+      "suite": "264",
+      "sqft": 705.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "LG Palliative And Hospice Care",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "SecondFloor",
+      "suite": "234",
+      "sqft": 1410.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Bruce Chang, CPA",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "ThirdFloor",
+      "suite": "309",
+      "sqft": 705.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Spectrum Empowered",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "FirstFloor",
+      "suite": "106",
+      "sqft": 3524.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Maxumus Tax",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "SecondFloor",
+      "suite": "270",
+      "sqft": 705.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Ik Truck CDL",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "SecondFloor",
+      "suite": "220",
+      "sqft": 488.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Ready Steady Games",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "ThirdFloor",
+      "suite": "303D",
+      "sqft": 250.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Our Recovery Center",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "ThirdFloor",
+      "suite": "310",
+      "sqft": 2819.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "RC Therapeutic Stretch Relief",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "SecondFloor",
+      "suite": "236",
+      "sqft": 1410.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "1st Care Experts",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "SecondFloor",
+      "suite": "218",
+      "sqft": 705.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "The Allice Collective",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "SecondFloor",
+      "suite": "266",
+      "sqft": 705.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "S&J Financial Consultants",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "SecondFloor",
+      "suite": "248",
+      "sqft": 1057.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Zee Chiropractic Clinic, Inc",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "FirstFloor",
+      "suite": "160",
+      "sqft": 1410.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "US Chemland",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "ThirdFloor",
+      "suite": "308",
+      "sqft": 705.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Ayoub Empire",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "FirstFloor",
+      "suite": "120A",
+      "sqft": 352.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "CC International Services",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "ThirdFloor",
+      "suite": "326",
+      "sqft": 1000.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "True Outreach Inc",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "ThirdFloor",
+      "suite": "303H",
+      "sqft": 352.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Crown Chiropractic & Wellness",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "SecondFloor",
+      "suite": "210",
+      "sqft": 705.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Hybrid Solutions Training & Testing Center",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "ThirdFloor",
+      "suite": "312",
+      "sqft": 1762.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Strong Haul Trucking LLC",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "FirstFloor",
+      "suite": "120D",
+      "sqft": 352.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Dollarhide Industrial Response Team, LLC",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "ThirdFloor",
+      "suite": "327C",
+      "sqft": 4425.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Zasstech",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "FirstFloor",
+      "suite": "185",
+      "sqft": 2819.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "ANB Imports, LLC",
+      "industry": "Unknown",
+      "employees": null,
+      "floor": "FirstFloor",
+      "suite": "118",
+      "sqft": 507.0,
+      "space_use": "Office"
+    },
+    {
+      "name": "Actio Business Consulting, LLC",
+      "industry": "ProfessionalScientificAndTechnicalServices",
+      "employees": 3,
+      "floor": "FirstFloor",
+      "suite": "155",
+      "sqft": 691.0,
+      "space_use": "Office"
+    }
+  ],
+  "photo_url": "https://ahprd1cdn.csgpimgs.com/i2/SnuypGI7LAswICZMaNHSRe1RXE52jjusFOLlaAcCAPg/112/image.jpg",
+  "matterport_model_ids": [
+    "4AGeBia6uPA",
+    "8DW9Tug1jxw",
+    "R5KgZDtKVdA",
+    "XSzS7Tbp1Jq",
+    "afdok4vuHZ2",
+    "b7HBcRyZUBt",
+    "hu9LX64osUN",
+    "qWnbmx87VTG",
+    "xH3GSAxmmht",
+    "zDYYFhPQqHC"
+  ]
+}

@@ -1,13 +1,25 @@
 {
-  "costar_property_id": "SAMPLE",
+  "costar_property_id": 0,
+  "building_name": "Sample Office",
+  "address": "1234 Westheimer Rd, Houston, TX",
+  "lat": 29.74,
+  "lon": -95.39,
   "property_type": "Office",
   "year_built": 1978,
+  "year_renovated": 1999,
   "stories": 1,
+  "height_ft": null,
   "rba_sqft": 12000,
-  "vacancy_pct": 15,
-  "estimated_occupancy": 40,
+  "construction_material": "Masonry",
+  "has_sprinklers": true,
+  "sprinkler_type": "Wet",
+  "floors": [{"id": 1, "name": "FirstFloor", "sqft": 12000}],
+  "current_tenant_count": 2,
+  "vacant": false,
   "tenants": [
-    {"name": "Acme Print Shop", "type": "printing", "floor": 1, "suite": "302", "notes": "solvents and inks on site"},
-    {"name": "Bayou Dental", "type": "medical office", "floor": 1, "suite": "301"}
-  ]
+    {"name": "Acme Print Shop", "industry": "Manufacturing", "employees": 6, "floor": "FirstFloor", "suite": "302", "sqft": 1500, "space_use": "Industrial"},
+    {"name": "Bayou Dental", "industry": "HealthCareAndSocialAssistance", "employees": 12, "floor": "FirstFloor", "suite": "301", "sqft": 2200, "space_use": "OfficeMedical"}
+  ],
+  "photo_url": null,
+  "matterport_model_ids": []
 }
