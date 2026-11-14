@@ -1,0 +1,117 @@
+{
+  "text": "Follow the wall 8 meters, passing 1 door on your left, then go through the door on your left into Office 114.",
+  "voice": "briefing",
+  "audio_url": "/fixtures/tts/951fccf45a1bdd86.mp3",
+  "words": [
+    {
+      "word": "Follow",
+      "start": 0.023,
+      "end": 0.279
+    },
+    {
+      "word": "the",
+      "start": 0.325,
+      "end": 0.395
+    },
+    {
+      "word": "wall",
+      "start": 0.43,
+      "end": 0.627
+    },
+    {
+      "word": "8",
+      "start": 0.697,
+      "end": 0.906
+    },
+    {
+      "word": "meters,",
+      "start": 0.975,
+      "end": 1.579
+    },
+    {
+      "word": "passing",
+      "start": 1.707,
+      "end": 2.101
+    },
+    {
+      "word": "1",
+      "start": 2.159,
+      "end": 2.345
+    },
+    {
+      "word": "door",
+      "start": 2.403,
+      "end": 2.635
+    },
+    {
+      "word": "on",
+      "start": 2.717,
+      "end": 2.821
+    },
+    {
+      "word": "your",
+      "start": 2.868,
+      "end": 2.984
+    },
+    {
+      "word": "left,",
+      "start": 3.03,
+      "end": 3.413
+    },
+    {
+      "word": "then",
+      "start": 3.692,
+      "end": 3.866
+    },
+    {
+      "word": "go",
+      "start": 3.924,
+      "end": 4.075
+    },
+    {
+      "word": "through",
+      "start": 4.18,
+      "end": 4.435
+    },
+    {
+      "word": "the",
+      "start": 4.47,
+      "end": 4.539
+    },
+    {
+      "word": "door",
+      "start": 4.574,
+      "end": 4.818
+    },
+    {
+      "word": "on",
+      "start": 4.923,
+      "end": 5.062
+    },
+    {
+      "word": "your",
+      "start": 5.097,
+      "end": 5.213
+    },
+    {
+      "word": "left",
+      "start": 5.248,
+      "end": 5.445
+    },
+    {
+      "word": "into",
+      "start": 5.491,
+      "end": 5.654
+    },
+    {
+      "word": "Office",
+      "start": 5.735,
+      "end": 5.991
+    },
+    {
+      "word": "114.",
+      "start": 6.026,
+      "end": 6.606
+    }
+  ]
+}

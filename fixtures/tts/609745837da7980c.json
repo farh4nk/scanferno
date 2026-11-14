@@ -1,0 +1,47 @@
+{
+  "text": "No trapped reported. Primary search: 110, 105, 104.",
+  "voice": "briefing",
+  "audio_url": "/fixtures/tts/609745837da7980c.mp3",
+  "words": [
+    {
+      "word": "No",
+      "start": 0.023,
+      "end": 0.128
+    },
+    {
+      "word": "trapped",
+      "start": 0.174,
+      "end": 0.464
+    },
+    {
+      "word": "reported.",
+      "start": 0.546,
+      "end": 1.01
+    },
+    {
+      "word": "Primary",
+      "start": 1.532,
+      "end": 1.858
+    },
+    {
+      "word": "search:",
+      "start": 1.904,
+      "end": 2.252
+    },
+    {
+      "word": "110,",
+      "start": 2.577,
+      "end": 3.483
+    },
+    {
+      "word": "105,",
+      "start": 3.75,
+      "end": 5.352
+    },
+    {
+      "word": "104.",
+      "start": 5.48,
+      "end": 6.397
+    }
+  ]
+}

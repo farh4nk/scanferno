@@ -1,0 +1,142 @@
+{
+  "text": "Arriving at Vibe Hobby, 5 story masonry building, sprinklered. Front is side A. Fire reported side C, the rear, floor 3. Aerial device on A and C.",
+  "voice": "narrator",
+  "audio_url": "/fixtures/tts/712dcb453b47df3b.mp3",
+  "words": [
+    {
+      "word": "Arriving",
+      "start": 0.0,
+      "end": 0.56
+    },
+    {
+      "word": "at",
+      "start": 0.64,
+      "end": 0.8
+    },
+    {
+      "word": "Vibe",
+      "start": 0.92,
+      "end": 1.28
+    },
+    {
+      "word": "Hobby,",
+      "start": 1.347,
+      "end": 2.0
+    },
+    {
+      "word": "5",
+      "start": 2.08,
+      "end": 2.32
+    },
+    {
+      "word": "story",
+      "start": 2.387,
+      "end": 2.72
+    },
+    {
+      "word": "masonry",
+      "start": 2.8,
+      "end": 3.36
+    },
+    {
+      "word": "building,",
+      "start": 3.422,
+      "end": 4.0
+    },
+    {
+      "word": "sprinklered.",
+      "start": 4.091,
+      "end": 4.96
+    },
+    {
+      "word": "Front",
+      "start": 5.093,
+      "end": 5.76
+    },
+    {
+      "word": "is",
+      "start": 5.84,
+      "end": 6.0
+    },
+    {
+      "word": "side",
+      "start": 6.08,
+      "end": 6.4
+    },
+    {
+      "word": "A.",
+      "start": 6.64,
+      "end": 6.96
+    },
+    {
+      "word": "Fire",
+      "start": 7.088,
+      "end": 7.6
+    },
+    {
+      "word": "reported",
+      "start": 7.671,
+      "end": 8.24
+    },
+    {
+      "word": "side",
+      "start": 8.32,
+      "end": 8.64
+    },
+    {
+      "word": "C,",
+      "start": 8.84,
+      "end": 9.12
+    },
+    {
+      "word": "the",
+      "start": 9.2,
+      "end": 9.44
+    },
+    {
+      "word": "rear,",
+      "start": 9.504,
+      "end": 9.84
+    },
+    {
+      "word": "floor",
+      "start": 9.92,
+      "end": 10.32
+    },
+    {
+      "word": "3.",
+      "start": 10.48,
+      "end": 10.88
+    },
+    {
+      "word": "Aerial",
+      "start": 11.2,
+      "end": 11.76
+    },
+    {
+      "word": "device",
+      "start": 11.84,
+      "end": 12.32
+    },
+    {
+      "word": "on",
+      "start": 12.4,
+      "end": 12.56
+    },
+    {
+      "word": "A",
+      "start": 12.76,
+      "end": 12.96
+    },
+    {
+      "word": "and",
+      "start": 13.06,
+      "end": 13.36
+    },
+    {
+      "word": "C.",
+      "start": 13.56,
+      "end": 13.92
+    }
+  ]
+}

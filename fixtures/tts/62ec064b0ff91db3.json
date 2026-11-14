@@ -1,0 +1,32 @@
+{
+  "text": "Left hand on the wall.",
+  "voice": "briefing",
+  "audio_url": "/fixtures/tts/62ec064b0ff91db3.mp3",
+  "words": [
+    {
+      "word": "Left",
+      "start": 0.023,
+      "end": 0.197
+    },
+    {
+      "word": "hand",
+      "start": 0.232,
+      "end": 0.418
+    },
+    {
+      "word": "on",
+      "start": 0.476,
+      "end": 0.522
+    },
+    {
+      "word": "the",
+      "start": 0.546,
+      "end": 0.615
+    },
+    {
+      "word": "wall.",
+      "start": 0.65,
+      "end": 0.987
+    }
+  ]
+}

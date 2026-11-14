@@ -1,0 +1,77 @@
+{
+  "text": "Vibe Hobby, 8866 Gulf Freeway. Five-story masonry, sprinklered. Fire location unknown. Aerial to Alpha.",
+  "voice": "briefing",
+  "audio_url": "/fixtures/tts/b91e12bdadc62f31.mp3",
+  "words": [
+    {
+      "word": "Vibe",
+      "start": 0.023,
+      "end": 0.267
+    },
+    {
+      "word": "Hobby,",
+      "start": 0.29,
+      "end": 0.743
+    },
+    {
+      "word": "8866",
+      "start": 1.01,
+      "end": 2.02
+    },
+    {
+      "word": "Gulf",
+      "start": 2.09,
+      "end": 2.415
+    },
+    {
+      "word": "Freeway.",
+      "start": 2.543,
+      "end": 3.158
+    },
+    {
+      "word": "Five-story",
+      "start": 3.483,
+      "end": 3.994
+    },
+    {
+      "word": "masonry,",
+      "start": 4.052,
+      "end": 4.609
+    },
+    {
+      "word": "sprinklered.",
+      "start": 4.632,
+      "end": 5.352
+    },
+    {
+      "word": "Fire",
+      "start": 5.724,
+      "end": 5.991
+    },
+    {
+      "word": "location",
+      "start": 6.026,
+      "end": 6.467
+    },
+    {
+      "word": "unknown.",
+      "start": 6.536,
+      "end": 7.082
+    },
+    {
+      "word": "Aerial",
+      "start": 7.407,
+      "end": 7.848
+    },
+    {
+      "word": "to",
+      "start": 7.918,
+      "end": 8.011
+    },
+    {
+      "word": "Alpha.",
+      "start": 8.115,
+      "end": 8.533
+    }
+  ]
+}

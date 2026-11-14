@@ -135,24 +135,32 @@ export default function Home({ k, plan, briefing, feed, go, building }) {
     setStep(i)
     const txt = stepScript(k, i)
     setCaption({ txt, at: 0, end: 0 }); setLoadingVoice(true)
-    const h = speak(txt, { voice: 'narrator', onStart: () => setLoadingVoice(false), onWord: (w) => setCaption({ txt, at: w.s, end: w.e }) })
+    const h = speak(txt, { voice: 'briefing', onStart: () => setLoadingVoice(false), onWord: (w) => setCaption({ txt, at: w.s, end: w.e }) })
     line.current = h
     h.finished.then((why) => {
       if (id !== run.current) return
       if (why === 'error') { setVoiceErr('ElevenLabs voice unavailable. Use Read instead.'); stop(); return }
-      if (why === 'ended') setTimeout(() => narrate(i + 1, id), 300)
+      if (why === 'ended') setTimeout(() => narrate(i + 1, id), 150)
     })
   }
   const begin = (i) => {
     halt(); setVoiceErr(null); setFollow(false); alive.current = true; setNarrating(true)
     const from = Math.max(0, Math.min(STEPS.length - 1, i))
     // the step about to play first, then the rest in order, one request at a time
-    prepareInOrder([...STEPS.keys()].slice(from).concat([...STEPS.keys()].slice(0, from)).map((j) => stepScript(k, j)))
+    prepareInOrder([...STEPS.keys()].slice(from).concat([...STEPS.keys()].slice(0, from)).map((j) => stepScript(k, j)), 'briefing')
     narrate(from, run.current)
   }
   const jump = (i) => begin(i)
   const toggle = () => { if (narrating) stop(); else begin(0) }
   useEffect(() => () => { run.current += 1; line.current?.stop() }, [])
+  // generate the voice in the background once the briefing settles, so Play starts at once.
+  // Not during a live call: the text changes with every caller line and each version costs a generation.
+  const scripts = STEPS.map((_, j) => stepScript(k, j)).join('\n')
+  useEffect(() => {
+    if (feed.status === 'live' || feed.status === 'connecting') return undefined
+    const t = setTimeout(() => prepareInOrder(scripts.split('\n'), 'briefing'), 1200)
+    return () => clearTimeout(t)
+  }, [scripts, feed.status])
   useEffect(() => {
     const onKey = (e) => { if (/^[1-4]$/.test(e.key) && !e.target.closest('input,textarea,select')) { stop(); setFollow(false); setStep(+e.key - 1) } }
     window.addEventListener('keydown', onKey); return () => window.removeEventListener('keydown', onKey)

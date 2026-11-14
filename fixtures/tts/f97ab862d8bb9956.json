@@ -1,0 +1,67 @@
+{
+  "text": "Search crew: side Alpha door, into Office 114. Watch for dead ends.",
+  "voice": "briefing",
+  "audio_url": "/fixtures/tts/f97ab862d8bb9956.mp3",
+  "words": [
+    {
+      "word": "Search",
+      "start": 0.035,
+      "end": 0.29
+    },
+    {
+      "word": "crew:",
+      "start": 0.325,
+      "end": 0.685
+    },
+    {
+      "word": "side",
+      "start": 1.068,
+      "end": 1.37
+    },
+    {
+      "word": "Alpha",
+      "start": 1.428,
+      "end": 1.695
+    },
+    {
+      "word": "door,",
+      "start": 1.73,
+      "end": 2.113
+    },
+    {
+      "word": "into",
+      "start": 2.357,
+      "end": 2.566
+    },
+    {
+      "word": "Office",
+      "start": 2.647,
+      "end": 2.949
+    },
+    {
+      "word": "114.",
+      "start": 2.984,
+      "end": 3.866
+    },
+    {
+      "word": "Watch",
+      "start": 4.145,
+      "end": 4.389
+    },
+    {
+      "word": "for",
+      "start": 4.435,
+      "end": 4.54
+    },
+    {
+      "word": "dead",
+      "start": 4.586,
+      "end": 4.748
+    },
+    {
+      "word": "ends.",
+      "start": 4.807,
+      "end": 5.283
+    }
+  ]
+}

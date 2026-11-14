@@ -64,28 +64,40 @@ export function deriveBrief(plan, b, rec) {
   }
 }
 
-// What the briefing says out loud (and shows in Read mode), one paragraph per step.
-export function stepScript(k, i) {
+// What the briefing says out loud (and shows in Read mode), in dispatch radio style: terse, numbers first,
+// fireground phonetics for sides, ordinal floors, no filler. Read to a crew en route.
+const PHON = { A: 'Alpha', B: 'Bravo', C: 'Charlie', D: 'Delta' }
+const NUM = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
+const ORDN = ['', 'first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth']
+const num = (n) => (Number.isInteger(n) && n <= 10 ? NUM[n] : String(n))
+const sideOf = (s) => (s ? `${PHON[s] || s} side` : '')
+const floorOf = (f) => (ORDN[f] ? `${ORDN[f]} floor` : `floor ${f}`)
+const short = (l) => (l || '').replace(/^Office (\d+)/, '$1')
+// street abbreviations read badly aloud ("Fwy"); expand them, and start every sentence with a capital
+const STREET = { Fwy: 'Freeway', St: 'Street', Rd: 'Road', Ave: 'Avenue', Blvd: 'Boulevard', Dr: 'Drive', Pkwy: 'Parkway', Hwy: 'Highway', Ln: 'Lane', Ct: 'Court', Pl: 'Place' }
+const spoken = (t) => t.replace(/\b(Fwy|St|Rd|Ave|Blvd|Dr|Pkwy|Hwy|Ln|Ct|Pl)\b/g, (m, w) => STREET[w]).replace(/(^|\. )([a-z])/g, (m, p, c) => p + c.toUpperCase())
+export function stepScript(k, i) { return spoken(rawScript(k, i)) }
+function rawScript(k, i) {
   if (!k) return ''
   const B = k.bld
   if (i === 0) return [
-    `Arriving at ${B.name || 'the building'}${k.stories ? `, ${k.stories} story` : ''}${B.construction ? ` ${B.construction.toLowerCase()}` : ''} building${B.sprinklers ? ', sprinklered' : ''}.`,
-    `Front is side A.`,
-    k.fireKnown ? `Fire reported${k.side ? ` side ${k.side}, the ${SIDE_NAME[k.side]}` : ''}${k.floor ? `, floor ${k.floor}` : ''}.` : 'No fire location reported yet.',
-    k.ladders.length ? `Aerial device on ${k.ladders.join(' and ')}.` : '',
+    `${B.name || 'Building'}${B.address ? `, ${B.address.split(',')[0]}` : ''}.`,
+    [k.stories && `${num(k.stories)}-story`, B.construction?.toLowerCase()].filter(Boolean).join(' ') + (B.sprinklers ? ', sprinklered.' : '.'),
+    k.fireKnown ? `Fire${k.side ? `, ${sideOf(k.side)}` : ''}${k.floor ? `, ${floorOf(k.floor)}` : ''}.` : 'Fire location unknown.',
+    k.ladders.length ? `Aerial to ${k.ladders.map((x) => PHON[x] || x).join(' and ')}.` : '',
   ].filter(Boolean).join(' ')
   if (i === 1) return [
-    k.search ? `Search crew enters side ${k.search.side} through the door into ${k.searchRoom}.` : '',
-    k.hose ? `Attack line about ${k.hose.total_ft} feet to the fire${k.hose.fits_preconnect ? ', inside a 200 foot preconnect' : ', longer than a preconnect'}.` : '',
-    k.watch ? `Watch for ${k.watch.text.replace(/^Caller reports /, '').replace(/\.$/, '').toLowerCase()}.` : '',
+    k.search ? `Search: ${sideOf(k.search.side)} door, ${k.searchRoom}.` : '',
+    k.hose ? `Attack: ${k.hose.total_ft} feet${k.hose.fits_preconnect ? ', preconnect' : ', extend the line'}.` : '',
+    k.watch ? `Caution: ${hazardName(k.watch).replace('O₂', 'oxygen').toLowerCase()}.` : '',
   ].filter(Boolean).join(' ')
   if (i === 2) return k.victim
-    ? `Trapped: ${shortWho(k.trapped[0].description)}, likely in ${k.victimLabel}${k.distToVictim ? `, about ${k.distToVictim} meters from the door` : ''}. Then search ${k.plan_.slice(1, 4).map((s) => k.label(s.room_id)).join(', ')}.`
-    : `No one reported trapped yet. Search ${k.plan_.slice(0, 3).map((s) => k.label(s.room_id)).join(', ')}.`
+    ? `Trapped: one, ${shortWho(k.trapped[0].description).replace(/^./, (c) => c.toLowerCase())}, ${k.victimLabel}${k.distToVictim ? `, ${Math.round(k.distToVictim)} meters in` : ''}. Secondary: ${k.plan_.slice(1, 4).map((s) => short(k.label(s.room_id))).join(', ')}.`
+    : `No trapped reported. Primary search: ${k.plan_.slice(0, 3).map((s) => short(k.label(s.room_id))).join(', ')}.`
   return [
-    k.vRoute ? `Nearest exit from ${k.victimLabel} is ${k.vRoute.distance_m} meters${k.vExitSide ? `, side ${k.vExitSide}` : ''}.` : `${k.exits.length} exits on side ${k.exitSides.join(', ')}.`,
-    k.deadEnd ? `${k.label(k.deadEnd)} is a dead end.` : '',
-    'If lost, call a mayday and follow the wall.',
+    k.vRoute ? `Egress: ${Math.round(k.vRoute.distance_m)} meters, ${sideOf(k.vExitSide)}.` : `${num(k.exits.length)} exits, ${k.exitSides.map((x) => PHON[x] || x).join(' and ')}.`,
+    k.deadEnd ? `${k.label(k.deadEnd)}, dead end.` : '',
+    'Lost: mayday, follow the wall.',
   ].filter(Boolean).join(' ')
 }
 

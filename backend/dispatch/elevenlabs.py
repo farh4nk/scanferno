@@ -18,6 +18,7 @@ ROLES = {
     "caller2": ["Adam", "Charlie", "Liam", "Will"],
     "firefighter": ["Harry", "Callum", "Roger", "Bill"],  # mayday radio calls
     "narrator": ["Alice", "Matilda", "River", "Bella"],   # spoken mayday directions
+    "briefing": ["Bill", "Callum", "Adam", "Liam"],        # en-route briefing: crisp, urgent (picked by ear)
 }
 SAMPLE_RATE = 16000  # pcm_16000 output: 16-bit mono
 _voices: dict[str, str] = {}
@@ -102,17 +103,27 @@ def _post_tts(url: str, **kw) -> httpx.Response:
     return r
 
 
+# How each spoken role should sound. The briefing is read to a crew en route: fast model (low latency),
+# quicker pace, less stability for more urgency. Bump PROFILE_VERSION when these change so caches refresh.
+PROFILE_VERSION = 3
+PROFILES = {
+    "briefing": {"models": ["eleven_flash_v2_5", "eleven_turbo_v2_5", "eleven_multilingual_v2"],
+                 "settings": {"stability": 0.3, "similarity_boost": 0.8, "style": 0.5, "speed": 1.2, "use_speaker_boost": True}},  # 1.2 is the API max
+}
+
+
 def tts_timed(text: str, voice: str = "narrator") -> tuple[bytes, list[dict]]:
     """MP3 plus word timings [{word, start, end}] from the with-timestamps endpoint, so a caption can follow
-    the voice word by word. Tries the expressive model first, then the multilingual one."""
+    the voice word by word. Model and voice settings come from PROFILES for the role, if any."""
     import base64
     vid = voice_id(voice) if voice in ROLES else voice
+    prof = PROFILES.get(voice, {})
     last = None
-    for m in TTS_MODELS:
+    for m in prof.get("models", TTS_MODELS):
         r = _post_tts(
             f"{BASE}/text-to-speech/{vid}/with-timestamps",
             params={"output_format": "mp3_44100_128"},
-            json={"text": text, "model_id": m},
+            json={"text": text, "model_id": m, **({"voice_settings": prof["settings"]} if "settings" in prof else {})},
             headers=_headers(),
             timeout=90,
         )

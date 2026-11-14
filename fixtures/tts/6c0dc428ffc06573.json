@@ -1,0 +1,132 @@
+{
+  "text": "Nearest exit from Kitchen 106 is 8.4 meters, side A. Office 110 is a dead end. If lost, call a mayday and follow the wall.",
+  "voice": "narrator",
+  "audio_url": "/fixtures/tts/6c0dc428ffc06573.mp3",
+  "words": [
+    {
+      "word": "Nearest",
+      "start": 0.0,
+      "end": 0.32
+    },
+    {
+      "word": "exit",
+      "start": 0.4,
+      "end": 0.72
+    },
+    {
+      "word": "from",
+      "start": 0.768,
+      "end": 0.96
+    },
+    {
+      "word": "Kitchen",
+      "start": 1.02,
+      "end": 1.44
+    },
+    {
+      "word": "106",
+      "start": 1.6,
+      "end": 2.4
+    },
+    {
+      "word": "is",
+      "start": 2.507,
+      "end": 2.72
+    },
+    {
+      "word": "8.4",
+      "start": 2.88,
+      "end": 3.68
+    },
+    {
+      "word": "meters,",
+      "start": 3.76,
+      "end": 4.56
+    },
+    {
+      "word": "side",
+      "start": 4.624,
+      "end": 4.88
+    },
+    {
+      "word": "A.",
+      "start": 5.08,
+      "end": 5.36
+    },
+    {
+      "word": "Office",
+      "start": 5.497,
+      "end": 6.32
+    },
+    {
+      "word": "110",
+      "start": 6.4,
+      "end": 7.2
+    },
+    {
+      "word": "is",
+      "start": 7.28,
+      "end": 7.44
+    },
+    {
+      "word": "a",
+      "start": 7.52,
+      "end": 7.6
+    },
+    {
+      "word": "dead",
+      "start": 7.68,
+      "end": 8.0
+    },
+    {
+      "word": "end.",
+      "start": 8.08,
+      "end": 8.64
+    },
+    {
+      "word": "If",
+      "start": 8.747,
+      "end": 8.96
+    },
+    {
+      "word": "lost,",
+      "start": 9.04,
+      "end": 9.44
+    },
+    {
+      "word": "call",
+      "start": 9.488,
+      "end": 9.68
+    },
+    {
+      "word": "a",
+      "start": 9.72,
+      "end": 9.76
+    },
+    {
+      "word": "mayday",
+      "start": 9.84,
+      "end": 10.32
+    },
+    {
+      "word": "and",
+      "start": 10.42,
+      "end": 10.72
+    },
+    {
+      "word": "follow",
+      "start": 10.766,
+      "end": 11.04
+    },
+    {
+      "word": "the",
+      "start": 11.08,
+      "end": 11.2
+    },
+    {
+      "word": "wall.",
+      "start": 11.28,
+      "end": 11.92
+    }
+  ]
+}

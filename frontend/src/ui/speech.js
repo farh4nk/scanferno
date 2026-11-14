@@ -17,7 +17,7 @@ export function prepare(text, voice = 'narrator') {
 }
 
 // fetch lines one after another (current line first), so we never trip the provider's concurrency limit
-export async function prepareInOrder(lines, voice = 'narrator') {
+export async function prepareInOrder(lines, voice = 'briefing') {
   for (const t of lines) { try { await prepare(t, voice) } catch { /* the player retries when it gets there */ } }
 }
 
@@ -33,14 +33,14 @@ function ranges(text, words) {
 }
 
 // Plays one line. onWord({s, e}) fires as each word is spoken; resolves when the line ends or is stopped.
-export function speak(text, { voice = 'narrator', onWord, onStart } = {}) {
+export function speak(text, { voice = 'briefing', onWord, onStart, rate = 1.1 } = {}) {
   let audio = null; let raf = 0; let stopped = false; let done
   const finished = new Promise((res) => { done = res })
   const stop = () => { stopped = true; cancelAnimationFrame(raf); if (audio) { audio.pause(); audio.src = '' } done('stopped') }
   prepare(text, voice).then((r) => {
     if (stopped) return
     const rs = ranges(text, r.words || [])
-    audio = new Audio(asset(r.audio_url))
+    audio = new Audio(asset(r.audio_url)); audio.preservesPitch = true; audio.playbackRate = rate
     const loop = () => {
       const t = audio.currentTime; let cur = null
       for (const w of rs) { if (w.start <= t) cur = w; else break }

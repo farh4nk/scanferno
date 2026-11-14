@@ -1,0 +1,77 @@
+{
+  "text": "four exits, Alpha and Bravo. Office 110, dead end. Lost: mayday, follow the wall.",
+  "voice": "briefing",
+  "audio_url": "/fixtures/tts/b4b07b81da83ef24.mp3",
+  "words": [
+    {
+      "word": "four",
+      "start": 0.023,
+      "end": 0.232
+    },
+    {
+      "word": "exits,",
+      "start": 0.302,
+      "end": 0.708
+    },
+    {
+      "word": "Alpha",
+      "start": 0.743,
+      "end": 1.115
+    },
+    {
+      "word": "and",
+      "start": 1.185,
+      "end": 1.347
+    },
+    {
+      "word": "Bravo.",
+      "start": 1.394,
+      "end": 1.87
+    },
+    {
+      "word": "Office",
+      "start": 2.137,
+      "end": 2.462
+    },
+    {
+      "word": "110,",
+      "start": 2.485,
+      "end": 3.147
+    },
+    {
+      "word": "dead",
+      "start": 3.274,
+      "end": 3.495
+    },
+    {
+      "word": "end.",
+      "start": 3.541,
+      "end": 3.901
+    },
+    {
+      "word": "Lost:",
+      "start": 4.075,
+      "end": 4.517
+    },
+    {
+      "word": "mayday,",
+      "start": 4.563,
+      "end": 5.004
+    },
+    {
+      "word": "follow",
+      "start": 5.074,
+      "end": 5.364
+    },
+    {
+      "word": "the",
+      "start": 5.422,
+      "end": 5.492
+    },
+    {
+      "word": "wall.",
+      "start": 5.55,
+      "end": 6.061
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "text": "Search: Alpha side door, Office 114. Caution: Dead ends.",
+  "voice": "briefing",
+  "audio_url": "/fixtures/tts/3e87c377c85573d2.mp3",
+  "words": [
+    {
+      "word": "Search:",
+      "start": 0.023,
+      "end": 0.441
+    },
+    {
+      "word": "Alpha",
+      "start": 0.58,
+      "end": 0.848
+    },
+    {
+      "word": "side",
+      "start": 0.929,
+      "end": 1.196
+    },
+    {
+      "word": "door,",
+      "start": 1.23,
+      "end": 1.602
+    },
+    {
+      "word": "Office",
+      "start": 1.741,
+      "end": 2.066
+    },
+    {
+      "word": "114.",
+      "start": 2.113,
+      "end": 3.007
+    },
+    {
+      "word": "Caution:",
+      "start": 3.274,
+      "end": 3.738
+    },
+    {
+      "word": "Dead",
+      "start": 3.912,
+      "end": 4.075
+    },
+    {
+      "word": "ends.",
+      "start": 4.121,
+      "end": 4.539
+    }
+  ]
+}

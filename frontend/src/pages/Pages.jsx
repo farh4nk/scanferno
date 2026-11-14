@@ -228,11 +228,11 @@ export function MaydayPage({ ctx, k }) {
   const voiceLine = useRef(null); const [saying, setSaying] = useState(false); const [vErr, setVErr] = useState(null)
   const say = (t) => {
     voiceLine.current?.stop(); setVErr(null); setSaying(true)
-    const h = speak(t, { voice: 'narrator' }); voiceLine.current = h
+    const h = speak(t, { voice: 'briefing' }); voiceLine.current = h
     h.finished.then((why) => { if (voiceLine.current === h) { setSaying(false); if (why === 'error') setVErr('ElevenLabs voice unavailable') } })
   }
   // fetch the voice for every step as soon as the directions arrive, so Speak is instant
-  useEffect(() => { if (m?.directions) prepareInOrder(m.directions) }, [m])
+  useEffect(() => { if (m?.directions) prepareInOrder(m.directions, 'briefing') }, [m])
   useEffect(() => () => voiceLine.current?.stop(), [])
   const n = m?.directions?.length || 0; const wp = m?.wall_path || []; const cut = n ? Math.round(wp.length * stepI / n) : 0
   return (

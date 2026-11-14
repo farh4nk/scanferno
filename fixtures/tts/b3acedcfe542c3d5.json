@@ -1,0 +1,42 @@
+{
+  "text": "Crawl to the nearest wall (2 meters).",
+  "voice": "briefing",
+  "audio_url": "/fixtures/tts/b3acedcfe542c3d5.mp3",
+  "words": [
+    {
+      "word": "Crawl",
+      "start": 0.023,
+      "end": 0.279
+    },
+    {
+      "word": "to",
+      "start": 0.337,
+      "end": 0.406
+    },
+    {
+      "word": "the",
+      "start": 0.464,
+      "end": 0.534
+    },
+    {
+      "word": "nearest",
+      "start": 0.569,
+      "end": 0.859
+    },
+    {
+      "word": "wall",
+      "start": 0.929,
+      "end": 1.219
+    },
+    {
+      "word": "(2",
+      "start": 1.301,
+      "end": 1.591
+    },
+    {
+      "word": "meters).",
+      "start": 1.66,
+      "end": 2.148
+    }
+  ]
+}

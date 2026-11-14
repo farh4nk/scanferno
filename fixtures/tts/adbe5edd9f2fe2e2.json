@@ -1,0 +1,32 @@
+{
+  "text": "Switch to your right hand.",
+  "voice": "briefing",
+  "audio_url": "/fixtures/tts/adbe5edd9f2fe2e2.mp3",
+  "words": [
+    {
+      "word": "Switch",
+      "start": 0.023,
+      "end": 0.279
+    },
+    {
+      "word": "to",
+      "start": 0.337,
+      "end": 0.395
+    },
+    {
+      "word": "your",
+      "start": 0.453,
+      "end": 0.546
+    },
+    {
+      "word": "right",
+      "start": 0.58,
+      "end": 0.708
+    },
+    {
+      "word": "hand.",
+      "start": 0.743,
+      "end": 1.115
+    }
+  ]
+}

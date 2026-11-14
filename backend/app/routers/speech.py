@@ -4,6 +4,7 @@ Every line is cached under fixtures/tts/<hash>.mp3 (+ .json word timings), so a 
 offline and repeats cost nothing.
 """
 import hashlib
+import os
 
 from fastapi import APIRouter, Body, HTTPException
 
@@ -11,18 +12,20 @@ from data import cache
 from dispatch import elevenlabs
 
 router = APIRouter(tags=["speech"])
-VOICES = {"narrator", "firefighter", "dispatcher", "caller", "caller2"}
+VOICES = {"briefing", "narrator", "firefighter", "dispatcher", "caller", "caller2"}
 
 
 @router.post("/speech")
-def speech(text: str = Body(..., embed=True), voice: str = Body("narrator", embed=True)):
+def speech(text: str = Body(..., embed=True), voice: str = Body("briefing", embed=True)):
     """{text, voice} -> {audio_url, words: [{word, start, end}], cached}. Voices are the call roles."""
     text = " ".join(text.split())
     if not text:
         raise HTTPException(400, "empty text")
     if voice not in VOICES:
         raise HTTPException(400, f"voice must be one of {sorted(VOICES)}")
-    key = hashlib.sha1(f"{voice}|{text}".encode()).hexdigest()[:16]
+    # keyed on the role, any pinned voice id and the profile version, so it works offline (no voice lookup)
+    pinned = os.getenv(f"ELEVENLABS_VOICE_{voice.upper()}", "auto")
+    key = hashlib.sha1(f"{voice}|{pinned}|{elevenlabs.PROFILE_VERSION}|{text}".encode()).hexdigest()[:16]
     meta = cache.load_json("tts", f"{key}.json")
     if meta:
         return {**meta, "cached": True}
