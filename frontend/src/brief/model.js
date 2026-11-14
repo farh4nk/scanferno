@@ -97,7 +97,7 @@ function rawScript(k, i) {
   return [
     k.vRoute ? `Egress: ${Math.round(k.vRoute.distance_m)} meters, ${sideOf(k.vExitSide)}.` : `${num(k.exits.length)} exits, ${k.exitSides.map((x) => PHON[x] || x).join(' and ')}.`,
     k.deadEnd ? `${k.label(k.deadEnd)}, dead end.` : '',
-    'Lost: mayday, follow the wall.',
+    'If lost, call a mayday and follow the wall.',
   ].filter(Boolean).join(' ')
 }
 

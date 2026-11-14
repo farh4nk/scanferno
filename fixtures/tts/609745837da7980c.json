@@ -6,42 +6,42 @@
     {
       "word": "No",
       "start": 0.023,
-      "end": 0.128
+      "end": 0.139
     },
     {
       "word": "trapped",
-      "start": 0.174,
-      "end": 0.464
+      "start": 0.197,
+      "end": 0.476
     },
     {
       "word": "reported.",
-      "start": 0.546,
-      "end": 1.01
+      "start": 0.534,
+      "end": 0.998
     },
     {
       "word": "Primary",
-      "start": 1.532,
-      "end": 1.858
+      "start": 1.671,
+      "end": 2.02
     },
     {
       "word": "search:",
-      "start": 1.904,
-      "end": 2.252
+      "start": 2.078,
+      "end": 2.414
     },
     {
       "word": "110,",
-      "start": 2.577,
-      "end": 3.483
+      "start": 2.681,
+      "end": 3.529
     },
     {
       "word": "105,",
-      "start": 3.75,
-      "end": 5.352
+      "start": 3.796,
+      "end": 4.76
     },
     {
       "word": "104.",
-      "start": 5.48,
-      "end": 6.397
+      "start": 5.027,
+      "end": 5.665
     }
   ]
 }

@@ -1,0 +1,67 @@
+{
+  "text": "Follow the wall about 1 meter, then turn right at the corner.",
+  "voice": "briefing",
+  "audio_url": "/fixtures/tts/b1754653d2ed3fa1.mp3",
+  "words": [
+    {
+      "word": "Follow",
+      "start": 0.023,
+      "end": 0.232
+    },
+    {
+      "word": "the",
+      "start": 0.279,
+      "end": 0.348
+    },
+    {
+      "word": "wall",
+      "start": 0.372,
+      "end": 0.557
+    },
+    {
+      "word": "about",
+      "start": 0.604,
+      "end": 0.789
+    },
+    {
+      "word": "1",
+      "start": 0.835,
+      "end": 0.975
+    },
+    {
+      "word": "meter,",
+      "start": 1.033,
+      "end": 1.369
+    },
+    {
+      "word": "then",
+      "start": 1.544,
+      "end": 1.683
+    },
+    {
+      "word": "turn",
+      "start": 1.729,
+      "end": 1.904
+    },
+    {
+      "word": "right",
+      "start": 1.962,
+      "end": 2.101
+    },
+    {
+      "word": "at",
+      "start": 2.124,
+      "end": 2.171
+    },
+    {
+      "word": "the",
+      "start": 2.194,
+      "end": 2.263
+    },
+    {
+      "word": "corner.",
+      "start": 2.298,
+      "end": 2.658
+    }
+  ]
+}

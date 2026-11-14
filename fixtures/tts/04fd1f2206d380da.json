@@ -1,0 +1,97 @@
+{
+  "text": "Vibe Hobby, 8866 Gulf Freeway. Five-story masonry, sprinklered. Fire, Charlie side, third floor. Aerial to Alpha and Charlie.",
+  "voice": "briefing",
+  "audio_url": "/fixtures/tts/04fd1f2206d380da.mp3",
+  "words": [
+    {
+      "word": "Vibe",
+      "start": 0.023,
+      "end": 0.325
+    },
+    {
+      "word": "Hobby,",
+      "start": 0.36,
+      "end": 0.801
+    },
+    {
+      "word": "8866",
+      "start": 1.033,
+      "end": 2.09
+    },
+    {
+      "word": "Gulf",
+      "start": 2.217,
+      "end": 2.554
+    },
+    {
+      "word": "Freeway.",
+      "start": 2.647,
+      "end": 3.193
+    },
+    {
+      "word": "Five-story",
+      "start": 3.46,
+      "end": 4.098
+    },
+    {
+      "word": "masonry,",
+      "start": 4.168,
+      "end": 4.702
+    },
+    {
+      "word": "sprinklered.",
+      "start": 4.725,
+      "end": 5.317
+    },
+    {
+      "word": "Fire,",
+      "start": 5.689,
+      "end": 6.072
+    },
+    {
+      "word": "Charlie",
+      "start": 6.107,
+      "end": 6.397
+    },
+    {
+      "word": "side,",
+      "start": 6.455,
+      "end": 6.78
+    },
+    {
+      "word": "third",
+      "start": 6.803,
+      "end": 7.001
+    },
+    {
+      "word": "floor.",
+      "start": 7.047,
+      "end": 7.442
+    },
+    {
+      "word": "Aerial",
+      "start": 7.767,
+      "end": 8.243
+    },
+    {
+      "word": "to",
+      "start": 8.324,
+      "end": 8.44
+    },
+    {
+      "word": "Alpha",
+      "start": 8.533,
+      "end": 8.882
+    },
+    {
+      "word": "and",
+      "start": 8.974,
+      "end": 9.16
+    },
+    {
+      "word": "Charlie.",
+      "start": 9.253,
+      "end": 9.694
+    }
+  ]
+}

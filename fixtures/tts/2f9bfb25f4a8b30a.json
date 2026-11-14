@@ -6,72 +6,72 @@
     {
       "word": "Four",
       "start": 0.023,
-      "end": 0.348
+      "end": 0.232
     },
     {
       "word": "exits,",
-      "start": 0.418,
-      "end": 0.789
+      "start": 0.29,
+      "end": 0.871
     },
     {
       "word": "Alpha",
-      "start": 0.848,
-      "end": 1.195
+      "start": 1.01,
+      "end": 1.323
     },
     {
       "word": "and",
-      "start": 1.265,
-      "end": 1.393
+      "start": 1.428,
+      "end": 1.765
     },
     {
       "word": "Bravo.",
-      "start": 1.439,
-      "end": 1.869
+      "start": 1.892,
+      "end": 2.543
     },
     {
       "word": "Office",
-      "start": 2.194,
-      "end": 2.507
+      "start": 2.81,
+      "end": 3.123
     },
     {
       "word": "110,",
-      "start": 2.531,
-      "end": 3.146
+      "start": 3.169,
+      "end": 3.866
     },
     {
       "word": "dead",
-      "start": 3.285,
-      "end": 3.459
+      "start": 3.994,
+      "end": 4.18
     },
     {
       "word": "end.",
-      "start": 3.506,
-      "end": 3.796
+      "start": 4.226,
+      "end": 4.586
     },
     {
       "word": "Lost:",
-      "start": 3.97,
-      "end": 4.435
+      "start": 4.853,
+      "end": 5.352
     },
     {
       "word": "mayday,",
-      "start": 4.481,
-      "end": 4.876
+      "start": 5.619,
+      "end": 6.153
     },
     {
       "word": "follow",
-      "start": 4.911,
-      "end": 5.12
+      "start": 6.385,
+      "end": 6.629
     },
     {
       "word": "the",
-      "start": 5.154,
-      "end": 5.224
+      "start": 6.676,
+      "end": 6.745
     },
     {
       "word": "wall.",
-      "start": 5.259,
-      "end": 5.526
+      "start": 6.78,
+      "end": 7.128
     }
   ]
 }

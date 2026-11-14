@@ -105,3 +105,9 @@ def test_speech_validates_input_and_serves_cache():
         assert r["cached"] and r["audio_url"] == meta["audio_url"]
     finally:
         p.unlink()
+
+
+def test_stutter_detector_flags_stretched_words_only():
+    from dispatch.elevenlabs import _glitchy
+    assert _glitchy([{"word": "follow", "start": 6.2, "end": 7.73}])          # the real stutter we heard
+    assert not _glitchy([{"word": "follow", "start": 6.38, "end": 6.63}, {"word": "8866", "start": 0.8, "end": 1.98}])

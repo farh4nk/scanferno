@@ -6,72 +6,72 @@
     {
       "word": "Vibe",
       "start": 0.023,
-      "end": 0.267
+      "end": 0.29
     },
     {
       "word": "Hobby,",
-      "start": 0.29,
-      "end": 0.743
+      "start": 0.313,
+      "end": 0.766
     },
     {
       "word": "8866",
-      "start": 1.01,
-      "end": 2.02
+      "start": 1.033,
+      "end": 2.217
     },
     {
       "word": "Gulf",
-      "start": 2.09,
-      "end": 2.415
+      "start": 2.287,
+      "end": 2.6
     },
     {
       "word": "Freeway.",
-      "start": 2.543,
-      "end": 3.158
+      "start": 2.693,
+      "end": 3.239
     },
     {
       "word": "Five-story",
-      "start": 3.483,
-      "end": 3.994
+      "start": 3.564,
+      "end": 4.121
     },
     {
       "word": "masonry,",
-      "start": 4.052,
-      "end": 4.609
+      "start": 4.179,
+      "end": 4.644
     },
     {
       "word": "sprinklered.",
-      "start": 4.632,
-      "end": 5.352
+      "start": 4.667,
+      "end": 5.259
     },
     {
       "word": "Fire",
-      "start": 5.724,
-      "end": 5.991
+      "start": 5.526,
+      "end": 5.816
     },
     {
       "word": "location",
-      "start": 6.026,
-      "end": 6.467
+      "start": 5.851,
+      "end": 6.339
     },
     {
       "word": "unknown.",
-      "start": 6.536,
-      "end": 7.082
+      "start": 6.432,
+      "end": 7.024
     },
     {
       "word": "Aerial",
-      "start": 7.407,
-      "end": 7.848
+      "start": 7.291,
+      "end": 7.651
     },
     {
       "word": "to",
-      "start": 7.918,
-      "end": 8.011
+      "start": 7.709,
+      "end": 7.778
     },
     {
       "word": "Alpha.",
-      "start": 8.115,
-      "end": 8.533
+      "start": 7.86,
+      "end": 8.231
     }
   ]
 }
