@@ -56,6 +56,17 @@ Framework-free TypeScript toolkit that draws our data on the Matterport model, p
 
 ## Visuals and pitch (branch `ui`)
 
+**Done**
+- React + Vite app in `frontend/` (`npm install && npm run dev`, http://localhost:5173; backend URL via `VITE_API_URL`, default http://localhost:8000).
+- Live call view: SSE `/calls/{id}/live` drives transcript, dispatch record (changed fields flash), briefing, mayday; audio starts when the stream opens.
+- SVG floor plan: maze heat, search order, trapped marker, fire area, exit routes, doors/windows, sides A-D, room click shows route + maze reasons.
+- 3D tab: mounts `viewer3d/` (Matterport Bundle SDK) via Vite alias `@viewer3d`; draws maze rooms, exits, fire, trapped, search order, routes, mayday and evac in the model. Needs `MATTERPORT_SDK_KEY` in repo-root `.env`.
+- Briefing tabs, Vexcel aerial viewer, Ask-the-plan (highlights answer on the plan), mayday panel (wall path + browser TTS), evac sim animation.
+
+**Next**
+1. Visual polish and pitch flow; test the 3D tab with a real `MATTERPORT_SDK_KEY` (untested without a key).
+2. Indoor-to-aerial overlay; mark evac bottleneck door on the plan.
+
 **Unblocked by:** aerial images at `/fixtures/<id>/vexcel/*.jpg`, calls at `/calls/{id}` and `/calls/{id}/replay` (SSE), sample briefing at `fixtures/sample/briefing.json`.
 
 ## Changelog
@@ -69,3 +80,5 @@ Framework-free TypeScript toolkit that draws our data on the Matterport model, p
 - 2026-11-14: Geometry (floorplan, routes, maze, mayday, evac, sides), briefing + Q&A agents, live call stream.
 - 2026-11-14: `viewer3d/`: Matterport Bundle SDK viewer with auto-calibrated overlay layers (rooms, exits, routes, mayday, evac sim), picking, dev bench.
 - 2026-11-14: docs/FEATURES.md backend feature backlog (built, partial, ideas, priorities).
+- 2026-11-14: Frontend scaffold: live call, floor plan, briefing, aerials, Q&A, mayday, evac (React + Vite).
+- 2026-11-14: Frontend 3D model tab using viewer3d overlays.
