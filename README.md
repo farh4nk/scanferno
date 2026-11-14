@@ -66,7 +66,7 @@ Data shapes shared between roles: [docs/CONTRACTS.md](docs/CONTRACTS.md). Sample
 Must have: 2-3 hero buildings, briefing from all three layers, dispatch call to facts, nav graph + maze score heatmap, mayday directions.
 Nice to have: evacuation sim, live mic, multi-caller merge, auto indoor/aerial alignment.
 
-See [docs/PLAN.md](docs/PLAN.md).
+See [docs/PLAN.md](docs/PLAN.md). Current progress and next steps: [docs/STATUS.md](docs/STATUS.md). Coding agents: start at [AGENTS.md](AGENTS.md).
 
 ## Ground rules
 
