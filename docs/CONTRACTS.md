@@ -46,12 +46,16 @@ Sample: [fixtures/sample/briefing.json](../fixtures/sample/briefing.json)
 |---|---|
 | `summary` | 2-3 sentence size-up readout |
 | `hazards[]` | `kind`, `severity` (high, med, low), `text`, `source` (vexcel, matterport, costar, dispatch), optional `room_id` or `side` |
-| `entry_points[]` | `side`, `door_id`, `text` |
-| `ladder_positions[]` | `side`, `text`, optional `lat`/`lon` |
-| `search_plan[]` | ordered `room_id` + `reason` |
-| `exit_routes[]` | `from_room_id`, `path` (room ids), `door_ids`, `exit_door_id`, `distance_m` |
+| `entry_points[]` | `side`, `door_id`, `text`, `sources`, optional `role` (search, attack) |
+| `ladder_positions[]` | `side`, `text`, `sources`, optional `lat`/`lon` |
+| `search_plan[]` | ordered `room_id` + `label` + `reason` + `sources` |
+| `exit_routes[]` | `from_room_id`, `path` (room ids), `door_ids`, `exit_door_id`, `distance_m`, `polyline`, `sources`; with a known fire also `rerouted` and `through_avoided` |
+| `hose_stretch[]` | per exterior door: `door_id`, `side`, `to_room_id`, `interior_m`, `total_ft`, `fits_preconnect` (200 ft), `text`, `sources` |
 | `trapped[]` | `room_id`, `description`, `confidence` |
 | `images` | view name -> image path under fixtures (nadir, oblique-north, ...) |
+| `changes[]` | live stream only: `kind` (fire, trapped, search_plan, route, hazard), `text`, optional `room_id` / `severity` |
+
+`sources` is a list drawn from `costar`, `vexcel`, `matterport`, `dispatch`. Live dispatch records also carry `corrections`: `{field: [{from, to, t}]}` for values the caller changed.
 
 ## 5. mayday response (Geometry produces)
 
@@ -69,3 +73,39 @@ Sample: [fixtures/sample/briefing.json](../fixtures/sample/briefing.json)
   ]
 }
 ```
+
+## 6. Search results (`GET /search`, `GET /properties/{id}`)
+
+```json
+{
+  "query": "8866 gulf freeway",
+  "results": [{
+    "id": "costar-239873", "costar_property_id": 239873, "name": "Vibe Hobby",
+    "address": "8866 Gulf Fwy, Houston, TX", "lat": 29.66, "lon": -95.26,
+    "property_type": "Office", "stories": 5, "tenants": 40,
+    "status": "ready", "building_id": "costar-239873",
+    "scan": {"model_id": "szdeKc4TjsE", "rooms": 16, "doorways": 32},
+    "score": 1.0, "match": "address"
+  }],
+  "geocoded": null,
+  "nearby": []
+}
+```
+
+`status: ready` means `building_id` works with every `/buildings/{id}` endpoint; `scanned` means CoStar facts and a Matterport scan exist but nothing is cached (`building_id` is null). `score` >= 0.75 is a confident match. With `geocode=true` and no confident match, `geocoded` is `{lat, lon, display_name}` and `nearby` lists the closest known buildings with `distance_m`. `/properties/{id}` returns one entry plus `nearest_ready` and, for scanned ones, `onboard_hint`.
+
+## 7. Live session state (`/live/sessions/{sid}`, every live endpoint returns it)
+
+```json
+{
+  "session_id": "bd44f87367", "building_id": "costar-239873",
+  "utterances": [{"role": "caller", "text": "...", "start": 0.0, "end": 2.1}],
+  "record": {"...": "dispatch.json, plus corrections"},
+  "briefing": {"...": "briefing.json with changes"},
+  "mayday": null,
+  "updates": 3,
+  "extracted": true
+}
+```
+
+`extracted` is false when the caller lines didn't change, so the record is the same as before. `mayday` is the section 5 response once someone says "mayday". `POST .../save` returns `{call_id}`. That call then works with `/calls/{id}`, `/replay` and `/live` like a scripted one (`script.json` has `"kind": "live"`).

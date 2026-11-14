@@ -45,7 +45,17 @@ tts_model: str | None = None
 stt_model: str | None = None
 
 
+class NotConfigured(RuntimeError):
+    pass
+
+
+def available() -> bool:
+    return bool(os.getenv("ELEVENLABS_API_KEY"))
+
+
 def _headers() -> dict:
+    if not available():
+        raise NotConfigured("ELEVENLABS_API_KEY is not set: server transcription is off (use browser speech or typed lines)")
     return {"xi-api-key": os.environ["ELEVENLABS_API_KEY"]}
 
 

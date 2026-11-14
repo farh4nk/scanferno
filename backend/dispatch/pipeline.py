@@ -24,15 +24,29 @@ def call_dir(call_id: str) -> Path:
     return CALLS / call_id
 
 
+def audio_file(call_id: str) -> Path | None:
+    """audio.wav for synthesized calls; saved live calls keep the browser's format (audio.webm, ...)."""
+    d = call_dir(call_id)
+    return d / "audio.wav" if (d / "audio.wav").exists() else next(iter(sorted(d.glob("audio.*"))), None)
+
+
+def audio_url(call_id: str) -> str | None:
+    f = audio_file(call_id)
+    return f"/fixtures/calls/{call_id}/{f.name}" if f else None
+
+
 def list_calls() -> list[dict]:
     out = []
     for d in sorted(CALLS.glob("*/script.json")):
-        s = cache.load_json("calls", d.parent.name, "script.json")
+        cid = d.parent.name
+        s = cache.load_json("calls", cid, "script.json")
         out.append({
-            "call_id": d.parent.name,
+            "call_id": cid,
             "building_id": s["building_id"],
             "title": s.get("title"),
-            "has_audio": (d.parent / "audio.wav").exists(),
+            "kind": s.get("kind"),
+            "has_audio": audio_file(cid) is not None,
+            "audio_url": audio_url(cid),
             "has_timeline": (d.parent / "timeline.json").exists(),
         })
     return out
@@ -82,12 +96,14 @@ def transcribe(call_id: str, refresh: bool = False) -> dict:
     return result
 
 
-def utterances(stt_result: dict, gap_s: float = 1.0, role_order: list[str] | None = None) -> list[dict]:
+def utterances(stt_result: dict, gap_s: float = 1.0, role_order: list[str] | None = None,
+               first_role: str = "dispatcher") -> list[dict]:
     """Group words into utterances by speaker change or pause.
-    The n-th distinct speaker gets role_order[n] (default dispatcher, caller); a single-speaker
-    mayday call passes ["caller"] so it isn't mistaken for the dispatcher."""
-    order = role_order or ["dispatcher", "caller"]
+    The n-th distinct speaker gets role_order[n]; without role_order the first voice is `first_role`
+    and the second the other of dispatcher/caller. Extra voices are caller2, caller3...
+    A single-speaker mayday call passes role_order=["caller"] so it isn't mistaken for the dispatcher."""
     words = [w for w in stt_result.get("words") or [] if w.get("type") == "word"]
+    order = role_order or [first_role, "caller" if first_role == "dispatcher" else "dispatcher"]
     roles: dict[str, str] = {}
     out: list[dict] = []
     for w in words:
