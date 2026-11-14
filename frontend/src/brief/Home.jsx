@@ -4,6 +4,7 @@ import PlanSvg from './PlanSvg'
 import { SIDE_NAME, STEPS, hazardName, stepScript } from './model'
 import { DeadEndPict, DistScale, EnterPict, ExitBars, ExitPict, FirePict, HoseGauge, Ring, SearchChain, Section, TrappedPict, WatchPict } from './Diagrams'
 import Icon from '../ui/Icon'
+import Viewer3D from '../components/Viewer3D'
 
 function KeyBand({ k, step }) {
   const cells = [
@@ -99,8 +100,9 @@ function StepPanel({ k, step, briefing, go }) {
   )
 }
 
-export default function Home({ k, plan, briefing, feed, go }) {
+export default function Home({ k, plan, briefing, feed, go, building }) {
   const [step, setStep] = useState(0)
+  const [view, setView] = useState('2d')
   const [narrating, setNarrating] = useState(false)
   const [reading, setReading] = useState(false)
   const [caption, setCaption] = useState(null)
@@ -129,7 +131,15 @@ export default function Home({ k, plan, briefing, feed, go }) {
     <div className="page brief">
       <KeyBand k={k} step={step} />
       <div className="stage panel">
-        <div className="planwrap"><PlanSvg plan={plan} k={k} {...o} /></div>
+        <div className="seg stage-mode"><button className={view === '2d' ? 'on' : ''} onClick={() => setView('2d')}>2D plan</button><button className={view === '3d' ? 'on' : ''} onClick={() => setView('3d')}>3D model</button></div>
+        <div className="planwrap">
+          {view === '3d'
+            ? <Viewer3D building={building} plan={plan} layers={{ order: step >= 2, routes: step >= 2, doors: true, heat: false, windows: false }}
+                searchOrder={o.order || {}} trapped={briefing.trapped || []} fireRooms={briefing.fire_room_ids}
+                selected={step === 3 ? k.deadEnd : step === 2 ? k.victim : null} onSelect={() => {}}
+                highlight={step === 3 ? { rooms: [], polylines: o.routes } : step === 1 && o.hose ? { rooms: [], polylines: [o.hose] } : null} mayday={null} evac={null} />
+            : <PlanSvg plan={plan} k={k} {...o} />}
+        </div>
         {narrating && caption ? (
           <p className="caption"><span className="said">{caption.txt.slice(0, caption.at)}</span><mark>{caption.txt.slice(caption.at, caption.end)}</mark>{caption.txt.slice(caption.end)}</p>
         ) : feed.status === 'live' || feed.status === 'connecting' ? (

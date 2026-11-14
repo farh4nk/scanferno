@@ -9,7 +9,7 @@ import AddressSearch from './components/search/AddressSearch'
 import PropertyCard from './components/search/PropertyCard'
 import Icon from './ui/Icon'
 import {
-  AerialPage, AllPage, AskPage, CallPage, EntryPage, EvacPage, ExteriorPage, FactsPage, HazardsPage, HosePage, MaydayPage, PlanPage, RescuePage,
+  AerialPage, AllPage, AskPage, CallPage, EntryPage, EvacPage, ExteriorPage, FactsPage, HazardsPage, HosePage, MaydayPage, ModelPage, PlanPage, RescuePage,
 } from './pages/Pages'
 
 const DEFAULT_BUILDING = 'costar-239873'
@@ -24,12 +24,13 @@ export const PAGES = [
   { id: 'hose', name: 'Hose', group: 'Before entry', C: HosePage },
   { id: 'exterior', name: 'Exterior', group: 'Before entry', C: ExteriorPage },
   { id: 'aerial', name: 'Aerial photos', group: 'Before entry', C: AerialPage },
+  { id: 'model', name: '3D model', group: 'Inside', C: ModelPage },
   { id: 'plan', name: 'Floor plan', group: 'Inside', C: PlanPage },
   { id: 'mayday', name: 'Mayday', group: 'Inside', alert: true, C: MaydayPage },
   { id: 'evac', name: 'Evacuation', group: 'Inside', C: EvacPage },
   { id: 'ask', name: 'Ask', group: 'Anywhere', C: AskPage },
 ]
-const TOOLS = ['call', 'plan', 'mayday', 'evac', 'aerial', 'ask']
+const TOOLS = ['model', 'call', 'plan', 'mayday', 'evac', 'aerial', 'ask']
 
 // #page?key=value routing, so the browser back button and shared links work
 const readHash = () => {
@@ -123,7 +124,7 @@ export default function App() {
 
       <main className="main">
         {!k ? <div className="page"><p className="empty">{error ? 'Waiting for the backend…' : 'Loading the building…'}</p></div>
-          : route.id === 'home' ? <Home k={k} plan={plan} briefing={briefing} feed={feed} go={go} />
+          : route.id === 'home' ? <Home k={k} plan={plan} briefing={briefing} feed={feed} go={go} building={building} />
             : route.id === 'all' ? <AllPage go={go} pages={PAGES} k={k} />
               : page ? <page.C key={`${route.id}-${buildingId}-${JSON.stringify(route.params)}`} ctx={ctx} k={k} go={go} />
                 : <div className="page"><p className="empty">Unknown page. <button className="lnk" onClick={() => go('home')}>Back to the briefing</button></p></div>}
