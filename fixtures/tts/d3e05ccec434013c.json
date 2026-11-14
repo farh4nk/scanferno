@@ -1,0 +1,67 @@
+{
+  "text": "No one reported trapped yet. Search Office 110, Office 105, Office 104.",
+  "voice": "narrator",
+  "audio_url": "/fixtures/tts/d3e05ccec434013c.mp3",
+  "words": [
+    {
+      "word": "No",
+      "start": 0.0,
+      "end": 0.16
+    },
+    {
+      "word": "one",
+      "start": 0.2,
+      "end": 0.32
+    },
+    {
+      "word": "reported",
+      "start": 0.391,
+      "end": 0.96
+    },
+    {
+      "word": "trapped",
+      "start": 1.02,
+      "end": 1.44
+    },
+    {
+      "word": "yet.",
+      "start": 1.54,
+      "end": 1.92
+    },
+    {
+      "word": "Search",
+      "start": 2.034,
+      "end": 2.72
+    },
+    {
+      "word": "Office",
+      "start": 2.766,
+      "end": 3.04
+    },
+    {
+      "word": "110,",
+      "start": 3.2,
+      "end": 4.4
+    },
+    {
+      "word": "Office",
+      "start": 4.457,
+      "end": 4.8
+    },
+    {
+      "word": "105,",
+      "start": 4.96,
+      "end": 6.36
+    },
+    {
+      "word": "Office",
+      "start": 6.411,
+      "end": 6.72
+    },
+    {
+      "word": "104.",
+      "start": 6.8,
+      "end": 8.08
+    }
+  ]
+}

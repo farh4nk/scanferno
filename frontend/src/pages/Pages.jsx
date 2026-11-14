@@ -6,7 +6,7 @@ import { HoseGauge, Ring, Section } from '../brief/Diagrams'
 import LivePanel from '../components/LivePanel'
 import Viewer3D from '../components/Viewer3D'
 import Icon from '../ui/Icon'
-import { prepare, speak } from '../ui/speech'
+import { prepareInOrder, speak } from '../ui/speech'
 
 const fmt = (t) => `${Math.floor(t / 60)}:${String(Math.floor(t % 60)).padStart(2, '0')}`
 const show = (v) => (Array.isArray(v) ? v.map((x) => (typeof x === 'object' ? x.location || x.description : x)).join('; ') : v == null ? '' : String(v))
@@ -232,7 +232,7 @@ export function MaydayPage({ ctx, k }) {
     h.finished.then((why) => { if (voiceLine.current === h) { setSaying(false); if (why === 'error') setVErr('ElevenLabs voice unavailable') } })
   }
   // fetch the voice for every step as soon as the directions arrive, so Speak is instant
-  useEffect(() => { m?.directions?.forEach((d) => prepare(d, 'narrator').catch(() => {})) }, [m])
+  useEffect(() => { if (m?.directions) prepareInOrder(m.directions) }, [m])
   useEffect(() => () => voiceLine.current?.stop(), [])
   const n = m?.directions?.length || 0; const wp = m?.wall_path || []; const cut = n ? Math.round(wp.length * stepI / n) : 0
   return (

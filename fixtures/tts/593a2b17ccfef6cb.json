@@ -1,0 +1,112 @@
+{
+  "text": "4 exits on side A, B. Office 110 is a dead end. If lost, call a mayday and follow the wall.",
+  "voice": "narrator",
+  "audio_url": "/fixtures/tts/593a2b17ccfef6cb.mp3",
+  "words": [
+    {
+      "word": "4",
+      "start": 0.0,
+      "end": 0.24
+    },
+    {
+      "word": "exits",
+      "start": 0.347,
+      "end": 0.88
+    },
+    {
+      "word": "on",
+      "start": 0.96,
+      "end": 1.12
+    },
+    {
+      "word": "side",
+      "start": 1.184,
+      "end": 1.44
+    },
+    {
+      "word": "A,",
+      "start": 1.68,
+      "end": 2.16
+    },
+    {
+      "word": "B.",
+      "start": 2.28,
+      "end": 2.64
+    },
+    {
+      "word": "Office",
+      "start": 2.731,
+      "end": 3.28
+    },
+    {
+      "word": "110",
+      "start": 3.36,
+      "end": 4.24
+    },
+    {
+      "word": "is",
+      "start": 4.32,
+      "end": 4.48
+    },
+    {
+      "word": "a",
+      "start": 4.52,
+      "end": 4.56
+    },
+    {
+      "word": "dead",
+      "start": 4.64,
+      "end": 4.96
+    },
+    {
+      "word": "end.",
+      "start": 5.04,
+      "end": 5.36
+    },
+    {
+      "word": "If",
+      "start": 5.52,
+      "end": 5.84
+    },
+    {
+      "word": "lost,",
+      "start": 5.92,
+      "end": 6.32
+    },
+    {
+      "word": "call",
+      "start": 6.4,
+      "end": 6.72
+    },
+    {
+      "word": "a",
+      "start": 6.76,
+      "end": 6.8
+    },
+    {
+      "word": "mayday",
+      "start": 6.88,
+      "end": 7.36
+    },
+    {
+      "word": "and",
+      "start": 7.46,
+      "end": 7.76
+    },
+    {
+      "word": "follow",
+      "start": 7.806,
+      "end": 8.08
+    },
+    {
+      "word": "the",
+      "start": 8.1,
+      "end": 8.16
+    },
+    {
+      "word": "wall.",
+      "start": 8.24,
+      "end": 8.88
+    }
+  ]
+}

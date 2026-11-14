@@ -86,6 +86,22 @@ def tts(text: str, voice: str = "narrator", emotion: str | None = None) -> bytes
     raise RuntimeError(f"ElevenLabs TTS rejected all models: {last.status_code} {last.text[:300]}")
 
 
+# ElevenLabs plans cap concurrent requests (2 on ours); more returns 429. Gate and retry instead of failing.
+import threading as _threading
+import time as _time
+_TTS_SLOTS = _threading.BoundedSemaphore(int(os.getenv("ELEVENLABS_CONCURRENCY", "2")))
+
+
+def _post_tts(url: str, **kw) -> httpx.Response:
+    for wait in (0.6, 1.2, 2.5, 5.0, None):
+        with _TTS_SLOTS:
+            r = httpx.post(url, **kw)
+        if r.status_code != 429 or wait is None:
+            return r
+        _time.sleep(wait)
+    return r
+
+
 def tts_timed(text: str, voice: str = "narrator") -> tuple[bytes, list[dict]]:
     """MP3 plus word timings [{word, start, end}] from the with-timestamps endpoint, so a caption can follow
     the voice word by word. Tries the expressive model first, then the multilingual one."""
@@ -93,7 +109,7 @@ def tts_timed(text: str, voice: str = "narrator") -> tuple[bytes, list[dict]]:
     vid = voice_id(voice) if voice in ROLES else voice
     last = None
     for m in TTS_MODELS:
-        r = httpx.post(
+        r = _post_tts(
             f"{BASE}/text-to-speech/{vid}/with-timestamps",
             params={"output_format": "mp3_44100_128"},
             json={"text": text, "model_id": m},

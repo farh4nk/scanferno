@@ -3,14 +3,22 @@ import { asset, speech } from '../api'
 
 const memo = new Map() // `${voice}|${text}` -> Promise<{audio_url, words}>
 
+// one retry: ElevenLabs can briefly refuse when several lines are generated together
+const fetchLine = (text, voice) => speech(text, voice).catch(() => new Promise((r) => setTimeout(r, 1500)).then(() => speech(text, voice)))
+
 export function prepare(text, voice = 'narrator') {
   const key = `${voice}|${text}`
   if (!memo.has(key)) {
-    const p = speech(text, voice).then((r) => { new Audio(asset(r.audio_url)).preload = 'auto'; return r })
+    const p = fetchLine(text, voice).then((r) => { new Audio(asset(r.audio_url)).preload = 'auto'; return r })
     p.catch(() => memo.delete(key))
     memo.set(key, p)
   }
   return memo.get(key)
+}
+
+// fetch lines one after another (current line first), so we never trip the provider's concurrency limit
+export async function prepareInOrder(lines, voice = 'narrator') {
+  for (const t of lines) { try { await prepare(t, voice) } catch { /* the player retries when it gets there */ } }
 }
 
 // Character ranges of each timed word inside the original text, for highlighting

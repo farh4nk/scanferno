@@ -5,7 +5,7 @@ import { SIDE_NAME, STEPS, hazardName, stepScript } from './model'
 import { DeadEndPict, DistScale, EnterPict, ExitBars, ExitPict, FirePict, HoseGauge, Ring, SearchChain, Section, TrappedPict, WatchPict } from './Diagrams'
 import Icon from '../ui/Icon'
 import Viewer3D from '../components/Viewer3D'
-import { prepare, speak } from '../ui/speech'
+import { prepareInOrder, speak } from '../ui/speech'
 
 function KeyBand({ k, step }) {
   const cells = [
@@ -145,8 +145,10 @@ export default function Home({ k, plan, briefing, feed, go, building }) {
   }
   const begin = (i) => {
     halt(); setVoiceErr(null); setFollow(false); alive.current = true; setNarrating(true)
-    STEPS.forEach((_, j) => prepare(stepScript(k, j), 'narrator').catch(() => {})) // fetch every step up front
-    narrate(Math.max(0, Math.min(STEPS.length - 1, i)), run.current)
+    const from = Math.max(0, Math.min(STEPS.length - 1, i))
+    // the step about to play first, then the rest in order, one request at a time
+    prepareInOrder([...STEPS.keys()].slice(from).concat([...STEPS.keys()].slice(0, from)).map((j) => stepScript(k, j)))
+    narrate(from, run.current)
   }
   const jump = (i) => begin(i)
   const toggle = () => { if (narrating) stop(); else begin(0) }
