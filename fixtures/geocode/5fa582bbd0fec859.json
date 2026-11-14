@@ -1,0 +1,8 @@
+{
+  "query": "1600 Smith St, Houston, TX",
+  "result": {
+    "lat": 29.755013,
+    "lon": -95.371683,
+    "display_name": "1600, Smith Street, Downtown, Houston, Harris County, Texas, 77002, United States"
+  }
+}

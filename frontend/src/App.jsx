@@ -1,6 +1,9 @@
-import { useEffect, useMemo, useState } from 'react'
-import { getBuildings, getCalls, getFloorplan, getBriefing } from './api'
-import { useLiveCall } from './useLiveCall'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { getBuildings, getCalls, health } from './api'
+import { useLiveCall } from './hooks/useLiveCall'
+import { useBuildingData } from './hooks/useBuildingData'
+import AddressSearch from './components/search/AddressSearch'
+import PropertyCard from './components/search/PropertyCard'
 import FloorPlan from './components/FloorPlan'
 import Transcript from './components/Transcript'
 import DispatchPanel from './components/DispatchPanel'
@@ -12,14 +15,16 @@ import EvacPanel from './components/EvacPanel'
 import Viewer3D from './components/Viewer3D'
 
 const LAYERS = [['heat', 'Maze heat'], ['order', 'Search order'], ['routes', 'Exit routes'], ['doors', 'Doors'], ['windows', 'Windows']]
+const DEFAULT_BUILDING = 'costar-239873'
+const initialBuilding = () => new URLSearchParams(window.location.search).get('building') || DEFAULT_BUILDING
 
 export default function App() {
   const [buildings, setBuildings] = useState([])
   const [calls, setCalls] = useState([])
-  const [buildingId, setBuildingId] = useState('costar-239873')
+  const [llm, setLlm] = useState(null)
+  const [buildingId, setBuildingId] = useState(initialBuilding)
+  const [property, setProperty] = useState(null)
   const [callId, setCallId] = useState('')
-  const [plan, setPlan] = useState(null)
-  const [baseBriefing, setBaseBriefing] = useState(null)
   const [layers, setLayers] = useState({ heat: true, order: true, routes: true, doors: true, windows: false })
   const [selected, setSelected] = useState(null)
   const [highlight, setHighlight] = useState(null)
@@ -30,23 +35,31 @@ export default function App() {
   const [speed, setSpeed] = useState(1)
   const [error, setError] = useState(null)
   const live = useLiveCall()
+  const { plan, briefing: baseBriefing, error: dataError } = useBuildingData(buildingId)
 
   useEffect(() => {
     Promise.all([getBuildings(), getCalls()])
       .then(([b, c]) => { setBuildings(b); setCalls(c) })
       .catch((e) => setError(`Cannot reach the backend (${e.message}). Start it with: cd backend && .venv/bin/uvicorn app.main:app --reload`))
+    health().then((h) => setLlm(h.llm)).catch(() => {})
   }, [])
 
-  const buildingCalls = useMemo(() => calls.filter((c) => c.building_id === buildingId), [calls, buildingId])
-
+  // keep the open building in the URL so a refresh or a shared link lands on it
   useEffect(() => {
-    live.reset(); setSelected(null); setHighlight(null); setMayday(null); setEvacFrame(null); setEvac(null)
-    setPlan(null); setBaseBriefing(null)
-    getFloorplan(buildingId).then(setPlan).catch((e) => setError(e.message))
-    getBriefing(buildingId).then(setBaseBriefing).catch((e) => setError(e.message))
-    // eslint-disable-next-line
+    const url = new URL(window.location.href)
+    url.searchParams.set('building', buildingId)
+    window.history.replaceState(null, '', url)
   }, [buildingId])
 
+  const openBuilding = useCallback((id) => {
+    setProperty(null)
+    if (!id || id === buildingId) return
+    live.reset(); setSelected(null); setHighlight(null); setMayday(null); setEvacFrame(null); setEvac(null)
+    setBuildingId(id)
+  }, [buildingId, live])
+
+  const building = buildings.find((b) => b.id === buildingId)
+  const buildingCalls = useMemo(() => calls.filter((c) => c.building_id === buildingId), [calls, buildingId])
   useEffect(() => { setCallId(buildingCalls[0]?.call_id || '') }, [buildingCalls])
 
   const briefing = live.briefing || baseBriefing
@@ -58,6 +71,10 @@ export default function App() {
     () => Object.fromEntries((briefing?.search_plan || []).map((s, i) => [s.room_id, i + 1])),
     [briefing],
   )
+  const routes = useMemo(
+    () => Object.fromEntries((briefing?.exit_routes || []).map((r) => [r.from_room_id, r])),
+    [briefing],
+  )
 
   const focusRoom = (id) => { setSelected(id); setHighlight(null) }
   const running = live.status === 'connecting' || live.status === 'live'
@@ -66,11 +83,10 @@ export default function App() {
     <div className="app">
       <header>
         <div className="brand"><span className="flame">🔥</span> SCANFERNO <span className="muted small">pre-entry briefing</span></div>
+        <AddressSearch current={building} onOpenBuilding={openBuilding} onOpenProperty={setProperty} />
         <div className="controls">
-          <select value={buildingId} onChange={(e) => setBuildingId(e.target.value)}>
-            {buildings.map((b) => <option key={b.id} value={b.id}>{b.name}</option>)}
-          </select>
-          <select value={callId} onChange={(e) => { live.reset(); setCallId(e.target.value) }}>
+          <select value={callId} onChange={(e) => { live.reset(); setCallId(e.target.value) }} disabled={!buildingCalls.length}>
+            {!buildingCalls.length && <option value="">No scripted calls</option>}
             {buildingCalls.map((c) => <option key={c.call_id} value={c.call_id}>{c.title.replace(/^[^:]+: /, '')}{c.has_audio ? '' : ' (no audio)'}</option>)}
           </select>
           <select value={speed} onChange={(e) => setSpeed(+e.target.value)} title="Replay speed">
@@ -80,10 +96,11 @@ export default function App() {
             ? <button onClick={live.reset}>■ Stop</button>
             : <button className="primary" disabled={!call} onClick={() => { setMayday(null); live.start(call, speed) }}>▶ Start call</button>}
           <span className={`status ${live.status}`}>{live.status}</span>
+          {llm != null && <span className={`status ${llm ? 'live' : ''}`} title="Gemini for extraction and summaries; offline rules otherwise">{llm ? 'LLM on' : 'offline rules'}</span>}
         </div>
       </header>
 
-      {(error || live.error) && <div className="banner">{error || live.error}</div>}
+      {(error || dataError || live.error) && <div className="banner">{error || dataError || live.error}</div>}
 
       <main>
         <section className="col left">
@@ -108,11 +125,11 @@ export default function App() {
               </div>
             </div>
             {plan && mode === '3d'
-              ? <Viewer3D building={buildings.find((b) => b.id === buildingId)} plan={plan} layers={layers}
+              ? <Viewer3D building={building} plan={plan} layers={layers}
                   searchOrder={searchOrder} trapped={briefing?.trapped || []} fireRooms={briefing?.fire_room_ids}
                   selected={selected} onSelect={focusRoom} highlight={highlight} mayday={activeMayday} evac={evac} />
               : plan
-                ? <FloorPlan plan={plan} layers={layers} searchOrder={searchOrder}
+                ? <FloorPlan plan={plan} layers={layers} searchOrder={searchOrder} routes={routes}
                     trapped={briefing?.trapped || []} fireRooms={briefing?.fire_room_ids}
                     selected={selected} onSelect={focusRoom} highlight={highlight}
                     mayday={activeMayday} evacFrame={evacFrame} sides={briefing?.sides} />
@@ -138,6 +155,8 @@ export default function App() {
           <AskPanel buildingId={buildingId} dispatch={live.record} onHighlight={setHighlight} />
         </section>
       </main>
+
+      {property && <PropertyCard property={property} onClose={() => setProperty(null)} onOpenBuilding={openBuilding} />}
     </div>
   )
 }

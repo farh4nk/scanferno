@@ -8,7 +8,10 @@ Living handoff doc. Update your role's section and add a changelog line in the s
 - Access to all sources verified: CoStar kit, Matterport GraphQL, Vexcel REST + MCP, Gemini, ElevenLabs STT (`scripts/check_access`).
 - 3 hero buildings picked by verified scan quality; all data cached in `fixtures/` (`scripts/pick_heroes`, `scripts/fetch_fixtures`).
 - Dispatch pipeline: audio -> diarized transcript -> live dispatch records via Gemini, with deterministic room matching (`dispatch/`). Two Vibe Hobby calls processed: `vibe-1-clean`, `vibe-2-messy`.
-- API: buildings, calls, SSE replay, typed extract, transcribe, static fixtures (`app/main.py`).
+- API: buildings, calls, SSE replay, typed extract, transcribe, static fixtures. Split into `app/routers/` (buildings, calls, dispatch, search) with shared lookups in `app/deps.py`; paths unchanged.
+- Address search: `GET /search` over 3 hero + 97 scanned CoStar properties, with a cached OpenStreetMap geocoder fallback; `GET /properties/{id}` (`data/directory.py`).
+- Briefing: every claim carries `sources`; exit routes avoid the fire area (`rerouted`, `through_avoided`); `hose_stretch` vs a 200 ft preconnect (`GET /buildings/{id}/hose`).
+- Live stream: briefing `changes` since the last update (`agent/changes.py`), record `corrections` for what the caller changed (`dispatch/history.py`).
 
 **Next**
 1. Regenerate call audio with real ElevenLabs voices (waiting on Voices: Read for the key).
@@ -62,6 +65,9 @@ Framework-free TypeScript toolkit that draws our data on the Matterport model, p
 - SVG floor plan: maze heat, search order, trapped marker, fire area, exit routes, doors/windows, sides A-D, room click shows route + maze reasons.
 - 3D tab: mounts `viewer3d/` (Matterport Bundle SDK) via Vite alias `@viewer3d`; draws maze rooms, exits, fire, trapped, search order, routes, mayday and evac in the model. Needs `MATTERPORT_SDK_KEY` in repo-root `.env`.
 - Briefing tabs, Vexcel aerial viewer, Ask-the-plan (highlights answer on the plan), mayday panel (wall path + browser TTS), evac sim animation.
+- Structure: `src/api/` (one function per endpoint, mirrors `backend/app/routers/`), `src/hooks/` (`useLiveCall`, `useBuildingData`, `useDebounced`), `src/components/search/`.
+- Header address search replaces the building dropdown: matches known buildings, opens a property card for scanned-only ones, Enter geocodes unknown addresses; open building kept in `?building=`.
+- Source tags on briefing claims, "Changed" box in the summary, hose stretch in the Entry tab, struck-through caller corrections, floor plan draws rerouted exit routes.
 
 **Next**
 1. Visual polish and pitch flow; test the 3D tab with a real `MATTERPORT_SDK_KEY` (untested without a key).
@@ -82,3 +88,4 @@ Framework-free TypeScript toolkit that draws our data on the Matterport model, p
 - 2026-11-14: docs/FEATURES.md backend feature backlog (built, partial, ideas, priorities).
 - 2026-11-14: Frontend scaffold: live call, floor plan, briefing, aerials, Q&A, mayday, evac (React + Vite).
 - 2026-11-14: Frontend 3D model tab using viewer3d overlays.
+- 2026-11-14: Address search (`/search`, `/properties`, header search UI); backend routers + frontend `api/` and `hooks/` restructure; fire rerouting, hose stretch, briefing sources, live `changes` and caller `corrections`; FEATURES.md covers frontend + search (41 tests).

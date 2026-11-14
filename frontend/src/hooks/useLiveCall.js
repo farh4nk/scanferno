@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { API, liveUrl } from './api'
+import { API, liveUrl } from '../api'
 
 const EMPTY = { utterances: [], record: null, recordN: 0, briefing: null, mayday: null, status: 'idle', error: null }
 

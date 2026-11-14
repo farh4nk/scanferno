@@ -42,7 +42,9 @@ You don't need any keys to build against cached data: everything for the 3 hero 
 
 Per building: `matterport_vector.json` (raw floor plan), `costar.json` (building facts + tenants), `vexcel/{nadir,oblique-north,oblique-east,oblique-south,oblique-west}.jpg`, `vexcel/elevation.json`, `vexcel/structure_metadata_extract.json` (roof material/condition/solar, roof objects, footprint), `vexcel/structure_geometry_metadata_extract.json` (footprint polygon).
 
-## API (backend/app/main.py)
+## API (backend/app/routers/, wired in app/main.py)
+
+One router file per area (`buildings.py`, `calls.py`, `dispatch.py`, `search.py`); shared 404 lookups in `app/deps.py`. The frontend mirrors this with one function per endpoint in `frontend/src/api/index.js`; components and hooks (`frontend/src/hooks/`) never call `fetch` directly. Adding an endpoint means touching both, plus a test.
 
 | Endpoint | Returns |
 |---|---|
@@ -53,10 +55,13 @@ Per building: `matterport_vector.json` (raw floor plan), `costar.json` (building
 | `GET /calls/{id}/replay?speed=1` | SSE in call time: `utterance`, `record`, `done` events. Start the audio when the stream opens |
 | `POST /dispatch/extract` | `{building_id, transcript:[{role,text}], previous}` -> updated dispatch record (typed fallback) |
 | `POST /dispatch/transcribe` | upload audio -> speaker-separated utterances |
-| `GET /calls/{id}/live?speed=1` | SSE like `/replay` plus `briefing` after each record and `mayday` (wall-following directions) for mayday calls |
+| `GET /calls/{id}/live?speed=1` | SSE like `/replay` plus `briefing` after each record (with `changes`) and `mayday` (wall-following directions) for mayday calls; records carry `corrections` |
 | `GET /buildings/{id}` | building + CoStar + Vexcel summary (roof, footprint, sides, images) |
 | `GET /buildings/{id}/floorplan` | `floorplan.json` with `maze_score`, `maze_detail`, `exit_routes`, sides |
-| `GET /buildings/{id}/routes?from_room=` | shortest route to an exit (room id, label or description) |
+| `GET /buildings/{id}/routes?from_room=&avoid=` | shortest route to an exit (room id, label or description), optionally around rooms (fire) |
+| `GET /buildings/{id}/hose?to_room=` | hose length from each exterior door to a room vs a 200 ft preconnect |
+| `GET /search?q=&geocode=` | address/name search over hero buildings (`ready`) and 97 scanned CoStar properties (`scanned`); unknown addresses geocoded to the nearest known buildings |
+| `GET /properties/{id}` | one searched property + nearest buildings with a briefing |
 | `GET /buildings/{id}/mayday?room=` | wall-following directions out (room id, label or mayday text) |
 | `GET /buildings/{id}/evac?occupants=` | evacuation sim: clear time, bottleneck door, frames |
 | `POST /buildings/{id}/dispatch` | `{transcript, use_llm}` -> dispatch record with room candidates (Gemini or offline rules) |
