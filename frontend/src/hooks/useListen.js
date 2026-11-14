@@ -12,6 +12,7 @@ const TICK_EVERY_MS = 20000
 const EMPTY = {
   utterances: [], interim: '', record: null, recordN: 0, briefing: null, mayday: null,
   building_match: null, status: 'idle', listening: false, error: null, savedCallId: null,
+  sessionBuildingId: null, buildingChanged: false,
 }
 const MIME = ['audio/webm;codecs=opus', 'audio/webm', 'audio/ogg;codecs=opus', 'audio/mp4']
 
@@ -38,6 +39,8 @@ export function useListen(buildingId) {
   const setRole = (r) => { role$.current = r; setRoleState(r) }
   const fail = (msg) => setState((s) => ({ ...s, error: msg }))
 
+  const syncBuilding = useRef(false) // session switched building; don't tear down the live session
+
   const apply = useCallback((r) => setState((s) => ({
     ...s,
     utterances: mode.current === 'server' ? indexed(r.utterances) : s.utterances,
@@ -46,6 +49,8 @@ export function useListen(buildingId) {
     briefing: r.briefing ?? s.briefing,
     mayday: r.mayday ?? s.mayday,
     building_match: r.building_match !== undefined ? r.building_match : s.building_match,
+    sessionBuildingId: r.building_id || s.sessionBuildingId,
+    buildingChanged: !!r.building_changed,
     error: null,
   })), [])
 
@@ -208,6 +213,7 @@ export function useListen(buildingId) {
 
   useEffect(() => {
     if (skipReset.current) { skipReset.current = false; return }
+    if (syncBuilding.current) { syncBuilding.current = false; return }
     reset()
   }, [buildingId, reset])
 
@@ -223,5 +229,7 @@ export function useListen(buildingId) {
     return () => clearInterval(tickTimer.current)
   }, [state.status, state.listening, state.record?.fire_room_ids, apply])
 
-  return { ...state, role, setRole, start, stop, addLine, uploadFile, save, reset, rebind, sessionId: sid.current }
+  const acceptBuildingSync = useCallback(() => { syncBuilding.current = true }, [])
+
+  return { ...state, role, setRole, start, stop, addLine, uploadFile, save, reset, rebind, acceptBuildingSync, sessionId: sid.current }
 }

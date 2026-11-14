@@ -42,6 +42,9 @@ class Session:
         self._caller_key: str | None = None
         self._mayday_key: str | None = None
         self._address_key: str | None = None
+        self._match_key: str | None = None
+
+        self.building_changed: bool = False
 
     def minutes(self) -> float:
         return max(0.0, (time.time() - self.created) / 60.0)
@@ -72,6 +75,8 @@ class Session:
         self.record = facts.extract(self.utterances, bid, self.use_llm, previous=self.record)
         self.record["corrections"] = history.track(self._hist, self.record, u["end"])
         self._resolve_address()
+        self._maybe_switch_building()
+        bid = self.building_id
         new = briefing_agent.build(bid, self.record, use_llm=False)
         live_geometry.attach(bid, self.record, new, self.minutes())
         new["changes"] = changes.diff(self.briefing, new)
@@ -80,10 +85,34 @@ class Session:
 
     def _resolve_address(self):
         addr = (self.record or {}).get("address")
+        if not addr:
+            return
+        # Always publish match metadata for the UI chip / confirm path.
+        if addr != getattr(self, "_match_key", None):
+            self._match_key = addr
+            self.building_match = live_geometry.resolve_address(addr)
+
+    def _maybe_switch_building(self):
+        """If the caller gave an address for a different known building, onboard it and switch."""
+        addr = (self.record or {}).get("address")
         if not addr or addr == self._address_key:
             return
         self._address_key = addr
-        self.building_match = live_geometry.resolve_address(addr)
+        from ondemand import OnboardError, resolve
+        try:
+            out = resolve.prepare_for_address(addr)
+        except OnboardError:
+            return
+        if not out or out["building_id"] == self.building_id:
+            return
+        self.building_id = out["building_id"]
+        self.building_changed = True
+        self.mayday = None
+        self._mayday_key = None
+        # Re-resolve rooms against the new floor plan
+        self.record = facts.extract(self.utterances, self.building_id, self.use_llm, previous=None)
+        self.record["corrections"] = []
+        self.briefing = None
 
     def _check_mayday(self, callers: list[tuple[int, dict]]):
         said = [u["text"] for _, u in callers if MAYDAY.search(u["text"])]
@@ -120,10 +149,13 @@ class Session:
         return self.state()
 
     def state(self, extracted: bool = False) -> dict:
-        return {"session_id": self.id, "building_id": self.building_id, "utterances": self.utterances,
-                "record": self.record, "briefing": self.briefing, "mayday": self.mayday,
-                "building_match": self.building_match, "minutes": round(self.minutes(), 2),
-                "started_at": self.created, "updates": len(self.timeline), "extracted": extracted}
+        changed = self.building_changed
+        self.building_changed = False
+        return {"session_id": self.id, "building_id": self.building_id, "building_changed": changed,
+                "utterances": self.utterances, "record": self.record, "briefing": self.briefing,
+                "mayday": self.mayday, "building_match": self.building_match,
+                "minutes": round(self.minutes(), 2), "started_at": self.created,
+                "updates": len(self.timeline), "extracted": extracted}
 
     def save(self, title: str | None = None) -> str:
         """Write the session as fixtures/calls/live-<id>/ so /calls/{id}/live replays it offline."""

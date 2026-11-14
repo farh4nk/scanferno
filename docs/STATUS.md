@@ -32,6 +32,18 @@ Living handoff doc. Update your role's section and add a changelog line in the s
 1. Multi-floor heat.
 2. Richer 3D heat raster if needed.
 
+## On-demand ready (branch `ondemand`)
+
+**Done**
+- `backend/ondemand/`: `prepare(key)` fetches Matterport vector, registers the building, builds floorplan (same layout as heroes). Registry in `fixtures/ondemand/ready.json`.
+- API: `GET/POST /ondemand/{key}`. `layers.building` and `GET /buildings` include onboarded rows.
+- Frontend: property card "Open briefing" onboards on demand (loading state), then opens floor plan / 3D.
+- Live: when the dispatch record gets an address for another known building, the session onboards it and switches `building_id` (`building_changed`); UI follows without killing the call.
+
+**Next**
+1. Prefetch a shortlist (Houston commercial) overnight for zero-wait demos.
+2. Better default `front` / exits when the scan has no exterior doorways.
+
 ## Geometry (branch `geometry-agent`)
 
 **Done**
@@ -98,3 +110,4 @@ Living handoff doc. Update your role's section and add a changelog line in the s
 - 2026-11-14: ElevenLabs voice for the spoken briefing and mayday steps (`POST /speech`, word-timed captions, cached); Office 110 mayday lines pre-generated (55 tests).
 - 2026-11-14: Briefing voice: Bill on ElevenLabs flash at max speed, dispatch radio script with phonetic sides, background pre-generation so Play is instant.
 - 2026-11-14: Live audio → briefing heat/rescue + address auto-switch + 3D Walk enter/exit (branch `audio-analysis`).
+- 2026-11-14: On-demand ready (`backend/ondemand/`): POST /ondemand/{key}, property-card open, live address→building switch.

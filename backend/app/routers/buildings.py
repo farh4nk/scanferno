@@ -14,9 +14,16 @@ router = APIRouter(prefix="/buildings", tags=["buildings"])
 
 @router.get("")
 def buildings():
-    out = []
-    for b in cache.buildings():
-        c = layers.costar(b["id"])
+    from ondemand import registry
+    out, seen = [], set()
+    for b in list(cache.buildings()) + list(registry.all()):
+        if b["id"] in seen:
+            continue
+        seen.add(b["id"])
+        try:
+            c = layers.costar(b["id"])
+        except FileNotFoundError:
+            c = {}
         out.append({**b, "stories": c.get("stories"), "year_built": c.get("year_built"), "tenants": c.get("current_tenant_count")})
     return out
 

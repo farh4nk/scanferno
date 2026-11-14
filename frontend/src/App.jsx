@@ -114,6 +114,15 @@ export default function App() {
     }
   }, [feed.building_match, buildingId, adoptBuilding])
 
+  // Live call named a different address → session onboarded it; follow without killing the session.
+  useEffect(() => {
+    if (source !== 'live' || !listen.buildingChanged || !listen.sessionBuildingId) return
+    if (listen.sessionBuildingId === buildingId) return
+    listen.acceptBuildingSync()
+    setBuildingId(listen.sessionBuildingId)
+    getBuildings().then(setBuildings).catch(() => {})
+  }, [source, listen.buildingChanged, listen.sessionBuildingId, buildingId, listen])
+
   const building = buildings.find((b) => b.id === buildingId)
   const buildingCalls = useMemo(() => calls.filter((c) => c.building_id === buildingId), [calls, buildingId])
   useEffect(() => { setCallId((id) => (buildingCalls.some((c) => c.call_id === id) ? id : buildingCalls[0]?.call_id || '')) }, [buildingCalls])
