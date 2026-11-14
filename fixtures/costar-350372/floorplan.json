@@ -1,0 +1,3705 @@
+{
+  "building_id": "costar-350372",
+  "units": "meters",
+  "floors": [
+    {
+      "id": "tsmq1wak12rhgn0mawksxcwcd",
+      "label": "Floor 1",
+      "sequence": 0
+    }
+  ],
+  "rooms": [
+    {
+      "id": "r-2qdmc5",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "label": "Office 101",
+      "type": "office",
+      "type_inferred": true,
+      "polygon": [
+        [
+          3.587,
+          18.165
+        ],
+        [
+          0.987,
+          18.161
+        ],
+        [
+          0.981,
+          21.435
+        ],
+        [
+          3.581,
+          21.44
+        ]
+      ],
+      "holes": [],
+      "centroid": [
+        2.284,
+        19.8
+      ],
+      "area_m2": 8.5,
+      "matterport_id": "2qdmc5i9byxi79ry1pxdkqzea",
+      "side": "D",
+      "exterior_sides": [
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "id": "r-3ygfq6",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "label": "Office 102",
+      "type": "office",
+      "type_inferred": true,
+      "polygon": [
+        [
+          6.468,
+          18.097
+        ],
+        [
+          6.462,
+          21.459
+        ],
+        [
+          9.326,
+          21.464
+        ],
+        [
+          9.332,
+          18.101
+        ]
+      ],
+      "holes": [],
+      "centroid": [
+        7.897,
+        19.78
+      ],
+      "area_m2": 9.6,
+      "matterport_id": "3ygfq6yfyyw3hi9x7u5rm2iqa",
+      "side": "B",
+      "exterior_sides": [
+        "B",
+        "C"
+      ]
+    },
+    {
+      "id": "r-ediidm",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "label": "Office 103",
+      "type": "office",
+      "type_inferred": true,
+      "polygon": [
+        [
+          9.326,
+          21.464
+        ],
+        [
+          12.344,
+          21.469
+        ],
+        [
+          12.349,
+          18.106
+        ],
+        [
+          9.332,
+          18.101
+        ]
+      ],
+      "holes": [],
+      "centroid": [
+        10.838,
+        19.785
+      ],
+      "area_m2": 10.1,
+      "matterport_id": "ediidma5zg15dufx3n0qyq21a",
+      "side": "C",
+      "exterior_sides": [
+        "C"
+      ]
+    },
+    {
+      "id": "r-n81qfe",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "label": "Office 104",
+      "type": "office",
+      "type_inferred": true,
+      "polygon": [
+        [
+          18.672,
+          18.625
+        ],
+        [
+          15.068,
+          18.619
+        ],
+        [
+          15.063,
+          21.474
+        ],
+        [
+          18.667,
+          21.48
+        ]
+      ],
+      "holes": [],
+      "centroid": [
+        16.868,
+        20.049
+      ],
+      "area_m2": 10.3,
+      "matterport_id": "n81qfe51azs8iexnbqwspye6c",
+      "side": "C",
+      "exterior_sides": [
+        "C"
+      ]
+    },
+    {
+      "id": "r-xy2x8m",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "label": "Hallway A",
+      "type": "hallway",
+      "type_inferred": true,
+      "polygon": [
+        [
+          9.463,
+          16.031
+        ],
+        [
+          5.303,
+          16.024
+        ],
+        [
+          3.68,
+          16.022
+        ],
+        [
+          2.433,
+          16.02
+        ],
+        [
+          -2.42,
+          16.012
+        ],
+        [
+          -2.429,
+          21.429
+        ],
+        [
+          0.363,
+          21.434
+        ],
+        [
+          0.369,
+          17.677
+        ],
+        [
+          12.35,
+          17.697
+        ],
+        [
+          12.349,
+          18.106
+        ],
+        [
+          12.344,
+          21.469
+        ],
+        [
+          15.063,
+          21.474
+        ],
+        [
+          15.068,
+          18.619
+        ],
+        [
+          18.672,
+          18.625
+        ],
+        [
+          18.675,
+          16.964
+        ],
+        [
+          16.736,
+          16.961
+        ],
+        [
+          16.743,
+          12.794
+        ],
+        [
+          15.076,
+          12.791
+        ],
+        [
+          15.071,
+          16.041
+        ],
+        [
+          12.621,
+          16.037
+        ],
+        [
+          11.944,
+          16.035
+        ],
+        [
+          9.971,
+          16.032
+        ],
+        [
+          9.97,
+          16.489
+        ],
+        [
+          9.462,
+          16.488
+        ]
+      ],
+      "holes": [],
+      "centroid": [
+        8.365,
+        17.629
+      ],
+      "area_m2": 62.5,
+      "matterport_id": "xy2x8mpaaqknp7q2c3nnbw1ma",
+      "side": "B",
+      "exterior_sides": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "id": "r-h26t7k",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "label": "Office 105",
+      "type": "office",
+      "type_inferred": true,
+      "polygon": [
+        [
+          22.06,
+          16.97
+        ],
+        [
+          18.675,
+          16.964
+        ],
+        [
+          18.672,
+          18.625
+        ],
+        [
+          18.667,
+          21.48
+        ],
+        [
+          22.053,
+          21.486
+        ]
+      ],
+      "holes": [],
+      "centroid": [
+        20.364,
+        19.225
+      ],
+      "area_m2": 15.3,
+      "matterport_id": "h26t7ky77ew74yb0pg8qqf5rd",
+      "side": "D",
+      "exterior_sides": [
+        "A",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "id": "r-tt6gm2",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "label": "Office 106",
+      "type": "office",
+      "type_inferred": true,
+      "polygon": [
+        [
+          2.433,
+          16.02
+        ],
+        [
+          2.438,
+          12.446
+        ],
+        [
+          -2.059,
+          12.569
+        ],
+        [
+          -2.414,
+          12.568
+        ],
+        [
+          -2.42,
+          16.012
+        ]
+      ],
+      "holes": [],
+      "centroid": [
+        0.025,
+        14.264
+      ],
+      "area_m2": 17.0,
+      "matterport_id": "tt6gm2a0463x9wmnx7rn6gugc",
+      "side": "B",
+      "exterior_sides": [
+        "B"
+      ]
+    },
+    {
+      "id": "r-b4qtyk",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "label": "Office 107",
+      "type": "office",
+      "type_inferred": true,
+      "polygon": [
+        [
+          4.842,
+          12.45
+        ],
+        [
+          2.438,
+          12.446
+        ],
+        [
+          2.433,
+          16.02
+        ],
+        [
+          3.68,
+          16.022
+        ],
+        [
+          5.304,
+          15.477
+        ],
+        [
+          5.308,
+          13.308
+        ],
+        [
+          5.309,
+          12.45
+        ]
+      ],
+      "holes": [],
+      "centroid": [
+        3.83,
+        14.162
+      ],
+      "area_m2": 9.8,
+      "matterport_id": "b4qtykzcazp4iumkamm7y7h2b",
+      "side": "C",
+      "exterior_sides": []
+    },
+    {
+      "id": "r-3m54yf",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "label": "Office 108",
+      "type": "office",
+      "type_inferred": true,
+      "polygon": [
+        [
+          5.303,
+          16.024
+        ],
+        [
+          9.463,
+          16.031
+        ],
+        [
+          9.971,
+          16.032
+        ],
+        [
+          9.976,
+          13.316
+        ],
+        [
+          5.615,
+          13.309
+        ],
+        [
+          5.308,
+          13.308
+        ],
+        [
+          5.304,
+          15.477
+        ]
+      ],
+      "holes": [],
+      "centroid": [
+        7.639,
+        14.67
+      ],
+      "area_m2": 12.7,
+      "matterport_id": "3m54yff1z7crxaywd8if9rb0d",
+      "side": "B",
+      "exterior_sides": []
+    },
+    {
+      "id": "r-wbpb7d",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "label": "Office 109",
+      "type": "office",
+      "type_inferred": true,
+      "polygon": [
+        [
+          15.071,
+          16.041
+        ],
+        [
+          15.076,
+          12.791
+        ],
+        [
+          12.626,
+          12.787
+        ],
+        [
+          12.621,
+          16.037
+        ]
+      ],
+      "holes": [],
+      "centroid": [
+        13.848,
+        14.414
+      ],
+      "area_m2": 8.0,
+      "matterport_id": "wbpb7dkfuwnikd1kq2a9hz70a",
+      "side": "B",
+      "exterior_sides": [
+        "A",
+        "B"
+      ]
+    },
+    {
+      "id": "r-g1gkrk",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "label": "Storage 110",
+      "type": "storage",
+      "type_inferred": true,
+      "polygon": [
+        [
+          2.446,
+          7.806
+        ],
+        [
+          2.444,
+          9.318
+        ],
+        [
+          3.209,
+          9.319
+        ],
+        [
+          3.211,
+          7.807
+        ]
+      ],
+      "holes": [],
+      "centroid": [
+        2.828,
+        8.563
+      ],
+      "area_m2": 1.2,
+      "matterport_id": "g1gkrkdygg4zs5xge8bxfuc1d",
+      "side": "B",
+      "exterior_sides": []
+    },
+    {
+      "id": "r-4mpd3y",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "label": "Office 111",
+      "type": "office",
+      "type_inferred": true,
+      "polygon": [
+        [
+          14.392,
+          6.538
+        ],
+        [
+          11.96,
+          6.534
+        ],
+        [
+          11.955,
+          9.605
+        ],
+        [
+          14.387,
+          9.609
+        ],
+        [
+          14.39,
+          7.953
+        ]
+      ],
+      "holes": [],
+      "centroid": [
+        13.174,
+        8.071
+      ],
+      "area_m2": 7.5,
+      "matterport_id": "4mpd3yxnm0wrnpak1ibnr29wc",
+      "side": "D",
+      "exterior_sides": [
+        "C",
+        "D"
+      ]
+    },
+    {
+      "id": "r-pcez6b",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "label": "Office 112",
+      "type": "office",
+      "type_inferred": true,
+      "polygon": [
+        [
+          16.8,
+          7.308
+        ],
+        [
+          16.801,
+          6.542
+        ],
+        [
+          14.392,
+          6.538
+        ],
+        [
+          14.39,
+          7.953
+        ],
+        [
+          15.267,
+          7.954
+        ],
+        [
+          15.264,
+          9.61
+        ],
+        [
+          16.796,
+          9.613
+        ]
+      ],
+      "holes": [],
+      "centroid": [
+        15.781,
+        7.903
+      ],
+      "area_m2": 5.9,
+      "matterport_id": "pcez6b4tqeep953kmm04hme9c",
+      "side": "B",
+      "exterior_sides": [
+        "B",
+        "C"
+      ]
+    },
+    {
+      "id": "r-kuc0fp",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "label": "Office 113",
+      "type": "office",
+      "type_inferred": true,
+      "polygon": [
+        [
+          19.444,
+          8.476
+        ],
+        [
+          20.265,
+          8.477
+        ],
+        [
+          20.263,
+          9.611
+        ],
+        [
+          22.045,
+          9.614
+        ],
+        [
+          22.051,
+          6.554
+        ],
+        [
+          19.447,
+          6.549
+        ]
+      ],
+      "holes": [],
+      "centroid": [
+        20.864,
+        7.954
+      ],
+      "area_m2": 7.0,
+      "matterport_id": "kuc0fpmsgqxff63egrxrycfud",
+      "side": "B",
+      "exterior_sides": [
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "id": "r-613htq",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "label": "Open area A",
+      "type": "open_area",
+      "type_inferred": true,
+      "polygon": [
+        [
+          4.842,
+          12.45
+        ],
+        [
+          5.309,
+          12.45
+        ],
+        [
+          5.617,
+          12.451
+        ],
+        [
+          5.615,
+          13.309
+        ],
+        [
+          9.976,
+          13.316
+        ],
+        [
+          9.971,
+          16.032
+        ],
+        [
+          11.944,
+          16.035
+        ],
+        [
+          11.955,
+          9.605
+        ],
+        [
+          11.96,
+          6.534
+        ],
+        [
+          14.392,
+          6.538
+        ],
+        [
+          16.801,
+          6.542
+        ],
+        [
+          17.809,
+          6.543
+        ],
+        [
+          16.8,
+          7.308
+        ],
+        [
+          16.796,
+          9.613
+        ],
+        [
+          18.987,
+          9.617
+        ],
+        [
+          18.992,
+          6.549
+        ],
+        [
+          19.447,
+          6.549
+        ],
+        [
+          22.051,
+          6.554
+        ],
+        [
+          22.068,
+          -3.96
+        ],
+        [
+          19.261,
+          -3.965
+        ],
+        [
+          16.829,
+          -3.969
+        ],
+        [
+          14.298,
+          -3.973
+        ],
+        [
+          11.953,
+          -3.977
+        ],
+        [
+          10.024,
+          -3.981
+        ],
+        [
+          10.023,
+          -3.544
+        ],
+        [
+          10.467,
+          -3.543
+        ],
+        [
+          10.464,
+          -1.348
+        ],
+        [
+          6.745,
+          -1.354
+        ],
+        [
+          6.742,
+          0.283
+        ],
+        [
+          7.953,
+          0.285
+        ],
+        [
+          7.952,
+          1.052
+        ],
+        [
+          6.741,
+          1.05
+        ],
+        [
+          6.738,
+          2.874
+        ],
+        [
+          6.735,
+          4.598
+        ],
+        [
+          9.983,
+          4.604
+        ],
+        [
+          9.978,
+          7.692
+        ],
+        [
+          5.66,
+          7.685
+        ],
+        [
+          4.85,
+          7.683
+        ]
+      ],
+      "holes": [
+        [
+          [
+            17.422,
+            -1.987
+          ],
+          [
+            19.137,
+            -1.984
+          ],
+          [
+            19.131,
+            1.274
+          ],
+          [
+            20.158,
+            1.276
+          ],
+          [
+            20.153,
+            4.522
+          ],
+          [
+            18.574,
+            4.52
+          ],
+          [
+            18.58,
+            1.274
+          ],
+          [
+            17.416,
+            1.272
+          ],
+          [
+            17.411,
+            4.598
+          ],
+          [
+            14.651,
+            4.593
+          ],
+          [
+            11.985,
+            4.589
+          ],
+          [
+            11.99,
+            1.262
+          ],
+          [
+            11.996,
+            -1.867
+          ],
+          [
+            13.408,
+            -1.865
+          ],
+          [
+            14.656,
+            1.267
+          ],
+          [
+            14.662,
+            -1.991
+          ]
+        ]
+      ],
+      "centroid": [
+        16.017,
+        5.569
+      ],
+      "area_m2": 153.4,
+      "matterport_id": "613htqkzf66zz7hf7n8kzszed",
+      "side": "B",
+      "exterior_sides": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "id": "r-cdz3fk",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "label": "Open area B",
+      "type": "open_area",
+      "type_inferred": true,
+      "polygon": [
+        [
+          4.842,
+          12.45
+        ],
+        [
+          4.85,
+          7.683
+        ],
+        [
+          5.66,
+          7.685
+        ],
+        [
+          5.665,
+          4.607
+        ],
+        [
+          5.192,
+          4.607
+        ],
+        [
+          5.195,
+          2.871
+        ],
+        [
+          6.738,
+          2.874
+        ],
+        [
+          6.741,
+          1.05
+        ],
+        [
+          6.742,
+          0.283
+        ],
+        [
+          6.745,
+          -1.354
+        ],
+        [
+          6.747,
+          -2.173
+        ],
+        [
+          4.643,
+          -2.176
+        ],
+        [
+          4.646,
+          -3.986
+        ],
+        [
+          -2.445,
+          -3.998
+        ],
+        [
+          -2.472,
+          12.104
+        ],
+        [
+          -2.058,
+          12.105
+        ],
+        [
+          -2.059,
+          12.569
+        ],
+        [
+          2.438,
+          12.446
+        ]
+      ],
+      "holes": [
+        [
+          [
+            2.447,
+            7.378
+          ],
+          [
+            3.212,
+            7.379
+          ],
+          [
+            3.211,
+            7.807
+          ],
+          [
+            3.209,
+            9.319
+          ],
+          [
+            2.444,
+            9.318
+          ],
+          [
+            2.446,
+            7.806
+          ]
+        ],
+        [
+          [
+            2.271,
+            3.856
+          ],
+          [
+            2.424,
+            1.014
+          ],
+          [
+            3.198,
+            0.243
+          ],
+          [
+            5.249,
+            0.246
+          ],
+          [
+            5.248,
+            0.477
+          ],
+          [
+            4.51,
+            0.476
+          ],
+          [
+            4.509,
+            1.114
+          ],
+          [
+            3.254,
+            1.111
+          ],
+          [
+            3.249,
+            3.858
+          ]
+        ]
+      ],
+      "centroid": [
+        1.544,
+        4.037
+      ],
+      "area_m2": 126.9,
+      "matterport_id": "cdz3fkt38kae7tapstpt0eaeb",
+      "side": "B",
+      "exterior_sides": [
+        "A",
+        "B",
+        "D"
+      ]
+    },
+    {
+      "id": "r-a5f9ag",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "label": "Office 114",
+      "type": "office",
+      "type_inferred": true,
+      "polygon": [
+        [
+          14.656,
+          1.267
+        ],
+        [
+          11.99,
+          1.262
+        ],
+        [
+          11.985,
+          4.589
+        ],
+        [
+          14.651,
+          4.593
+        ]
+      ],
+      "holes": [],
+      "centroid": [
+        13.32,
+        2.928
+      ],
+      "area_m2": 8.9,
+      "matterport_id": "a5f9age4zzxewres6iqux2emc",
+      "side": "D",
+      "exterior_sides": []
+    },
+    {
+      "id": "r-19ab05",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "label": "Office 115",
+      "type": "office",
+      "type_inferred": true,
+      "polygon": [
+        [
+          17.411,
+          4.598
+        ],
+        [
+          17.416,
+          1.272
+        ],
+        [
+          14.656,
+          1.267
+        ],
+        [
+          14.651,
+          4.593
+        ]
+      ],
+      "holes": [],
+      "centroid": [
+        16.033,
+        2.932
+      ],
+      "area_m2": 9.2,
+      "matterport_id": "19ab05tns5h6y4qm42esqqpea",
+      "side": "B",
+      "exterior_sides": []
+    },
+    {
+      "id": "r-q5n62d",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "label": "Office 116",
+      "type": "office",
+      "type_inferred": true,
+      "polygon": [
+        [
+          18.58,
+          1.274
+        ],
+        [
+          18.574,
+          4.52
+        ],
+        [
+          20.153,
+          4.522
+        ],
+        [
+          20.158,
+          1.276
+        ],
+        [
+          19.131,
+          1.274
+        ]
+      ],
+      "holes": [],
+      "centroid": [
+        19.366,
+        2.898
+      ],
+      "area_m2": 5.1,
+      "matterport_id": "q5n62dpd3mrc1exy2hr84132b",
+      "side": "D",
+      "exterior_sides": []
+    },
+    {
+      "id": "r-b2kez6",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "label": "Office 117",
+      "type": "office",
+      "type_inferred": true,
+      "polygon": [
+        [
+          14.656,
+          1.267
+        ],
+        [
+          13.408,
+          -1.865
+        ],
+        [
+          11.996,
+          -1.867
+        ],
+        [
+          11.99,
+          1.262
+        ]
+      ],
+      "holes": [],
+      "centroid": [
+        13.044,
+        -0.14
+      ],
+      "area_m2": 6.4,
+      "matterport_id": "b2kez6wsw32fm2x3ui593u3hc",
+      "side": "A",
+      "exterior_sides": []
+    },
+    {
+      "id": "r-m8npxs",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "label": "Office 118",
+      "type": "office",
+      "type_inferred": true,
+      "polygon": [
+        [
+          14.662,
+          -1.991
+        ],
+        [
+          14.656,
+          1.267
+        ],
+        [
+          17.416,
+          1.272
+        ],
+        [
+          17.422,
+          -1.987
+        ]
+      ],
+      "holes": [],
+      "centroid": [
+        16.039,
+        -0.36
+      ],
+      "area_m2": 9.0,
+      "matterport_id": "m8npxsuk79xy21dd09x9wtped",
+      "side": "D",
+      "exterior_sides": []
+    },
+    {
+      "id": "r-n2yqr3",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "label": "Office 119",
+      "type": "office",
+      "type_inferred": true,
+      "polygon": [
+        [
+          17.416,
+          1.272
+        ],
+        [
+          18.58,
+          1.274
+        ],
+        [
+          19.131,
+          1.274
+        ],
+        [
+          19.137,
+          -1.984
+        ],
+        [
+          17.422,
+          -1.987
+        ]
+      ],
+      "holes": [],
+      "centroid": [
+        18.277,
+        -0.356
+      ],
+      "area_m2": 5.6,
+      "matterport_id": "n2yqr30509t7i8whfdf2htwic",
+      "side": "D",
+      "exterior_sides": []
+    },
+    {
+      "id": "r-bmpu8r",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "label": "Storage 120",
+      "type": "storage",
+      "type_inferred": true,
+      "polygon": [
+        [
+          11.953,
+          -3.977
+        ],
+        [
+          11.956,
+          -5.48
+        ],
+        [
+          10.027,
+          -5.484
+        ],
+        [
+          10.024,
+          -3.981
+        ]
+      ],
+      "holes": [],
+      "centroid": [
+        10.99,
+        -4.73
+      ],
+      "area_m2": 2.9,
+      "matterport_id": "bmpu8rc0bpgc1bruwia8kktzd",
+      "side": "A",
+      "exterior_sides": [
+        "A",
+        "B"
+      ]
+    },
+    {
+      "id": "r-f97s71",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "label": "Storage 121",
+      "type": "storage",
+      "type_inferred": true,
+      "polygon": [
+        [
+          14.298,
+          -3.973
+        ],
+        [
+          11.959,
+          -7.082
+        ],
+        [
+          11.956,
+          -5.48
+        ],
+        [
+          11.953,
+          -3.977
+        ]
+      ],
+      "holes": [],
+      "centroid": [
+        12.737,
+        -5.011
+      ],
+      "area_m2": 3.6,
+      "matterport_id": "f97s719x9ctqkce19r6s01b5a",
+      "side": "D",
+      "exterior_sides": [
+        "B",
+        "D"
+      ]
+    },
+    {
+      "id": "r-tyz3uy",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "label": "Storage 122",
+      "type": "storage",
+      "type_inferred": true,
+      "polygon": [
+        [
+          14.298,
+          -3.973
+        ],
+        [
+          16.829,
+          -3.969
+        ],
+        [
+          16.83,
+          -4.695
+        ],
+        [
+          16.834,
+          -7.004
+        ],
+        [
+          16.011,
+          -7.005
+        ],
+        [
+          16.007,
+          -4.696
+        ],
+        [
+          14.299,
+          -4.699
+        ]
+      ],
+      "holes": [],
+      "centroid": [
+        16.421,
+        -5.851
+      ],
+      "area_m2": 3.7,
+      "matterport_id": "tyz3uyd99x00wa88mxhmugrxa",
+      "side": "D",
+      "exterior_sides": [
+        "A",
+        "B",
+        "D"
+      ]
+    },
+    {
+      "id": "r-peina1",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "label": "Office 123",
+      "type": "office",
+      "type_inferred": true,
+      "polygon": [
+        [
+          19.267,
+          -7.018
+        ],
+        [
+          17.621,
+          -7.021
+        ],
+        [
+          17.617,
+          -4.694
+        ],
+        [
+          16.83,
+          -4.695
+        ],
+        [
+          16.829,
+          -3.969
+        ],
+        [
+          19.261,
+          -3.965
+        ]
+      ],
+      "holes": [],
+      "centroid": [
+        18.317,
+        -5.374
+      ],
+      "area_m2": 5.6,
+      "matterport_id": "peina19mpqedsku6a3huu38md",
+      "side": "B",
+      "exterior_sides": [
+        "A",
+        "B",
+        "D"
+      ]
+    }
+  ],
+  "doors": [
+    {
+      "id": "d-iku1df",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "rooms": [
+        "r-613htq",
+        "r-xy2x8m"
+      ],
+      "position": [
+        11.004,
+        16.034
+      ],
+      "width_m": 1.83,
+      "type": "opening",
+      "is_exit": false
+    },
+    {
+      "id": "d-c5yw9h",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "rooms": [
+        "r-tyz3uy",
+        "r-613htq"
+      ],
+      "position": [
+        16.117,
+        -3.97
+      ],
+      "width_m": 0.9,
+      "type": "doorway",
+      "is_exit": false
+    },
+    {
+      "id": "d-s55z41",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "rooms": [
+        "r-4mpd3y",
+        "r-613htq"
+      ],
+      "position": [
+        12.624,
+        6.535
+      ],
+      "width_m": 0.88,
+      "type": "doorway",
+      "is_exit": false
+    },
+    {
+      "id": "d-3kkxhi",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "rooms": [
+        "r-kuc0fp",
+        "r-613htq"
+      ],
+      "position": [
+        19.954,
+        6.55
+      ],
+      "width_m": 0.86,
+      "type": "doorway",
+      "is_exit": false
+    },
+    {
+      "id": "d-1wu9y5",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "rooms": [
+        "r-613htq",
+        "r-peina1"
+      ],
+      "position": [
+        18.604,
+        -3.966
+      ],
+      "width_m": 0.99,
+      "type": "doorway",
+      "is_exit": false
+    },
+    {
+      "id": "d-tqmer9",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "rooms": [
+        "r-613htq",
+        "r-f97s71"
+      ],
+      "position": [
+        13.708,
+        -3.974
+      ],
+      "width_m": 0.94,
+      "type": "doorway",
+      "is_exit": false
+    },
+    {
+      "id": "d-kkpa2d",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "rooms": [
+        "r-613htq",
+        "r-pcez6b"
+      ],
+      "position": [
+        15.036,
+        6.539
+      ],
+      "width_m": 0.86,
+      "type": "doorway",
+      "is_exit": false
+    },
+    {
+      "id": "d-qqyrin",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "rooms": [
+        "r-3m54yf",
+        "r-613htq"
+      ],
+      "position": [
+        9.974,
+        14.083
+      ],
+      "width_m": 0.88,
+      "type": "doorway",
+      "is_exit": false
+    },
+    {
+      "id": "d-1rdnfz",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "rooms": [
+        "r-613htq",
+        "r-bmpu8r"
+      ],
+      "position": [
+        11.237,
+        -3.978
+      ],
+      "width_m": 1.43,
+      "type": "doorway",
+      "is_exit": false
+    },
+    {
+      "id": "d-xtqywx",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "rooms": [
+        "r-613htq",
+        "r-19ab05"
+      ],
+      "position": [
+        16.758,
+        4.597
+      ],
+      "width_m": 0.93,
+      "type": "doorway",
+      "is_exit": false
+    },
+    {
+      "id": "d-08g5m2",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "rooms": [
+        "r-613htq",
+        "r-q5n62d"
+      ],
+      "position": [
+        19.422,
+        4.521
+      ],
+      "width_m": 0.87,
+      "type": "doorway",
+      "is_exit": false
+    },
+    {
+      "id": "d-mradqt",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "rooms": [
+        "r-n2yqr3",
+        "r-613htq"
+      ],
+      "position": [
+        18.135,
+        -1.985
+      ],
+      "width_m": 0.86,
+      "type": "doorway",
+      "is_exit": false
+    },
+    {
+      "id": "d-geccr1",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "rooms": [
+        "r-a5f9ag",
+        "r-613htq"
+      ],
+      "position": [
+        14.025,
+        4.592
+      ],
+      "width_m": 0.83,
+      "type": "doorway",
+      "is_exit": false
+    },
+    {
+      "id": "d-zzd121",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "rooms": [
+        "r-613htq",
+        "r-b2kez6"
+      ],
+      "position": [
+        12.691,
+        -1.866
+      ],
+      "width_m": 0.9,
+      "type": "doorway",
+      "is_exit": false
+    },
+    {
+      "id": "d-5kumef",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "rooms": [
+        "r-613htq",
+        "r-m8npxs"
+      ],
+      "position": [
+        15.41,
+        -1.99
+      ],
+      "width_m": 0.9,
+      "type": "doorway",
+      "is_exit": false
+    },
+    {
+      "id": "d-bfqdcn",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "rooms": [
+        "r-g1gkrk",
+        "r-cdz3fk"
+      ],
+      "position": [
+        2.445,
+        8.534
+      ],
+      "width_m": 1.46,
+      "type": "doorway",
+      "is_exit": false
+    },
+    {
+      "id": "d-kdtmmi",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "rooms": [
+        "r-tt6gm2",
+        "r-cdz3fk"
+      ],
+      "position": [
+        -1.383,
+        12.55
+      ],
+      "width_m": 0.54,
+      "type": "doorway",
+      "is_exit": false
+    },
+    {
+      "id": "d-gpurg0",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "rooms": [
+        "r-cdz3fk",
+        "r-g1gkrk"
+      ],
+      "position": [
+        3.21,
+        8.339
+      ],
+      "width_m": 0.92,
+      "type": "doorway",
+      "is_exit": false
+    },
+    {
+      "id": "d-eax0y4",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "rooms": [
+        "r-n81qfe",
+        "r-xy2x8m"
+      ],
+      "position": [
+        15.787,
+        18.62
+      ],
+      "width_m": 0.88,
+      "type": "doorway",
+      "is_exit": false
+    },
+    {
+      "id": "d-rhg8g6",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "rooms": [
+        "r-xy2x8m",
+        "r-b4qtyk"
+      ],
+      "position": [
+        3.205,
+        16.021
+      ],
+      "width_m": 0.95,
+      "type": "doorway",
+      "is_exit": false
+    },
+    {
+      "id": "d-0tir21",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "rooms": [
+        "r-tt6gm2",
+        "r-xy2x8m"
+      ],
+      "position": [
+        1.586,
+        16.019
+      ],
+      "width_m": 1.54,
+      "type": "doorway",
+      "is_exit": false
+    },
+    {
+      "id": "d-me4btb",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "rooms": [
+        "r-h26t7k",
+        "r-xy2x8m"
+      ],
+      "position": [
+        18.674,
+        17.674
+      ],
+      "width_m": 0.9,
+      "type": "doorway",
+      "is_exit": false
+    },
+    {
+      "id": "d-c2suhm",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "rooms": [
+        "r-xy2x8m",
+        "r-ediidm"
+      ],
+      "position": [
+        11.472,
+        17.695
+      ],
+      "width_m": 0.89,
+      "type": "doorway",
+      "is_exit": false
+    },
+    {
+      "id": "d-62gyze",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "rooms": [
+        "r-xy2x8m",
+        "r-3ygfq6"
+      ],
+      "position": [
+        7.182,
+        17.688
+      ],
+      "width_m": 0.87,
+      "type": "doorway",
+      "is_exit": false
+    },
+    {
+      "id": "d-5p5r2t",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "rooms": [
+        "r-xy2x8m",
+        "r-2qdmc5"
+      ],
+      "position": [
+        1.506,
+        17.679
+      ],
+      "width_m": 0.92,
+      "type": "doorway",
+      "is_exit": false
+    },
+    {
+      "id": "d-fgbtrw",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "rooms": [
+        "r-xy2x8m",
+        "outside"
+      ],
+      "position": [
+        4.335,
+        17.683
+      ],
+      "width_m": 0.92,
+      "type": "doorway",
+      "is_exit": true,
+      "side": "C"
+    },
+    {
+      "id": "d-7hh313",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "rooms": [
+        "r-xy2x8m",
+        "r-wbpb7d"
+      ],
+      "position": [
+        14.394,
+        16.04
+      ],
+      "width_m": 0.87,
+      "type": "doorway",
+      "is_exit": false
+    },
+    {
+      "id": "d-main",
+      "floor_id": "tsmq1wak12rhgn0mawksxcwcd",
+      "rooms": [
+        "r-cdz3fk",
+        "outside"
+      ],
+      "position": [
+        1.0,
+        -3.99
+      ],
+      "width_m": 1.8,
+      "type": "doorway",
+      "is_exit": true,
+      "inferred": true,
+      "side": "A"
+    }
+  ],
+  "windows": [],
+  "stairs": [],
+  "voids": [
+    [
+      [
+        3.249,
+        3.858
+      ],
+      [
+        3.254,
+        1.111
+      ],
+      [
+        4.509,
+        1.114
+      ],
+      [
+        4.51,
+        0.476
+      ],
+      [
+        5.248,
+        0.477
+      ],
+      [
+        5.249,
+        0.246
+      ],
+      [
+        3.198,
+        0.243
+      ],
+      [
+        2.424,
+        1.014
+      ],
+      [
+        2.271,
+        3.856
+      ]
+    ],
+    [
+      [
+        2.269,
+        5.607
+      ],
+      [
+        2.271,
+        3.856
+      ],
+      [
+        1.348,
+        3.855
+      ],
+      [
+        1.345,
+        5.606
+      ]
+    ],
+    [
+      [
+        6.742,
+        0.283
+      ],
+      [
+        6.741,
+        1.05
+      ],
+      [
+        7.952,
+        1.052
+      ],
+      [
+        7.953,
+        0.285
+      ]
+    ],
+    [
+      [
+        6.735,
+        4.598
+      ],
+      [
+        6.738,
+        2.874
+      ],
+      [
+        5.195,
+        2.871
+      ],
+      [
+        5.192,
+        4.607
+      ],
+      [
+        5.665,
+        4.607
+      ],
+      [
+        5.66,
+        7.685
+      ],
+      [
+        9.978,
+        7.692
+      ],
+      [
+        9.983,
+        4.604
+      ]
+    ]
+  ],
+  "outline": [
+    [
+      -2.472,
+      12.104
+    ],
+    [
+      -2.413,
+      12.104
+    ],
+    [
+      -2.42,
+      16.012
+    ],
+    [
+      -2.429,
+      21.429
+    ],
+    [
+      0.363,
+      21.434
+    ],
+    [
+      0.369,
+      17.677
+    ],
+    [
+      0.987,
+      17.678
+    ],
+    [
+      0.981,
+      21.435
+    ],
+    [
+      3.581,
+      21.44
+    ],
+    [
+      3.588,
+      17.682
+    ],
+    [
+      6.468,
+      17.687
+    ],
+    [
+      6.462,
+      21.459
+    ],
+    [
+      9.326,
+      21.464
+    ],
+    [
+      12.344,
+      21.469
+    ],
+    [
+      15.063,
+      21.474
+    ],
+    [
+      18.667,
+      21.48
+    ],
+    [
+      22.053,
+      21.486
+    ],
+    [
+      22.06,
+      16.97
+    ],
+    [
+      18.675,
+      16.964
+    ],
+    [
+      16.736,
+      16.961
+    ],
+    [
+      16.743,
+      12.794
+    ],
+    [
+      15.076,
+      12.791
+    ],
+    [
+      12.626,
+      12.787
+    ],
+    [
+      12.621,
+      16.037
+    ],
+    [
+      11.944,
+      16.035
+    ],
+    [
+      11.955,
+      9.605
+    ],
+    [
+      14.387,
+      9.609
+    ],
+    [
+      14.39,
+      7.953
+    ],
+    [
+      15.267,
+      7.954
+    ],
+    [
+      15.264,
+      9.61
+    ],
+    [
+      16.796,
+      9.613
+    ],
+    [
+      18.987,
+      9.617
+    ],
+    [
+      18.989,
+      8.475
+    ],
+    [
+      20.265,
+      8.477
+    ],
+    [
+      20.263,
+      9.611
+    ],
+    [
+      22.045,
+      9.614
+    ],
+    [
+      22.051,
+      6.554
+    ],
+    [
+      22.068,
+      -3.96
+    ],
+    [
+      19.261,
+      -3.965
+    ],
+    [
+      19.267,
+      -7.018
+    ],
+    [
+      17.621,
+      -7.021
+    ],
+    [
+      17.617,
+      -4.694
+    ],
+    [
+      16.83,
+      -4.695
+    ],
+    [
+      16.834,
+      -7.004
+    ],
+    [
+      16.011,
+      -7.005
+    ],
+    [
+      16.007,
+      -4.696
+    ],
+    [
+      14.299,
+      -4.699
+    ],
+    [
+      14.298,
+      -3.973
+    ],
+    [
+      11.959,
+      -7.082
+    ],
+    [
+      11.956,
+      -5.48
+    ],
+    [
+      10.027,
+      -5.484
+    ],
+    [
+      10.024,
+      -3.981
+    ],
+    [
+      10.023,
+      -3.544
+    ],
+    [
+      10.467,
+      -3.543
+    ],
+    [
+      10.464,
+      -1.348
+    ],
+    [
+      6.745,
+      -1.354
+    ],
+    [
+      6.747,
+      -2.173
+    ],
+    [
+      4.643,
+      -2.176
+    ],
+    [
+      4.646,
+      -3.986
+    ],
+    [
+      -2.445,
+      -3.998
+    ]
+  ],
+  "maze_score": {
+    "r-2qdmc5": 0.49,
+    "r-3ygfq6": 0.49,
+    "r-ediidm": 0.54,
+    "r-n81qfe": 0.52,
+    "r-xy2x8m": 0.19,
+    "r-h26t7k": 0.51,
+    "r-tt6gm2": 0.28,
+    "r-b4qtyk": 0.48,
+    "r-3m54yf": 0.7,
+    "r-wbpb7d": 0.57,
+    "r-g1gkrk": 0.33,
+    "r-4mpd3y": 0.75,
+    "r-pcez6b": 0.78,
+    "r-kuc0fp": 0.83,
+    "r-613htq": 0.48,
+    "r-cdz3fk": 0.13,
+    "r-a5f9ag": 0.77,
+    "r-19ab05": 0.8,
+    "r-q5n62d": 0.82,
+    "r-b2kez6": 0.84,
+    "r-m8npxs": 0.87,
+    "r-n2yqr3": 0.89,
+    "r-bmpu8r": 0.7,
+    "r-f97s71": 0.85,
+    "r-tyz3uy": 0.88,
+    "r-peina1": 0.9
+  },
+  "maze_detail": {
+    "r-2qdmc5": {
+      "distance_m": 5.1,
+      "second_exit_m": 25.2,
+      "turns": 1,
+      "decisions": 1,
+      "dead_end": true,
+      "windowless": true,
+      "single_exit": true,
+      "components": {
+        "distance": 0.15,
+        "turns": 0.33,
+        "decisions": 0.5,
+        "dead_end": 1.0,
+        "single_exit": 1.0,
+        "windowless": 1.0
+      },
+      "why": [
+        "one door only (dead end)",
+        "no practical second way out",
+        "no outside window"
+      ]
+    },
+    "r-3ygfq6": {
+      "distance_m": 5.1,
+      "second_exit_m": 29.3,
+      "turns": 1,
+      "decisions": 1,
+      "dead_end": true,
+      "windowless": true,
+      "single_exit": true,
+      "components": {
+        "distance": 0.15,
+        "turns": 0.33,
+        "decisions": 0.5,
+        "dead_end": 1.0,
+        "single_exit": 1.0,
+        "windowless": 1.0
+      },
+      "why": [
+        "one door only (dead end)",
+        "no practical second way out",
+        "no outside window"
+      ]
+    },
+    "r-ediidm": {
+      "distance_m": 9.3,
+      "second_exit_m": 33.5,
+      "turns": 1,
+      "decisions": 1,
+      "dead_end": true,
+      "windowless": true,
+      "single_exit": true,
+      "components": {
+        "distance": 0.28,
+        "turns": 0.33,
+        "decisions": 0.5,
+        "dead_end": 1.0,
+        "single_exit": 1.0,
+        "windowless": 1.0
+      },
+      "why": [
+        "one door only (dead end)",
+        "no practical second way out",
+        "no outside window"
+      ]
+    },
+    "r-n81qfe": {
+      "distance_m": 13.5,
+      "second_exit_m": 37.6,
+      "turns": 0,
+      "decisions": 1,
+      "dead_end": true,
+      "windowless": true,
+      "single_exit": true,
+      "components": {
+        "distance": 0.4,
+        "turns": 0.0,
+        "decisions": 0.5,
+        "dead_end": 1.0,
+        "single_exit": 1.0,
+        "windowless": 1.0
+      },
+      "why": [
+        "one door only (dead end)",
+        "no practical second way out",
+        "no outside window"
+      ]
+    },
+    "r-xy2x8m": {
+      "distance_m": 4.0,
+      "second_exit_m": 28.2,
+      "turns": 0,
+      "decisions": 0,
+      "dead_end": false,
+      "windowless": true,
+      "single_exit": true,
+      "components": {
+        "distance": 0.12,
+        "turns": 0.0,
+        "decisions": 0.0,
+        "dead_end": 0.0,
+        "single_exit": 1.0,
+        "windowless": 1.0
+      },
+      "why": [
+        "no practical second way out",
+        "no outside window"
+      ]
+    },
+    "r-h26t7k": {
+      "distance_m": 16.6,
+      "second_exit_m": 40.7,
+      "turns": 1,
+      "decisions": 1,
+      "dead_end": true,
+      "windowless": true,
+      "single_exit": false,
+      "components": {
+        "distance": 0.49,
+        "turns": 0.33,
+        "decisions": 0.5,
+        "dead_end": 1.0,
+        "single_exit": 0.0,
+        "windowless": 1.0
+      },
+      "why": [
+        "one door only (dead end)",
+        "no outside window"
+      ]
+    },
+    "r-tt6gm2": {
+      "distance_m": 5.6,
+      "second_exit_m": 18.9,
+      "turns": 0,
+      "decisions": 1,
+      "dead_end": false,
+      "windowless": true,
+      "single_exit": true,
+      "components": {
+        "distance": 0.17,
+        "turns": 0.0,
+        "decisions": 0.5,
+        "dead_end": 0.0,
+        "single_exit": 1.0,
+        "windowless": 1.0
+      },
+      "why": [
+        "no practical second way out",
+        "no outside window"
+      ]
+    },
+    "r-b4qtyk": {
+      "distance_m": 4.0,
+      "second_exit_m": 24.9,
+      "turns": 1,
+      "decisions": 1,
+      "dead_end": true,
+      "windowless": true,
+      "single_exit": true,
+      "components": {
+        "distance": 0.12,
+        "turns": 0.33,
+        "decisions": 0.5,
+        "dead_end": 1.0,
+        "single_exit": 1.0,
+        "windowless": 1.0
+      },
+      "why": [
+        "one door only (dead end)",
+        "no practical second way out",
+        "no outside window"
+      ]
+    },
+    "r-3m54yf": {
+      "distance_m": 11.5,
+      "second_exit_m": 35.5,
+      "turns": 2,
+      "decisions": 2,
+      "dead_end": true,
+      "windowless": true,
+      "single_exit": true,
+      "components": {
+        "distance": 0.34,
+        "turns": 0.67,
+        "decisions": 1.0,
+        "dead_end": 1.0,
+        "single_exit": 1.0,
+        "windowless": 1.0
+      },
+      "why": [
+        "2 branching rooms to pick through",
+        "one door only (dead end)",
+        "no practical second way out",
+        "no outside window"
+      ]
+    },
+    "r-wbpb7d": {
+      "distance_m": 11.9,
+      "second_exit_m": 35.9,
+      "turns": 1,
+      "decisions": 1,
+      "dead_end": true,
+      "windowless": true,
+      "single_exit": true,
+      "components": {
+        "distance": 0.35,
+        "turns": 0.33,
+        "decisions": 0.5,
+        "dead_end": 1.0,
+        "single_exit": 1.0,
+        "windowless": 1.0
+      },
+      "why": [
+        "one door only (dead end)",
+        "no practical second way out",
+        "no outside window"
+      ]
+    },
+    "r-g1gkrk": {
+      "distance_m": 13.0,
+      "second_exit_m": 13.7,
+      "turns": 1,
+      "decisions": 1,
+      "dead_end": false,
+      "windowless": true,
+      "single_exit": false,
+      "components": {
+        "distance": 0.39,
+        "turns": 0.33,
+        "decisions": 0.5,
+        "dead_end": 0.0,
+        "single_exit": 0.0,
+        "windowless": 1.0
+      },
+      "why": [
+        "no outside window"
+      ]
+    },
+    "r-4mpd3y": {
+      "distance_m": 19.4,
+      "second_exit_m": 43.3,
+      "turns": 3,
+      "decisions": 2,
+      "dead_end": true,
+      "windowless": true,
+      "single_exit": false,
+      "components": {
+        "distance": 0.58,
+        "turns": 1.0,
+        "decisions": 1.0,
+        "dead_end": 1.0,
+        "single_exit": 0.0,
+        "windowless": 1.0
+      },
+      "why": [
+        "3 turns on the way out",
+        "2 branching rooms to pick through",
+        "one door only (dead end)",
+        "no outside window"
+      ]
+    },
+    "r-pcez6b": {
+      "distance_m": 21.7,
+      "second_exit_m": 45.6,
+      "turns": 3,
+      "decisions": 2,
+      "dead_end": true,
+      "windowless": true,
+      "single_exit": false,
+      "components": {
+        "distance": 0.64,
+        "turns": 1.0,
+        "decisions": 1.0,
+        "dead_end": 1.0,
+        "single_exit": 0.0,
+        "windowless": 1.0
+      },
+      "why": [
+        "22 m to the nearest exit",
+        "3 turns on the way out",
+        "2 branching rooms to pick through",
+        "one door only (dead end)",
+        "no outside window"
+      ]
+    },
+    "r-kuc0fp": {
+      "distance_m": 26.7,
+      "second_exit_m": 50.7,
+      "turns": 3,
+      "decisions": 2,
+      "dead_end": true,
+      "windowless": true,
+      "single_exit": false,
+      "components": {
+        "distance": 0.79,
+        "turns": 1.0,
+        "decisions": 1.0,
+        "dead_end": 1.0,
+        "single_exit": 0.0,
+        "windowless": 1.0
+      },
+      "why": [
+        "27 m to the nearest exit",
+        "3 turns on the way out",
+        "2 branching rooms to pick through",
+        "one door only (dead end)",
+        "no outside window"
+      ]
+    },
+    "r-613htq": {
+      "distance_m": 21.1,
+      "second_exit_m": 45.1,
+      "turns": 2,
+      "decisions": 1,
+      "dead_end": false,
+      "windowless": true,
+      "single_exit": false,
+      "components": {
+        "distance": 0.63,
+        "turns": 0.67,
+        "decisions": 0.5,
+        "dead_end": 0.0,
+        "single_exit": 0.0,
+        "windowless": 1.0
+      },
+      "why": [
+        "21 m to the nearest exit",
+        "no outside window"
+      ]
+    },
+    "r-cdz3fk": {
+      "distance_m": 8.0,
+      "second_exit_m": 16.8,
+      "turns": 0,
+      "decisions": 0,
+      "dead_end": false,
+      "windowless": true,
+      "single_exit": false,
+      "components": {
+        "distance": 0.24,
+        "turns": 0.0,
+        "decisions": 0.0,
+        "dead_end": 0.0,
+        "single_exit": 0.0,
+        "windowless": 1.0
+      },
+      "why": [
+        "no outside window"
+      ]
+    },
+    "r-a5f9ag": {
+      "distance_m": 21.4,
+      "second_exit_m": 45.4,
+      "turns": 3,
+      "decisions": 2,
+      "dead_end": true,
+      "windowless": true,
+      "single_exit": false,
+      "components": {
+        "distance": 0.64,
+        "turns": 1.0,
+        "decisions": 1.0,
+        "dead_end": 1.0,
+        "single_exit": 0.0,
+        "windowless": 1.0
+      },
+      "why": [
+        "21 m to the nearest exit",
+        "3 turns on the way out",
+        "2 branching rooms to pick through",
+        "one door only (dead end)",
+        "no outside window"
+      ]
+    },
+    "r-19ab05": {
+      "distance_m": 23.9,
+      "second_exit_m": 47.9,
+      "turns": 3,
+      "decisions": 2,
+      "dead_end": true,
+      "windowless": true,
+      "single_exit": false,
+      "components": {
+        "distance": 0.71,
+        "turns": 1.0,
+        "decisions": 1.0,
+        "dead_end": 1.0,
+        "single_exit": 0.0,
+        "windowless": 1.0
+      },
+      "why": [
+        "24 m to the nearest exit",
+        "3 turns on the way out",
+        "2 branching rooms to pick through",
+        "one door only (dead end)",
+        "no outside window"
+      ]
+    },
+    "r-q5n62d": {
+      "distance_m": 26.3,
+      "second_exit_m": 50.3,
+      "turns": 3,
+      "decisions": 2,
+      "dead_end": true,
+      "windowless": true,
+      "single_exit": false,
+      "components": {
+        "distance": 0.78,
+        "turns": 1.0,
+        "decisions": 1.0,
+        "dead_end": 1.0,
+        "single_exit": 0.0,
+        "windowless": 1.0
+      },
+      "why": [
+        "26 m to the nearest exit",
+        "3 turns on the way out",
+        "2 branching rooms to pick through",
+        "one door only (dead end)",
+        "no outside window"
+      ]
+    },
+    "r-b2kez6": {
+      "distance_m": 27.9,
+      "second_exit_m": 51.9,
+      "turns": 3,
+      "decisions": 2,
+      "dead_end": true,
+      "windowless": true,
+      "single_exit": false,
+      "components": {
+        "distance": 0.83,
+        "turns": 1.0,
+        "decisions": 1.0,
+        "dead_end": 1.0,
+        "single_exit": 0.0,
+        "windowless": 1.0
+      },
+      "why": [
+        "28 m to the nearest exit",
+        "3 turns on the way out",
+        "2 branching rooms to pick through",
+        "one door only (dead end)",
+        "no outside window"
+      ]
+    },
+    "r-m8npxs": {
+      "distance_m": 30.6,
+      "second_exit_m": 54.6,
+      "turns": 3,
+      "decisions": 2,
+      "dead_end": true,
+      "windowless": true,
+      "single_exit": false,
+      "components": {
+        "distance": 0.91,
+        "turns": 1.0,
+        "decisions": 1.0,
+        "dead_end": 1.0,
+        "single_exit": 0.0,
+        "windowless": 1.0
+      },
+      "why": [
+        "31 m to the nearest exit",
+        "3 turns on the way out",
+        "2 branching rooms to pick through",
+        "one door only (dead end)",
+        "no outside window"
+      ]
+    },
+    "r-n2yqr3": {
+      "distance_m": 33.2,
+      "second_exit_m": 57.2,
+      "turns": 3,
+      "decisions": 2,
+      "dead_end": true,
+      "windowless": true,
+      "single_exit": false,
+      "components": {
+        "distance": 0.99,
+        "turns": 1.0,
+        "decisions": 1.0,
+        "dead_end": 1.0,
+        "single_exit": 0.0,
+        "windowless": 1.0
+      },
+      "why": [
+        "33 m to the nearest exit",
+        "3 turns on the way out",
+        "2 branching rooms to pick through",
+        "one door only (dead end)",
+        "no outside window"
+      ]
+    },
+    "r-bmpu8r": {
+      "distance_m": 27.7,
+      "second_exit_m": 51.7,
+      "turns": 1,
+      "decisions": 2,
+      "dead_end": true,
+      "windowless": true,
+      "single_exit": false,
+      "components": {
+        "distance": 0.82,
+        "turns": 0.33,
+        "decisions": 1.0,
+        "dead_end": 1.0,
+        "single_exit": 0.0,
+        "windowless": 1.0
+      },
+      "why": [
+        "28 m to the nearest exit",
+        "2 branching rooms to pick through",
+        "one door only (dead end)",
+        "no outside window"
+      ]
+    },
+    "r-f97s71": {
+      "distance_m": 29.2,
+      "second_exit_m": 53.2,
+      "turns": 3,
+      "decisions": 2,
+      "dead_end": true,
+      "windowless": true,
+      "single_exit": false,
+      "components": {
+        "distance": 0.87,
+        "turns": 1.0,
+        "decisions": 1.0,
+        "dead_end": 1.0,
+        "single_exit": 0.0,
+        "windowless": 1.0
+      },
+      "why": [
+        "29 m to the nearest exit",
+        "3 turns on the way out",
+        "2 branching rooms to pick through",
+        "one door only (dead end)",
+        "no outside window"
+      ]
+    },
+    "r-tyz3uy": {
+      "distance_m": 31.8,
+      "second_exit_m": 55.8,
+      "turns": 3,
+      "decisions": 2,
+      "dead_end": true,
+      "windowless": true,
+      "single_exit": false,
+      "components": {
+        "distance": 0.94,
+        "turns": 1.0,
+        "decisions": 1.0,
+        "dead_end": 1.0,
+        "single_exit": 0.0,
+        "windowless": 1.0
+      },
+      "why": [
+        "32 m to the nearest exit",
+        "3 turns on the way out",
+        "2 branching rooms to pick through",
+        "one door only (dead end)",
+        "no outside window"
+      ]
+    },
+    "r-peina1": {
+      "distance_m": 33.7,
+      "second_exit_m": 57.7,
+      "turns": 3,
+      "decisions": 2,
+      "dead_end": true,
+      "windowless": true,
+      "single_exit": false,
+      "components": {
+        "distance": 1.0,
+        "turns": 1.0,
+        "decisions": 1.0,
+        "dead_end": 1.0,
+        "single_exit": 0.0,
+        "windowless": 1.0
+      },
+      "why": [
+        "34 m to the nearest exit",
+        "3 turns on the way out",
+        "2 branching rooms to pick through",
+        "one door only (dead end)",
+        "no outside window"
+      ]
+    }
+  },
+  "exit_routes": {
+    "r-2qdmc5": {
+      "path": [
+        "r-2qdmc5",
+        "r-xy2x8m"
+      ],
+      "door_ids": [
+        "d-5p5r2t"
+      ],
+      "distance_m": 5.1,
+      "polyline": [
+        [
+          2.28,
+          19.8
+        ],
+        [
+          1.51,
+          17.68
+        ],
+        [
+          4.33,
+          17.68
+        ]
+      ],
+      "from_room_id": "r-2qdmc5",
+      "exit_door_id": "d-fgbtrw"
+    },
+    "r-3ygfq6": {
+      "path": [
+        "r-3ygfq6",
+        "r-xy2x8m"
+      ],
+      "door_ids": [
+        "d-62gyze"
+      ],
+      "distance_m": 5.1,
+      "polyline": [
+        [
+          7.9,
+          19.78
+        ],
+        [
+          7.18,
+          17.69
+        ],
+        [
+          4.33,
+          17.68
+        ]
+      ],
+      "from_room_id": "r-3ygfq6",
+      "exit_door_id": "d-fgbtrw"
+    },
+    "r-ediidm": {
+      "path": [
+        "r-ediidm",
+        "r-xy2x8m"
+      ],
+      "door_ids": [
+        "d-c2suhm"
+      ],
+      "distance_m": 9.3,
+      "polyline": [
+        [
+          10.84,
+          19.79
+        ],
+        [
+          11.47,
+          17.7
+        ],
+        [
+          4.33,
+          17.68
+        ]
+      ],
+      "from_room_id": "r-ediidm",
+      "exit_door_id": "d-fgbtrw"
+    },
+    "r-n81qfe": {
+      "path": [
+        "r-n81qfe",
+        "r-xy2x8m"
+      ],
+      "door_ids": [
+        "d-eax0y4"
+      ],
+      "distance_m": 13.5,
+      "polyline": [
+        [
+          16.87,
+          20.05
+        ],
+        [
+          15.79,
+          18.62
+        ],
+        [
+          12.65,
+          17.4
+        ],
+        [
+          4.33,
+          17.68
+        ]
+      ],
+      "from_room_id": "r-n81qfe",
+      "exit_door_id": "d-fgbtrw"
+    },
+    "r-xy2x8m": {
+      "path": [
+        "r-xy2x8m"
+      ],
+      "door_ids": [],
+      "distance_m": 4.0,
+      "polyline": [
+        [
+          8.37,
+          17.63
+        ],
+        [
+          4.33,
+          17.68
+        ]
+      ],
+      "from_room_id": "r-xy2x8m",
+      "exit_door_id": "d-fgbtrw"
+    },
+    "r-h26t7k": {
+      "path": [
+        "r-h26t7k",
+        "r-xy2x8m"
+      ],
+      "door_ids": [
+        "d-me4btb"
+      ],
+      "distance_m": 16.6,
+      "polyline": [
+        [
+          20.36,
+          19.23
+        ],
+        [
+          18.67,
+          17.67
+        ],
+        [
+          4.33,
+          17.68
+        ]
+      ],
+      "from_room_id": "r-h26t7k",
+      "exit_door_id": "d-fgbtrw"
+    },
+    "r-tt6gm2": {
+      "path": [
+        "r-tt6gm2",
+        "r-xy2x8m"
+      ],
+      "door_ids": [
+        "d-0tir21"
+      ],
+      "distance_m": 5.6,
+      "polyline": [
+        [
+          0.03,
+          14.26
+        ],
+        [
+          1.59,
+          16.02
+        ],
+        [
+          4.33,
+          17.68
+        ]
+      ],
+      "from_room_id": "r-tt6gm2",
+      "exit_door_id": "d-fgbtrw"
+    },
+    "r-b4qtyk": {
+      "path": [
+        "r-b4qtyk",
+        "r-xy2x8m"
+      ],
+      "door_ids": [
+        "d-rhg8g6"
+      ],
+      "distance_m": 4.0,
+      "polyline": [
+        [
+          3.83,
+          14.16
+        ],
+        [
+          3.21,
+          16.02
+        ],
+        [
+          4.33,
+          17.68
+        ]
+      ],
+      "from_room_id": "r-b4qtyk",
+      "exit_door_id": "d-fgbtrw"
+    },
+    "r-3m54yf": {
+      "path": [
+        "r-3m54yf",
+        "r-613htq",
+        "r-xy2x8m"
+      ],
+      "door_ids": [
+        "d-qqyrin",
+        "d-iku1df"
+      ],
+      "distance_m": 11.5,
+      "polyline": [
+        [
+          7.64,
+          14.67
+        ],
+        [
+          9.97,
+          14.08
+        ],
+        [
+          11.0,
+          16.03
+        ],
+        [
+          9.16,
+          16.79
+        ],
+        [
+          4.33,
+          17.68
+        ]
+      ],
+      "from_room_id": "r-3m54yf",
+      "exit_door_id": "d-fgbtrw"
+    },
+    "r-wbpb7d": {
+      "path": [
+        "r-wbpb7d",
+        "r-xy2x8m"
+      ],
+      "door_ids": [
+        "d-7hh313"
+      ],
+      "distance_m": 11.9,
+      "polyline": [
+        [
+          13.85,
+          14.41
+        ],
+        [
+          14.39,
+          16.04
+        ],
+        [
+          4.33,
+          17.68
+        ]
+      ],
+      "from_room_id": "r-wbpb7d",
+      "exit_door_id": "d-fgbtrw"
+    },
+    "r-g1gkrk": {
+      "path": [
+        "r-g1gkrk",
+        "r-cdz3fk"
+      ],
+      "door_ids": [
+        "d-bfqdcn"
+      ],
+      "distance_m": 13.0,
+      "polyline": [
+        [
+          2.83,
+          8.56
+        ],
+        [
+          2.44,
+          8.53
+        ],
+        [
+          1.0,
+          -3.99
+        ]
+      ],
+      "from_room_id": "r-g1gkrk",
+      "exit_door_id": "d-main"
+    },
+    "r-4mpd3y": {
+      "path": [
+        "r-4mpd3y",
+        "r-613htq",
+        "r-xy2x8m"
+      ],
+      "door_ids": [
+        "d-s55z41",
+        "d-iku1df"
+      ],
+      "distance_m": 19.4,
+      "polyline": [
+        [
+          13.17,
+          8.07
+        ],
+        [
+          12.62,
+          6.54
+        ],
+        [
+          11.66,
+          6.23
+        ],
+        [
+          11.0,
+          16.03
+        ],
+        [
+          9.16,
+          16.79
+        ],
+        [
+          4.33,
+          17.68
+        ]
+      ],
+      "from_room_id": "r-4mpd3y",
+      "exit_door_id": "d-fgbtrw"
+    },
+    "r-pcez6b": {
+      "path": [
+        "r-pcez6b",
+        "r-613htq",
+        "r-xy2x8m"
+      ],
+      "door_ids": [
+        "d-kkpa2d",
+        "d-iku1df"
+      ],
+      "distance_m": 21.7,
+      "polyline": [
+        [
+          15.78,
+          7.9
+        ],
+        [
+          15.04,
+          6.54
+        ],
+        [
+          11.66,
+          6.23
+        ],
+        [
+          11.0,
+          16.03
+        ],
+        [
+          9.16,
+          16.79
+        ],
+        [
+          4.33,
+          17.68
+        ]
+      ],
+      "from_room_id": "r-pcez6b",
+      "exit_door_id": "d-fgbtrw"
+    },
+    "r-kuc0fp": {
+      "path": [
+        "r-kuc0fp",
+        "r-613htq",
+        "r-xy2x8m"
+      ],
+      "door_ids": [
+        "d-3kkxhi",
+        "d-iku1df"
+      ],
+      "distance_m": 26.7,
+      "polyline": [
+        [
+          20.86,
+          7.95
+        ],
+        [
+          19.95,
+          6.55
+        ],
+        [
+          11.66,
+          6.23
+        ],
+        [
+          11.0,
+          16.03
+        ],
+        [
+          9.16,
+          16.79
+        ],
+        [
+          4.33,
+          17.68
+        ]
+      ],
+      "from_room_id": "r-kuc0fp",
+      "exit_door_id": "d-fgbtrw"
+    },
+    "r-613htq": {
+      "path": [
+        "r-613htq",
+        "r-xy2x8m"
+      ],
+      "door_ids": [
+        "d-iku1df"
+      ],
+      "distance_m": 21.1,
+      "polyline": [
+        [
+          16.02,
+          5.57
+        ],
+        [
+          11.66,
+          6.23
+        ],
+        [
+          11.0,
+          16.03
+        ],
+        [
+          9.16,
+          16.79
+        ],
+        [
+          4.33,
+          17.68
+        ]
+      ],
+      "from_room_id": "r-613htq",
+      "exit_door_id": "d-fgbtrw"
+    },
+    "r-cdz3fk": {
+      "path": [
+        "r-cdz3fk"
+      ],
+      "door_ids": [],
+      "distance_m": 8.0,
+      "polyline": [
+        [
+          1.54,
+          4.04
+        ],
+        [
+          1.0,
+          -3.99
+        ]
+      ],
+      "from_room_id": "r-cdz3fk",
+      "exit_door_id": "d-main"
+    },
+    "r-a5f9ag": {
+      "path": [
+        "r-a5f9ag",
+        "r-613htq",
+        "r-xy2x8m"
+      ],
+      "door_ids": [
+        "d-geccr1",
+        "d-iku1df"
+      ],
+      "distance_m": 21.4,
+      "polyline": [
+        [
+          13.32,
+          2.93
+        ],
+        [
+          14.03,
+          4.59
+        ],
+        [
+          11.66,
+          6.23
+        ],
+        [
+          11.0,
+          16.03
+        ],
+        [
+          9.16,
+          16.79
+        ],
+        [
+          4.33,
+          17.68
+        ]
+      ],
+      "from_room_id": "r-a5f9ag",
+      "exit_door_id": "d-fgbtrw"
+    },
+    "r-19ab05": {
+      "path": [
+        "r-19ab05",
+        "r-613htq",
+        "r-xy2x8m"
+      ],
+      "door_ids": [
+        "d-xtqywx",
+        "d-iku1df"
+      ],
+      "distance_m": 23.9,
+      "polyline": [
+        [
+          16.03,
+          2.93
+        ],
+        [
+          16.76,
+          4.6
+        ],
+        [
+          11.66,
+          6.23
+        ],
+        [
+          11.0,
+          16.03
+        ],
+        [
+          9.16,
+          16.79
+        ],
+        [
+          4.33,
+          17.68
+        ]
+      ],
+      "from_room_id": "r-19ab05",
+      "exit_door_id": "d-fgbtrw"
+    },
+    "r-q5n62d": {
+      "path": [
+        "r-q5n62d",
+        "r-613htq",
+        "r-xy2x8m"
+      ],
+      "door_ids": [
+        "d-08g5m2",
+        "d-iku1df"
+      ],
+      "distance_m": 26.3,
+      "polyline": [
+        [
+          19.37,
+          2.9
+        ],
+        [
+          19.42,
+          4.52
+        ],
+        [
+          11.66,
+          6.23
+        ],
+        [
+          11.0,
+          16.03
+        ],
+        [
+          9.16,
+          16.79
+        ],
+        [
+          4.33,
+          17.68
+        ]
+      ],
+      "from_room_id": "r-q5n62d",
+      "exit_door_id": "d-fgbtrw"
+    },
+    "r-b2kez6": {
+      "path": [
+        "r-b2kez6",
+        "r-613htq",
+        "r-xy2x8m"
+      ],
+      "door_ids": [
+        "d-zzd121",
+        "d-iku1df"
+      ],
+      "distance_m": 27.9,
+      "polyline": [
+        [
+          13.04,
+          -0.14
+        ],
+        [
+          12.69,
+          -1.87
+        ],
+        [
+          11.7,
+          -2.17
+        ],
+        [
+          11.0,
+          16.03
+        ],
+        [
+          9.16,
+          16.79
+        ],
+        [
+          4.33,
+          17.68
+        ]
+      ],
+      "from_room_id": "r-b2kez6",
+      "exit_door_id": "d-fgbtrw"
+    },
+    "r-m8npxs": {
+      "path": [
+        "r-m8npxs",
+        "r-613htq",
+        "r-xy2x8m"
+      ],
+      "door_ids": [
+        "d-5kumef",
+        "d-iku1df"
+      ],
+      "distance_m": 30.6,
+      "polyline": [
+        [
+          16.04,
+          -0.36
+        ],
+        [
+          15.41,
+          -1.99
+        ],
+        [
+          11.7,
+          -2.17
+        ],
+        [
+          11.0,
+          16.03
+        ],
+        [
+          9.16,
+          16.79
+        ],
+        [
+          4.33,
+          17.68
+        ]
+      ],
+      "from_room_id": "r-m8npxs",
+      "exit_door_id": "d-fgbtrw"
+    },
+    "r-n2yqr3": {
+      "path": [
+        "r-n2yqr3",
+        "r-613htq",
+        "r-xy2x8m"
+      ],
+      "door_ids": [
+        "d-mradqt",
+        "d-iku1df"
+      ],
+      "distance_m": 33.2,
+      "polyline": [
+        [
+          18.28,
+          -0.36
+        ],
+        [
+          18.14,
+          -1.99
+        ],
+        [
+          11.7,
+          -2.17
+        ],
+        [
+          11.0,
+          16.03
+        ],
+        [
+          9.16,
+          16.79
+        ],
+        [
+          4.33,
+          17.68
+        ]
+      ],
+      "from_room_id": "r-n2yqr3",
+      "exit_door_id": "d-fgbtrw"
+    },
+    "r-bmpu8r": {
+      "path": [
+        "r-bmpu8r",
+        "r-613htq",
+        "r-xy2x8m"
+      ],
+      "door_ids": [
+        "d-1rdnfz",
+        "d-iku1df"
+      ],
+      "distance_m": 27.7,
+      "polyline": [
+        [
+          10.99,
+          -4.73
+        ],
+        [
+          11.24,
+          -3.98
+        ],
+        [
+          11.0,
+          16.03
+        ],
+        [
+          9.16,
+          16.79
+        ],
+        [
+          4.33,
+          17.68
+        ]
+      ],
+      "from_room_id": "r-bmpu8r",
+      "exit_door_id": "d-fgbtrw"
+    },
+    "r-f97s71": {
+      "path": [
+        "r-f97s71",
+        "r-613htq",
+        "r-xy2x8m"
+      ],
+      "door_ids": [
+        "d-tqmer9",
+        "d-iku1df"
+      ],
+      "distance_m": 29.2,
+      "polyline": [
+        [
+          12.74,
+          -5.01
+        ],
+        [
+          13.71,
+          -3.97
+        ],
+        [
+          11.7,
+          -2.17
+        ],
+        [
+          11.0,
+          16.03
+        ],
+        [
+          9.16,
+          16.79
+        ],
+        [
+          4.33,
+          17.68
+        ]
+      ],
+      "from_room_id": "r-f97s71",
+      "exit_door_id": "d-fgbtrw"
+    },
+    "r-tyz3uy": {
+      "path": [
+        "r-tyz3uy",
+        "r-613htq",
+        "r-xy2x8m"
+      ],
+      "door_ids": [
+        "d-c5yw9h",
+        "d-iku1df"
+      ],
+      "distance_m": 31.8,
+      "polyline": [
+        [
+          16.42,
+          -5.85
+        ],
+        [
+          16.12,
+          -3.97
+        ],
+        [
+          11.7,
+          -2.17
+        ],
+        [
+          11.0,
+          16.03
+        ],
+        [
+          9.16,
+          16.79
+        ],
+        [
+          4.33,
+          17.68
+        ]
+      ],
+      "from_room_id": "r-tyz3uy",
+      "exit_door_id": "d-fgbtrw"
+    },
+    "r-peina1": {
+      "path": [
+        "r-peina1",
+        "r-613htq",
+        "r-xy2x8m"
+      ],
+      "door_ids": [
+        "d-1wu9y5",
+        "d-iku1df"
+      ],
+      "distance_m": 33.7,
+      "polyline": [
+        [
+          18.32,
+          -5.37
+        ],
+        [
+          18.6,
+          -3.97
+        ],
+        [
+          11.7,
+          -2.17
+        ],
+        [
+          11.0,
+          16.03
+        ],
+        [
+          9.16,
+          16.79
+        ],
+        [
+          4.33,
+          17.68
+        ]
+      ],
+      "from_room_id": "r-peina1",
+      "exit_door_id": "d-fgbtrw"
+    }
+  }
+}

@@ -6,3 +6,5 @@ httpx
 networkx
 shapely
 google-genai
+python-multipart
+pytest

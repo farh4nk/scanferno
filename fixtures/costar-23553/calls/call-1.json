@@ -1,0 +1,16 @@
+{
+  "id": "call-1",
+  "kind": "dispatch",
+  "title": "Open-plan office fire, boss stuck in the storage room",
+  "building_id": "costar-23553",
+  "audio": null,
+  "transcript": [
+    {"t": 0.0, "speaker": "dispatcher", "text": "911, what is the address of your emergency?"},
+    {"t": 2.0, "speaker": "caller", "text": "2500 Fondren Road, Piney Point offices. There are flames in the big open office on the west side, lots of black smoke."},
+    {"t": 9.0, "speaker": "dispatcher", "text": "What floor?"},
+    {"t": 10.0, "speaker": "caller", "text": "Ground floor."},
+    {"t": 12.0, "speaker": "dispatcher", "text": "Is anyone still inside?"},
+    {"t": 13.5, "speaker": "caller", "text": "My boss is stuck in the storage room by the hallway, the door is jammed."},
+    {"t": 19.0, "speaker": "caller", "text": "I'm outside on the sidewalk."}
+  ]
+}

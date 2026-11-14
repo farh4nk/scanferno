@@ -100,8 +100,11 @@ def main():
 
     if args.write:
         picks = rows[: args.write]
+        # keep hand-tuned fields (front, scan_rotation_deg, floorplan_overrides) for buildings already listed
+        existing = {b["id"]: b for b in cache.buildings()}
         cache.save_json([
             {
+                **existing.get(f"costar-{r['costar_property_id']}", {}),
                 "id": f"costar-{r['costar_property_id']}",
                 "name": r["name"],
                 "address": r["address"],

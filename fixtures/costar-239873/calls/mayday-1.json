@@ -1,0 +1,10 @@
+{
+  "id": "mayday-1",
+  "kind": "mayday",
+  "title": "Engine 23 crew disoriented in a dead-end office",
+  "building_id": "costar-239873",
+  "audio": null,
+  "transcript": [
+    {"t": 0.0, "speaker": "firefighter", "text": "Mayday, mayday, mayday. Engine 23, crew of two, we're lost in zero visibility. Last known position Office 110 on the Delta side. Low air."}
+  ]
+}
