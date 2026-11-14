@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { getBuildings, getCalls, health } from './api'
 import { useLiveCall } from './hooks/useLiveCall'
+import { useListen } from './hooks/useListen'
 import { useBuildingData } from './hooks/useBuildingData'
+import LivePanel from './components/LivePanel'
 import AddressSearch from './components/search/AddressSearch'
 import PropertyCard from './components/search/PropertyCard'
 import FloorPlan from './components/FloorPlan'
@@ -21,7 +23,8 @@ const initialBuilding = () => new URLSearchParams(window.location.search).get('b
 export default function App() {
   const [buildings, setBuildings] = useState([])
   const [calls, setCalls] = useState([])
-  const [llm, setLlm] = useState(null)
+  const [caps, setCaps] = useState({ llm: null, stt: false })
+  const [source, setSource] = useState('replay') // replay a scripted call, or a live call (mic / typed)
   const [buildingId, setBuildingId] = useState(initialBuilding)
   const [property, setProperty] = useState(null)
   const [callId, setCallId] = useState('')
@@ -35,14 +38,19 @@ export default function App() {
   const [speed, setSpeed] = useState(1)
   const [error, setError] = useState(null)
   const live = useLiveCall()
+  const listen = useListen(buildingId)
+  const feed = source === 'live' ? listen : live // both hooks expose utterances, record, briefing, mayday, status
   const { plan, briefing: baseBriefing, error: dataError } = useBuildingData(buildingId)
 
   useEffect(() => {
     Promise.all([getBuildings(), getCalls()])
       .then(([b, c]) => { setBuildings(b); setCalls(c) })
       .catch((e) => setError(`Cannot reach the backend (${e.message}). Start it with: cd backend && .venv/bin/uvicorn app.main:app --reload`))
-    health().then((h) => setLlm(h.llm)).catch(() => {})
+    health().then((h) => setCaps({ llm: h.llm, stt: !!h.stt })).catch(() => {})
   }, [])
+
+  const switchSource = (s) => { live.reset(); listen.stop(); setMayday(null); setSource(s) }
+  const onSaved = (id) => getCalls().then((c) => { setCalls(c); setCallId(id) })
 
   // keep the open building in the URL so a refresh or a shared link lands on it
   useEffect(() => {
@@ -60,12 +68,14 @@ export default function App() {
 
   const building = buildings.find((b) => b.id === buildingId)
   const buildingCalls = useMemo(() => calls.filter((c) => c.building_id === buildingId), [calls, buildingId])
-  useEffect(() => { setCallId(buildingCalls[0]?.call_id || '') }, [buildingCalls])
+  useEffect(() => {
+    setCallId((id) => (buildingCalls.some((c) => c.call_id === id) ? id : buildingCalls[0]?.call_id || ''))
+  }, [buildingCalls])
 
-  const briefing = live.briefing || baseBriefing
+  const briefing = feed.briefing || baseBriefing
   const call = calls.find((c) => c.call_id === callId)
-  // the mayday overlay can come from the live call stream or from the manual panel
-  const activeMayday = mayday || live.mayday
+  // the mayday overlay can come from the call (replayed or live) or from the manual panel
+  const activeMayday = mayday || feed.mayday
 
   const searchOrder = useMemo(
     () => Object.fromEntries((briefing?.search_plan || []).map((s, i) => [s.room_id, i + 1])),
@@ -85,18 +95,26 @@ export default function App() {
         <div className="brand"><span className="flame">🔥</span> SCANFERNO <span className="muted small">pre-entry briefing</span></div>
         <AddressSearch current={building} onOpenBuilding={openBuilding} onOpenProperty={setProperty} />
         <div className="controls">
-          <select value={callId} onChange={(e) => { live.reset(); setCallId(e.target.value) }} disabled={!buildingCalls.length}>
-            {!buildingCalls.length && <option value="">No scripted calls</option>}
-            {buildingCalls.map((c) => <option key={c.call_id} value={c.call_id}>{c.title.replace(/^[^:]+: /, '')}{c.has_audio ? '' : ' (no audio)'}</option>)}
-          </select>
-          <select value={speed} onChange={(e) => setSpeed(+e.target.value)} title="Replay speed">
-            {[1, 2, 4].map((s) => <option key={s} value={s}>{s}×</option>)}
-          </select>
-          {running
-            ? <button onClick={live.reset}>■ Stop</button>
-            : <button className="primary" disabled={!call} onClick={() => { setMayday(null); live.start(call, speed) }}>▶ Start call</button>}
-          <span className={`status ${live.status}`}>{live.status}</span>
-          {llm != null && <span className={`status ${llm ? 'live' : ''}`} title="Gemini for extraction and summaries; offline rules otherwise">{llm ? 'LLM on' : 'offline rules'}</span>}
+          <span className="seg">
+            <button className={source === 'replay' ? 'on' : ''} onClick={() => switchSource('replay')}>Replay</button>
+            <button className={source === 'live' ? 'on' : ''} onClick={() => switchSource('live')}>Live</button>
+          </span>
+          {source === 'replay' && (
+            <>
+              <select value={callId} onChange={(e) => { live.reset(); setCallId(e.target.value) }} disabled={!buildingCalls.length}>
+                {!buildingCalls.length && <option value="">No scripted calls</option>}
+                {buildingCalls.map((c) => <option key={c.call_id} value={c.call_id}>{c.title.replace(/^[^:]+: /, '')}{c.has_audio ? '' : ' (no audio)'}</option>)}
+              </select>
+              <select value={speed} onChange={(e) => setSpeed(+e.target.value)} title="Replay speed">
+                {[1, 2, 4].map((s) => <option key={s} value={s}>{s}×</option>)}
+              </select>
+              {running
+                ? <button onClick={live.reset}>■ Stop</button>
+                : <button className="primary" disabled={!call} onClick={() => { setMayday(null); live.start(call, speed) }}>▶ Start call</button>}
+            </>
+          )}
+          <span className={`status ${feed.status}`}>{feed.status}</span>
+          {caps.llm != null && <span className={`status ${caps.llm ? 'live' : ''}`} title="Gemini for extraction and summaries; offline rules otherwise">{caps.llm ? 'LLM on' : 'offline rules'}</span>}
         </div>
       </header>
 
@@ -104,8 +122,10 @@ export default function App() {
 
       <main>
         <section className="col left">
-          <Transcript utterances={live.utterances} status={live.status} />
-          <DispatchPanel record={live.record} n={live.recordN} />
+          {source === 'live' && <LivePanel listen={listen} stt={caps.stt} onSaved={onSaved} />}
+          <Transcript utterances={feed.utterances} status={feed.status} interim={feed.interim}
+            emptyText={source === 'live' ? 'Press “Listen”, upload a recording, or type a line.' : undefined} />
+          <DispatchPanel record={feed.record} n={feed.recordN} />
         </section>
 
         <section className="col center">
@@ -144,7 +164,7 @@ export default function App() {
             </div>
           </div>
           <div className="row2">
-            <MaydayPanel buildingId={buildingId} rooms={plan?.rooms || []} liveMayday={live.mayday} onResult={setMayday} />
+            <MaydayPanel buildingId={buildingId} rooms={plan?.rooms || []} liveMayday={feed.mayday} onResult={setMayday} />
             <EvacPanel buildingId={buildingId} onFrame={setEvacFrame} onResult={setEvac} />
           </div>
         </section>
@@ -152,7 +172,7 @@ export default function App() {
         <section className="col right">
           <BriefingPanel b={briefing} onFocusRoom={focusRoom} />
           <AerialPanel images={briefing?.images} building={briefing?.building} roof={briefing?.roof?.material} />
-          <AskPanel buildingId={buildingId} dispatch={live.record} onHighlight={setHighlight} />
+          <AskPanel buildingId={buildingId} dispatch={feed.record} onHighlight={setHighlight} />
         </section>
       </main>
 

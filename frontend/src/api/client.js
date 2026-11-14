@@ -14,6 +14,16 @@ export async function post(path, body, opts) {
   return request(path, { ...opts, method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) })
 }
 
+export async function postForm(path, fields, opts) {
+  const body = new FormData()
+  Object.entries(fields).forEach(([k, v]) => { if (v != null) Array.isArray(v) ? body.append(k, ...v) : body.append(k, v) })
+  return request(path, { ...opts, method: 'POST', body })
+}
+
+export async function del(path) {
+  return request(path, { method: 'DELETE' })
+}
+
 async function request(path, opts) {
   const r = await fetch(`${API}${path}`, opts)
   if (!r.ok) {

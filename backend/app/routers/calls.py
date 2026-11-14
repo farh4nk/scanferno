@@ -29,7 +29,7 @@ def call(call_id: str):
     return {
         "call_id": call_id,
         "script": script,
-        "audio_url": f"/fixtures/calls/{call_id}/audio.wav",
+        "audio_url": pipeline.audio_url(call_id),
         **(cache.load_json("calls", call_id, "timeline.json") or {"utterances": [], "timeline": []}),
     }
 

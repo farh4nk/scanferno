@@ -33,10 +33,10 @@ Turns a 911 call or radio dispatch into a structured record that reshapes the br
 | 1.5 | Vague phrase to real room ("office by the elevators") | ✅ | P0 | `dispatch/locate.py`; uses room types, labels and distances. Known issue: "hallway" picks one of two hallways |
 | 1.6 | Phrase to building side ("back of the building" -> Charlie side) | ✅ | P0 | Uses `geometry/sides.py` |
 | 1.7 | Caller corrections mid-call ("no wait, it's the kitchen") | ✅ | P0 | `dispatch/history.py`: live records carry `corrections` {field: [{from, to, t}]}; the UI strikes through the old value. List fields only count as corrected when an item disappears |
-| 1.8 | Typed-text fallback if audio fails during judging | ✅ | P0 | `POST /dispatch/extract`, `POST /buildings/{id}/dispatch` |
+| 1.8 | Typed-text fallback if audio fails during judging | ✅ | P0 | `POST /dispatch/extract`, `POST /buildings/{id}/dispatch`; typed lines in the Live panel go through `/live/sessions/{sid}/utterances` |
 | 1.9 | Merge multiple callers into one picture | 💡 | P1 | Merge records by field; agreement raises confidence, conflicts get flagged instead of overwritten. Needs a second call script for the same incident |
-| 1.10 | Live microphone streaming | 💡 | P1 | Chunk mic audio to STT every few seconds and reuse the replay event stream. Recorded calls are enough for the demo |
-| 1.11 | Faster extraction | 💡 | P1 | Flash-lite takes 3 to 12 s per update. Options: only re-extract on new caller turns, run rules first and refine with Gemini, cache by transcript hash |
+| 1.10 | Live microphone streaming | ✅ | P1 | `/live/sessions` (`dispatch/session.py`): mic audio is re-transcribed by ElevenLabs every 4 s (needs `ELEVENLABS_API_KEY`), or browser speech recognition sends finished lines (no key). Upload a recording too. `save` writes the call to `fixtures/calls/live-<id>/` so it replays offline |
+| 1.11 | Faster extraction | 🟡 | P1 | Live sessions already re-extract only when caller lines change, and briefings there use rules only. Still open: run rules first and refine with Gemini, cache by transcript hash |
 | 1.12 | Caller location and "people accounted for" fields | 💡 | P2 | "I'm outside in the parking lot", "everyone else got out"; lowers search priority for cleared rooms |
 
 ## 2. Geometry and navigation (`backend/geometry/`, owner: geometry)
@@ -130,6 +130,7 @@ The core technical depth: turning raw Matterport geometry into decisions.
 | 8.7 | Fire-aware route on room click | 💡 | P1 | Call `getRoute(id, room, fireRooms)` instead of the static plan route when a fire is known |
 | 8.8 | Aerial annotations on obliques | 💡 | P1 | Needs 4.3 |
 | 8.9 | Evac bottleneck door marked on the plan | 💡 | P2 | |
+| 8.10 | Live call panel: mic / browser speech / typed lines, upload, save as replayable call | ✅ | P0 | Header Replay / Live toggle; `components/LivePanel.jsx`, `hooks/useListen.js`. Same transcript, record, briefing and mayday panels as replay |
 
 ---
 

@@ -24,15 +24,29 @@ def call_dir(call_id: str) -> Path:
     return CALLS / call_id
 
 
+def audio_file(call_id: str) -> Path | None:
+    """audio.wav for synthesized calls; saved live calls keep the browser's format (audio.webm, ...)."""
+    d = call_dir(call_id)
+    return d / "audio.wav" if (d / "audio.wav").exists() else next(iter(sorted(d.glob("audio.*"))), None)
+
+
+def audio_url(call_id: str) -> str | None:
+    f = audio_file(call_id)
+    return f"/fixtures/calls/{call_id}/{f.name}" if f else None
+
+
 def list_calls() -> list[dict]:
     out = []
     for d in sorted(CALLS.glob("*/script.json")):
-        s = cache.load_json("calls", d.parent.name, "script.json")
+        cid = d.parent.name
+        s = cache.load_json("calls", cid, "script.json")
         out.append({
-            "call_id": d.parent.name,
+            "call_id": cid,
             "building_id": s["building_id"],
             "title": s.get("title"),
-            "has_audio": (d.parent / "audio.wav").exists(),
+            "kind": s.get("kind"),
+            "has_audio": audio_file(cid) is not None,
+            "audio_url": audio_url(cid),
             "has_timeline": (d.parent / "timeline.json").exists(),
         })
     return out
@@ -82,15 +96,17 @@ def transcribe(call_id: str, refresh: bool = False) -> dict:
     return result
 
 
-def utterances(stt_result: dict, gap_s: float = 1.0) -> list[dict]:
-    """Group words into utterances by speaker change or pause. First speaker = dispatcher."""
+def utterances(stt_result: dict, gap_s: float = 1.0, first_role: str = "dispatcher") -> list[dict]:
+    """Group words into utterances by speaker change or pause. The first voice heard is `first_role`,
+    the second the other of dispatcher/caller, any more are caller2, caller3..."""
     words = [w for w in stt_result.get("words") or [] if w.get("type") == "word"]
+    order = [first_role, "caller" if first_role == "dispatcher" else "dispatcher"]
     roles: dict[str, str] = {}
     out: list[dict] = []
     for w in words:
         spk = w.get("speaker_id") or "speaker_0"
         if spk not in roles:
-            roles[spk] = "dispatcher" if not roles else ("caller" if len(roles) == 1 else f"caller{len(roles)}")
+            roles[spk] = order[len(roles)] if len(roles) < 2 else f"caller{len(roles)}"
         role = roles[spk]
         if out and out[-1]["role"] == role and w["start"] - out[-1]["end"] < gap_s:
             out[-1]["text"] += " " + w["text"]

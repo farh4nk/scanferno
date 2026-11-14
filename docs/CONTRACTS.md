@@ -93,3 +93,19 @@ Sample: [fixtures/sample/briefing.json](../fixtures/sample/briefing.json)
 ```
 
 `status: ready` means `building_id` works with every `/buildings/{id}` endpoint; `scanned` means CoStar facts and a Matterport scan exist but nothing is cached (`building_id` is null). `score` >= 0.75 is a confident match. With `geocode=true` and no confident match, `geocoded` is `{lat, lon, display_name}` and `nearby` lists the closest known buildings with `distance_m`. `/properties/{id}` returns one entry plus `nearest_ready` and, for scanned ones, `onboard_hint`.
+
+## 7. Live session state (`/live/sessions/{sid}`, every live endpoint returns it)
+
+```json
+{
+  "session_id": "bd44f87367", "building_id": "costar-239873",
+  "utterances": [{"role": "caller", "text": "...", "start": 0.0, "end": 2.1}],
+  "record": {"...": "dispatch.json, plus corrections"},
+  "briefing": {"...": "briefing.json with changes"},
+  "mayday": null,
+  "updates": 3,
+  "extracted": true
+}
+```
+
+`extracted` is false when the caller lines didn't change, so the record is the same as before. `mayday` is the section 5 response once someone says "mayday". `POST .../save` returns `{call_id}`. That call then works with `/calls/{id}`, `/replay` and `/live` like a scripted one (`script.json` has `"kind": "live"`).

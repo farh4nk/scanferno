@@ -1,5 +1,5 @@
 // One function per backend endpoint, grouped like backend/app/routers/. Add new endpoints here, not in components.
-import { get, post, sseUrl } from './client'
+import { del, get, post, postForm, sseUrl } from './client'
 
 export { API, asset } from './client'
 
@@ -23,6 +23,14 @@ export const ask = (id, question, dispatch = {}) => post(`/buildings/${id}/ask`,
 export const getCalls = () => get('/calls')
 export const getCall = (id) => get(`/calls/${id}`)
 export const liveUrl = (callId, speed) => sseUrl(`/calls/${enc(callId)}/live`, { speed })
+
+// routers/live.py: calls happening now (every call returns the session state)
+export const createLiveSession = (buildingId) => post('/live/sessions', { building_id: buildingId })
+export const liveAudio = (sid, blob, filename, firstRole) =>
+  postForm(`/live/sessions/${sid}/audio`, { file: [blob, filename], first_role: firstRole })
+export const liveUtterances = (sid, utterances) => post(`/live/sessions/${sid}/utterances`, { utterances })
+export const saveLiveSession = (sid, title) => post(`/live/sessions/${sid}/save`, { title })
+export const endLiveSession = (sid) => del(`/live/sessions/${sid}`)
 
 // routers/search.py
 export const search = (q, { limit = 8, geocode = false } = {}) => get('/search', { q, limit, geocode: geocode || null })

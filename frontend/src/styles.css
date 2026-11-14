@@ -87,6 +87,13 @@ main { flex: 1; min-height: 0; display: grid; grid-template-columns: 330px minma
 .dirs ol { margin: 6px 0; padding-left: 20px; } .dirs li { margin-bottom: 3px; }
 .evac input[type=range] { flex: 1; min-width: 80px; padding: 0; }
 
+/* live call (mic / upload / typed) */
+.livepanel .inline select { flex: 1; min-width: 0; }
+.livepanel form input { flex: 1; min-width: 0; }
+.livepanel .seg button { text-transform: capitalize; }
+.livepanel code { background: var(--panel2); padding: 1px 5px; border-radius: 4px; }
+.utt.interim { opacity: .55; font-style: italic; border-left: 3px dashed var(--muted); }
+
 /* address search (header) */
 .search { position: relative; flex: 1; max-width: 520px; min-width: 240px; }
 .search input { width: 100%; padding-right: 30px; }

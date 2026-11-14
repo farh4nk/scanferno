@@ -12,6 +12,7 @@ Living handoff doc. Update your role's section and add a changelog line in the s
 - Address search: `GET /search` over 3 hero + 97 scanned CoStar properties, with a cached OpenStreetMap geocoder fallback; `GET /properties/{id}` (`data/directory.py`).
 - Briefing: every claim carries `sources`; exit routes avoid the fire area (`rerouted`, `through_avoided`); `hose_stretch` vs a 200 ft preconnect (`GET /buildings/{id}/hose`).
 - Live stream: briefing `changes` since the last update (`agent/changes.py`), record `corrections` for what the caller changed (`dispatch/history.py`).
+- Live transcription: `/live/sessions` (`dispatch/session.py`, `app/routers/live.py`) takes mic audio (ElevenLabs STT, re-transcribed whole each upload) or ready-made lines (browser speech / typed), re-extracts when caller lines change, returns record + briefing + mayday, and can save the call as `fixtures/calls/live-<id>/`. `/health` reports `stt`; without a key audio endpoints return 503.
 
 **Next**
 1. Regenerate call audio with real ElevenLabs voices (waiting on Voices: Read for the key).
@@ -20,6 +21,7 @@ Living handoff doc. Update your role's section and add a changelog line in the s
 4. Mayday TTS: speak the `directions` from `GET /buildings/{id}/mayday` (or the `mayday` event on `/calls/{id}/live`).
 
 **Open issues**
+- Server mic transcription only tested with a stubbed STT (no ElevenLabs key on the Windows machine).
 - Gemini main models overloaded; extraction runs on flash-lite, 3 to 12 s per update. Replay of cached calls hides this.
 - Messy call: the "hallway" match picks one of two scanned hallways.
 
@@ -67,6 +69,7 @@ Framework-free TypeScript toolkit that draws our data on the Matterport model, p
 - Briefing tabs, Vexcel aerial viewer, Ask-the-plan (highlights answer on the plan), mayday panel (wall path + browser TTS), evac sim animation.
 - Structure: `src/api/` (one function per endpoint, mirrors `backend/app/routers/`), `src/hooks/` (`useLiveCall`, `useBuildingData`, `useDebounced`), `src/components/search/`.
 - Header address search replaces the building dropdown: matches known buildings, opens a property card for scanned-only ones, Enter geocodes unknown addresses; open building kept in `?building=`.
+- Live mode (header Replay / Live): `LivePanel` with ElevenLabs mic, browser speech recognition (Chrome/Edge) or typed lines, recording upload, "First voice is the" / "Speaking as" role toggle, save as a replayable call.
 - Source tags on briefing claims, "Changed" box in the summary, hose stretch in the Entry tab, struck-through caller corrections, floor plan draws rerouted exit routes.
 
 **Next**
@@ -89,3 +92,4 @@ Framework-free TypeScript toolkit that draws our data on the Matterport model, p
 - 2026-11-14: Frontend scaffold: live call, floor plan, briefing, aerials, Q&A, mayday, evac (React + Vite).
 - 2026-11-14: Frontend 3D model tab using viewer3d overlays.
 - 2026-11-14: Address search (`/search`, `/properties`, header search UI); backend routers + frontend `api/` and `hooks/` restructure; fire rerouting, hose stretch, briefing sources, live `changes` and caller `corrections`; FEATURES.md covers frontend + search (41 tests).
+- 2026-11-14: Live call transcription: `/live/sessions` (mic via ElevenLabs, browser speech, typed lines, uploads), save live calls as replayable fixtures, frontend Live mode (47 tests).
