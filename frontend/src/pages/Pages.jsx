@@ -1,6 +1,6 @@
 // One page per job. Each page does one thing; the home briefing links here for detail.
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { ask, asset, getEvac, getMayday, getTour } from '../api'
+import { ask, asset, getEvac, getMayday, getRoute, getTour } from '../api'
 import PlanSvg from '../brief/PlanSvg'
 import AerialView, { sideOfCompass, viewLabel, viewOfCompass } from '../brief/Aerial'
 import { HoseGauge, Ring, Section } from '../brief/Diagrams'
@@ -285,6 +285,15 @@ export function PlanPage({ ctx, k, go, start3d = false }) {
       .then((d) => alive && setTour(d)).catch(() => alive && setTour(null))
     return () => { alive = false }
   }, [sel, entry, recommended, ctx.buildingId]) // eslint-disable-line react-hooks/exhaustive-deps
+  // way out of the picked room, steering around rooms on fire (falls back to the plan's route)
+  const fireKey = (k.fireIds || []).join(',')
+  const [out, setOut] = useState(null)
+  useEffect(() => {
+    if (!sel) { setOut(null); return undefined }
+    let alive = true
+    getRoute(ctx.buildingId, sel, k.fireIds || []).then((r) => alive && setOut(r)).catch(() => alive && setOut(null))
+    return () => { alive = false }
+  }, [sel, fireKey, ctx.buildingId]) // eslint-disable-line react-hooks/exhaustive-deps
   const play = (legs) => { setMode('3d'); setRun({ legs, i: 0 }) }
   const clip = useMemo(() => (run && tour ? { data: tour[run.legs[run.i]], label: tour.room_label } : null), [run, tour])
   const clipEnd = () => setTimeout(() => setRun((r) => (r && r.i + 1 < r.legs.length ? { ...r, i: r.i + 1 } : r)), 1200)
@@ -295,7 +304,7 @@ export function PlanPage({ ctx, k, go, start3d = false }) {
   const [L, setL] = useState({ order: true, routes: true, doors: true, heat: false, windows: false })
   const order = L.order ? Object.fromEntries(k.plan_.map((s, i) => [s.room_id, i + 1])) : null
   const md = sel && ctx.plan.maze_detail?.[sel]
-  const routes = L.routes ? (sel ? [k.routeOf(sel)?.polyline] : k.victim ? [k.vRoute?.polyline] : []).filter(Boolean) : []
+  const routes = L.routes ? (sel ? [(out?.from_room_id === sel ? out : k.routeOf(sel))?.polyline] : k.victim ? [k.vRoute?.polyline] : []).filter(Boolean) : []
   return (
     <div className="page split" style={{ gridTemplateColumns: '1fr 340px' }}>
       <div className="col">
@@ -317,6 +326,7 @@ export function PlanPage({ ctx, k, go, start3d = false }) {
           <p className="note">{k.R[sel].type} · {k.R[sel].area_m2} m² · side {k.R[sel].side}</p>
           <div className="maze"><span>Maze score</span><div className="bar big"><i style={{ width: `${(ctx.plan.maze_score?.[sel] || 0) * 100}%` }} /></div><b>{(ctx.plan.maze_score?.[sel] || 0).toFixed(2)}</b></div>
           {(md?.why || []).map((w, i) => <div key={i} className="row one"><span>{w}</span></div>)}
+          {out?.from_room_id === sel && <WayOut r={out} k={k} base={ctx.plan.exit_routes?.[sel]} onFire={k.fireIds.includes(sel)} />}
           {tour && (
             <div className="tourpick">
               <h2>Guided clips <span>the camera walks it for you</span></h2>
@@ -334,6 +344,24 @@ export function PlanPage({ ctx, k, go, start3d = false }) {
           <button className="btn red wide" onClick={() => go('mayday', { room: sel })}>Mayday from here<Icon name="arrow" /></button>
         </> : <><h2>Floor plan</h2><p className="note big">Tap any room for its maze score, exit route and mayday directions.</p></>}
       </div>
+    </div>
+  )
+}
+
+// Exit route for the picked room, and what the fire did to it
+function WayOut({ r, k, base, onFire }) {
+  const side = k.doors[r.exit_door_id]?.side
+  const extra = base ? Math.round(r.distance_m - base.distance_m) : 0
+  const blocked = (r.through_avoided || []).map((id) => k.label(id))
+  const tone = blocked.length || onFire ? 'r' : r.rerouted ? 'f' : ''
+  const note = onFire ? 'This room is on fire.'
+    : blocked.length ? `Only way out runs through ${blocked.join(' and ')}, which is on fire.`
+      : r.rerouted ? `Rerouted around the fire${extra > 0 ? `, ${extra} m longer` : ''}.`
+        : k.fireIds.length ? 'Clear of the fire.' : null
+  return (
+    <div className={`wayout ${tone}`}>
+      <span>Way out</span><b>{Math.round(r.distance_m)} m{side ? ` · side ${side} door` : ''}</b>
+      {note && <small>{note}</small>}
     </div>
   )
 }

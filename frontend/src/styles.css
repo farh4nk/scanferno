@@ -271,7 +271,6 @@ svg.mi { width: 22px; height: 22px; } .ip { fill: var(--white); } .iad { fill: v
 .viewer3d-box { flex: 1; min-height: 0; position: relative; }
 .viewer3d-msg { flex: 1; display: grid; place-content: center; padding: 24px; text-align: center; color: var(--dim); border: 1px dashed var(--rule); border-radius: 10px; }
 
-<<<<<<< Updated upstream
 /* ---------- live call highlights ---------- */
 .rm.flash { stroke: var(--fire); stroke-width: 9; animation: roomflash 1s ease-in-out 6; }
 @keyframes roomflash { 50% { fill: rgba(255, 90, 31, .45); } }
@@ -311,8 +310,6 @@ svg.mi { width: 22px; height: 22px; } .ip { fill: var(--white); } .iad { fill: v
 .caption.err { color: var(--hotfg); }
 .caption .vload { color: var(--fire); font-weight: 800; }
 .para .said { color: var(--dim); } .para mark { background: var(--fire); color: var(--ink); border-radius: 3px; padding: 0 2px; }
-=======
->>>>>>> Stashed changes
 /* guided clips: caption and controls over the 3D model */
 .tour-bar { position: absolute; left: 12px; right: 12px; bottom: 12px; max-width: 640px; margin: 0 auto; padding: 10px 14px 12px; border-radius: 10px; background: rgba(15,17,21,.9); border: 2px solid #38bdf8; backdrop-filter: blur(6px); display: flex; flex-direction: column; gap: 8px; }
 .tour-bar.out { border-color: #22c55e; }
@@ -328,6 +325,12 @@ svg.mi { width: 22px; height: 22px; } .ip { fill: var(--white); } .iad { fill: v
 .tourpick .btns { display: flex; gap: 8px; } .tourpick .btns .btn { flex: 1; height: 44px; }
 .tourpick .btn small { font-weight: 600; opacity: .75; }
 
+.wayout { margin: 14px 0 4px; padding: 12px 14px; border-radius: 10px; background: var(--road2); display: grid; gap: 2px; }
+.wayout span { font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--dim); }
+.wayout b { font-size: 22px; } .wayout small { font-size: 14px; color: var(--dim); display: flex; align-items: center; gap: 8px; }
+.wayout small::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: currentColor; flex: none; }
+.wayout.f small { color: var(--fire); }
+.wayout.r { background: #2a1512; } .wayout.r small { color: var(--hotfg); }
 /* path simulation */
 .rm.chk:not(.hf):not(.victim) { fill: #15301f; stroke: #3f8f5f; } .ord.chk circle { fill: #7dffb3; }
 .simplan .ag { transition: none; stroke: var(--fire); stroke-width: 4; }

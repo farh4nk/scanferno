@@ -127,7 +127,7 @@ The core technical depth: turning raw Matterport geometry into decisions.
 | 8.4 | Header address search | ✅ | P0 | `components/search/AddressSearch.jsx`: debounced, keyboard nav, `/` to focus, Enter geocodes unknown addresses. Open building is kept in the URL (`?building=`) |
 | 8.5 | Source tags, "Changed" box, hose stretch, struck-through caller corrections | ✅ | P0 | `SourceTags.jsx`, `BriefingPanel.jsx`, `DispatchPanel.jsx` |
 | 8.6 | Mayday panel (wall path + browser TTS), evac sim, Ask-the-plan | ✅ | P1 | |
-| 8.7 | Fire-aware route on room click | 💡 | P1 | Call `getRoute(id, room, fireRooms)` instead of the static plan route when a fire is known |
+| 8.7 | Fire-aware route on room click | ✅ | P1 | Floor plan page calls `getRoute(id, room, fireRooms)` on every pick and when the fire changes; sidebar "Way out" says clear / rerouted (+m) / only way out runs through the fire / room on fire |
 | 8.8 | Aerial annotations on obliques | ✅ | P1 | `brief/Aerial.jsx`: side letters on each wall, fire side hatched red, search entry, aerial staging, entrances; Aerial page opens on the fire side; home Arrive photo uses it too |
 | 8.9 | Evac bottleneck door marked on the plan | 💡 | P2 | |
 | 8.10 | Live call panel: mic / browser speech / typed lines, upload, save as replayable call | ✅ | P0 | Header Replay / Live toggle; `components/LivePanel.jsx`, `hooks/useListen.js`. Same transcript, record, briefing and mayday panels as replay |
