@@ -74,7 +74,8 @@ def tts(text: str, voice: str = "narrator", emotion: str | None = None) -> bytes
         r = httpx.post(
             f"{BASE}/text-to-speech/{vid}",
             params={"output_format": f"pcm_{SAMPLE_RATE}"},
-            json={"text": body, "model_id": m},
+            # v3 stability snaps to 0 / 0.5 / 1: 0.5 ("natural") keeps a plain voice from drifting breathy
+            json={"text": body, "model_id": m, **({"voice_settings": {"stability": 0.5}} if m == "eleven_v3" else {})},
             headers=_headers(),
             timeout=60,
         )

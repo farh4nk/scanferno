@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { createLiveSession, endLiveSession, liveAudio, liveTick, liveUtterances, saveLiveSession, setLiveBuilding } from '../api'
+import { createLiveSession, endLiveSession, getLiveSession, liveAudio, liveRecordingUrl, liveTick, liveUtterances, saveLiveSession, setLiveBuilding } from '../api'
 
 // A call happening now, through a /live session. Same state shape as useLiveCall, so the transcript,
 // dispatch and briefing panels don't care which one feeds them. Inputs:
@@ -7,12 +7,13 @@ import { createLiveSession, endLiveSession, liveAudio, liveTick, liveUtterances,
 //   browser  the browser's own speech recognition (Chrome/Edge, no key); one voice, role picked by hand
 //   typed    lines typed by hand (also works alongside browser mode)
 // plus uploadFile() for a recorded call.
+const KEEP = 'scanferno.liveSid' // the call in this tab, so a reload can pick it back up
 const UPLOAD_EVERY_MS = 4000
 const TICK_EVERY_MS = 20000
 const EMPTY = {
   utterances: [], interim: '', record: null, recordN: 0, briefing: null, mayday: null,
   building_match: null, status: 'idle', listening: false, error: null, savedCallId: null,
-  sessionBuildingId: null, buildingChanged: false,
+  sessionBuildingId: null, buildingChanged: false, mode: null, startedAt: 0, quota: false, processing: false, recordingUrl: null,
 }
 const MIME = ['audio/webm;codecs=opus', 'audio/webm', 'audio/ogg;codecs=opus', 'audio/mp4']
 
@@ -31,6 +32,8 @@ export function useListen(buildingId) {
   const role$ = useRef('caller')
   const lines = useRef([])
   const media = useRef({ recorder: null, stream: null, chunks: [], timer: null })
+  const urlRef = useRef(null) // object URL of the finished recording
+  const levelRef = useRef(0) // 0..1 mic loudness, read by the live bar on its own clock
   const recog = useRef(null)
   const pending = useRef({ busy: false, dirty: false })
   const skipReset = useRef(false)
@@ -55,7 +58,10 @@ export function useListen(buildingId) {
   })), [])
 
   const session = useCallback(async () => {
-    if (!sid.current) sid.current = (await createLiveSession(buildingId)).session_id
+    if (!sid.current) {
+      sid.current = (await createLiveSession(buildingId)).session_id
+      try { sessionStorage.setItem(KEEP, sid.current) } catch { /* storage unavailable */ }
+    }
     return sid.current
   }, [buildingId])
 
@@ -64,6 +70,7 @@ export function useListen(buildingId) {
     pending.current.dirty = true
     if (pending.current.busy) return
     pending.current.busy = true
+    setState((s) => ({ ...s, processing: true }))
     try {
       while (pending.current.dirty) {
         pending.current.dirty = false
@@ -75,9 +82,9 @@ export function useListen(buildingId) {
       if (mode.current === 'server') {
         active.current = false
         stopMic()
-        setState((s) => ({ ...s, status: 'error', listening: false, error: e.message }))
+        setState((s) => ({ ...s, status: 'error', listening: false, error: e.message, quota: e.status === 402 }))
       } else fail(e.message)
-    } finally { pending.current.busy = false }
+    } finally { pending.current.busy = false; setState((s) => ({ ...s, processing: false })) }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session, apply])
 
@@ -106,7 +113,8 @@ export function useListen(buildingId) {
 
   function stopMic() {
     const m = media.current
-    clearInterval(m.timer)
+    clearInterval(m.timer); clearInterval(m.meter); levelRef.current = 0
+    m.ctx?.close().catch(() => {}); m.ctx = null
     if (m.recorder && m.recorder.state !== 'inactive') m.recorder.stop()
     m.stream?.getTracks().forEach((t) => t.stop())
     m.recorder = null; m.stream = null
@@ -119,8 +127,28 @@ export function useListen(buildingId) {
     media.current = { recorder, stream, chunks: [], timer: null }
     let fresh = false
     recorder.ondataavailable = (e) => { if (e.data.size) { media.current.chunks.push(e.data); fresh = true } }
-    recorder.onstop = () => sendAudio(firstRole) // last chunk lands just before stop
+    const chunks = media.current.chunks
+    recorder.onstop = () => {
+      sendAudio(firstRole) // last chunk lands just before stop
+      if (!chunks.length) return
+      if (urlRef.current) URL.revokeObjectURL(urlRef.current)
+      urlRef.current = URL.createObjectURL(new Blob(chunks, { type: recorder.mimeType || 'audio/webm' }))
+      setState((s) => ({ ...s, recordingUrl: urlRef.current }))
+    }
     recorder.start(1000)
+    const AC = window.AudioContext || window.webkitAudioContext
+    if (AC) {
+      const ctx = new AC(); const an = ctx.createAnalyser(); an.fftSize = 512
+      ctx.createMediaStreamSource(stream).connect(an)
+      const buf = new Uint8Array(an.fftSize)
+      media.current.ctx = ctx
+      media.current.meter = setInterval(() => {
+        an.getByteTimeDomainData(buf)
+        let sum = 0
+        for (const v of buf) { const x = (v - 128) / 128; sum += x * x }
+        levelRef.current = Math.min(1, Math.sqrt(sum / buf.length) * 5)
+      }, 100)
+    }
     media.current.timer = setInterval(() => { if (fresh) { fresh = false; sendAudio(firstRole) } }, UPLOAD_EVERY_MS)
   }
 
@@ -149,7 +177,8 @@ export function useListen(buildingId) {
   }
 
   const start = useCallback(async (input, { firstRole = 'dispatcher' } = {}) => {
-    setState((s) => ({ ...s, error: null, savedCallId: null, status: 'connecting' }))
+    if (urlRef.current) { URL.revokeObjectURL(urlRef.current); urlRef.current = null }
+    setState((s) => ({ ...s, error: null, quota: false, savedCallId: null, recordingUrl: null, status: 'connecting', mode: input, startedAt: Date.now() }))
     try {
       await session()
       mode.current = input
@@ -204,14 +233,18 @@ export function useListen(buildingId) {
 
   const reset = useCallback(() => {
     stop()
+    if (urlRef.current) { URL.revokeObjectURL(urlRef.current); urlRef.current = null }
     if (sid.current) endLiveSession(sid.current).catch(() => {})
+    try { sessionStorage.removeItem(KEEP) } catch { /* storage unavailable */ }
     sid.current = null; mode.current = null; t0.current = 0; lines.current = []
     media.current = { recorder: null, stream: null, chunks: [], timer: null }
     pending.current = { busy: false, dirty: false }
     setState(EMPTY)
   }, [stop])
 
+  const mounted = useRef(false)
   useEffect(() => {
+    if (!mounted.current) { mounted.current = true; return }
     if (skipReset.current) { skipReset.current = false; return }
     if (syncBuilding.current) { syncBuilding.current = false; return }
     reset()
@@ -229,7 +262,20 @@ export function useListen(buildingId) {
     return () => clearInterval(tickTimer.current)
   }, [state.status, state.listening, state.record?.fire_room_ids, apply])
 
+  // Pick a call back up (after a page reload): transcript, facts, briefing and, if there is one, the recording
+  const restore = useCallback(async (id, { hasAudio = false } = {}) => {
+    const r = await getLiveSession(id)
+    sid.current = id; mode.current = hasAudio ? 'server' : 'typed'; active.current = false
+    lines.current = []; t0.current = 0
+    try { sessionStorage.setItem(KEEP, id) } catch { /* storage unavailable */ }
+    setState({
+      ...EMPTY, utterances: indexed(r.utterances), record: r.record, recordN: r.updates || 0, briefing: r.briefing, mayday: r.mayday,
+      building_match: r.building_match ?? null, sessionBuildingId: r.building_id, status: 'done', mode: hasAudio ? 'server' : 'typed',
+      recordingUrl: hasAudio ? liveRecordingUrl(id) : null, startedAt: (r.started_at || 0) * 1000,
+    })
+  }, [])
+
   const acceptBuildingSync = useCallback(() => { syncBuilding.current = true }, [])
 
-  return { ...state, role, setRole, start, stop, addLine, uploadFile, save, reset, rebind, acceptBuildingSync, sessionId: sid.current }
+  return { ...state, levelRef, role, setRole, start, stop, restore, addLine, uploadFile, save, reset, rebind, acceptBuildingSync, sessionId: sid.current }
 }

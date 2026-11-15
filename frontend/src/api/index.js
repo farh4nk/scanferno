@@ -38,6 +38,10 @@ export const liveAudio = (sid, blob, filename, firstRole) =>
   postForm(`/live/sessions/${sid}/audio`, { file: [blob, filename], first_role: firstRole })
 export const liveUtterances = (sid, utterances) => post(`/live/sessions/${sid}/utterances`, { utterances })
 export const liveTick = (sid) => post(`/live/sessions/${sid}/tick`)
+// calls taken since the API started, and a call's recording: lets a reloaded page pick its call back up
+export const listLiveSessions = () => get('/live/sessions')
+export const getLiveSession = (sid) => get(`/live/sessions/${sid}`)
+export const liveRecordingUrl = (sid) => `${API}/live/sessions/${sid}/audio`
 export const setLiveBuilding = (sid, buildingId) => post(`/live/sessions/${sid}/building`, { building_id: buildingId })
 export const saveLiveSession = (sid, title) => post(`/live/sessions/${sid}/save`, { title })
 export const endLiveSession = (sid) => del(`/live/sessions/${sid}`)

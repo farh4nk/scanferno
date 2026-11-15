@@ -3,8 +3,10 @@ import AerialView from './Aerial'
 import { asset } from '../api'
 import PlanSvg from './PlanSvg'
 import { SIDE_NAME, STEPS, hazardName, stepScript } from './model'
-import { Freshness, trustNotes, DeadEndPict, DistScale, EnterPict, ExitBars, ExitPict, FirePict, HoseGauge, Ring, SearchChain, Section, TrappedPict, WatchPict } from './Diagrams'
+import { Freshness, DeadEndPict, DistScale, EnterPict, ExitBars, ExitPict, FirePict, HoseGauge, Ring, SearchChain, Section, TrappedPict, WatchPict } from './Diagrams'
 import Icon from '../ui/Icon'
+import LiveSide from './LiveSide'
+import { listLiveSessions } from '../api'
 import Viewer3D from '../components/Viewer3D'
 import PathSim from './PathSim'
 import { prepareInOrder, speak } from '../ui/speech'
@@ -12,18 +14,53 @@ import { prepareInOrder, speak } from '../ui/speech'
 // facts the caller isn't sure of say so; confident ones stay clean
 const unsure = (c) => (c != null && c < 0.85 ? ` · ${Math.round(c * 100)}% sure` : '')
 
-function TrustCard({ k }) {
-  const notes = trustNotes(k.age, k.caveats)
+// What the data can and can't promise, kept at the bottom of the page so it is there without crowding the plan
+function TrustSection({ k }) {
+  if (!k.age) return null
   return (
-    <div className="card trust"><h3>How fresh <span>verify on arrival</span></h3>
-      <Freshness age={k.age} />
-      {notes.slice(0, 1).map((n) => <div key={n} className="tnote">{n}</div>)}
+    <section className="trustsec">
+      <h2>Know before you trust it <span>verify on arrival</span></h2>
+      <div className="card trust">
+        <Freshness age={k.age} />
+        <div className="tnotes">{k.caveats.map((n) => <div key={n} className="tnote">{n}</div>)}</div>
+      </div>
+    </section>
+  )
+}
+
+// Live test, before the call: say what will happen instead of showing someone else's facts
+function LiveIntro({ onStart, onRestore, buildingId, canLive }) {
+  const [recent, setRecent] = useState([])
+  useEffect(() => { let on = true; listLiveSessions().then((l) => on && setRecent(l.filter((x) => x.building_id === buildingId).slice(0, 3))).catch(() => {}); return () => { on = false } }, [buildingId])
+  return (
+    <div className="card liveintro">
+      <h3>Live test <span>nothing is preloaded</span></h3>
+      <p>Press start and talk: one person plays the caller, one plays the dispatcher. The dispatcher speaks first.</p>
+      <ol><li>Your voices are transcribed as you speak.</li><li>The call sheet fills in address, floor, side, trapped and hazards.</li><li>The plan and the briefing update with every fact.</li></ol>
+      <button className="btn f wide" onClick={onStart} disabled={!canLive}><Icon name="mic" />Start live call</button>
+      {recent.length > 0 && (
+        <div className="recent">
+          <h4>Calls taken since the server started</h4>
+          {recent.map((r) => (
+            <button key={r.session_id} className="recent-row" onClick={() => onRestore(r.session_id, r.has_audio)}>
+              <span>{new Date(r.started_at * 1000).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })} · {r.lines} lines{r.has_audio ? ' · recorded' : ''}</span>
+              <small>{r.preview}</small>
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   )
 }
 
-function KeyBand({ k, step }) {
-  const cells = [
+function KeyBand({ k, step, blank }) {
+  const cells = blank ? [
+    { key: 'Fire', s: [], off: true, pict: <FirePict known={false} />, v: 'Listening…' },
+    { key: 'Watch', s: [], off: true, pict: <WatchPict known={false} />, v: 'Listening…' },
+    { key: 'Enter', s: [], off: true, pict: <EnterPict side="?" />, v: 'Listening…' },
+    { key: 'Trapped', s: [], off: true, pict: <TrappedPict known={false} />, v: 'Listening…' },
+    { key: 'Way out', s: [], off: true, pict: <ExitPict />, v: 'Listening…' },
+  ] : [
     { key: 'Fire', s: [0], hot: k.fireKnown, off: !k.fireKnown, pict: <FirePict stories={k.stories} floor={k.floor} side={k.side} known={k.fireKnown} />,
       v: k.fireKnown ? (k.floor ? `Floor ${k.floor}` : 'Reported') : 'Listening…', sub: k.fireKnown && k.side ? `Side ${k.side} · ${SIDE_NAME[k.side]}${unsure(k.conf.side)}` : null },
     { key: 'Watch', s: [1], off: !k.watch, pict: <WatchPict known={!!k.watch} o2={k.isO2} />,
@@ -62,7 +99,7 @@ function attackPlan(k, step) {
     o.order = Object.fromEntries(k.plan_.slice(1, 5).map((s, i) => [s.room_id, i + 2]))
     if (k.victim && k.vRoute) {
       o.dashed = [...k.vRoute.polyline].reverse(); o.pulse = k.R[k.victim].centroid
-      o.tags.push({ at: k.R[k.victim].centroid, dy: -44, text: `TRAPPED · ${k.victimLabel.toUpperCase()}`, cls: 'r' })
+      o.tags.push({ at: k.R[k.victim].centroid, dy: -58, text: `TRAPPED · ${k.victimLabel.toUpperCase()}`, cls: 'r' })
       o.tags.push({ at: exitPt(k.vRoute), dy: 44, text: `ENTER · ${k.vRoute.distance_m} M TO VICTIM`, cls: 'f' })
     } else if (!k.victim) o.order = Object.fromEntries(k.plan_.slice(0, 5).map((s, i) => [s.room_id, i + 1]))
   }
@@ -72,7 +109,7 @@ function attackPlan(k, step) {
     if (k.deadEnd) o.tags.push({ at: k.R[k.deadEnd].centroid, text: 'DEAD END · NO WINDOW', cls: 'warn' })
     if (k.vRoute) o.tags.push({ at: exitPt(k.vRoute), dy: 44, text: `NEAREST EXIT · ${k.vRoute.distance_m} M`, cls: 'f' })
   }
-  if (step > 0 && k.fireKnown && k.fireIds[0]) o.tags.push({ at: k.R[k.fireIds[0]].centroid, dx: 60, dy: -62, text: k.isO2 ? 'FIRE · O₂ CYLINDERS REPORTED' : 'FIRE AREA', cls: 'r' })
+  if (step > 0 && k.fireKnown && k.fireIds[0]) o.tags.push({ at: k.R[k.fireIds[0]].centroid, dx: 60, dy: k.victim && k.fireIds.includes(k.victim) ? 70 : -62, text: k.isO2 ? 'FIRE · O₂ CYLINDERS REPORTED' : 'FIRE AREA', cls: 'r' })
   return o
 }
 
@@ -81,9 +118,9 @@ function liveOverlay(k) {
   const o = { sides: true, tags: [], routes: [], order: Object.fromEntries(k.plan_.slice(0, 4).map((s, i) => [s.room_id, i + 1])), pulse: null, dashed: null }
   if (k.victim && k.vRoute) {
     o.dashed = [...k.vRoute.polyline].reverse(); o.pulse = k.R[k.victim].centroid
-    o.tags.push({ at: k.R[k.victim].centroid, dy: -44, text: `TRAPPED · ${k.victimLabel.toUpperCase()}`, cls: 'r' })
+    o.tags.push({ at: k.R[k.victim].centroid, dy: -58, text: `TRAPPED · ${k.victimLabel.toUpperCase()}`, cls: 'r' })
   }
-  if (k.fireKnown && k.fireIds[0]) o.tags.push({ at: k.R[k.fireIds[0]].centroid, dx: 60, dy: -62, text: k.isO2 ? 'FIRE · O₂ CYLINDERS REPORTED' : 'FIRE AREA', cls: 'r' })
+  if (k.fireKnown && k.fireIds[0]) o.tags.push({ at: k.R[k.fireIds[0]].centroid, dx: 60, dy: k.victim && k.fireIds.includes(k.victim) ? 70 : -62, text: k.isO2 ? 'FIRE · O₂ CYLINDERS REPORTED' : 'FIRE AREA', cls: 'r' })
   return o
 }
 
@@ -93,8 +130,7 @@ function StepPanel({ k, step, briefing, go }) {
     return (
       <>
         {img && <div className="photo aerial-photo"><AerialView view={k.frontView} src={img} k={k} compact /></div>}
-        <div className={`card ${k.age ? 'sect' : ''}`}><Section k={k} /></div>
-        {k.age && <TrustCard k={k} />}
+        <div className="card"><Section k={k} /></div>
       </>
     )
   }
@@ -127,7 +163,7 @@ function StepPanel({ k, step, briefing, go }) {
   )
 }
 
-export default function Home({ k, plan, briefing, feed, go, building }) {
+export default function Home({ k, plan, briefing, feed, go, building, mode, onStartLive, onRestore, canLive, tools }) {
   const [step, setStep] = useState(0)
   const [view, setView] = useState('2d')
   const [follow, setFollow] = useState(true)
@@ -139,6 +175,15 @@ export default function Home({ k, plan, briefing, feed, go, building }) {
   const [sideOpen, setSideOpen] = useState(() => { try { return localStorage.getItem('scanferno.sideOpen') !== '0' } catch { return true } })
   const toggleSide = () => setSideOpen((v) => { try { localStorage.setItem('scanferno.sideOpen', v ? '0' : '1') } catch { /* storage unavailable */ } return !v })
   const [reading, setReading] = useState(false)
+  // live test: while the call runs the side panel is the call sheet; when it ends it switches to the briefing
+  const [tab, setTab] = useState('call')
+  // the recording of the live call, to hear it back
+  const rec = useRef(null)
+  const [hear, setHear] = useState({ playing: false, t: 0 })
+  const hasRec = mode === 'live' && !!feed.recordingUrl
+  const hasCall = mode === 'live' && (feed.utterances.length > 0 || live)
+  // Live test before any facts have been heard: nothing from the building's preset briefing is shown or playable
+  const blank = mode === 'live' && !feed.record
   const [caption, setCaption] = useState(null)
   const alive = useRef(false)
 
@@ -152,7 +197,7 @@ export default function Home({ k, plan, briefing, feed, go, building }) {
     if (id !== run.current) return
     if (i >= STEPS.length) { stop(); return }
     setStep(i)
-    const txt = stepScript(k, i)
+    const txt = stepScript(k, i, mode === 'live')
     setCaption({ txt, at: 0, end: 0 }); setLoadingVoice(true)
     const h = speak(txt, { voice: 'briefing', onStart: () => setLoadingVoice(false), onWord: (w) => setCaption({ txt, at: w.s, end: w.e }) })
     line.current = h
@@ -163,23 +208,27 @@ export default function Home({ k, plan, briefing, feed, go, building }) {
     })
   }
   const begin = (i) => {
+    rec.current?.pause()
     halt(); setVoiceErr(null); setFollow(false); setSim(false); alive.current = true; setNarrating(true)
     const from = Math.max(0, Math.min(STEPS.length - 1, i))
     // the step about to play first, then the rest in order, one request at a time
-    prepareInOrder([...STEPS.keys()].slice(from).concat([...STEPS.keys()].slice(0, from)).map((j) => stepScript(k, j)), 'briefing')
+    prepareInOrder([...STEPS.keys()].slice(from).concat([...STEPS.keys()].slice(0, from)).map((j) => stepScript(k, j, mode === 'live')), 'briefing')
     narrate(from, run.current)
   }
   const jump = (i) => begin(i)
   const toggle = () => { if (narrating) stop(); else begin(0) }
+  const toggleRec = () => { const a = rec.current; if (!a) return; if (a.paused) { stop(); a.play().catch(() => {}) } else a.pause() }
+  const seekRec = (t) => { const a = rec.current; if (!a) return; stop(); a.currentTime = t; a.play().catch(() => {}) }
+  const buildingBriefing = mode === 'live' && feed.processing
   useEffect(() => () => { run.current += 1; line.current?.stop() }, [])
   // generate the voice in the background once the briefing settles, so Play starts at once.
   // Not during a live call: the text changes with every caller line and each version costs a generation.
-  const scripts = STEPS.map((_, j) => stepScript(k, j)).join('\n')
+  const scripts = STEPS.map((_, j) => stepScript(k, j, mode === 'live')).join('\n')
   useEffect(() => {
-    if (feed.status === 'live' || feed.status === 'connecting') return undefined
+    if (blank || feed.status === 'live' || feed.status === 'connecting') return undefined
     const t = setTimeout(() => prepareInOrder(scripts.split('\n'), 'briefing'), 1200)
     return () => clearTimeout(t)
-  }, [scripts, feed.status])
+  }, [scripts, feed.status, blank])
   useEffect(() => {
     const onKey = (e) => { if (/^[1-4]$/.test(e.key) && !e.target.closest('input,textarea,select')) { stop(); setFollow(false); setSim(false); setStep(+e.key - 1) } }
     window.addEventListener('keydown', onKey); return () => window.removeEventListener('keydown', onKey)
@@ -189,8 +238,8 @@ export default function Home({ k, plan, briefing, feed, go, building }) {
   const prevStatus = useRef(feed.status)
   useEffect(() => {
     const was = prevStatus.current; prevStatus.current = feed.status
-    if (feed.status === 'connecting' || (feed.status === 'live' && was !== 'live')) setFollow(true)
-    if (feed.status === 'done' && was === 'live') { setFollow(false); setStep(k.victim ? 2 : 0) }
+    if (feed.status === 'connecting' || (feed.status === 'live' && was !== 'live')) { setFollow(true); setTab('call') }
+    if (feed.status === 'done' && was === 'live') { setFollow(false); setStep(k.victim ? 2 : 0); setTab('brief') }
   }, [feed.status]) // eslint-disable-line react-hooks/exhaustive-deps
   // flash the rooms each briefing update names, with the change as a banner
   useEffect(() => {
@@ -202,25 +251,34 @@ export default function Home({ k, plan, briefing, feed, go, building }) {
     const t = setTimeout(() => setFlash(null), 6000)
     return () => clearTimeout(t)
   }, [briefing.generated_at]) // eslint-disable-line react-hooks/exhaustive-deps
+  // switching to a blank slate stops any narration and closes the text and simulation views
+  useEffect(() => { if (blank) { stop(); setSim(false); setReading(false); setStep(0) } }, [blank]) // eslint-disable-line react-hooks/exhaustive-deps
   const livePlan = live && follow
-  const o = { ...(livePlan ? liveOverlay(k) : attackPlan(k, step)), flash: flash?.ids || [] }
+  const o = blank
+    ? { sides: false, tags: [], routes: [], order: null, doors: false, flash: [] }
+    : { ...(livePlan ? liveOverlay(k) : attackPlan(k, step)), flash: flash?.ids || [] }
   const last = feed.utterances.at(-1)
   return (
     <div className={`page brief ${sideOpen ? '' : 'noside'}`}>
-      <KeyBand k={k} step={step} />
-      <button className="sidetoggle" onClick={toggleSide} aria-expanded={sideOpen} aria-controls="side-panel" title={sideOpen ? 'Hide the side panel' : 'Show the side panel'}>
-        <span aria-hidden="true">{sideOpen ? '›' : '‹'}</span>{sideOpen ? 'Hide panel' : 'Show panel'}
-      </button>
+      {tools}
+      {mode === 'live' && <audio ref={rec} src={feed.recordingUrl || undefined} hidden onPlay={() => setHear((h) => ({ ...h, playing: true }))} onPause={() => setHear((h) => ({ ...h, playing: false }))} onEnded={() => setHear({ playing: false, t: 0 })} onLoadedMetadata={(e) => { const a = e.currentTarget; if (a.duration === Infinity) { /* MediaRecorder files carry no length: read to the end once so seeking works */ a.currentTime = 1e101; const fix = () => { a.removeEventListener('timeupdate', fix); a.currentTime = 0 }; a.addEventListener('timeupdate', fix) } }} onTimeUpdate={(e) => setHear({ playing: !e.currentTarget.paused, t: e.currentTarget.currentTime })} />}
+      <KeyBand k={k} step={step} blank={blank} />
+      <div className="stagerow">
       {sim ? <PathSim k={k} building={building} plan={plan} briefing={briefing} onClose={() => setSim(false)} /> : <>
       <div className="stage panel">
-        {livePlan && <button className="livebadge" onClick={() => setFollow(false)} title="Click a step to take over"><span className="dotlive" />Live · the plan updates as the caller talks</button>}
-        {live && !follow && <button className="livebadge off" onClick={() => setFollow(true)}><span className="dotlive" />Back to live</button>}
-        {flash?.items?.length > 0 && (
-          <div className="newbanner" key={flash.key}>
-            {flash.items.slice(0, 2).map((c, i) => <div key={i} className={`nb ${c.kind}`}><b>New</b>{c.text}</div>)}
+        <div className={`stagehead ${live ? 'live' : ''}`}>
+          <div className="stagehead-l">
+            {livePlan && <button className="livebadge" onClick={() => setFollow(false)} title="Click a step to take over"><span className="dotlive" />Live · the plan updates as the caller talks</button>}
+            {live && !follow && <button className="livebadge off" onClick={() => setFollow(true)}><span className="dotlive" />Back to live</button>}
           </div>
-        )}
-        <div className="seg stage-mode"><button className={view === '2d' ? 'on' : ''} onClick={() => setView('2d')}>2D plan</button><button className={view === '3d' ? 'on' : ''} onClick={() => setView('3d')}>3D model</button></div>
+          <div className="newbanner" key={flash?.key || 'none'}>
+            {(flash?.items || []).slice(0, 2).map((c, i) => <div key={i} className={`nb ${c.kind}`} title={c.text}><b>New</b><span>{c.text}</span></div>)}
+          </div>
+          <div className="stage-tools">
+          <button className="sidetoggle" onClick={toggleSide} aria-expanded={sideOpen} aria-controls="side-panel" title={sideOpen ? 'Hide the side panel' : 'Show the side panel'}><span aria-hidden="true">{sideOpen ? '›' : '‹'}</span>{sideOpen ? 'Hide panel' : 'Show panel'}</button>
+          <div className="seg"><button className={view === '2d' ? 'on' : ''} onClick={() => setView('2d')}>2D plan</button><button className={view === '3d' ? 'on' : ''} onClick={() => setView('3d')}>3D model</button></div>
+        </div>
+        </div>
         <div className="planwrap">
           {view === '3d'
             ? <Viewer3D building={building} plan={plan} layers={{ order: step >= 2, routes: step >= 2, doors: true, heat: false, windows: false }}
@@ -233,31 +291,40 @@ export default function Home({ k, plan, briefing, feed, go, building }) {
         {narrating && caption && !reading ? (
           <p className={`caption ${loadingVoice ? 'loading' : ''}`}>{loadingVoice && <span className="vload">Preparing voice… </span>}<span className="said">{caption.txt.slice(0, caption.at)}</span><mark>{caption.txt.slice(caption.at, caption.end)}</mark>{caption.txt.slice(caption.end)}</p>
         ) : live ? (
-          <div className="ticker"><span className="dotlive" /><b>{last?.role || 'call'}</b>{last?.text || 'Connecting…'}</div>
+          <div className="ticker"><span className="dotlive" /><b>{last?.role || 'call'}</b>{last?.text || 'Listening…'}</div>
         ) : null}
       </div>
-      <div className="side" id="side-panel" key={`${step}-${reading}`}>
+      <div className="side" id="side-panel" key={`${step}-${reading}-${tab}`}>
+        {hasCall && !blank && <div className="seg side-tabs"><button className={tab === 'call' ? 'on' : ''} onClick={() => setTab('call')}>Call sheet</button><button className={tab === 'brief' ? 'on' : ''} onClick={() => setTab('brief')}>Briefing</button></div>}
         {reading ? (
           <div className="readp"><h2>Briefing <span>tap a step to show it on the plan</span></h2>
             {STEPS.map((s, i) => (
               <button key={s} className={`para ${i === step ? 'on' : ''}`} onClick={() => { stop(); setStep(i) }}>
-                <i>{i + 1}</i><div><b>{s}</b><p>{narrating && i === step && caption ? <><span className="said">{caption.txt.slice(0, caption.at)}</span><mark>{caption.txt.slice(caption.at, caption.end)}</mark>{caption.txt.slice(caption.end)}</> : stepScript(k, i)}</p></div>
+                <i>{i + 1}</i><div><b>{s}</b><p>{narrating && i === step && caption ? <><span className="said">{caption.txt.slice(0, caption.at)}</span><mark>{caption.txt.slice(caption.at, caption.end)}</mark>{caption.txt.slice(caption.end)}</> : stepScript(k, i, mode === 'live')}</p></div>
               </button>
             ))}
           </div>
-        ) : <StepPanel k={k} step={step} briefing={briefing} go={go} />}
+        ) : blank ? (hasCall ? <LiveSide feed={feed} onSeek={hasRec ? seekRec : undefined} hearT={hasRec && hear.playing ? hear.t : null} /> : <LiveIntro onStart={onStartLive} onRestore={onRestore} buildingId={building?.id} canLive={canLive} />)
+          : hasCall && tab === 'call' ? <LiveSide feed={feed} onSeek={hasRec ? seekRec : undefined} hearT={hasRec && hear.playing ? hear.t : null} />
+            : <StepPanel k={k} step={step} briefing={briefing} go={go} />}
       </div>
       </>}
-      <div className="stepper">
+      </div>
+      {!blank && <div className="stepper">
         {STEPS.map((s, i) => (
           <button key={s} className={`stp ${!livePlan && i === step ? 'on' : ''} ${!livePlan && i < step ? 'past' : ''}`} onClick={() => { setSim(false); if (narrating) jump(i); else { stop(); setFollow(false); setStep(i) } }}><i>{i + 1}</i>{s}</button>
         ))}
         {narrating && <button className="btn play skip" onClick={() => jump(step - 1)} disabled={step === 0} aria-label="Previous step"><Icon name="prev" /></button>}
         {narrating && <button className="btn play skip" onClick={() => jump(step + 1)} disabled={step === STEPS.length - 1} aria-label="Next step"><Icon name="next" /></button>}
-        <button className="btn f play" onClick={toggle}><Icon name={narrating ? 'pause' : 'speak'} />{narrating ? 'Stop' : 'Play'}</button>
+        {hasRec && <button className="btn play" onClick={toggleRec} title="Hear the recording of your call"><Icon name={hear.playing ? 'pause' : 'call'} />{hear.playing ? 'Pause call' : 'Hear the call'}</button>}
+        <button className="btn f play" onClick={toggle} disabled={buildingBriefing && !narrating} title={mode === 'live' ? 'Read out the briefing built from your call' : undefined}>
+          {buildingBriefing && !narrating ? <><span className="dotlive" />Building…</> : <><Icon name={narrating ? 'pause' : 'speak'} />{narrating ? 'Stop' : mode === 'live' ? 'Play call briefing' : 'Play'}</>}
+        </button>
         <button className={`btn play ${sim ? 'on' : ''}`} onClick={() => { stop(); setReading(false); setSim((v) => !v) }} disabled={!k.plan_.length} title="Animate the whole search: every room in order, then the way out"><Icon name="route" />Path simulation</button>
         <button className={`btn play ${reading ? 'on' : ''}`} onClick={() => setReading((r) => !r)}><Icon name="facts" />{reading ? 'Close text' : 'Read'}</button>
-      </div>
+      </div>}
+
+      {!blank && <TrustSection k={k} />}
     </div>
   )
 }

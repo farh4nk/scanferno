@@ -133,6 +133,9 @@ The core technical depth: turning raw Matterport geometry into decisions.
 | 8.10 | Live call panel: mic / browser speech / typed lines, upload, save as replayable call | ✅ | P0 | Header Replay / Live toggle; `components/LivePanel.jsx`, `hooks/useListen.js`. Same transcript, record, briefing and mayday panels as replay |
 | 8.11 | Live heat / people / safest routes on map | ✅ | P0 | Nested `briefing.heat` + `briefing.rescue`; Rescue page overlays; CoStar/Vexcel risk modifiers |
 | 8.12 | Walk selected rescue route in 3D | ✅ | P1 | Enter → victim → exit sequence from Rescue “Walk rescue on 3D” |
+| 8.13 | Start live call from the header: mic → ElevenLabs transcript → call sheet → briefing | ✅ | P0 | Header "Start live call" (`App.jsx` `startLive`), `components/LiveBar.jsx` (clock, mic meter, End call), Home side panel `brief/LiveSide.jsx` (call sheet fills field by field, transcript with Dispatch/Caller). First voice is the dispatcher. Out of ElevenLabs credits → 402 with a "Use browser speech instead" button |
+| 8.14 | Demo / Live test mode switch for the whole app | ✅ | P0 | Header switch (`components/ModeSwitch.jsx`, remembered in localStorage). Demo: preset briefing + scripted calls. Live test: no scripted calls, blank slate until the call produces facts (nothing playable), then the briefing is built from the call; side panel has Call sheet / Briefing tabs. Test scripts in [LIVE_TEST_SCRIPTS.md](LIVE_TEST_SCRIPTS.md) |
+| 8.15 | Roomier, scrolling briefing page | ✅ | P1 | Four bands (key facts, plan + step beside it, sticky steps bar, "know before you trust it"); tools row scrolls with the page; the plan stays in view while the side panel scrolls |
 
 ---
 

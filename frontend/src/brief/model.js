@@ -35,6 +35,7 @@ export function deriveBrief(plan, b, rec) {
 
   const hz = b.hazards || []
   const watch = hz.find((h) => h.source === 'dispatch') || hz.find((h) => h.severity === 'high') || null
+  const reported = hz.filter((h) => h.source === 'dispatch')
   const isO2 = !!watch && /oxygen|o2\b|cylinder/i.test(watch.text)
 
   const doorRoom = (d) => d && label(d.rooms.find((r) => r !== 'outside'))
@@ -62,10 +63,11 @@ export function deriveBrief(plan, b, rec) {
     victimConf: rescuePeople[0]?.room_confidence ?? trapped[0]?.confidence ?? null,
     victimWords: rescuePeople[0]?.said || rec?.trapped?.[0]?.location || trapped[0]?.description || '',
     fireIds, fireKnown, heatRooms, heatMinutes: b.heat?.minutes ?? b.minutes ?? null,
-    floor, side, watch, isO2, search, attack, searchRoom: doorRoom(doors[search?.door_id]),
+    floor, side, watch, reported, isO2, search, attack, searchRoom: doorRoom(doors[search?.door_id]),
     exits, exitSides, vRoute, vExitSide, distToVictim, deadEnd, hose, bld, frontView,
     stories: bld.stories, roof: bld.roof_height_m, people: b.occupancy?.employees_on_floor,
     ladders: (b.ladder_positions || []).map((l) => l.side), caveats: b.caveats || [], age: b.data_age || null, conf: rec?.confidence || {},
+    call: rec ? { address: rec.address, where: rec.fire_location, conditions: rec.conditions || [], callerAt: rec.caller_location } : null,
     rescueFactors: b.rescue?.factors || [],
   }
 }
@@ -82,7 +84,22 @@ const short = (l) => (l || '').replace(/^Office (\d+)/, '$1')
 // street abbreviations read badly aloud ("Fwy"); expand them, and start every sentence with a capital
 const STREET = { Fwy: 'Freeway', St: 'Street', Rd: 'Road', Ave: 'Avenue', Blvd: 'Boulevard', Dr: 'Drive', Pkwy: 'Parkway', Hwy: 'Highway', Ln: 'Lane', Ct: 'Court', Pl: 'Place' }
 const spoken = (t) => t.replace(/\b(Fwy|St|Rd|Ave|Blvd|Dr|Pkwy|Hwy|Ln|Ct|Pl)\b/g, (m, w) => STREET[w]).replace(/(^|\. )([a-z])/g, (m, p, c) => p + c.toUpperCase())
-export function stepScript(k, i) { return spoken(rawScript(k, i)) }
+// `live`: a briefing built from the call you just took opens with what the caller said (demo scripts stay as they are)
+export function stepScript(k, i, live = false) { return spoken(live && i === 0 && k?.call ? liveOpening(k) : rawScript(k, i)) }
+const lower1 = (t) => (t ? t.charAt(0).toLowerCase() + t.slice(1) : t)
+function liveOpening(k) {
+  const B = k.bld; const c = k.call
+  const where = (c.address || B.address || '').split(',')[0]
+  return [
+    'Call briefing.',
+    where ? `${where}.` : '',
+    c.where ? `${c.where.replace(/\.$/, '')}.` : '',
+    k.fireKnown ? `Fire${k.side ? `, ${sideOf(k.side)}` : ''}${k.floor ? `, ${floorOf(k.floor)}` : ''}.` : 'Fire location unknown.',
+    c.conditions.length ? `${c.conditions.slice(0, 2).join(', ')}.` : '',
+    k.ladders.length ? `Aerial to ${k.ladders.map((x) => PHON[x] || x).join(' and ')}.` : '',
+    c.callerAt ? `Caller is ${lower1(c.callerAt.replace(/\.$/, ''))}.` : '',
+  ].filter(Boolean).join(' ')
+}
 function rawScript(k, i) {
   if (!k) return ''
   const B = k.bld
@@ -95,8 +112,9 @@ function rawScript(k, i) {
   if (i === 1) return [
     k.search ? `Search: ${sideOf(k.search.side)} door, ${k.searchRoom}.` : '',
     k.hose ? `Attack: ${k.hose.total_ft} feet${k.hose.fits_preconnect ? ', preconnect' : ', extend the line'}.` : '',
-    k.watch ? `Caution: ${hazardName(k.watch).replace('O₂', 'oxygen').toLowerCase()}.` : '',
+    cautionLine(k),
   ].filter(Boolean).join(' ')
+  if (i === 2 && k.trapped.length > 1) return `Trapped: ${num(k.trapped.length)}. ${k.trapped.slice(0, 3).map((t) => `${shortWho(t.description)}, ${k.label(t.room_id)}`).join('. ')}.`
   if (i === 2) return k.victim
     ? `Trapped: one, ${shortWho(k.trapped[0]?.description ?? k.rescuePeople[0]?.description).replace(/^./, (c) => c.toLowerCase())}, ${k.victimLabel}${k.distToVictim ? `, ${Math.round(k.distToVictim)} meters in` : ''}. Secondary: ${k.plan_.slice(1, 4).map((s) => short(k.label(s.room_id))).join(', ')}.`
     : `No trapped reported. Primary search: ${k.plan_.slice(0, 3).map((s) => short(k.label(s.room_id))).join(', ')}.`
@@ -105,6 +123,13 @@ function rawScript(k, i) {
     k.deadEnd ? `${k.label(k.deadEnd)}, dead end.` : '',
     'If lost, call a mayday and follow the wall.',
   ].filter(Boolean).join(' ')
+}
+
+// what the caller reported (two hazards at most), else the building's top risk
+const spokenHazard = (h) => (/oxygen|o2\b|cylinder/i.test(h.text) ? 'oxygen cylinders' : h.text.replace(/^Caller reports /i, '').replace(/\.$/, '').toLowerCase())
+function cautionLine(k) {
+  const list = k.reported.length ? k.reported.slice(0, 2).map(spokenHazard) : k.watch ? [hazardName(k.watch).replace('O₂', 'oxygen').toLowerCase()] : []
+  return list.length ? `Caution: ${list.join(', ')}.` : ''
 }
 
 export const STEPS = ['Arrive', 'Enter', 'Search', 'Get out']

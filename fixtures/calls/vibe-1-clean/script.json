@@ -3,14 +3,14 @@
   "title": "Vibe Hobby: clean call, trapped coworker in break room",
   "lines": [
     {"role": "dispatcher", "text": "Nine one one, what's the address of your emergency?"},
-    {"role": "caller", "emotion": "panicked", "text": "Eighty eight sixty six Gulf Freeway, the Vibe office building by the feeder road. There's a fire on the third floor!"},
+    {"role": "caller", "text": "Eighty eight sixty six Gulf Freeway, the Vibe office building by the feeder road. There's a fire on the third floor!"},
     {"role": "dispatcher", "text": "Okay. Where on the third floor?"},
-    {"role": "caller", "emotion": "panicked", "text": "The back of the building, in the truck driving school suite. Black smoke is pouring out of the windows."},
+    {"role": "caller", "text": "The back of the building, in the truck driving school suite. Black smoke is pouring out of the windows."},
     {"role": "dispatcher", "text": "Is anyone still inside?"},
-    {"role": "caller", "emotion": "crying", "text": "My coworker Maria went back for her laptop. She's in the break room, the little kitchen at the end of the hall."},
+    {"role": "caller", "text": "My coworker Maria went back for her laptop. She's in the break room, the little kitchen at the end of the hall."},
     {"role": "dispatcher", "text": "Do you know of any hazards? Gas, chemicals?"},
-    {"role": "caller", "emotion": "nervous", "text": "The driving school keeps oxygen tanks for their first aid class, in the back."},
+    {"role": "caller", "text": "The driving school keeps oxygen tanks for their first aid class, in the back."},
     {"role": "dispatcher", "text": "Where are you right now?"},
-    {"role": "caller", "emotion": "breathless", "text": "I'm outside, in the front parking lot.", "pause": 1.0}
+    {"role": "caller", "text": "I'm outside, in the front parking lot.", "pause": 1.0}
   ]
 }
