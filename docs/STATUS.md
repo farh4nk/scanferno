@@ -70,7 +70,8 @@ Living handoff doc. Update your role's section and add a changelog line in the s
 - One page per job behind `#hash` routes (`src/pages/Pages.jsx`): 3D model, Call (replay + live mic), Dispatch facts, Rescue, Entry, Hazards, Hose, Exterior, Aerial, Floor plan (2D + 3D), Mayday (steps + speak), Evacuation, Ask, All tools.
 - Shared pieces: `src/brief/model.js` (derives the briefing facts from floorplan + briefing + record, no building-specific code), `src/brief/PlanSvg.jsx` (one plan renderer), `src/brief/Diagrams.jsx`, `src/ui/Icon.jsx`.
 - Removed the old panels (Briefing, Dispatch, Transcript, Mayday, Evac, Ask, Aerial, FloorPlan, SourceTags); kept AddressSearch, PropertyCard, LivePanel, Viewer3D.
-- Next: wire the rescue planner (`agent/rescue.py`) into the Search step once it has an endpoint; check the 3D tab with a Matterport SDK key.
+- Aerial photos are annotated (`src/brief/Aerial.jsx` + hand-placed `fixtures/<id>/vexcel/annotations.json`, Vibe Hobby only): each wall gets its side letter, the fire side is hatched red, search entry and aerial staging marked, plus entrances and roof features. The Aerial page opens on the burning wall. Vexcel names obliques by the camera's direction, so the front (south) wall is `oblique-north`; `frontView` was showing the rear and is fixed.
+- Next: annotations for Bellaire and Piney Point; note the main entrance and `Vibe 8866` sign are on the east wall (D) while `front` is S.
 
 **Done**
 - React + Vite app in `frontend/` (`npm install && npm run dev`, http://localhost:5173; backend URL via `VITE_API_URL`, default http://localhost:8000).
@@ -85,6 +86,7 @@ Living handoff doc. Update your role's section and add a changelog line in the s
 **Unblocked by:** aerial images at `/fixtures/<id>/vexcel/*.jpg`, calls at `/calls/{id}` and `/calls/{id}/replay` (SSE), sample briefing at `fixtures/sample/briefing.json`.
 
 ## Changelog
+- 2026-11-15: Annotated aerial photos (sides, fire side, staging, entrances) for Vibe Hobby; front photo now shows the actual front wall.
 - 2026-11-14: Ion 3D hang fix: reuse floorplan.json, skip ondemand rebuild on cache hit, mark onboarded buildings ready in search.
 
 - 2026-11-14: Repo scaffold, data clients, contracts.

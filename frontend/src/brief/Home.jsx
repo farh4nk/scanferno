@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import AerialView from './Aerial'
 import { asset } from '../api'
 import PlanSvg from './PlanSvg'
 import { SIDE_NAME, STEPS, hazardName, stepScript } from './model'
@@ -78,8 +79,7 @@ function StepPanel({ k, step, briefing, go }) {
     const img = briefing.images?.[k.frontView]
     return (
       <>
-        {img && <div className="photo"><img src={asset(img)} alt="Side A as you pull up" />
-          <span className="sl a">A</span><span className="sl b">B</span><span className={`sl c ${k.fireKnown && k.side === 'C' ? 'hot' : ''}`}>C{k.fireKnown && k.side === 'C' ? ' · FIRE' : ''}</span><span className="sl d">D</span></div>}
+        {img && <div className="photo aerial-photo"><AerialView view={k.frontView} src={img} k={k} compact /></div>}
         <div className="card"><Section k={k} /></div>
       </>
     )

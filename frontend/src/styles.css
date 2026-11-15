@@ -208,6 +208,16 @@ svg.mi { width: 22px; height: 22px; } .ip { fill: var(--white); } .iad { fill: v
 .st { display: grid; grid-template-columns: 40px 1fr; gap: 14px; align-items: center; padding: 10px 0; border-top: 1px solid var(--rule); font-size: 17px; color: var(--dim); text-align: left; transition: color .2s; }
 .st:first-child { border-top: 0; } .st i { font-style: normal; width: 34px; height: 34px; border-radius: 50%; border: 2px solid var(--rule); display: grid; place-items: center; font-weight: 800; font-size: 15px; }
 .st.done { color: #7a6a60; } .st.now { color: var(--white); font-size: 21px; font-weight: 700; } .st.now i { background: var(--fire); border-color: var(--fire); color: var(--ink); }
+.aerial { display: block; height: auto; max-height: 100%; }
+.aerial text { font-family: inherit; font-weight: 800; paint-order: stroke; stroke: var(--night); stroke-linejoin: round; }
+.aerial .letter { fill: var(--ink); stroke: none; text-anchor: middle; }
+.aerial .sidename { fill: var(--white); stroke-width: 5px; text-anchor: middle; letter-spacing: .06em; }
+.aerial .face.fire .sidename { fill: var(--hotfg); }
+.aerial .pill-t { fill: var(--white); stroke-width: 6px; letter-spacing: .06em; }
+.aerial .mark circle { fill: var(--night); stroke: var(--white); } .aerial .mark text { fill: var(--white); stroke-width: 4px; font-weight: 700; }
+.aerial .mark.entry circle { fill: var(--fire); stroke: var(--night); } .aerial .mark.roof circle, .aerial .mark.utility circle, .aerial .mark.landmark circle { stroke: var(--dim); }
+.aerial .mark.roof text, .aerial .mark.utility text, .aerial .mark.landmark text { fill: var(--dim); }
+.aerial-photo .aerial { width: 100%; max-height: 260px; margin: 0; border-radius: 0; }
 .aer { width: 100%; flex: 1; min-height: 0; object-fit: contain; background: #000; border-radius: 10px; margin-top: 12px; }
 .askbar { height: 52px; border-radius: 10px; background: var(--road); display: flex; align-items: center; padding: 0 8px 0 18px; gap: 12px; color: var(--dim); }
 .askbar input { flex: 1; background: none; height: auto; padding: 0; outline: none; } .askbar input::placeholder { color: var(--dim); }

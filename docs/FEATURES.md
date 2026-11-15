@@ -26,7 +26,7 @@ Turns a 911 call or radio dispatch into a structured record that reshapes the br
 
 | # | Feature | Status | Priority | Notes |
 |---|---|---|---|---|
-| 1.1 | Scripted calls (`fixtures/calls/<id>/script.json`) synthesized to audio | 🟡 | P0 | `vibe-1-clean`, `vibe-2-messy` done. `bellaire-1-patient`, `piney-1-storage`, `vibe-mayday` still need audio via `scripts.process_calls`. Real ElevenLabs voices blocked on key permission |
+| 1.1 | Scripted calls (`fixtures/calls/<id>/script.json`) synthesized to audio | ✅ | P0 | All 5 calls voiced with ElevenLabs (`scripts.process_calls`) |
 | 1.2 | Speech to text with speaker separation (ElevenLabs `scribe_v2`) | ✅ | P0 | `POST /dispatch/transcribe` |
 | 1.3 | LLM fact extraction into the dispatch record, with confidence per field | ✅ | P0 | Gemini via `agent/llm.py`; rules fallback in `dispatch/facts.py` when Gemini is down |
 | 1.4 | Live replay in call time (SSE: `utterance`, `record`, `briefing`, `mayday`) | ✅ | P0 | `GET /calls/{id}/replay`, `GET /calls/{id}/live` |
@@ -81,7 +81,7 @@ The core technical depth: turning raw Matterport geometry into decisions.
 |---|---|---|---|---|
 | 4.1 | CoStar building facts and tenants, enums decoded | ✅ | P0 | `data/costar.py`; many tenants are "Unknown tenant" |
 | 4.2 | Vexcel roof material/condition, footprint, elevation, oblique images | ✅ | P0 | Cached under `fixtures/<id>/vexcel/` |
-| 4.3 | Aerial annotations: entry points, roof access, ladder spots on oblique images | 💡 | P0 | Project known exits and sides onto the four obliques; return pixel boxes for the UI to draw |
+| 4.3 | Aerial annotations: entry points, roof access, ladder spots on oblique images | ✅ | P0 | Hand-placed per building in `fixtures/<id>/vexcel/annotations.json` (walls by compass, staging spots, entrances, roof features); Vibe Hobby done. Automatic projection is still open |
 | 4.4 | Vision model on obliques: doors, fire escapes, roof access | 💡 | P1 | Gemini vision on each oblique, cross-checked against Vexcel attributes and our exits. Could also confirm the inferred exits in 2.10 |
 | 4.5 | Aerial ladder reach suggestions | 💡 | P1 | Roof height from elevation data vs typical ladder reach; suggest which side to position the truck |
 | 4.6 | Roof collapse risk | 🟡 | P1 | Roof material + condition + building age -> "avoid roof ops" flag |
@@ -93,8 +93,8 @@ The core technical depth: turning raw Matterport geometry into decisions.
 | # | Feature | Status | Priority | Notes |
 |---|---|---|---|---|
 | 5.1 | TTS for scripted call voices | 🟡 | P0 | ElevenLabs once voice ids work; macOS `say` fallback |
-| 5.2 | Mayday directions spoken aloud | 💡 | P0 | TTS of `directions` from `/mayday`; short radio-style phrases, cached per room |
-| 5.3 | Briefing as a 30-second radio summary | 💡 | P2 | Condensed spoken version of the briefing for crews en route |
+| 5.2 | Mayday directions spoken aloud | ✅ | P0 | TTS of `directions` from `/mayday`; short radio-style phrases, cached per room |
+| 5.3 | Briefing as a 30-second radio summary | ✅ | P2 | Condensed spoken version of the briefing for crews en route |
 | 5.4 | Printable one-page pre-plan (PDF) | 💡 | P2 | Same briefing data as a classic pre-plan sheet; shows we replace the binder |
 
 ## 6. Reliability for judging
@@ -103,7 +103,7 @@ The core technical depth: turning raw Matterport geometry into decisions.
 |---|---|---|---|---|
 | 6.1 | Full offline mode (no keys, cached data only) | ✅ | P0 | All three heroes and calls served from `fixtures/` |
 | 6.2 | Gemini fallback chain + rules fallback | ✅ | P0 | `agent/llm.py` |
-| 6.3 | Cached briefing per call so the demo never waits on an LLM | 💡 | P0 | Precompute briefings for each scripted call record and serve them on replay; live LLM only for Q&A |
+| 6.3 | Cached briefing per call so the demo never waits on an LLM | ✅ | P0 | Precompute briefings for each scripted call record and serve them on replay; live LLM only for Q&A |
 | 6.4 | Tests for API, dispatch and geometry | ✅ | P0 | 41 tests in `backend/tests`; add one per new endpoint |
 
 ## 7. Address search and property directory (`backend/data/directory.py`, `app/routers/search.py`)
@@ -113,7 +113,7 @@ The core technical depth: turning raw Matterport geometry into decisions.
 | 7.1 | Search buildings by address or name | ✅ | P0 | `GET /search?q=`. Offline over the 3 hero buildings (`status: ready`, full briefing) and 97 scanned CoStar properties from `hero_candidates.json` (`status: scanned`, facts only). Abbreviations normalized ("Freeway" = "Fwy"); a wrong house number on the right street is a weak match |
 | 7.2 | Unknown address -> nearest known buildings | ✅ | P1 | `GET /search?q=&geocode=true` geocodes with OpenStreetMap Nominatim (no key) only when nothing matches well; cached in `fixtures/geocode/` |
 | 7.3 | Property card for scanned-only buildings | ✅ | P1 | `GET /properties/{id or costar id}`: facts, scan stats, nearest buildings with a briefing, how to onboard |
-| 7.4 | Onboard a searched property | 💡 | P2 | Promote a `scanned` property into `buildings.json` and run `scripts.fetch_fixtures` from the API. Needs Matterport/Vexcel keys and the CoStar kit, plus a hand-set `front` |
+| 7.4 | Onboard a searched property | ✅ | P2 | Promote a `scanned` property into `buildings.json` and run `scripts.fetch_fixtures` from the API. Needs Matterport/Vexcel keys and the CoStar kit, plus a hand-set `front` |
 | 7.5 | Dispatch address drives the building | ✅ | P1 | Live `building_match` from spoken address; auto-switch when ready + score ≥ 0.75; confirm chip otherwise; `POST /live/sessions/{sid}/building` rebinds |
 | 7.6 | Search by location | 🟡 | P2 | `GET /search?lat=&lon=` returns nearest buildings; no map picker in the UI yet |
 
@@ -128,7 +128,7 @@ The core technical depth: turning raw Matterport geometry into decisions.
 | 8.5 | Source tags, "Changed" box, hose stretch, struck-through caller corrections | ✅ | P0 | `SourceTags.jsx`, `BriefingPanel.jsx`, `DispatchPanel.jsx` |
 | 8.6 | Mayday panel (wall path + browser TTS), evac sim, Ask-the-plan | ✅ | P1 | |
 | 8.7 | Fire-aware route on room click | 💡 | P1 | Call `getRoute(id, room, fireRooms)` instead of the static plan route when a fire is known |
-| 8.8 | Aerial annotations on obliques | 💡 | P1 | Needs 4.3 |
+| 8.8 | Aerial annotations on obliques | ✅ | P1 | `brief/Aerial.jsx`: side letters on each wall, fire side hatched red, search entry, aerial staging, entrances; Aerial page opens on the fire side; home Arrive photo uses it too |
 | 8.9 | Evac bottleneck door marked on the plan | 💡 | P2 | |
 | 8.10 | Live call panel: mic / browser speech / typed lines, upload, save as replayable call | ✅ | P0 | Header Replay / Live toggle; `components/LivePanel.jsx`, `hooks/useListen.js`. Same transcript, record, briefing and mayday panels as replay |
 | 8.11 | Live heat / people / safest routes on map | ✅ | P0 | Nested `briefing.heat` + `briefing.rescue`; Rescue page overlays; CoStar/Vexcel risk modifiers |

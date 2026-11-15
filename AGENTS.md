@@ -40,7 +40,7 @@ You don't need any keys to build against cached data: everything for the 3 hero 
 | `costar-350372` | Bellaire Medical, 6550 Mapleridge | Most rooms (35) and doorways (44); rooms typed only Other/Void |
 | `costar-23553` | Piney Point Offices II, 2500 Fondren | 20 rooms; types Other/Void |
 
-Per building: `matterport_vector.json` (raw floor plan), `costar.json` (building facts + tenants), `vexcel/{nadir,oblique-north,oblique-east,oblique-south,oblique-west}.jpg`, `vexcel/elevation.json`, `vexcel/structure_metadata_extract.json` (roof material/condition/solar, roof objects, footprint), `vexcel/structure_geometry_metadata_extract.json` (footprint polygon).
+Per building: `matterport_vector.json` (raw floor plan), `costar.json` (building facts + tenants), `vexcel/{nadir,oblique-north,oblique-east,oblique-south,oblique-west}.jpg`, `vexcel/elevation.json`, `vexcel/structure_metadata_extract.json` (roof material/condition/solar, roof objects, footprint), `vexcel/structure_geometry_metadata_extract.json` (footprint polygon), and for Vibe Hobby `vexcel/annotations.json` (hand-placed walls, staging, entrances on each photo; drawn by `frontend/src/brief/Aerial.jsx`). Vexcel names obliques by the direction the camera looks: `oblique-north` shows the south wall.
 
 ## API (backend/app/routers/, wired in app/main.py)
 

@@ -18,6 +18,8 @@ export const getSimulation = (id, rooms, { entry, exit, avoid = [] } = {}) =>
   get(`/buildings/${id}/simulation`, { rooms: rooms.join(','), entry, exit, avoid: avoid.join(',') || null })
 export const getMayday = (id, room) => get(`/buildings/${id}/mayday`, { room })
 export const getEvac = (id, occupants) => get(`/buildings/${id}/evac`, { occupants })
+// hand-placed aerial notes next to the Vexcel images (fixtures/<id>/vexcel/annotations.json); `dir` is the images' folder URL
+export const getAerialNotes = (dir) => get(`${dir.startsWith("/") ? "" : "/"}${dir}/annotations.json`)
 export const getHose = (id, toRoom) => get(`/buildings/${id}/hose`, { to_room: toRoom })
 export const extractDispatch = (id, transcript, useLlm) => post(`/buildings/${id}/dispatch`, { transcript, use_llm: useLlm })
 export const getBriefing = (id, dispatch = {}) => post(`/buildings/${id}/briefing`, { dispatch, use_llm: false })

@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { ask, asset, getEvac, getMayday, getTour } from '../api'
 import PlanSvg from '../brief/PlanSvg'
+import AerialView, { sideOfCompass, viewLabel, viewOfCompass } from '../brief/Aerial'
 import { HoseGauge, Ring, Section } from '../brief/Diagrams'
 import LivePanel from '../components/LivePanel'
 import Viewer3D from '../components/Viewer3D'
@@ -252,11 +253,18 @@ export function ExteriorPage({ ctx, k }) {
 
 // ---------- Aerial photos ----------
 export function AerialPage({ ctx, k }) {
-  const imgs = ctx.briefing.images || {}; const [v, setV] = useState(k.frontView in imgs ? k.frontView : Object.keys(imgs)[0])
+  const imgs = ctx.briefing.images || {}
+  const front = k.bld.front || 'S'
+  // open on the wall that's burning when we know it, otherwise the front
+  const fireView = k.fireKnown && k.side ? viewOfCompass(['N', 'E', 'S', 'W'].find((c) => sideOfCompass(front, c) === k.side)) : null
+  const first = [fireView, k.frontView].find((x) => x && x in imgs) || Object.keys(imgs)[0]
+  const [v, setV] = useState(ctx.params.view in imgs ? ctx.params.view : first)
+  useEffect(() => { if (fireView && fireView in imgs) setV(fireView) }, [fireView]) // eslint-disable-line react-hooks/exhaustive-deps
+  const order = ['nadir', ...['A', 'B', 'C', 'D'].map((s) => viewOfCompass(['N', 'E', 'S', 'W'].find((c) => sideOfCompass(front, c) === s)))].filter((x) => x in imgs)
   return (
     <div className="page"><div className="panel col full">
-      <div className="seg">{Object.keys(imgs).map((x) => <button key={x} className={v === x ? 'on' : ''} onClick={() => setV(x)}>{x === 'nadir' ? 'top-down' : x.replace('oblique-', 'from the ')}</button>)}</div>
-      {imgs[v] ? <img className="aer" src={asset(imgs[v])} alt={`Aerial ${v}`} /> : <p className="empty">No aerial images for this building.</p>}
+      <div className="seg">{order.map((x) => <button key={x} className={v === x ? 'on' : ''} onClick={() => setV(x)}>{viewLabel(x, front)}{k.fireKnown && x !== 'nadir' && viewLabel(x, front)[0] === k.side ? ' · fire' : ''}</button>)}</div>
+      {imgs[v] ? <AerialView view={v} src={imgs[v]} k={k} /> : <p className="empty">No aerial images for this building.</p>}
     </div></div>
   )
 }

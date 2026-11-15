@@ -1,0 +1,385 @@
+{
+  "note": "Hand-placed on the cached Vexcel images (pixel coordinates). Views are named for the direction the camera looks, so oblique-north shows the south face. Faces carry their compass direction; the side letter (A-D) comes from the building's front in buildings.json. Optional per face: `label` (where the side badge goes, default the middle), `minor` (badge only, for a wall seen edge-on).",
+  "views": {
+    "nadir": {
+      "size": [
+        1059,
+        1072
+      ],
+      "faces": [
+        {
+          "compass": "N",
+          "edge": [
+            [
+              232,
+              232
+            ],
+            [
+              812,
+              218
+            ]
+          ],
+          "staging": [
+            530,
+            150
+          ]
+        },
+        {
+          "compass": "E",
+          "edge": [
+            [
+              812,
+              218
+            ],
+            [
+              838,
+              832
+            ]
+          ],
+          "staging": [
+            915,
+            560
+          ],
+          "label": [
+            770,
+            640
+          ]
+        },
+        {
+          "compass": "S",
+          "edge": [
+            [
+              838,
+              832
+            ],
+            [
+              245,
+              842
+            ]
+          ],
+          "staging": [
+            700,
+            960
+          ]
+        },
+        {
+          "compass": "W",
+          "edge": [
+            [
+              245,
+              842
+            ],
+            [
+              232,
+              232
+            ]
+          ],
+          "staging": [
+            165,
+            640
+          ]
+        }
+      ],
+      "marks": [
+        {
+          "kind": "entry",
+          "at": [
+            836,
+            522
+          ],
+          "text": "Main entrance"
+        },
+        {
+          "kind": "entry",
+          "at": [
+            620,
+            862
+          ],
+          "text": "Courtyard door"
+        },
+        {
+          "kind": "roof",
+          "at": [
+            530,
+            500
+          ],
+          "text": "Skylights"
+        },
+        {
+          "kind": "utility",
+          "at": [
+            170,
+            300
+          ],
+          "text": "Ground HVAC"
+        }
+      ]
+    },
+    "oblique-north": {
+      "size": [
+        1186,
+        833
+      ],
+      "faces": [
+        {
+          "compass": "S",
+          "poly": [
+            [
+              292,
+              442
+            ],
+            [
+              912,
+              436
+            ],
+            [
+              925,
+              618
+            ],
+            [
+              298,
+              606
+            ]
+          ],
+          "staging": [
+            775,
+            745
+          ]
+        }
+      ],
+      "marks": [
+        {
+          "kind": "entry",
+          "at": [
+            705,
+            668
+          ],
+          "text": "Courtyard door"
+        },
+        {
+          "kind": "roof",
+          "at": [
+            588,
+            210
+          ],
+          "text": "Skylights"
+        },
+        {
+          "kind": "utility",
+          "at": [
+            195,
+            215
+          ],
+          "text": "Ground HVAC"
+        }
+      ]
+    },
+    "oblique-south": {
+      "size": [
+        1111,
+        940
+      ],
+      "faces": [
+        {
+          "compass": "N",
+          "poly": [
+            [
+              270,
+              553
+            ],
+            [
+              853,
+              547
+            ],
+            [
+              864,
+              737
+            ],
+            [
+              268,
+              760
+            ]
+          ],
+          "staging": [
+            560,
+            860
+          ]
+        }
+      ],
+      "marks": [
+        {
+          "kind": "landmark",
+          "at": [
+            350,
+            636
+          ],
+          "text": "8866 sign"
+        },
+        {
+          "kind": "roof",
+          "at": [
+            560,
+            348
+          ],
+          "text": "Skylights"
+        },
+        {
+          "kind": "utility",
+          "at": [
+            925,
+            700
+          ],
+          "text": "Ground HVAC"
+        }
+      ]
+    },
+    "oblique-west": {
+      "size": [
+        1208,
+        978
+      ],
+      "faces": [
+        {
+          "compass": "E",
+          "poly": [
+            [
+              330,
+              592
+            ],
+            [
+              920,
+              580
+            ],
+            [
+              915,
+              782
+            ],
+            [
+              305,
+              792
+            ]
+          ],
+          "staging": [
+            640,
+            885
+          ],
+          "label": [
+            770,
+            650
+          ]
+        },
+        {
+          "compass": "S",
+          "poly": [
+            [
+              240,
+              330
+            ],
+            [
+              330,
+              592
+            ],
+            [
+              305,
+              792
+            ],
+            [
+              262,
+              760
+            ]
+          ],
+          "minor": true,
+          "label": [
+            262,
+            520
+          ]
+        }
+      ],
+      "marks": [
+        {
+          "kind": "entry",
+          "at": [
+            612,
+            748
+          ],
+          "text": "Main entrance"
+        },
+        {
+          "kind": "landmark",
+          "at": [
+            410,
+            640
+          ],
+          "text": "Vibe 8866 sign"
+        },
+        {
+          "kind": "roof",
+          "at": [
+            598,
+            368
+          ],
+          "text": "Skylights"
+        }
+      ]
+    },
+    "oblique-east": {
+      "size": [
+        1221,
+        794
+      ],
+      "faces": [
+        {
+          "compass": "W",
+          "poly": [
+            [
+              296,
+              405
+            ],
+            [
+              893,
+              398
+            ],
+            [
+              918,
+              588
+            ],
+            [
+              288,
+              592
+            ]
+          ],
+          "staging": [
+            190,
+            400
+          ]
+        }
+      ],
+      "marks": [
+        {
+          "kind": "entry",
+          "at": [
+            660,
+            600
+          ],
+          "text": "Side door"
+        },
+        {
+          "kind": "utility",
+          "at": [
+            350,
+            645
+          ],
+          "text": "Ground HVAC"
+        },
+        {
+          "kind": "roof",
+          "at": [
+            605,
+            185
+          ],
+          "text": "Skylights"
+        }
+      ]
+    }
+  }
+}
