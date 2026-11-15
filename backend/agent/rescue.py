@@ -12,6 +12,7 @@ pass a victim: a window costs breach time, plus a ground ladder above the first 
 
     plan(bid, dispatch, heat)  ->  {"people": [...], "summary": [...]}
 """
+import hashlib
 import math
 import re
 
@@ -233,17 +234,24 @@ def plan(bid: str, d: dict, heat: dict | None = None, *, risk_bump: float = 0.0,
     floor = d.get("floor") or 1
     risk = RISK + max(0.0, risk_bump)
     bump = room_bump or {}
-    windows = [w for w in fp.get("windows") or [] if w.get("exterior") and w["width_m"] >= MIN_WINDOW_M
-               and danger.get(w["room_id"], 0.0) < heat_model.ZONES[0][1]]
+    windows = [w for w in fp.get("windows") or [] if w.get("exterior") and w["width_m"] >= MIN_WINDOW_M]
     out = []
-    for i, p in enumerate(people(d)):
+    seen_people: dict[str, int] = {}
+    for p in people(d):
         if p.get("is_caller") and not p.get("room_id"):
             cands = locate(p.get("near") or "", fp, nav, layers.building(bid).get("front", "S"))
             p["room_id"] = cands[0]["room_id"] if cands else None
             p["room_candidates"] = cands
-        person = {"id": f"p{i + 1}", "description": p.get("description") or "person", "count": p.get("count") or 1,
+        description = p.get("description") or "person"
+        identity = re.sub(r"\s+", " ", description.casefold()).strip()
+        seen_people[identity] = seen_people.get(identity, 0) + 1
+        person_id = p.get("id") or f"person-{hashlib.sha1(identity.encode()).hexdigest()[:10]}"
+        if seen_people[identity] > 1:
+            person_id = f"{person_id}-{seen_people[identity]}"
+        person = {"id": person_id, "description": description, "count": p.get("count") or 1,
                   "needs_assist": bool(p.get("needs_assist")), "is_caller": bool(p.get("is_caller")),
-                  "said": p.get("near") or p.get("location"), "confidence": p.get("confidence"), "room_id": p.get("room_id")}
+                  "said": p.get("near") or p.get("location"), "confidence": p.get("confidence"), "room_id": p.get("room_id"),
+                  "location_source": p.get("location_source", "transcription"), "manual": p.get("manual", False)}
         rid = p.get("room_id")
         if rid not in nav.rooms:
             person.update({"located": False, "text": f"{person['description']}: location unknown, follow the search plan."})
@@ -254,9 +262,11 @@ def plan(bid: str, d: dict, heat: dict | None = None, *, risk_bump: float = 0.0,
         cands = p.get("room_candidates") or []
         top_conf = cands[0]["confidence"] if cands else (p.get("confidence") or 0.5)
         radius = math.sqrt(room.get("area_m2", 10) / math.pi)
-        g = _graph(nav, rid, point, windows)
-        terms_in = _terminals(nav, windows, "in", floor, danger, window_extra_s)
-        terms_out = _terminals(nav, windows, "out", floor, danger, window_extra_s)
+        safe_windows = [w for w in windows if danger.get(w["room_id"], 0.0) < heat_model.ZONES[0][1]]
+        extraction_windows = [*safe_windows, *(w for w in windows if w["room_id"] == rid and w not in safe_windows)]
+        g = _graph(nav, rid, point, extraction_windows)
+        terms_in = _terminals(nav, safe_windows, "in", floor, danger, window_extra_s)
+        terms_out = _terminals(nav, extraction_windows, "out", floor, danger, window_extra_s)
         entry = _options(g, nav, rid, "in", danger, terms_in, risk=risk, room_bump=bump)
         exits = _options(g, nav, rid, "out", danger, terms_out, risk=risk, room_bump=bump)
         for o in entry:
@@ -276,6 +286,13 @@ def plan(bid: str, d: dict, heat: dict | None = None, *, risk_bump: float = 0.0,
         })
         if entry and exits:
             total = entry[0]["time_s"] + exits[0]["time_s"]
+            person["recommended_route"] = {
+                "entry": entry[0],
+                "extraction": exits[0],
+                "distance_m": round(entry[0]["distance_m"] + exits[0]["distance_m"], 1),
+                "time_s": total,
+                "same_exit": exits[0]["same_as_entry"],
+            }
             back = "back out the same way" if exits[0]["same_as_entry"] else exits[0]["text"][0].lower() + exits[0]["text"][1:]
             person["total_time_s"] = total
             person["text"] = (f"{person['description'].capitalize()} in {room['label']} ({basis}, {heat_model.zone(here)}). "
@@ -291,6 +308,7 @@ def plan(bid: str, d: dict, heat: dict | None = None, *, risk_bump: float = 0.0,
     for n, p in enumerate(out, 1):
         p["priority"] = n
     return {"people": out, "floor": floor, "windows_considered": len(windows),
+            "route_objective": "minimum modeled response time with fire-exposure penalties",
             "assumptions": ["Speeds: walk 1.2 m/s clear, crawl-search 0.5 m/s in smoke; drag 0.8 / 0.3 m/s.",
                             "Window removal adds breach time, plus a ground ladder above the first floor.",
                             "Danger is a model of spread from the reported fire area, not a sensor reading.",

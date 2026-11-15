@@ -208,9 +208,6 @@ export default function Home({ k, plan, briefing, feed, go, building }) {
   return (
     <div className={`page brief ${sideOpen ? '' : 'noside'}`}>
       <KeyBand k={k} step={step} />
-      <button className="sidetoggle" onClick={toggleSide} aria-expanded={sideOpen} aria-controls="side-panel" title={sideOpen ? 'Hide the side panel' : 'Show the side panel'}>
-        <span aria-hidden="true">{sideOpen ? '›' : '‹'}</span>{sideOpen ? 'Hide panel' : 'Show panel'}
-      </button>
       {sim ? <PathSim k={k} building={building} plan={plan} briefing={briefing} onClose={() => setSim(false)} /> : <>
       <div className="stage panel">
         {livePlan && <button className="livebadge" onClick={() => setFollow(false)} title="Click a step to take over"><span className="dotlive" />Live · the plan updates as the caller talks</button>}
@@ -220,7 +217,11 @@ export default function Home({ k, plan, briefing, feed, go, building }) {
             {flash.items.slice(0, 2).map((c, i) => <div key={i} className={`nb ${c.kind}`}><b>New</b>{c.text}</div>)}
           </div>
         )}
-        <div className="seg stage-mode"><button className={view === '2d' ? 'on' : ''} onClick={() => setView('2d')}>2D plan</button><button className={view === '3d' ? 'on' : ''} onClick={() => setView('3d')}>3D model</button></div>
+        <div className="seg stage-mode">
+          <button className={view === '2d' ? 'on' : ''} onClick={() => setView('2d')}>2D plan</button>
+          <button className={view === '3d' ? 'on' : ''} onClick={() => setView('3d')}>3D model</button>
+          {!sideOpen && <button className="panel-reopen" onClick={toggleSide} aria-expanded={false} aria-controls="side-panel">Show panel</button>}
+        </div>
         <div className="planwrap">
           {view === '3d'
             ? <Viewer3D building={building} plan={plan} layers={{ order: step >= 2, routes: step >= 2, doors: true, heat: false, windows: false }}
@@ -237,6 +238,12 @@ export default function Home({ k, plan, briefing, feed, go, building }) {
         ) : null}
       </div>
       <div className="side" id="side-panel" key={`${step}-${reading}`}>
+        <div className="side-head">
+          <b>Briefing panel</b>
+          <button className="side-collapse" onClick={toggleSide} aria-expanded={true} aria-controls="side-panel" title="Hide briefing panel">
+            Hide panel <span aria-hidden="true">›</span>
+          </button>
+        </div>
         {reading ? (
           <div className="readp"><h2>Briefing <span>tap a step to show it on the plan</span></h2>
             {STEPS.map((s, i) => (

@@ -24,6 +24,85 @@ def test_typed_utterances_build_record_and_briefing():
     assert not again["extracted"] and again["updates"] == 1
 
 
+def test_manual_room_locations_override_transcription_until_cleared():
+    sid = _new()
+    fp = client.get(f"/buildings/{BID}/floorplan").json()
+    rooms = fp["rooms"]
+    transcript = [{"role": "caller", "text": "My coworker is trapped in the kitchen. The fire is in the office."}]
+    initial = client.post(f"/live/sessions/{sid}/utterances", json={"utterances": transcript}).json()
+    auto_person_room = initial["record"]["trapped"][0]["room_id"]
+    auto_fire_room = initial["record"]["fire_room_ids"][0]
+    manual_person_room = next(r["id"] for r in rooms if r["id"] != auto_person_room)
+    manual_fire_room = next(r["id"] for r in rooms if r["id"] not in (auto_person_room, auto_fire_room))
+    added_person_room = next(r["id"] for r in rooms if r["id"] not in (auto_person_room, auto_fire_room, manual_fire_room))
+
+    updated = client.post(f"/live/sessions/{sid}/locations", json={
+        "fire_room_id": manual_fire_room,
+        "people": [
+            {"description": "coworker", "room_id": manual_person_room},
+            {"description": "caller", "room_id": added_person_room, "manual": True},
+        ],
+    })
+    assert updated.status_code == 200
+    state = updated.json()
+    assert state["record"]["fire_room_ids"] == [manual_fire_room]
+    assert state["record"]["trapped"][0]["room_id"] == manual_person_room
+    assert state["record"]["trapped"][0]["location_source"] == "manual"
+    assert state["briefing"]["trapped"][0]["location_source"] == "manual"
+    assert any(p["description"] == "caller" and p["manual"] for p in state["record"]["trapped"])
+
+    transcript.append({"role": "caller", "text": "A patient is trapped in the kitchen."})
+    later = client.post(f"/live/sessions/{sid}/utterances", json={"utterances": transcript}).json()
+    assert later["extracted"]
+    assert later["record"]["fire_room_ids"] == [manual_fire_room]
+    coworker = next(p for p in later["record"]["trapped"] if p["description"] == "coworker")
+    assert coworker["room_id"] == manual_person_room and coworker["location_source"] == "manual"
+    assert any(p["description"] == "caller" and p["room_id"] == added_person_room for p in later["record"]["trapped"])
+    new_person = next(p for p in later["record"]["trapped"] if p["description"] == "patient")
+    assert new_person["room_id"] and new_person["location_source"] == "transcription"
+    assert any(p["room_id"] == new_person["room_id"] for p in later["briefing"]["rescue"]["people"])
+    assert any(c["kind"] == "trapped" and c["room_id"] == new_person["room_id"] for c in later["briefing"]["changes"])
+    assert len(later["record"]["trapped"]) > 1
+
+    cleared = client.post(f"/live/sessions/{sid}/locations", json={"fire_room_id": None, "people": []}).json()
+    assert cleared["record"]["fire_location_source"] == "transcription"
+    restored = next(p for p in cleared["record"]["trapped"] if p["description"] == "coworker")
+    assert restored["room_id"] == auto_person_room and restored["location_source"] == "transcription"
+    assert not any(p["description"] == "caller" for p in cleared["record"]["trapped"])
+
+
+def test_manual_locations_reject_unknown_rooms():
+    sid = _new()
+    response = client.post(f"/live/sessions/{sid}/locations", json={"fire_room_id": "not-a-room", "people": []})
+    assert response.status_code == 422
+
+
+def test_transcript_movement_and_fire_spread_refresh_rescue_plan():
+    sid = _new()
+    rooms = {r["label"]: r["id"] for r in client.get(f"/buildings/{BID}/floorplan").json()["rooms"]}
+    lines = [{"role": "caller", "text": "My coworker is trapped in Office 101. Fire is in Kitchen 106."}]
+    initial = client.post(f"/live/sessions/{sid}/utterances", json={"utterances": lines}).json()
+    original = next(p for p in initial["briefing"]["rescue"]["people"] if p["description"] == "coworker")
+    fire_kitchen = rooms["Kitchen 106"]
+
+    lines.append({"role": "caller", "text": "My coworker moved from Office 101 to Office 110, and the fire has spread to Office 104."})
+    lines.append({"role": "caller", "text": "My coworker is now by the door."})
+    updated = client.post(f"/live/sessions/{sid}/utterances", json={"utterances": lines}).json()
+    coworker = next(p for p in updated["briefing"]["rescue"]["people"] if p["description"] == "coworker")
+    moved_room = rooms["Office 110"]
+    fire_office = rooms["Office 104"]
+
+    assert updated["record"]["fire_room_ids"] == [fire_kitchen, fire_office]
+    assert updated["briefing"]["heat"]["fire_room_ids"] == [fire_kitchen, fire_office]
+    assert coworker["room_id"] == moved_room and coworker["id"] == original["id"]
+    assert coworker["position"] != original["position"]
+    assert updated["record"]["trapped"][0]["near"] == "by the door"
+    assert "trapped" in updated["record"]["changed"]
+    assert coworker["recommended_route"]["entry"]["polyline"]
+    assert coworker["recommended_route"]["extraction"]["polyline"]
+    assert {c["kind"] for c in updated["briefing"]["changes"]} >= {"fire_spread", "person_moved"}
+
+
 def test_audio_uses_stt_and_diarized_roles(monkeypatch):
     cached = cache.load_json("calls", "vibe-1-clean", "transcript.json")
     monkeypatch.setattr(elevenlabs, "stt", lambda audio, name: cached)

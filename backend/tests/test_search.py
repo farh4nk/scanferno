@@ -1,9 +1,23 @@
+import pytest
 from fastapi.testclient import TestClient
 
 from app.main import app
 from data import directory
+from ondemand import registry
 
 client = TestClient(app)
+
+
+@pytest.fixture(autouse=True)
+def isolate_search_from_local_onboarding(monkeypatch):
+    original_all = registry.all
+    original_all.cache_clear()
+    monkeypatch.setattr(registry, "all", lambda: ())
+    directory.clear()
+    yield
+    monkeypatch.undo()
+    original_all.cache_clear()
+    directory.clear()
 
 
 def test_search_matches_abbreviations_and_ranks_ready_first():
@@ -49,7 +63,8 @@ def test_catalog_covers_every_matterport_model():
 
 def test_search_finds_complexes_by_unit_scan_names_and_typos():
     sky = client.get("/search", params={"q": "skylux"}).json()["results"][0]
-    assert sky["status"] == "scanned" and sky["models_count"] > 10 and sky["scan"]["model_id"]
+    assert sky["status"] in ("scanned", "ready") and sky["models_count"] > 10 and sky["scan"]["model_id"]
+    assert (sky["status"] == "ready") == (sky["building_id"] is not None)
     typo = client.get("/search", params={"q": "2001 westheimr rd"}).json()["results"][0]
     assert typo["address"].startswith("2001 Westheimer") and typo["score"] >= directory.GOOD_SCORE
 

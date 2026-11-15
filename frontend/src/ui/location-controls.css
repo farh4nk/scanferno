@@ -1,0 +1,15 @@
+.location-editor { gap: 12px; }
+.location-editor > .sel { margin: 0; }
+.location-assignment { display: flex; flex-direction: column; gap: 6px; }
+.location-assignment .sel { margin: 0; }
+.location-source { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.location-map { height: 320px; min-height: 260px; background: var(--night); border: 1px solid var(--rule); border-radius: 10px; padding: 8px; }
+.location-map svg { cursor: crosshair; }
+.manual-person { display: grid; grid-template-columns: minmax(100px, 1fr) minmax(120px, 1fr) auto; gap: 8px; align-items: center; }
+.manual-person .sel { margin: 0; min-width: 0; }
+.pc-open { position: sticky; top: 0; z-index: 2; display: flex; width: 100%; min-height: 54px; height: auto !important; justify-content: center; font-size: 18px; box-shadow: 0 6px 20px rgba(0, 0, 0, .35); }
+
+@media (max-width: 1250px) {
+  .manual-person { grid-template-columns: 1fr 1fr; }
+  .manual-person button { grid-column: 1 / -1; }
+}

@@ -3,6 +3,7 @@ utterances recognized in the browser / typed. Every update returns the session s
 from fastapi import APIRouter, Body, Form, HTTPException, UploadFile
 
 from app import deps
+from data import layers
 from dispatch import elevenlabs, session
 
 router = APIRouter(prefix="/live", tags=["live"])
@@ -52,6 +53,42 @@ def utterances(sid: str, utterances: list[dict] = Body(..., embed=True)):
 def tick(sid: str):
     """Grow heat with elapsed minutes without re-running extraction."""
     return _session(sid).tick()
+
+
+@router.post("/sessions/{sid}/locations")
+def locations(sid: str, payload: dict = Body(...)):
+    """Apply manual fire/person room locations over the live transcript-derived record."""
+    s = _session(sid)
+    fire_room_id = payload.get("fire_room_id")
+    people = payload.get("people", [])
+    if fire_room_id is not None and not isinstance(fire_room_id, str):
+        raise HTTPException(422, "fire_room_id must be a room id or null")
+    if not isinstance(people, list):
+        raise HTTPException(422, "people must be a list")
+
+    rooms = {r["id"] for r in layers.floorplan(s.building_id)["rooms"]}
+    if fire_room_id is not None and fire_room_id not in rooms:
+        raise HTTPException(422, f"Unknown fire room {fire_room_id}")
+    cleaned = []
+    seen = set()
+    for person in people:
+        if not isinstance(person, dict):
+            raise HTTPException(422, "Each person location must be an object")
+        description, room_id = person.get("description"), person.get("room_id")
+        manual = person.get("manual", False)
+        if not isinstance(description, str) or not description.strip():
+            raise HTTPException(422, "Each person needs a description")
+        if not isinstance(room_id, str) or room_id not in rooms:
+            raise HTTPException(422, f"Unknown person room {room_id}")
+        if not isinstance(manual, bool):
+            raise HTTPException(422, "manual must be a boolean")
+        description = description.strip()
+        key = description.casefold()
+        if key in seen:
+            raise HTTPException(422, f"Duplicate person location for {description}")
+        seen.add(key)
+        cleaned.append({"description": description, "room_id": room_id, "manual": manual})
+    return s.set_locations(fire_room_id, cleaned)
 
 
 @router.post("/sessions/{sid}/building")

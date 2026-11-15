@@ -59,6 +59,9 @@ export default function PropertyCard({ property, onClose, onOpenBuilding }) {
         <h2 className="modal-title">{p.name}</h2>
         {p.address && p.address !== p.name && <p className="muted">{p.address}</p>}
         {err && <p className="err">{err}</p>}
+        <button className="primary pc-open" disabled={busy || !p.scan?.model_id} onClick={openReady} aria-busy={busy}>
+          {busy ? 'Creating briefing…' : p.status === 'ready' ? 'Open briefing' : 'Create briefing'}
+        </button>
         {p.lat != null && imgOk && (
           <img className="pc-aerial" src={propertyAerialUrl(key)} alt="Vexcel aerial view" onError={() => setImgOk(false)} />
         )}
@@ -83,11 +86,8 @@ export default function PropertyCard({ property, onClose, onOpenBuilding }) {
           <p className="small"><a href={`https://www.openstreetmap.org/?mlat=${p.lat}&mlon=${p.lon}#map=18/${p.lat}/${p.lon}`} target="_blank" rel="noreferrer">
             Open on map ({p.lat.toFixed(5)}, {p.lon.toFixed(5)})</a></p>
         )}
-        <button className="primary" disabled={busy || !p.scan?.model_id} onClick={openReady}>
-          {busy ? 'Loading interior…' : 'Open briefing'}
-        </button>
         {p.status !== 'ready' && !busy && (
-          <p className="small muted">First open fetches the Matterport floor plan (a few seconds), then works offline like the hero buildings.</p>
+          <p className="small muted">Creating a briefing fetches the Matterport floor plan (a few seconds); it is then cached for offline use.</p>
         )}
         {p.nearest_ready?.length > 0 && (
           <>
