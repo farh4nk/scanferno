@@ -6,8 +6,10 @@ briefing (with `changes`, plus nested `heat` / `rescue`) and, when a caller says
 directions. Extraction only reruns when a caller line changed, so re-sending the same audio is cheap.
 Sessions live in memory; `save` turns one into a replayable call under fixtures/calls/.
 """
+import copy
 import hashlib
 import re
+import threading
 import time
 import uuid
 
@@ -30,6 +32,7 @@ class Session:
         self.building_id = building_id
         self.use_llm = use_llm
         self.created = time.time()
+        self._lock = threading.RLock()
         self.utterances: list[dict] = []
         self.record: dict | None = None
         self.briefing: dict | None = None
@@ -38,6 +41,8 @@ class Session:
         self.timeline: list[dict] = []
         self.stt_result: dict | None = None
         self.audio: tuple[bytes, str] | None = None
+        self._auto_record: dict | None = None
+        self.location_overrides = {"fire_room_id": None, "people": []}
         self._hist: dict = {}
         self._caller_key: str | None = None
         self._mayday_key: str | None = None
@@ -56,6 +61,10 @@ class Session:
         return self.update(pipeline.utterances(self.stt_result, first_role=first_role))
 
     def update(self, utterances: list[dict]) -> dict:
+        with self._lock:
+            return self._update(utterances)
+
+    def _update(self, utterances: list[dict]) -> dict:
         self.utterances = [{"role": u.get("role") or "caller", "text": u["text"].strip(),
                             "start": u.get("start", 0), "end": u.get("end", u.get("start", 0))}
                            for u in utterances if (u.get("text") or "").strip()]
@@ -72,7 +81,8 @@ class Session:
     def _extract(self, last: tuple[int, dict]):
         i, u = last
         bid = self.building_id
-        self.record = facts.extract(self.utterances, bid, self.use_llm, previous=self.record)
+        self._auto_record = facts.extract(self.utterances, bid, self.use_llm, previous=self._auto_record)
+        self.record = self._record_with_location_overrides(self._auto_record)
         self.record["corrections"] = history.track(self._hist, self.record, u["end"])
         self._resolve_address()
         self._maybe_switch_building()
@@ -109,10 +119,81 @@ class Session:
         self.building_changed = True
         self.mayday = None
         self._mayday_key = None
+        self.location_overrides = {"fire_room_id": None, "people": []}
         # Re-resolve rooms against the new floor plan
-        self.record = facts.extract(self.utterances, self.building_id, self.use_llm, previous=None)
+        self._auto_record = facts.extract(self.utterances, self.building_id, self.use_llm, previous=None)
+        self.record = self._record_with_location_overrides(self._auto_record)
         self.record["corrections"] = []
         self.briefing = None
+
+    def _record_with_location_overrides(self, record: dict) -> dict:
+        out = copy.deepcopy(record)
+        fp = layers.floorplan(self.building_id)
+        rooms = {r["id"]: r for r in fp["rooms"]}
+        labels = {rid: room["label"] for rid, room in rooms.items()}
+        for person in out.get("trapped") or []:
+            person.setdefault("location_source", "transcription")
+            person.setdefault("manual", False)
+
+        fire_room_id = self.location_overrides["fire_room_id"]
+        out["fire_location_source"] = "transcription" if out.get("fire_room_ids") else None
+        if fire_room_id:
+            room = rooms[fire_room_id]
+            out["fire_room_ids"] = [fire_room_id]
+            out["fire_candidates"] = [{
+                "room_id": fire_room_id, "label": room["label"], "confidence": 1.0,
+                "why": "manually selected",
+            }]
+            out["fire_location_source"] = "manual"
+
+        trapped = out.setdefault("trapped", [])
+        for override in self.location_overrides["people"]:
+            description = override["description"]
+            person = next((p for p in trapped if p["description"].casefold() == description.casefold()), None)
+            if person is None:
+                if not override.get("manual"):
+                    continue
+                person = {
+                    "description": description, "near": labels[override["room_id"]], "confidence": 1.0,
+                    "needs_assist": False, "room_candidates": [], "manual": True,
+                }
+                trapped.append(person)
+            room_id = override["room_id"]
+            person.update({
+                "room_id": room_id, "confidence": 1.0, "room_match": "manually selected",
+                "room_candidates": [{
+                    "room_id": room_id, "label": labels[room_id], "confidence": 1.0,
+                    "why": "manually selected",
+                }],
+                "location_source": "manual",
+            })
+        out["location_overrides"] = copy.deepcopy(self.location_overrides)
+        return out
+
+    def set_locations(self, fire_room_id: str | None, people: list[dict]) -> dict:
+        with self._lock:
+            return self._set_locations(fire_room_id, people)
+
+    def _set_locations(self, fire_room_id: str | None, people: list[dict]) -> dict:
+        self.location_overrides = {
+            "fire_room_id": fire_room_id,
+            "people": copy.deepcopy(people),
+        }
+        if self._auto_record is None:
+            self._auto_record = facts.extract([], self.building_id, use_llm=False)
+        self.record = self._record_with_location_overrides(self._auto_record)
+        t = self.utterances[-1].get("end", 0) if self.utterances else 0
+        self.record["corrections"] = history.track(self._hist, self.record, t)
+        previous = self.briefing
+        new = briefing_agent.build(self.building_id, self.record, use_llm=False)
+        live_geometry.attach(self.building_id, self.record, new, self.minutes())
+        new["changes"] = changes.diff(previous, new)
+        self.briefing = new
+        if self.utterances:
+            self.timeline.append({
+                "t": t, "utterance_index": len(self.utterances) - 1, "record": self.record,
+            })
+        return self.state()
 
     def _check_mayday(self, callers: list[tuple[int, dict]]):
         said = [u["text"] for _, u in callers if MAYDAY.search(u["text"])]
@@ -126,11 +207,16 @@ class Session:
 
     def tick(self) -> dict:
         """Recompute heat/rescue with elapsed minutes without re-extracting (quiet fire growth)."""
-        if self.record and self.briefing:
-            live_geometry.attach(self.building_id, self.record, self.briefing, self.minutes())
-        return self.state()
+        with self._lock:
+            if self.record and self.briefing:
+                live_geometry.attach(self.building_id, self.record, self.briefing, self.minutes())
+            return self.state()
 
     def set_building(self, building_id: str) -> dict:
+        with self._lock:
+            return self._set_building(building_id)
+
+    def _set_building(self, building_id: str) -> dict:
         """Rebind the session to another building; keep utterances and re-run locate + briefing."""
         if building_id == self.building_id:
             return self.state()
@@ -138,6 +224,8 @@ class Session:
         self.mayday = None
         self._mayday_key = None
         self.briefing = None
+        self._auto_record = None
+        self.location_overrides = {"fire_room_id": None, "people": []}
         self._caller_key = None
         self._hist = {}
         callers = [(i, u) for i, u in enumerate(self.utterances) if u["role"] != "dispatcher"]
@@ -149,13 +237,15 @@ class Session:
         return self.state()
 
     def state(self, extracted: bool = False) -> dict:
-        changed = self.building_changed
-        self.building_changed = False
-        return {"session_id": self.id, "building_id": self.building_id, "building_changed": changed,
-                "utterances": self.utterances, "record": self.record, "briefing": self.briefing,
-                "mayday": self.mayday, "building_match": self.building_match,
-                "minutes": round(self.minutes(), 2), "started_at": self.created,
-                "updates": len(self.timeline), "extracted": extracted}
+        with self._lock:
+            changed = self.building_changed
+            self.building_changed = False
+            return {"session_id": self.id, "building_id": self.building_id, "building_changed": changed,
+                    "utterances": self.utterances, "record": self.record, "briefing": self.briefing,
+                    "location_overrides": copy.deepcopy(self.location_overrides),
+                    "mayday": self.mayday, "building_match": self.building_match,
+                    "minutes": round(self.minutes(), 2), "started_at": self.created,
+                    "updates": len(self.timeline), "extracted": extracted}
 
     def save(self, title: str | None = None) -> str:
         """Write the session as fixtures/calls/live-<id>/ so /calls/{id}/live replays it offline."""

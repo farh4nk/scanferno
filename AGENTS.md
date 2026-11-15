@@ -57,7 +57,7 @@ One router file per area (`buildings.py`, `calls.py`, `dispatch.py`, `search.py`
 | `GET /calls/{id}/replay?speed=1` | SSE in call time: `utterance`, `record`, `done` events. Start the audio when the stream opens |
 | `POST /dispatch/extract` | `{building_id, transcript:[{role,text}], previous}` -> updated dispatch record (typed fallback) |
 | `POST /dispatch/transcribe` | upload audio (+ `first_role`) -> speaker-separated utterances; 503 without `ELEVENLABS_API_KEY` |
-| `POST /live/sessions` | `{building_id}` -> live call session. Then `POST .../{sid}/audio` (whole recording so far, re-transcribed), `POST .../{sid}/utterances` (browser speech / typed lines), `GET .../{sid}`, `POST .../{sid}/save` -> replayable `live-<id>` call, `DELETE .../{sid}`. Each returns `{utterances, record, briefing, mayday, updates}` |
+| `POST /live/sessions` | `{building_id}` -> live call session. Then `POST .../{sid}/audio` (whole recording so far, re-transcribed), `POST .../{sid}/utterances` (browser speech / typed lines), `POST .../{sid}/locations` (manual fire/person room overrides, retained across transcription updates), `GET .../{sid}`, `POST .../{sid}/save` -> replayable `live-<id>` call, `DELETE .../{sid}`. Each returns `{utterances, record, briefing, mayday, updates, location_overrides}` |
 | `GET /health` | `{ok, llm, stt, buildings}`: which keys are configured |
 | `GET /calls/{id}/live?speed=1` | SSE like `/replay` plus `briefing` after each record (with `changes`) and `mayday` (wall-following directions) for mayday calls; records carry `corrections` |
 | `GET /buildings/{id}` | building + CoStar + Vexcel summary (roof, footprint, sides, images) |

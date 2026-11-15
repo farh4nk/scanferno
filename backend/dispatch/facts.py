@@ -38,7 +38,8 @@ NUM_WORDS = {"one": 1, "two": 2, "three": 3, "four": 4, "five": 5, "a couple": 2
 
 def _empty() -> dict:
     return {"address": None, "floor": None, "side": None, "fire_location": None, "conditions": [],
-            "trapped": [], "hazards": [], "caller_location": None, "confidence": {}, "corrected": []}
+            "fire_locations": [], "fire_spread": False, "trapped": [], "hazards": [],
+            "caller_location": None, "confidence": {}, "corrected": []}
 
 
 def _set(rec: dict, field: str, value, conf: float, text: str):
@@ -58,8 +59,106 @@ def _set(rec: dict, field: str, value, conf: float, text: str):
 
 
 def _location_phrase(text: str) -> str | None:
-    m = re.search(r"\b((?:in|by|near|next to|beside|at|on) (?:the|a|an|his|her|their|my|our) [^,.;!?]+)", text, re.I)
+    m = re.search(r"\b((?:in|by|near|next to|beside|at|on|to|into) (?:the|a|an|his|her|their|my|our)?\s*[^,.;!?]+)", text, re.I)
     return m.group(1).strip() if m else None
+
+
+FIRE_SPREAD = re.compile(
+    r"\b(?:fire|smoke|flames)\b(?:\s+(?:has|have|is|are|was|were))?\s+(?:spread(?:ing)?|reached|moved|moving)\b",
+    re.I,
+)
+FIRE_TARGET = re.compile(r"\b(?:to|into|in)\s+((?:the|a|an)\s+)?([^,.;!?]+)", re.I)
+
+
+def _fire_event(text: str) -> tuple[str | None, bool]:
+    """Return a reported fire location and whether this statement explicitly describes spread."""
+    fire_mention = re.search(r"\b(?:fire|smoke|flames)\b", text, re.I)
+    if not fire_mention:
+        return None, False
+    text = text[fire_mention.start():]
+    spread = FIRE_SPREAD.search(text)
+    spreads = bool(spread)
+    if spread:
+        target = FIRE_TARGET.search(text[spread.end():])
+        if target:
+            destination = re.split(r"\b(?:from|and|while|but)\b", target.group(2), maxsplit=1, flags=re.I)[0].strip()
+            return f"in {target.group(1) or ''}{destination}".strip(), True
+    fire_bit = re.search(r"\b(?:fire|smoke|flames)\b[^.?!]*?\b(?:in|at|from|on|to|into|coming out)\b[^.?!]*", text, re.I)
+    return (_location_phrase(fire_bit.group(0)) if fire_bit else None), spreads
+
+
+def _fire_history(transcript: list[dict]) -> tuple[list[str], bool]:
+    locations: list[str] = []
+    spread = False
+    for line in transcript:
+        if (line.get("role") or line.get("speaker")) == "dispatcher":
+            continue
+        location, spread_event = _fire_event(line.get("text") or "")
+        if not location:
+            continue
+        spread = spread_event
+        if spread:
+            if location.casefold() not in {x.casefold() for x in locations}:
+                locations.append(location)
+        else:
+            locations = [location]
+    return locations, spread
+
+
+MOVE_CUE = re.compile(r"\b(?:moved|relocated|went|walked|crawled|is now|are now|now in|now at)\b", re.I)
+PERSON_PRONOUN = re.compile(r"\b(?:he|she|they|them|that person|the person)\b", re.I)
+
+
+def _apply_person_movements(record: dict, transcript: list[dict], building_id: str | None = None) -> None:
+    """Apply clear, person-specific movement statements to the latest trapped-person location."""
+    people = record.get("trapped") or []
+    if building_id:
+        fp, nav = layers.floorplan(building_id), layers.nav(building_id)
+        front = layers.building(building_id).get("front", "S")
+    else:
+        fp = nav = None
+        front = "S"
+    for line in transcript:
+        if (line.get("role") or line.get("speaker")) == "dispatcher":
+            continue
+        text = (line.get("text") or "").strip()
+        move = MOVE_CUE.search(text)
+        if not move:
+            continue
+        destination = _location_phrase(text[move.start():])
+        if not destination:
+            continue
+        low = text.casefold()
+        named = [p for p in people if p.get("description") and
+                 re.search(rf"\b{re.escape(p['description'].casefold())}\b", low)]
+        if len(named) == 1:
+            person = named[0]
+        elif not named and len(people) == 1 and PERSON_PRONOUN.search(low):
+            person = people[0]
+        else:
+            continue
+        if (person.get("near") or person.get("location")) == destination:
+            continue
+        person["near"] = destination
+        if "location" in person:
+            person["location"] = destination
+        if fp and nav:
+            candidates = locate(destination, fp, nav, front)
+            if candidates:
+                person["room_id"] = candidates[0]["room_id"]
+                person["room_candidates"] = candidates
+        changed = record.get("changed")
+        if not isinstance(changed, list):
+            changed = []
+            record["changed"] = changed
+        if "trapped" not in changed:
+            changed.append("trapped")
+        corrected = record.get("corrected")
+        if not isinstance(corrected, list):
+            corrected = []
+            record["corrected"] = corrected
+        if "trapped" not in corrected:
+            corrected.append("trapped")
 
 
 def _after_correction(text: str) -> str:
@@ -88,15 +187,22 @@ def rules_extract(transcript: list[dict], front: str = "S") -> dict:
         for f in floors:
             _set(rec, "floor", ORDINALS[f], 0.9 if not correcting else 0.8, low)
 
-        fire_bit = re.search(r"((?:fire|smoke|flames)[^.?!]*?\b(?:in|at|from|on|coming out)\b[^.?!]*)", low)
+        fire_bit = re.search(r"((?:fire|smoke|flames)[^.?!]*?\b(?:in|at|from|on|to|into|coming out)\b[^.?!]*)", low)
         asked_fire = (re.search(r"\b(?:fire|smoke|flames|which side|where on|where in)\b", last_q)
                       and not re.search(r"\bwhere are you\b|\baddress\b|\banyone\b", last_q))
         side = side_from_text(fire_bit.group(1) if fire_bit else (low if asked_fire else ""), front)
         if side:
             _set(rec, "side", side, 0.85, low)
-        loc = _location_phrase(fire_bit.group(1)) if fire_bit else (_location_phrase(low) if asked_fire else None)
+        loc, spreads = _fire_event(low) if fire_bit else (_location_phrase(low) if asked_fire else None, False)
         if loc and not re.fullmatch(r"\w+ the \w+ floor", loc):
             _set(rec, "fire_location", loc, 0.75, low)
+            if spreads:
+                if loc.casefold() not in {x.casefold() for x in rec["fire_locations"]}:
+                    rec["fire_locations"].append(loc)
+                rec["fire_spread"] = True
+            else:
+                rec["fire_locations"] = [loc]
+                rec["fire_spread"] = False
 
         for c in CONDITIONS:
             if re.search(rf"\b{c}\b", low) and not any(c in x for x in rec["conditions"]):
@@ -186,9 +292,18 @@ def extract(transcript: list[dict], building_id: str | None = None, use_llm: boo
         rec = rules_extract(lines, front)
     rec["extractor"] = source
     rec["transcript"] = transcript
+    fire_locations, fire_spread = _fire_history(lines)
+    if fire_locations:
+        rec["fire_locations"] = fire_locations
+        rec["fire_location"] = fire_locations[-1]
+        rec["fire_spread"] = fire_spread
     if building_id:
         rec["building_id"] = building_id
         resolve_rooms(rec, building_id)
+        _apply_person_movements(rec, lines, building_id)
+        resolve_rooms(rec, building_id)
+    else:
+        _apply_person_movements(rec, lines)
     return rec
 
 
@@ -209,12 +324,21 @@ def resolve_rooms(rec: dict, building_id: str) -> dict:
             if cands:
                 p["confidence"] = round(min(p.get("confidence", 0.7), 0.4 + cands[0]["confidence"]), 2)
         p["room_candidates"] = cands
-    fire_text = " ".join(x for x in (rec.get("fire_location"), {"A": "front", "C": "back", "B": "left side", "D": "right side"}.get(rec.get("side") or "")) if x)
-    cands = locate(fire_text, fp, nav, front) if fire_text else []
-    if not cands and rec.get("side"):
-        cands = [{"room_id": r["id"], "label": r["label"], "confidence": 0.3, "why": f"on side {rec['side']}"}
-                 for r in fp["rooms"] if r.get("side") == rec["side"]][:3]
-    rec["fire_room_ids"] = [c["room_id"] for c in cands[:2]]
+    fire_texts = rec.get("fire_locations") or ([rec.get("fire_location")] if rec.get("fire_location") else [])
+    if not fire_texts and rec.get("side"):
+        fire_texts = [{"A": "front", "C": "back", "B": "left side", "D": "right side"}.get(rec["side"], "")]
+    cands, fire_ids = [], set()
+    for fire_text in fire_texts:
+        text = " ".join(x for x in (fire_text, {"A": "front", "C": "back", "B": "left side", "D": "right side"}.get(rec.get("side") or "")) if x)
+        matches = locate(text, fp, nav, front) if text else []
+        if not matches and rec.get("side"):
+            matches = [{"room_id": r["id"], "label": r["label"], "confidence": 0.3, "why": f"on side {rec['side']}"}
+                       for r in fp["rooms"] if r.get("side") == rec["side"]][:3]
+        for candidate in matches[:2]:
+            if candidate["room_id"] not in fire_ids:
+                cands.append(candidate)
+                fire_ids.add(candidate["room_id"])
+    rec["fire_room_ids"] = [c["room_id"] for c in cands]
     rec["fire_candidates"] = cands
     return rec
 

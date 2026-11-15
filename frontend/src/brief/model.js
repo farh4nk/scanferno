@@ -25,8 +25,9 @@ export function deriveBrief(plan, b, rec) {
   const routeOf = (id) => routes[id] || plan.exit_routes?.[id] || null
 
   const trapped = (b.trapped || []).filter((t) => t.room_id && R[t.room_id])
-  const rescuePeople = (b.rescue?.people || []).filter((p) => p.located && p.room_id && R[p.room_id])
-  const victim = rescuePeople[0]?.room_id || trapped[0]?.room_id || null
+  const rescuePeople = (b.rescue?.people || []).filter((p) => !p.room_id || R[p.room_id])
+  const locatedPeople = rescuePeople.filter((p) => p.located && p.room_id && R[p.room_id])
+  const victim = locatedPeople[0]?.room_id || trapped[0]?.room_id || null
   const fireIds = (b.fire_room_ids || []).filter((id) => R[id])
   const heatRooms = b.heat?.rooms || null
   const floor = rec?.floor ?? b.occupancy?.floor ?? null
@@ -60,8 +61,8 @@ export function deriveBrief(plan, b, rec) {
 
   return {
     R, doors, label, routeOf, plan_, trapped, rescuePeople, victim, victimLabel: victim ? label(victim) : null,
-    victimConf: rescuePeople[0]?.room_confidence ?? trapped[0]?.confidence ?? null,
-    victimWords: rescuePeople[0]?.said || rec?.trapped?.[0]?.location || trapped[0]?.description || '',
+    victimConf: locatedPeople[0]?.room_confidence ?? trapped[0]?.confidence ?? null,
+    victimWords: locatedPeople[0]?.said || rec?.trapped?.[0]?.location || trapped[0]?.description || '',
     fireIds, fireKnown, heatRooms, heatMinutes: b.heat?.minutes ?? b.minutes ?? null,
     floor, side, watch, reported, isO2, search, attack, searchRoom: doorRoom(doors[search?.door_id]),
     exits, exitSides, vRoute, vExitSide, distToVictim, deadEnd, hose, bld, frontView,

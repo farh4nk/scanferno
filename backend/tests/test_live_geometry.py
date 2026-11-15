@@ -25,6 +25,12 @@ def test_attach_heat_and_rescue_polylines():
     assert "cells" not in brief["heat"]
     people = brief["rescue"]["people"]
     assert people and people[0]["entry"]["polyline"] and people[0]["extraction"]["polyline"]
+    recommended = people[0]["recommended_route"]
+    assert recommended["entry"] == people[0]["entry"]
+    assert recommended["extraction"] == people[0]["extraction"]
+    assert recommended["time_s"] == people[0]["total_time_s"]
+    assert recommended["distance_m"] == round(people[0]["entry"]["distance_m"] + people[0]["extraction"]["distance_m"], 1)
+    assert brief["rescue"]["route_objective"] == "minimum modeled response time with fire-exposure penalties"
     hotter = {"building_id": BID}
     live_geometry.attach(BID, d, hotter, minutes=5.0)
     cold = next(iter(brief["heat"]["rooms"].values()))["danger"]

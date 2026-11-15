@@ -351,7 +351,8 @@ def build(bid: str, dispatch: dict | None = None, use_llm: bool | None = None) -
                            f"a {PRECONNECT_FT} ft preconnect won't reach; extend the line.", "matterport"))
     hazards.sort(key=lambda h: SEVERITY_ORDER[h["severity"]])
     trapped = [{"room_id": p.get("room_id"), "description": p["description"], "confidence": p.get("confidence"),
-                "needs_assist": p.get("needs_assist", False), "candidates": p.get("room_candidates", [])}
+                "needs_assist": p.get("needs_assist", False), "candidates": p.get("room_candidates", []),
+                "location_source": p.get("location_source", "transcription"), "manual": p.get("manual", False)}
                for p in d.get("trapped") or []]
     entries = entry_points(fp, nav, d, sides)
     ladders = ladder_positions(o, fp, d, floor)

@@ -12,12 +12,12 @@ const SDK_KEY = typeof __MP_SDK_KEY__ === 'string' ? __MP_SDK_KEY__ : ''
 setApiBase(API)
 
 const VIEWS = [['dollhouse', 'Dollhouse'], ['floorplan', 'Top'], ['inside', 'Walk']]
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
+const heatColor = (danger) => danger >= 0.75 ? '#d42a1e' : '#ff7d1f'
 
 export default function Viewer3D({
   building, plan, layers, searchOrder, trapped, fireRooms, selected, onSelect, highlight, mayday, evac,
   clip, onClipEnd, onClipClose,
-  heat = null, rescuePeople = null, selectedRoute = null, walkToken = 0,
+  heat = null, fireHeat = false, rescuePeople = null, selectedRoute = null, selectedPersonId = null, onPersonSelect = null,
 }) {
   const box = useRef(null)
   const [viewer, setViewer] = useState(null)
@@ -27,7 +27,6 @@ export default function Viewer3D({
   const [here, setHere] = useState(null)
   const [anchor, setAnchor] = useState(null)
   const [heading, setHeading] = useState(null)
-  const [walkPhase, setWalkPhase] = useState(null)
   const player = useRef(null)
   // guided clip: the player for `clip`, its latest event, and whether captions are read aloud
   const tourRef = useRef(null)
@@ -42,9 +41,14 @@ export default function Viewer3D({
   viewRef.current = view
   const onSelectRef = useRef(onSelect)
   onSelectRef.current = onSelect
+  const onPersonSelectRef = useRef(onPersonSelect)
+  onPersonSelectRef.current = onPersonSelect
+  const rescuePeopleRef = useRef(rescuePeople)
+  rescuePeopleRef.current = rescuePeople
+  const trappedRef = useRef(trapped)
+  trappedRef.current = trapped
   const lastWalked = useRef(null)
   const liveViewer = useRef(null)
-  const walkGen = useRef(0)
 
   const walkTo = (v, roomId) => {
     if (!v || v !== liveViewer.current || !roomId) return Promise.resolve(null)
@@ -78,7 +82,25 @@ export default function Viewer3D({
         })
         opened.onHeading(setHeading)
         opened.onPick((p) => {
-          if (!p.room || viewRef.current === 'inside') return
+          if (!p.room) return
+          const people = rescuePeopleRef.current?.length
+            ? rescuePeopleRef.current
+            : (trappedRef.current || []).map((t) => ({ ...t, position: null }))
+          const inRoom = people.filter((t) => t.room_id === p.room.id && t.located !== false)
+            .map((t) => ({
+              person: t,
+              point: t.position || opened.floorplan.rooms.find((r) => r.id === t.room_id)?.centroid,
+            }))
+            .filter((t) => t.point)
+          const nearest = inRoom.sort((a, b) => Math.hypot(a.point[0] - p.local[0], a.point[1] - p.local[1])
+            - Math.hypot(b.point[0] - p.local[0], b.point[1] - p.local[1]))[0]
+          // A single occupant makes the room unambiguous; in shared rooms require a near-marker click.
+          if (onPersonSelectRef.current && nearest
+            && (inRoom.length === 1 || Math.hypot(nearest.point[0] - p.local[0], nearest.point[1] - p.local[1]) <= 1.5)) {
+            onPersonSelectRef.current(nearest.person.id)
+            return
+          }
+          if (viewRef.current === 'inside') return
           onSelectRef.current(p.room.id)
           walkTo(opened, p.room.id)
         })
@@ -117,22 +139,33 @@ export default function Viewer3D({
   }, [viewer, layers.order, searchOrder, walking])
 
   useEffect(() => {
+    draw('fire-heat', fireHeat, (l, fp) => {
+      for (const r of fp.rooms) {
+        const danger = heat?.rooms?.[r.id]?.danger ?? 0
+        if (danger < 0.12) continue
+        l.polygon(r.polygon, { color: heatColor(danger), opacity: Math.min(0.52, 0.12 + danger * 0.42), holes: r.holes })
+      }
+    })
+  }, [viewer, fireHeat, heat])
+
+  useEffect(() => {
     draw('incident', true, (l, fp) => {
       if (fireRooms?.length) highlightRooms(l, fp, fireRooms, '#ff7a1a', { pulse: true, label: 'FIRE' })
       const people = rescuePeople?.length ? rescuePeople : (trapped || []).map((t) => ({ ...t, position: null }))
       for (const t of people) {
         const r = fp.rooms.find((x) => x.id === t.room_id)
-        if (!r) continue
-        const at = t.position || r.centroid
-        l.marker(at, { shape: 'cone', radius: 0.3, height: 0.8, color: '#ff2a2a', xray: true })
-        l.label(at, (t.description || 'TRAPPED').split(' ')[0].toUpperCase(), { height: 2.6, color: '#fecaca', size: 0.34 })
+        const at = t.position || r?.centroid
+        if (!at) continue
+        const chosen = t.id === selectedPersonId
+        l.marker(at, { shape: 'cone', radius: chosen ? 0.38 : 0.3, height: chosen ? 1 : 0.8, color: chosen ? '#ff2a2a' : '#fb923c', xray: true })
+        l.label(at, (t.description || 'TRAPPED').split(' ')[0].toUpperCase(), { height: 2.6, color: chosen ? '#fecaca' : '#ffb385', size: chosen ? 0.38 : 0.32 })
       }
-      if (heat?.zones?.untenable?.length) highlightRooms(l, fp, heat.zones.untenable, '#7f1d1d', { pulse: false })
+      if (fireHeat && heat?.zones?.untenable?.length) highlightRooms(l, fp, heat.zones.untenable, '#7f1d1d', { pulse: false })
     })
-  }, [viewer, fireRooms, trapped, rescuePeople, heat])
+  }, [viewer, fireRooms, trapped, rescuePeople, selectedPersonId, heat, fireHeat])
 
   useEffect(() => {
-    if (viewer && selected && selected !== lastWalked.current && !clip && !walkToken) walkTo(viewer, selected)
+    if (viewer && selected && selected !== lastWalked.current && !clip) walkTo(viewer, selected)
     // eslint-disable-next-line
   }, [viewer, selected])
 
@@ -141,24 +174,30 @@ export default function Viewer3D({
   const walkFrom = walkRoute && here?.room?.id === walkRoute.from_room_id ? here.local : undefined
 
   useEffect(() => {
-    draw('route', true, (l, fp) => {
-      if (clip) return
-      if (selectedRoute?.entry?.polyline) {
-        drawRoute(l, { polyline: selectedRoute.entry.polyline, from_room_id: selectedRoute.person?.room_id }, fp, '#4dd0ff', { xray: walking })
+    draw('route', layers.routes || (walking && !selectedRoute), (l, fp) => {
+      if (clip || (!layers.routes && !walking)) return
+      if (selectedRoute?.entry?.polyline?.length > 1) {
+        const line = selectedRoute.entry.polyline
+        drawRoute(l, selectedRoute.entry, fp, '#4dd0ff',
+          { xray: walking, endLabel: selectedRoute.person?.description || 'person' })
+        l.marker(line[0], { shape: 'ring', radius: 0.38, color: '#4dd0ff', xray: true })
+        l.label(line[0], `ENTRY ${selectedRoute.entry.side || ''}`, { height: 2.4, color: '#4dd0ff', size: 0.32 })
       }
-      if (selectedRoute?.extraction?.polyline) {
-        drawRoute(l, { polyline: selectedRoute.extraction.polyline, from_room_id: selectedRoute.person?.room_id }, fp, '#7dffb3', { xray: walking })
+      if (selectedRoute?.extraction?.polyline?.length > 1) {
+        const line = selectedRoute.extraction.polyline
+        drawRoute(l, selectedRoute.extraction, fp, '#7dffb3',
+          { xray: walking, endLabel: `EXIT ${selectedRoute.extraction.side || ''}` })
+        l.marker(line[line.length - 1], { shape: 'ring', radius: 0.4, color: '#7dffb3', xray: true })
       }
       if (selectedRoute) return
       if (walking) {
         if (walkRoute) drawRoute(l, walkRoute, fp, undefined, { from: walkFrom, xray: true })
         return
       }
-      const targets = layers.routes ? trapped.map((t) => t.room_id) : []
-      if (selected) targets.push(selected)
+      const targets = layers.routes && selected ? [selected] : []
       for (const id of new Set(targets)) { const rt = fp.exit_routes?.[id]; if (rt) drawRoute(l, rt, fp) }
     })
-  }, [viewer, selected, trapped, layers.routes, walking, walkRoute, walkFrom, clip, selectedRoute])
+  }, [viewer, selected, layers.routes, walking, walkRoute, walkFrom, clip, selectedRoute])
 
   useEffect(() => {
     draw('mayday', true, (l, fp) => { if (mayday?.wall_path) drawMayday(l, mayday, fp) })
@@ -208,46 +247,6 @@ export default function Viewer3D({
     // eslint-disable-next-line
   }, [voice, capText])
 
-  // Walk rescue: enter to victim room, pause, then exit along extraction path.
-  useEffect(() => {
-    if (!viewer || !selectedRoute?.person?.room_id || !walkToken) return undefined
-    const gen = ++walkGen.current
-    const person = selectedRoute.person
-    const entryPath = selectedRoute.entry?.path || []
-    const exitPath = selectedRoute.extraction?.path || []
-    const enterRoom = entryPath[0] || person.room_id
-    const exitRoom = [...exitPath].reverse().find((r) => r !== person.room_id) || exitPath.at(-1) || person.room_id
-
-    ;(async () => {
-      try {
-        setWalkPhase('enter')
-        setView('inside')
-        try { await viewer.setView('inside') } catch { /* Showcase may refuse */ }
-        if (walkGen.current !== gen) return
-        await walkTo(viewer, enterRoom)
-        if (walkGen.current !== gen) return
-        if (enterRoom !== person.room_id) {
-          await sleep(900)
-          if (walkGen.current !== gen) return
-          await walkTo(viewer, person.room_id)
-        }
-        if (walkGen.current !== gen) return
-        setWalkPhase('save')
-        await sleep(1600)
-        if (walkGen.current !== gen) return
-        setWalkPhase('exit')
-        if (exitRoom && exitRoom !== person.room_id) await walkTo(viewer, exitRoom)
-        if (walkGen.current !== gen) return
-        setWalkPhase('done')
-        setStatus('Rescue walk complete')
-      } catch (e) {
-        if (walkGen.current === gen) setErr(`Rescue walk failed: ${e.message || e}`)
-      }
-    })()
-    return () => { walkGen.current += 1 }
-    // eslint-disable-next-line
-  }, [walkToken, viewer])
-
   const go = async (v) => {
     setView(v)
     setErr(null)
@@ -257,14 +256,9 @@ export default function Viewer3D({
 
   const exitSide = walkRoute && plan.doors.find((d) => d.id === walkRoute.exit_door_id)?.side
   const walkLine = walkRoute && (walkFrom ? [walkFrom, ...walkRoute.polyline.slice(1)] : walkRoute.polyline)
-  const walkInfo = selectedRoute
-    ? (walkPhase === 'enter' ? 'Walking in to the victim…'
-      : walkPhase === 'save' ? 'At victim — preparing exit…'
-        : walkPhase === 'exit' ? 'Exiting with the victim…'
-          : walkPhase === 'done' ? 'Rescue walk done'
-            : selectedRoute.entry?.text)
-    : walkRoute && `${plan.rooms.find((r) => r.id === walkRoute.from_room_id)?.label}: `
-      + `${(walkFrom ? pathLength(walkLine) : walkRoute.distance_m).toFixed(0)} m to exit${exitSide ? ` ${exitSide}` : ''}`
+  const walkInfo = !selectedRoute && walkRoute
+    ? `${plan.rooms.find((r) => r.id === walkRoute.from_room_id)?.label}: ${(walkFrom ? pathLength(walkLine) : walkRoute.distance_m).toFixed(0)} m to exit${exitSide ? ` ${exitSide}` : ''}`
+    : null
   const hint = !selectedRoute && walkLine && here && heading != null
     && turnHint(heading, here.local, pointAlong(walkLine, Math.min(pathLength(walkLine), nearestAlong(walkLine, here.local) + 2)))
 

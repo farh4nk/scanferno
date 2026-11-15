@@ -25,6 +25,7 @@ const P = {
   prev: <path d="M7 5v14M18 6l-8 6 8 6z" />,
   next: <path d="M17 5v14M6 6l8 6-8 6z" />,
   all: <path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z" />,
+  brief: <path d="M3 10.5 12 4l9 6.5M5 9v11h14V9M9 20v-6h6v6" />,
 }
 export default function Icon({ name }) {
   return <svg className="ic" viewBox="0 0 24 24" aria-hidden="true">{P[name]}</svg>

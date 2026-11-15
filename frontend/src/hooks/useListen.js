@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { createLiveSession, endLiveSession, getLiveSession, liveAudio, liveRecordingUrl, liveTick, liveUtterances, saveLiveSession, setLiveBuilding } from '../api'
+import { createLiveSession, endLiveSession, getLiveSession, liveAudio, liveRecordingUrl, liveTick, liveUtterances, saveLiveSession, setLiveBuilding, setLiveLocations } from '../api'
 
 // A call happening now, through a /live session. Same state shape as useLiveCall, so the transcript,
 // dispatch and briefing panels don't care which one feeds them. Inputs:
@@ -13,7 +13,8 @@ const TICK_EVERY_MS = 20000
 const EMPTY = {
   utterances: [], interim: '', record: null, recordN: 0, briefing: null, mayday: null,
   building_match: null, status: 'idle', listening: false, error: null, savedCallId: null,
-  sessionBuildingId: null, buildingChanged: false, mode: null, startedAt: 0, quota: false, processing: false, recordingUrl: null,
+  sessionBuildingId: null, buildingChanged: false, locationOverrides: { fire_room_id: null, people: [] },
+  mode: null, startedAt: 0, quota: false, processing: false, recordingUrl: null,
 }
 const MIME = ['audio/webm;codecs=opus', 'audio/webm', 'audio/ogg;codecs=opus', 'audio/mp4']
 
@@ -50,6 +51,7 @@ export function useListen(buildingId) {
     record: r.record ?? s.record,
     recordN: s.recordN + (r.extracted ? 1 : 0),
     briefing: r.briefing ?? s.briefing,
+    locationOverrides: r.location_overrides ?? s.locationOverrides,
     mayday: r.mayday ?? s.mayday,
     building_match: r.building_match !== undefined ? r.building_match : s.building_match,
     sessionBuildingId: r.building_id || s.sessionBuildingId,
@@ -231,6 +233,16 @@ export function useListen(buildingId) {
     } catch (e) { fail(e.message); skipReset.current = false; return null }
   }, [apply])
 
+  const setLocations = useCallback(async (locations) => {
+    try {
+      apply(await setLiveLocations(await session(), locations))
+      return true
+    } catch (e) {
+      fail(e.message)
+      return false
+    }
+  }, [session, apply])
+
   const reset = useCallback(() => {
     stop()
     if (urlRef.current) { URL.revokeObjectURL(urlRef.current); urlRef.current = null }
@@ -277,5 +289,5 @@ export function useListen(buildingId) {
 
   const acceptBuildingSync = useCallback(() => { syncBuilding.current = true }, [])
 
-  return { ...state, levelRef, role, setRole, start, stop, restore, addLine, uploadFile, save, reset, rebind, acceptBuildingSync, sessionId: sid.current }
+  return { ...state, levelRef, role, setRole, start, stop, restore, addLine, uploadFile, save, reset, rebind, setLocations, acceptBuildingSync, sessionId: sid.current }
 }

@@ -53,7 +53,19 @@ function LiveIntro({ onStart, onRestore, buildingId, canLive }) {
   )
 }
 
-function KeyBand({ k, step, blank }) {
+function KeyBand({ k, step, blank, selectedPerson, selectedEgress, peopleCount }) {
+  const wayOut = step === 3 && selectedPerson
+    ? selectedEgress
+      ? `${selectedEgress.distance_m} m`
+      : selectedPerson.located === false ? 'Location unknown' : 'No safe route'
+    : `${k.exits.length} exits`
+  const wayOutSub = step === 3 && selectedPerson
+    ? selectedEgress
+      ? `${selectedPerson.description} · side ${selectedEgress.side || '?'}`
+      : selectedPerson.located === false ? 'Update location to route' : 'Route unavailable'
+    : step === 3
+      ? peopleCount ? 'Select a person to see their route' : 'No person located yet'
+      : `sides ${k.exitSides.join(', ')}`
   const cells = blank ? [
     { key: 'Fire', s: [], off: true, pict: <FirePict known={false} />, v: 'Listening…' },
     { key: 'Watch', s: [], off: true, pict: <WatchPict known={false} />, v: 'Listening…' },
@@ -67,7 +79,8 @@ function KeyBand({ k, step, blank }) {
       v: k.watch ? hazardName(k.watch) : 'Listening…', sub: k.watch ? `from ${k.watch.source}${k.watch.source === 'dispatch' ? unsure(k.conf.hazards) : ''}` : null },
     { key: 'Enter', s: [1], pict: <EnterPict side={k.search?.side} />, v: k.search ? `Side ${k.search.side} door` : 'No door found', sub: k.searchRoom ? `into ${k.searchRoom}` : null },
     { key: 'Trapped', s: [2], hot: !!k.victim, off: !k.victim, pict: <TrappedPict known={!!k.victim} />, v: k.victimLabel || 'Listening…', sub: k.victim && k.victimConf != null ? `${Math.round(k.victimConf * 100)}% sure` : null },
-    { key: 'Way out', s: [3], pict: <ExitPict />, v: k.vRoute ? `${k.vRoute.distance_m} m` : `${k.exits.length} exits`, sub: k.vRoute ? `from victim · side ${k.vExitSide || '?'}` : `sides ${k.exitSides.join(', ')}` },
+    { key: 'Way out', s: [3], pict: <ExitPict />, v: step === 3 ? wayOut : k.vRoute ? `${k.vRoute.distance_m} m` : `${k.exits.length} exits`,
+      sub: step === 3 ? wayOutSub : k.vRoute ? `from victim · side ${k.vExitSide || '?'}` : `sides ${k.exitSides.join(', ')}` },
   ]
   return (
     <div className="keyband">
@@ -80,9 +93,29 @@ function KeyBand({ k, step, blank }) {
   )
 }
 
-function attackPlan(k, step) {
+function rescueRoster(k) {
+  const people = [...(k.rescuePeople || [])]
+  const descriptions = new Set(people.map((p) => (p.description || '').trim().toLowerCase()).filter(Boolean))
+  for (const [i, person] of (k.trapped || []).entries()) {
+    const description = (person.description || '').trim().toLowerCase()
+    if (description && descriptions.has(description)) continue
+    if (description) descriptions.add(description)
+    people.push({ ...person, id: person.id || `trapped-${i}` })
+  }
+  return people.map((person, i) => {
+    const position = person.position || k.R[person.room_id]?.centroid || null
+    return {
+      ...person,
+      id: person.id || `person-${i}`,
+      position,
+      located: person.located ?? !!position,
+    }
+  })
+}
+
+function attackPlan(k, step, selectedPerson, selectedEgress) {
   // overlays drawn on the plan for each step
-  const o = { sides: step !== 0, tags: [], routes: [], dim: false, order: null, pulse: null, dashed: null, hose: null, bigExits: false, deadEnd: null }
+  const o = { sides: step !== 0, tags: [], routes: [], dim: false, order: null, pulse: null, dashed: null, hose: null, bigExits: false, deadEnd: null, egress: null }
   const exitPt = (r) => r?.polyline?.at(-1)
   if (step === 0) {
     o.dim = true
@@ -104,10 +137,9 @@ function attackPlan(k, step) {
     } else if (!k.victim) o.order = Object.fromEntries(k.plan_.slice(0, 5).map((s, i) => [s.room_id, i + 1]))
   }
   if (step === 3) {
-    o.bigExits = true; o.deadEnd = k.deadEnd
-    o.routes = k.plan_.slice(0, 6).map((s) => k.routeOf(s.room_id)?.polyline).filter(Boolean)
-    if (k.deadEnd) o.tags.push({ at: k.R[k.deadEnd].centroid, text: 'DEAD END · NO WINDOW', cls: 'warn' })
-    if (k.vRoute) o.tags.push({ at: exitPt(k.vRoute), dy: 44, text: `NEAREST EXIT · ${k.vRoute.distance_m} M`, cls: 'f' })
+    o.deadEnd = selectedPerson?.room_id === k.deadEnd ? k.deadEnd : null
+    o.egress = selectedEgress
+    if (selectedEgress?.polyline) o.routes = [selectedEgress.polyline]
   }
   if (step > 0 && k.fireKnown && k.fireIds[0]) o.tags.push({ at: k.R[k.fireIds[0]].centroid, dx: 60, dy: k.victim && k.fireIds.includes(k.victim) ? 70 : -62, text: k.isO2 ? 'FIRE · O₂ CYLINDERS REPORTED' : 'FIRE AREA', cls: 'r' })
   return o
@@ -124,7 +156,7 @@ function liveOverlay(k) {
   return o
 }
 
-function StepPanel({ k, step, briefing, go }) {
+function StepPanel({ k, step, briefing, go, people, selectedPerson, selectedEgress, onSelectPerson }) {
   if (step === 0) {
     const img = briefing.images?.[k.frontView]
     return (
@@ -154,18 +186,48 @@ function StepPanel({ k, step, briefing, go }) {
       <div className="card"><h3>Search order</h3><SearchChain k={k} from={0} n={5} onRoom={(id) => go('rescue', { room: id })} /></div>
     </>
   )
-  return (
+  if (step === 3) return (
     <>
+      <div className="card">
+        <h3>People to evacuate <span>{people.length ? 'Select a person for their route' : 'No location reported'}</span></h3>
+        {people.length ? people.map((person) => {
+          const room = person.room_id && k.R[person.room_id] ? k.label(person.room_id) : null
+          const status = person.located ? room || 'Location reported' : 'Location unknown'
+          return (
+            <button key={person.id} type="button" className={`row ${person.id === selectedPerson?.id ? 'sel' : ''}`}
+              aria-pressed={person.id === selectedPerson?.id} onClick={() => onSelectPerson(person.id)}>
+              <span className={`sh ${person.located ? 'r' : 'o'}`}>{person.located ? 'P' : '?'}</span>
+              <div><b>{person.description || 'Person'}</b><small>{status}</small></div>
+              {person.id === selectedPerson?.id && <span className="route-badge">Selected</span>}
+            </button>
+          )
+        }) : (
+          <div className="egress-empty">
+            <p className="muted">No person location is in the briefing yet. Add one in Rescue or wait for a caller update.</p>
+            <button type="button" className="btn egress-add" onClick={() => go('rescue')}>Add person location</button>
+          </div>
+        )}
+      </div>
+      {selectedPerson && (
+        <div className={`card ${selectedEgress ? '' : 'egress-unavailable'}`}>
+          <h3>{selectedEgress ? 'Selected exit route' : 'Exit route unavailable'}</h3>
+          <p className="note">{selectedEgress?.text || (selectedPerson.located === false
+            ? 'This person has no confirmed room yet. Update their location to calculate an exit route.'
+            : 'No safe exit route is available from this location.')}</p>
+        </div>
+      )}
       <div className="card"><h3>Distance to the nearest exit</h3><ExitBars k={k} /></div>
       {k.deadEnd && <div className="card"><div className="hzrow"><DeadEndPict /><div><b>{k.label(k.deadEnd)} is a dead end</b><span>One way in, one way out</span></div></div></div>}
-      <button className="btn red wide" onClick={() => go('mayday', { room: k.victim || k.deadEnd })}>Mayday: wall-follow directions<Icon name="arrow" /></button>
+      <button className="btn red wide" onClick={() => go('mayday', { room: selectedPerson?.room_id || k.victim || k.deadEnd })}>Mayday: wall-follow directions<Icon name="arrow" /></button>
     </>
   )
+  return null
 }
 
-export default function Home({ k, plan, briefing, feed, go, building, mode, onStartLive, onRestore, canLive, tools }) {
+export default function Home({ k, plan, briefing, feed, go, building, mode, onStartLive, onRestore, canLive }) {
   const [step, setStep] = useState(0)
   const [view, setView] = useState('2d')
+  const [selectedPersonId, setSelectedPersonId] = useState(null)
   const [follow, setFollow] = useState(true)
   const [flash, setFlash] = useState(null)
   const live = ['live', 'connecting', 'paused'].includes(feed.status)
@@ -251,18 +313,39 @@ export default function Home({ k, plan, briefing, feed, go, building, mode, onSt
     const t = setTimeout(() => setFlash(null), 6000)
     return () => clearTimeout(t)
   }, [briefing.generated_at]) // eslint-disable-line react-hooks/exhaustive-deps
+  const people = rescueRoster(k)
+  const selectedPerson = people.find((person) => person.id === selectedPersonId)
+    || people.find((person) => person.room_id === k.victim)
+    || people.find((person) => person.located && person.room_id)
+    || people[0]
+    || null
+  const selectedEgress = selectedPerson?.located !== false && selectedPerson?.room_id
+    ? selectedPerson.extraction || selectedPerson.recommended_route?.extraction || k.routeOf(selectedPerson.room_id)
+    : null
   // switching to a blank slate stops any narration and closes the text and simulation views
   useEffect(() => { if (blank) { stop(); setSim(false); setReading(false); setStep(0) } }, [blank]) // eslint-disable-line react-hooks/exhaustive-deps
   const livePlan = live && follow
-  const o = blank
-    ? { sides: false, tags: [], routes: [], order: null, doors: false, flash: [] }
-    : { ...(livePlan ? liveOverlay(k) : attackPlan(k, step)), flash: flash?.ids || [] }
+  const overlay = livePlan ? liveOverlay(k) : attackPlan(k, step, selectedPerson, selectedEgress)
+  if (livePlan && step === 3) {
+    overlay.dashed = null
+    overlay.egress = selectedEgress
+    overlay.routes = selectedEgress?.polyline ? [selectedEgress.polyline] : []
+  }
+  const o = blank ? { sides: false, tags: [], routes: [], order: null, doors: false, flash: [] } : { ...overlay, flash: flash?.ids || [] }
+  const victimName = k.rescuePeople.find((p) => p.room_id === k.victim)?.description
+    || k.trapped.find((p) => p.room_id === k.victim)?.description
+    || k.victimLabel
+    || 'victim'
+  const stageRoute = step === 3 && o.egress
+    ? { extraction: { ...o.egress, side: o.egress.side || k.doors[o.egress.exit_door_id]?.side }, person: selectedPerson }
+    : step === 2 && k.vRoute && o.dashed
+      ? { entry: { ...k.vRoute, polyline: o.dashed, side: k.vExitSide }, person: { description: victimName } }
+      : null
   const last = feed.utterances.at(-1)
   return (
     <div className={`page brief ${sideOpen ? '' : 'noside'}`}>
-      {tools}
       {mode === 'live' && <audio ref={rec} src={feed.recordingUrl || undefined} hidden onPlay={() => setHear((h) => ({ ...h, playing: true }))} onPause={() => setHear((h) => ({ ...h, playing: false }))} onEnded={() => setHear({ playing: false, t: 0 })} onLoadedMetadata={(e) => { const a = e.currentTarget; if (a.duration === Infinity) { /* MediaRecorder files carry no length: read to the end once so seeking works */ a.currentTime = 1e101; const fix = () => { a.removeEventListener('timeupdate', fix); a.currentTime = 0 }; a.addEventListener('timeupdate', fix) } }} onTimeUpdate={(e) => setHear({ playing: !e.currentTarget.paused, t: e.currentTarget.currentTime })} />}
-      <KeyBand k={k} step={step} blank={blank} />
+      <KeyBand k={k} step={step} blank={blank} selectedPerson={selectedPerson} selectedEgress={selectedEgress} peopleCount={people.length} />
       <div className="stagerow">
       {sim ? <PathSim k={k} building={building} plan={plan} briefing={briefing} onClose={() => setSim(false)} /> : <>
       <div className="stage panel">
@@ -275,17 +358,27 @@ export default function Home({ k, plan, briefing, feed, go, building, mode, onSt
             {(flash?.items || []).slice(0, 2).map((c, i) => <div key={i} className={`nb ${c.kind}`} title={c.text}><b>New</b><span>{c.text}</span></div>)}
           </div>
           <div className="stage-tools">
-          <button className="sidetoggle" onClick={toggleSide} aria-expanded={sideOpen} aria-controls="side-panel" title={sideOpen ? 'Hide the side panel' : 'Show the side panel'}><span aria-hidden="true">{sideOpen ? '›' : '‹'}</span>{sideOpen ? 'Hide panel' : 'Show panel'}</button>
-          <div className="seg"><button className={view === '2d' ? 'on' : ''} onClick={() => setView('2d')}>2D plan</button><button className={view === '3d' ? 'on' : ''} onClick={() => setView('3d')}>3D model</button></div>
-        </div>
+            {!sideOpen && <button className="panel-reopen" onClick={toggleSide} aria-expanded={false} aria-controls="side-panel">Show panel</button>}
+            <div className="seg stage-mode">
+              <button className={view === '2d' ? 'on' : ''} onClick={() => setView('2d')}>2D plan</button>
+              <button className={view === '3d' ? 'on' : ''} onClick={() => setView('3d')}>3D model</button>
+            </div>
+          </div>
         </div>
         <div className="planwrap">
           {view === '3d'
             ? <Viewer3D building={building} plan={plan} layers={{ order: step >= 2, routes: step >= 2, doors: true, heat: false, windows: false }}
                 searchOrder={o.order || {}} trapped={briefing.trapped || []} fireRooms={briefing.fire_room_ids}
-                selected={step === 3 ? k.deadEnd : step === 2 ? k.victim : null} onSelect={() => {}}
-                highlight={step === 3 ? { rooms: [], polylines: o.routes } : step === 1 && o.hose ? { rooms: [], polylines: [o.hose] } : null} mayday={null} evac={null} />
-            : <PlanSvg plan={plan} k={k} {...o} />}
+                rescuePeople={people}
+                selectedPersonId={selectedPerson?.id}
+                onPersonSelect={setSelectedPersonId}
+                selected={step === 3 ? selectedPerson?.room_id : step === 2 ? k.victim : null} onSelect={() => {}}
+                highlight={step === 1 && o.hose ? { rooms: [], polylines: [o.hose] } : null}
+                selectedRoute={stageRoute}
+                mayday={null} evac={null} />
+            : <PlanSvg plan={plan} k={k} {...o} selected={step === 3 ? selectedPerson?.room_id : step === 2 ? k.victim : null}
+                people={people.map((person) => ({ id: person.id, at: person.position, label: person.description, located: person.located }))}
+                selectedPersonId={selectedPerson?.id} onPersonSelect={setSelectedPersonId} />}
         </div>
         {voiceErr && <p className="caption err">{voiceErr}</p>}
         {narrating && caption && !reading ? (
@@ -295,6 +388,12 @@ export default function Home({ k, plan, briefing, feed, go, building, mode, onSt
         ) : null}
       </div>
       <div className="side" id="side-panel" key={`${step}-${reading}-${tab}`}>
+        <div className="side-head">
+          <b>Briefing panel</b>
+          <button className="side-collapse" onClick={toggleSide} aria-expanded={true} aria-controls="side-panel" title="Hide briefing panel">
+            Hide panel <span aria-hidden="true">›</span>
+          </button>
+        </div>
         {hasCall && !blank && <div className="seg side-tabs"><button className={tab === 'call' ? 'on' : ''} onClick={() => setTab('call')}>Call sheet</button><button className={tab === 'brief' ? 'on' : ''} onClick={() => setTab('brief')}>Briefing</button></div>}
         {reading ? (
           <div className="readp"><h2>Briefing <span>tap a step to show it on the plan</span></h2>
@@ -306,7 +405,8 @@ export default function Home({ k, plan, briefing, feed, go, building, mode, onSt
           </div>
         ) : blank ? (hasCall ? <LiveSide feed={feed} onSeek={hasRec ? seekRec : undefined} hearT={hasRec && hear.playing ? hear.t : null} /> : <LiveIntro onStart={onStartLive} onRestore={onRestore} buildingId={building?.id} canLive={canLive} />)
           : hasCall && tab === 'call' ? <LiveSide feed={feed} onSeek={hasRec ? seekRec : undefined} hearT={hasRec && hear.playing ? hear.t : null} />
-            : <StepPanel k={k} step={step} briefing={briefing} go={go} />}
+            : <StepPanel k={k} step={step} briefing={briefing} go={go} people={people} selectedPerson={selectedPerson}
+              selectedEgress={selectedEgress} onSelectPerson={setSelectedPersonId} />}
       </div>
       </>}
       </div>

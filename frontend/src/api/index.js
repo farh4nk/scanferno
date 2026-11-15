@@ -42,6 +42,7 @@ export const liveTick = (sid) => post(`/live/sessions/${sid}/tick`)
 export const listLiveSessions = () => get('/live/sessions')
 export const getLiveSession = (sid) => get(`/live/sessions/${sid}`)
 export const liveRecordingUrl = (sid) => `${API}/live/sessions/${sid}/audio`
+export const setLiveLocations = (sid, locations) => post(`/live/sessions/${sid}/locations`, locations)
 export const setLiveBuilding = (sid, buildingId) => post(`/live/sessions/${sid}/building`, { building_id: buildingId })
 export const saveLiveSession = (sid, title) => post(`/live/sessions/${sid}/save`, { title })
 export const endLiveSession = (sid) => del(`/live/sessions/${sid}`)
