@@ -217,7 +217,7 @@ svg.mi { width: 22px; height: 22px; } .ip { fill: var(--white); } .iad { fill: v
 .aerial .mark circle { fill: var(--night); stroke: var(--white); } .aerial .mark text { fill: var(--white); stroke-width: 4px; font-weight: 700; }
 .aerial .mark.entry circle { fill: var(--fire); stroke: var(--night); } .aerial .mark.roof circle, .aerial .mark.utility circle, .aerial .mark.landmark circle { stroke: var(--dim); }
 .aerial .mark.roof text, .aerial .mark.utility text, .aerial .mark.landmark text { fill: var(--dim); }
-.aerial-photo .aerial { width: 100%; max-height: 260px; margin: 0; border-radius: 0; }
+.aerial-photo .aerial { width: 100%; max-height: 190px; margin: 0; border-radius: 0; }
 .aer { width: 100%; flex: 1; min-height: 0; object-fit: contain; background: #000; border-radius: 10px; margin-top: 12px; }
 .askbar { height: 52px; border-radius: 10px; background: var(--road); display: flex; align-items: center; padding: 0 8px 0 18px; gap: 12px; color: var(--dim); }
 .askbar input { flex: 1; background: none; height: auto; padding: 0; outline: none; } .askbar input::placeholder { color: var(--dim); }
@@ -356,3 +356,16 @@ svg.mi { width: 22px; height: 22px; } .ip { fill: var(--white); } .iad { fill: v
 .sidetoggle { position: absolute; z-index: 6; top: 50%; right: 466px; transform: translateY(-50%); display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 12px 0 10px; border-radius: 22px; background: var(--night); border: 2px solid var(--rule); color: var(--white); font-size: 13px; font-weight: 800; }
 .sidetoggle span { font-size: 22px; line-height: 1; } .sidetoggle:hover { border-color: var(--fire); }
 .brief.noside .sidetoggle { right: 12px; }
+
+/* data freshness */
+.fr-axis { stroke: var(--rule); stroke-width: 3; }
+.fr-dot { fill: var(--road); stroke: var(--dim); stroke-width: 3; } .fr-dot.src { stroke: var(--fire); } .fr-dot.now { fill: var(--fire); stroke: var(--fire); }
+.fr-l, .fr-t, .fr-q { text-anchor: middle; font-family: inherit; }
+.fr-l { fill: var(--dim); font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; } .fr-l.src { fill: var(--fire); } .fr-l.now { fill: var(--white); }
+.fr-t { fill: var(--white); font-size: 15px; font-weight: 700; }
+.fr-unk { stroke: var(--dim); stroke-width: 2; stroke-dasharray: 5 5; fill: none; }
+.fr-q { fill: var(--dim); font-size: 13px; font-weight: 700; }
+.trust h3 span { color: var(--dim); }
+.tnote { display: flex; gap: 10px; align-items: baseline; padding: 6px 0; font-size: 14px; font-weight: 600; color: var(--white); border-top: 1px solid var(--rule); }
+.tnote::before { content: '?'; flex: none; display: grid; place-items: center; width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--fire); color: var(--fire); font-size: 11px; font-weight: 900; }
+.card.sect .dg { max-height: 180px; } .trust .dg { max-height: 104px; } .fresh .dg { max-height: 150px; } .card.trust { padding-bottom: 8px; }

@@ -167,3 +167,50 @@ export const DeadEndPict = () => (
     <text x="60" y="100" className="gl c dim">1 door · no window</text>
   </Svg>
 )
+
+// ---------- how fresh is each source: a timeline from construction to the call ----------
+const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+const ym = (s) => (s ? `${MON[+s.slice(5, 7) - 1]} ${s.slice(0, 4)}` : null)
+// Points are spaced in order, not to scale: 40 years and 10 months both need room for a label.
+export function Freshness({ age }) {
+  if (!age) return null
+  const now = new Date()
+  const pts = [
+    age.built && { t: String(age.built), l: 'Built', c: 'old' },
+    age.renovated && { t: String(age.renovated), l: 'Renovated', c: 'old' },
+    age.aerial && { t: ym(age.aerial), l: 'Aerial photos', c: 'src' },
+    { t: `${MON[now.getMonth()]} ${now.getFullYear()}`, l: 'This call', c: 'now' },
+  ].filter(Boolean)
+  const W = 400; const x0 = 34; const x1 = W - 34; const y = 46
+  const X = (i) => x0 + (i * (x1 - x0)) / (pts.length - 1)
+  // the interior scan has no date: show it as a dashed span over the whole window it could be from
+  const from = X(age.renovated ? 1 : 0); const to = X(pts.length - 1)
+  return (
+    <div className="fresh"><Svg w={W} h={118} wide label="How old each data source is">
+      <line x1={x0} y1={y} x2={x1} y2={y} className="fr-axis" />
+      {pts.map((p, i) => (
+        <g key={p.l} transform={`translate(${X(i)},${y})`}>
+          <circle r={p.c === 'now' ? 8 : 6} className={`fr-dot ${p.c}`} />
+          <text y={-16} className={`fr-l ${p.c}`}>{p.l}</text>
+          <text y={26} className="fr-t">{p.t}</text>
+        </g>
+      ))}
+      {age.scan == null && <>
+        <path d={`M${from} ${y + 44}h${to - from}`} className="fr-unk" />
+        <path d={`M${from} ${y + 38}v12M${to} ${y + 38}v12`} className="fr-unk" />
+        <text x={Math.min(Math.max((from + to) / 2, 150), W - 150)} y={y + 64} className="fr-q">Floor plan scanned sometime here · date unknown</text>
+      </>}
+    </Svg></div>
+  )
+}
+
+// short warnings about what the data can't promise
+export function trustNotes(age, caveats = []) {
+  if (!age) return []
+  const out = []
+  if (age.stories > 1 && age.scan_floors < age.stories) out.push(`Plan covers ${age.scan_floors} of ${age.stories} floors; others assumed the same`)
+  if (age.inferred_doors) out.push(`${age.inferred_doors} door${age.inferred_doors > 1 ? 's' : ''} inferred, not scanned`)
+  if (!age.orientation_verified) out.push('Side letters inside are approximate')
+  if (!out.length) return caveats.slice(0, 2)
+  return out
+}

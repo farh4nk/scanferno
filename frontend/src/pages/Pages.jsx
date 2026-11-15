@@ -3,7 +3,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { ask, asset, getEvac, getMayday, getRoute, getTour } from '../api'
 import PlanSvg from '../brief/PlanSvg'
 import AerialView, { sideOfCompass, viewLabel, viewOfCompass } from '../brief/Aerial'
-import { HoseGauge, Ring, Section } from '../brief/Diagrams'
+import { Freshness, HoseGauge, Ring, Section } from '../brief/Diagrams'
 import LivePanel from '../components/LivePanel'
 import Viewer3D from '../components/Viewer3D'
 import Icon from '../ui/Icon'
@@ -246,7 +246,7 @@ export function ExteriorPage({ ctx, k }) {
     <div className="page split" style={{ gridTemplateColumns: '1fr 1fr' }}>
       <div className="col"><div className="panel"><h2>Building</h2><Section k={k} /></div>
         <div className="panel"><h2>Ladders</h2>{(b.ladder_positions || []).map((l, i) => <div key={i} className="row"><span className="sh">{l.side}</span><div><b>{l.purpose}</b><small>{l.text}</small></div><span className="src">{(l.sources || []).join(' + ')}</span></div>)}</div></div>
-      <div className="panel"><h2>Know before you trust it</h2>{k.caveats.map((c, i) => <div key={i} className="row one"><span>{c}</span></div>)}</div>
+      <div className="panel"><h2>Know before you trust it</h2><Freshness age={k.age} />{k.caveats.map((c, i) => <div key={i} className="row one"><span>{c}</span></div>)}</div>
     </div>
   )
 }

@@ -65,7 +65,7 @@ export function deriveBrief(plan, b, rec) {
     floor, side, watch, isO2, search, attack, searchRoom: doorRoom(doors[search?.door_id]),
     exits, exitSides, vRoute, vExitSide, distToVictim, deadEnd, hose, bld, frontView,
     stories: bld.stories, roof: bld.roof_height_m, people: b.occupancy?.employees_on_floor,
-    ladders: (b.ladder_positions || []).map((l) => l.side), caveats: b.caveats || [],
+    ladders: (b.ladder_positions || []).map((l) => l.side), caveats: b.caveats || [], age: b.data_age || null, conf: rec?.confidence || {},
     rescueFactors: b.rescue?.factors || [],
   }
 }

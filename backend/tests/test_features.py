@@ -34,6 +34,12 @@ def test_briefing_claims_cite_sources():
     assert all(h["source"] for h in b["hazards"])
 
 
+def test_briefing_reports_data_age():
+    a = client.post(f"/buildings/{BID}/briefing", json={"dispatch": {}, "use_llm": False}).json()["data_age"]
+    assert a["built"] == 1983 and a["aerial"] == "2026-01" and a["scan"] is None
+    assert a["scan_floors"] == 1 and a["stories"] == 5
+
+
 def test_briefing_changes():
     old = {"search_plan": [{"room_id": "a", "label": "Office A"}], "trapped": [], "hazards": []}
     new = {"search_plan": [{"room_id": "b", "label": "Office B"}], "fire_room_ids": ["b"],
