@@ -80,6 +80,7 @@ def prepare(key: str, refresh: bool = False, fetch_outside: bool = True) -> dict
         _ensure_vexcel(bid, e["lat"], e["lon"], refresh)
 
     registry.upsert(row)
+    directory.clear()  # search list flips to ready / building_id
     # Drop only this building's floorplan cache entry if we must rebuild.
     if refresh or not floorplan_path.exists():
         layers.floorplan.cache_clear()

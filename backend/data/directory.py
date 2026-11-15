@@ -128,7 +128,31 @@ def entries() -> tuple[dict, ...]:
             e["building_id"] = bid
 
     _clean_cities(out)
+    _mark_ondemand_ready(out)
     return tuple(out)
+
+
+def _mark_ondemand_ready(out: list[dict]) -> None:
+    """Buildings prepared via POST /ondemand show as ready in search (open briefing, not the property card)."""
+    from ondemand import registry  # local: ondemand.ready imports directory
+    ready = {b["id"] for b in registry.all()
+             if cache.FIXTURES.joinpath(b["id"], "matterport_vector.json").exists()}
+    if not ready:
+        return
+    for e in out:
+        bid = e.get("building_id") or e["id"]
+        if bid in ready or e["id"] in ready:
+            e["status"] = "ready"
+            e["building_id"] = bid if bid in ready else e["id"]
+
+
+def clear() -> None:
+    """Drop search caches after onboarding so the next /search shows status ready."""
+    entries.cache_clear()
+    _index.cache_clear()
+    _keys.cache_clear()
+    _scored.cache_clear()
+    _facets_cached.cache_clear()
 
 
 def _clean_cities(out: list[dict]) -> None:
