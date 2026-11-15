@@ -2,7 +2,8 @@
 // Everything here is derived from API data; nothing is specific to one building.
 
 export const SIDE_NAME = { A: 'front', B: 'left', C: 'rear', D: 'right' }
-const COMPASS_VIEW = { N: 'oblique-north', S: 'oblique-south', E: 'oblique-east', W: 'oblique-west' }
+// Vexcel names an oblique by the way the camera looks: the south wall is seen in oblique-north
+const COMPASS_VIEW = { N: 'oblique-south', S: 'oblique-north', E: 'oblique-west', W: 'oblique-east' }
 
 // Plan coordinates are meters with y up; the SVG view flips y and scales.
 export function makeView(plan, scale = 40, pad = 1.6) {
