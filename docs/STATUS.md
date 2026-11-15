@@ -97,6 +97,7 @@ Living handoff doc. Update your role's section and add a changelog line in the s
 **Unblocked by:** aerial images at `/fixtures/<id>/vexcel/*.jpg`, calls at `/calls/{id}` and `/calls/{id}/replay` (SSE), sample briefing at `fixtures/sample/briefing.json`.
 
 ## Changelog
+- 2026-11-15: Live test mode has a building picker ("Where is the fire?"): the ready buildings plus the 97 other CoStar-linked scanned buildings, searchable, set up on demand when picked (about 1 s). Demo mode stays on the preset buildings (branch `ui-live-building-picker`).
 - 2026-11-15: New logo, the equalizer flame (a flame cut into audio bars): `frontend/src/components/Logo.jsx` replaces the "SF" chip in the header on every page (click it to go home), plus `frontend/public/favicon.svg` (branch `ui-live-mic`).
 - 2026-11-15: Live calls survive a page reload: the tab remembers its call and restores transcript, briefing and recording from the API; the blank slate lists recent calls (`GET /live/sessions`, `GET /live/sessions/{id}/audio`). Calls still live only in API memory, so a backend restart (any backend code edit under `--reload`) loses them; use Save call to keep one (branch `ui-live-mic`).
 - 2026-11-15: Live briefing narration opens with the call itself ("Call briefing. <address>. <where the fire is>. Fire, <side>, <floor>. <conditions>. Caller is <where>."); demo narration unchanged (branch `ui-live-mic`).
