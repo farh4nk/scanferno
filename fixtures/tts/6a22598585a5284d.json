@@ -1,0 +1,87 @@
+{
+  "text": "Piney Point Offices II, 2500 Fondren Road. Three-story steel, sprinklered. Fire, first floor. Aerial to Alpha.",
+  "voice": "briefing",
+  "audio_url": "/fixtures/tts/6a22598585a5284d.mp3",
+  "words": [
+    {
+      "word": "Piney",
+      "start": 0.023,
+      "end": 0.255
+    },
+    {
+      "word": "Point",
+      "start": 0.302,
+      "end": 0.476
+    },
+    {
+      "word": "Offices",
+      "start": 0.534,
+      "end": 0.94
+    },
+    {
+      "word": "II,",
+      "start": 0.964,
+      "end": 1.301
+    },
+    {
+      "word": "2500",
+      "start": 1.359,
+      "end": 2.102
+    },
+    {
+      "word": "Fondren",
+      "start": 2.16,
+      "end": 2.473
+    },
+    {
+      "word": "Road.",
+      "start": 2.531,
+      "end": 2.856
+    },
+    {
+      "word": "Three-story",
+      "start": 3.181,
+      "end": 3.692
+    },
+    {
+      "word": "steel,",
+      "start": 3.75,
+      "end": 4.18
+    },
+    {
+      "word": "sprinklered.",
+      "start": 4.284,
+      "end": 4.888
+    },
+    {
+      "word": "Fire,",
+      "start": 5.12,
+      "end": 5.48
+    },
+    {
+      "word": "first",
+      "start": 5.538,
+      "end": 5.759
+    },
+    {
+      "word": "floor.",
+      "start": 5.794,
+      "end": 6.177
+    },
+    {
+      "word": "Aerial",
+      "start": 6.444,
+      "end": 6.873
+    },
+    {
+      "word": "to",
+      "start": 6.955,
+      "end": 7.059
+    },
+    {
+      "word": "Alpha.",
+      "start": 7.152,
+      "end": 7.558
+    }
+  ]
+}

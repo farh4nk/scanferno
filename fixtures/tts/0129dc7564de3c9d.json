@@ -1,0 +1,37 @@
+{
+  "text": "Search: Alpha side door, Office 101.",
+  "voice": "briefing",
+  "audio_url": "/fixtures/tts/0129dc7564de3c9d.mp3",
+  "words": [
+    {
+      "word": "Search:",
+      "start": 0.023,
+      "end": 0.488
+    },
+    {
+      "word": "Alpha",
+      "start": 0.755,
+      "end": 1.022
+    },
+    {
+      "word": "side",
+      "start": 1.08,
+      "end": 1.347
+    },
+    {
+      "word": "door,",
+      "start": 1.382,
+      "end": 1.777
+    },
+    {
+      "word": "Office",
+      "start": 1.916,
+      "end": 2.241
+    },
+    {
+      "word": "101.",
+      "start": 2.276,
+      "end": 2.903
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "text": "One exits, Alpha. If lost, call a mayday and follow the wall.",
+  "voice": "briefing",
+  "audio_url": "/fixtures/tts/72ab784192aa1d86.mp3",
+  "words": [
+    {
+      "word": "One",
+      "start": 0.023,
+      "end": 0.151
+    },
+    {
+      "word": "exits,",
+      "start": 0.174,
+      "end": 0.615
+    },
+    {
+      "word": "Alpha.",
+      "start": 0.65,
+      "end": 0.998
+    },
+    {
+      "word": "If",
+      "start": 1.207,
+      "end": 1.346
+    },
+    {
+      "word": "lost,",
+      "start": 1.439,
+      "end": 1.857
+    },
+    {
+      "word": "call",
+      "start": 1.996,
+      "end": 2.171
+    },
+    {
+      "word": "a",
+      "start": 2.205,
+      "end": 2.229
+    },
+    {
+      "word": "mayday",
+      "start": 2.263,
+      "end": 2.565
+    },
+    {
+      "word": "and",
+      "start": 2.6,
+      "end": 2.67
+    },
+    {
+      "word": "follow",
+      "start": 2.728,
+      "end": 2.925
+    },
+    {
+      "word": "the",
+      "start": 2.972,
+      "end": 3.041
+    },
+    {
+      "word": "wall.",
+      "start": 3.065,
+      "end": 3.436
+    }
+  ]
+}

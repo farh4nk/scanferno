@@ -1,0 +1,87 @@
+{
+  "text": "Trapped: one, patient using a wheelchair, Office 123, 34 meters in. Secondary: Hallway A, 101, 108.",
+  "voice": "briefing",
+  "audio_url": "/fixtures/tts/b23fe4d181df0f42.mp3",
+  "words": [
+    {
+      "word": "Trapped:",
+      "start": 0.023,
+      "end": 0.488
+    },
+    {
+      "word": "one,",
+      "start": 0.72,
+      "end": 1.057
+    },
+    {
+      "word": "patient",
+      "start": 1.161,
+      "end": 1.533
+    },
+    {
+      "word": "using",
+      "start": 1.591,
+      "end": 1.823
+    },
+    {
+      "word": "a",
+      "start": 1.87,
+      "end": 1.893
+    },
+    {
+      "word": "wheelchair,",
+      "start": 1.928,
+      "end": 2.531
+    },
+    {
+      "word": "Office",
+      "start": 2.798,
+      "end": 3.089
+    },
+    {
+      "word": "123,",
+      "start": 3.135,
+      "end": 4.133
+    },
+    {
+      "word": "34",
+      "start": 4.203,
+      "end": 4.702
+    },
+    {
+      "word": "meters",
+      "start": 4.76,
+      "end": 5.039
+    },
+    {
+      "word": "in.",
+      "start": 5.109,
+      "end": 5.445
+    },
+    {
+      "word": "Secondary:",
+      "start": 5.817,
+      "end": 6.467
+    },
+    {
+      "word": "Hallway",
+      "start": 6.676,
+      "end": 7.071
+    },
+    {
+      "word": "A,",
+      "start": 7.14,
+      "end": 7.396
+    },
+    {
+      "word": "101,",
+      "start": 7.454,
+      "end": 8.104
+    },
+    {
+      "word": "108.",
+      "start": 8.243,
+      "end": 9.079
+    }
+  ]
+}

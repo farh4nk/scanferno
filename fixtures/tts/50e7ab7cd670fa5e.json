@@ -1,0 +1,97 @@
+{
+  "text": "Egress: 4 meters, Charlie side. Office 123, dead end. If lost, call a mayday and follow the wall.",
+  "voice": "briefing",
+  "audio_url": "/fixtures/tts/50e7ab7cd670fa5e.mp3",
+  "words": [
+    {
+      "word": "Egress:",
+      "start": 0.023,
+      "end": 0.639
+    },
+    {
+      "word": "4",
+      "start": 0.766,
+      "end": 0.906
+    },
+    {
+      "word": "meters,",
+      "start": 0.964,
+      "end": 1.335
+    },
+    {
+      "word": "Charlie",
+      "start": 1.37,
+      "end": 1.637
+    },
+    {
+      "word": "side.",
+      "start": 1.683,
+      "end": 2.066
+    },
+    {
+      "word": "Office",
+      "start": 2.438,
+      "end": 2.809
+    },
+    {
+      "word": "123,",
+      "start": 2.867,
+      "end": 3.61
+    },
+    {
+      "word": "dead",
+      "start": 3.68,
+      "end": 3.854
+    },
+    {
+      "word": "end.",
+      "start": 3.9,
+      "end": 4.226
+    },
+    {
+      "word": "If",
+      "start": 4.551,
+      "end": 4.702
+    },
+    {
+      "word": "lost,",
+      "start": 4.783,
+      "end": 5.224
+    },
+    {
+      "word": "call",
+      "start": 5.317,
+      "end": 5.491
+    },
+    {
+      "word": "a",
+      "start": 5.526,
+      "end": 5.549
+    },
+    {
+      "word": "mayday",
+      "start": 5.607,
+      "end": 5.886
+    },
+    {
+      "word": "and",
+      "start": 5.921,
+      "end": 5.99
+    },
+    {
+      "word": "follow",
+      "start": 6.06,
+      "end": 6.327
+    },
+    {
+      "word": "the",
+      "start": 6.373,
+      "end": 6.443
+    },
+    {
+      "word": "wall.",
+      "start": 6.478,
+      "end": 6.931
+    }
+  ]
+}
