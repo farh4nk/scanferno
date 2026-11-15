@@ -58,7 +58,7 @@ const MAX_SNAP_M = 4
 const OTHER_ROOM_PENALTY_M = 3
 const LOOK_AHEAD_M = 3.5
 const WALK_MPS = 2.4
-const COLORS = { in: '#38bdf8', out: '#22c55e' }
+const COLORS = { in: '#38bdf8', out: '#22c55e', search: '#ff7a1a' }
 
 /** Camera stops along a clip, in order. Empty if the model has no usable sweeps near the route. */
 export async function planShots(showcase: Showcase, overlay: Overlay, fp: Floorplan, clip: TourClip): Promise<Shot[]> {

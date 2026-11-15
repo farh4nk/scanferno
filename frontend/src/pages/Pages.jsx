@@ -218,14 +218,17 @@ export function RescuePage({ ctx, k, go }) {
   const [walkClip, setWalkClip] = useState(null)
   const [walkLoading, setWalkLoading] = useState(false)
   const [walkError, setWalkError] = useState(null)
+  const walkRequest = useRef(0)
   const [entryId, setEntryId] = useState(null)
   const [exitId, setExitId] = useState(null)
   const [heatVisible, setHeatVisible] = useState(true)
   const person = people.find((p) => p.id === personId) || people[0] || null
   useEffect(() => {
+    walkRequest.current += 1
     setEntryId(null)
     setExitId(null)
     setWalkClip(null)
+    setWalkLoading(false)
     setWalkError(null)
   }, [person?.id])
   const recommended = person?.recommended_route
@@ -245,13 +248,19 @@ export function RescuePage({ ctx, k, go }) {
   const source = person?.manual || person?.location_source === 'manual' ? 'Manual location' : 'From audio'
   const totalTime = entry && extraction ? entry.time_s + extraction.time_s : null
   const totalDistance = entry && extraction ? entry.distance_m + extraction.distance_m : null
-  const choosePerson = (id) => {
-    setPersonId(id)
+  const cancelWalk = () => {
+    walkRequest.current += 1
     setWalkClip(null)
+    setWalkLoading(false)
     setWalkError(null)
+  }
+  const choosePerson = (id) => {
+    cancelWalk()
+    setPersonId(id)
   }
   const walkToExit = async () => {
     if (!person?.room_id || !extraction) return
+    const request = ++walkRequest.current
     setWalkLoading(true)
     setWalkError(null)
     try {
@@ -259,12 +268,16 @@ export function RescuePage({ ctx, k, go }) {
         exit: extraction.id,
         avoid: k.fireIds || [],
       })
+      if (!tour.out?.polyline || tour.out.polyline.length < 2 || !tour.out.steps?.length) {
+        throw new Error('No walkable route is available for this exit.')
+      }
+      if (request !== walkRequest.current) return
       setWalkClip({ data: tour.out, label: `${person.description} · ${tour.room_label}` })
       setMode('3d')
     } catch (e) {
-      setWalkError(`Could not load the exit walkthrough: ${e.message}`)
+      if (request === walkRequest.current) setWalkError(`Could not load the exit walkthrough: ${e.message}`)
     } finally {
-      setWalkLoading(false)
+      if (request === walkRequest.current) setWalkLoading(false)
     }
   }
 
@@ -301,13 +314,13 @@ export function RescuePage({ ctx, k, go }) {
               <div className="rescue-route-group">
                 <h3>Way in <span>crew to person</span></h3>
                 {entry && <RouteOption option={entry} k={k} direction="in" recommended={bestEntry} selected
-                  onClick={() => setEntryId(routeKey(entry))} />}
+                  onClick={() => { cancelWalk(); setEntryId(routeKey(entry)) }} />}
                 {!person.entry_options?.length && <p className="empty">No known entry reaches this room.</p>}
                 {(person.entry_options || []).filter((o) => routeKey(o) !== routeKey(entry)).length > 0 && (
                   <details className="route-alternatives">
                     <summary>Other entries · {(person.entry_options || []).length - 1}</summary>
                     {(person.entry_options || []).filter((o) => routeKey(o) !== routeKey(entry)).map((o) => (
-                      <RouteOption key={`in-${routeKey(o)}`} option={o} k={k} direction="in" recommended={bestEntry} onClick={() => { setEntryId(routeKey(o)); setWalkClip(null) }} />
+                      <RouteOption key={`in-${routeKey(o)}`} option={o} k={k} direction="in" recommended={bestEntry} onClick={() => { cancelWalk(); setEntryId(routeKey(o)) }} />
                     ))}
                   </details>
                 )}
@@ -315,13 +328,13 @@ export function RescuePage({ ctx, k, go }) {
               <div className="rescue-route-group">
                 <h3>Way out <span>person to safety</span></h3>
                 {extraction && <RouteOption option={extraction} k={k} direction="out" recommended={bestExit} selected
-                  onClick={() => setExitId(routeKey(extraction))} />}
+                  onClick={() => { cancelWalk(); setExitId(routeKey(extraction)) }} />}
                 {!person.extraction_options?.length && <p className="empty">No known extraction reaches safety.</p>}
                 {(person.extraction_options || []).filter((o) => routeKey(o) !== routeKey(extraction)).length > 0 && (
                   <details className="route-alternatives">
                     <summary>Other exits · {(person.extraction_options || []).length - 1}</summary>
                     {(person.extraction_options || []).filter((o) => routeKey(o) !== routeKey(extraction)).map((o) => (
-                      <RouteOption key={`out-${routeKey(o)}`} option={o} k={k} direction="out" recommended={bestExit} onClick={() => { setExitId(routeKey(o)); setWalkClip(null) }} />
+                      <RouteOption key={`out-${routeKey(o)}`} option={o} k={k} direction="out" recommended={bestExit} onClick={() => { cancelWalk(); setExitId(routeKey(o)) }} />
                     ))}
                   </details>
                 )}

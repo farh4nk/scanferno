@@ -154,8 +154,8 @@ export default function Viewer3D({
       const people = rescuePeople?.length ? rescuePeople : (trapped || []).map((t) => ({ ...t, position: null }))
       for (const t of people) {
         const r = fp.rooms.find((x) => x.id === t.room_id)
-        if (!r) continue
-        const at = t.position || r.centroid
+        const at = t.position || r?.centroid
+        if (!at) continue
         const chosen = t.id === selectedPersonId
         l.marker(at, { shape: 'cone', radius: chosen ? 0.38 : 0.3, height: chosen ? 1 : 0.8, color: chosen ? '#ff2a2a' : '#fb923c', xray: true })
         l.label(at, (t.description || 'TRAPPED').split(' ')[0].toUpperCase(), { height: 2.6, color: chosen ? '#fecaca' : '#ffb385', size: chosen ? 0.38 : 0.32 })

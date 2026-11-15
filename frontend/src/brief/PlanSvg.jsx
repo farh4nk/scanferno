@@ -71,7 +71,7 @@ export default function PlanSvg({
       {hose && <polyline className="hoseln" points={v.str(hose)} />}
       {taggedRoutes
         ? taggedRoutes.map((r, i) => r?.polyline?.length > 1 && <polyline key={`rr${i}`} className={`route ${r.cls || ''}`} points={v.str(r.polyline)} />)
-        : routes.map((pl, i) => <polyline key={`r${i}`} className={`route ${i > 0 && routes.length > 2 ? 'thin' : ''}`} points={v.str(pl)} />)}
+        : routes.map((pl, i) => <polyline key={`r${i}`} className={`route ${routes.length === 1 ? 'primary' : ''} ${i > 0 && routes.length > 2 ? 'thin' : ''}`} points={v.str(pl)} />)}
       {taggedRoutes?.map((r, i) => {
         if (!r?.polyline?.length) return null
         const point = r.startLabel ? r.polyline?.[0] : r.endLabel ? r.polyline?.[r.polyline.length - 1] : null
@@ -113,7 +113,7 @@ export default function PlanSvg({
               if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e.stopPropagation(); onPersonSelect(p.id) }
             } : undefined}>
             <circle className="person-ring" r={16} /><circle className="person-dot" r={8} />
-            {p.label && p.id === selectedPersonId && <text className="person-lbl" y={-22}>{(p.label || '').split(' ')[0]}</text>}
+            {p.label && p.id === selectedPersonId && <text className="person-lbl" y={-22}>{(p.label || '').split(/\s+/).slice(0, 2).join(' ').toUpperCase()}</text>}
             <title>{p.label || 'Person'}{p.located === false ? ' · location unknown' : p.id === selectedPersonId ? ' · selected' : ''}</title>
           </g>
         )

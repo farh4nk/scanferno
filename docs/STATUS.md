@@ -85,6 +85,9 @@ Living handoff doc. Update your role's section and add a changelog line in the s
 - Live call view: SSE `/calls/{id}/live` drives transcript, dispatch record (changed fields flash), briefing, mayday; audio starts when the stream opens.
 - SVG floor plan: maze heat, search order, trapped marker, fire area, exit routes, doors/windows, sides A-D, room click shows route + maze reasons.
 - Room labels now fit within their room polygons, and the briefing side-panel control sits with the panel header or 2D/3D controls instead of floating over the plan.
+- The Get out plan shows one relevant egress route instead of layering search routes; dead-end detail stays in the briefing panel, room labels remain legible above route lines, and the briefing layout fits narrower viewports without clipping its controls.
+- Get out now lists every reported person, marks their locations on the map, and switches the egress route when a person or marker is selected. When nobody has a known location, it explains that instead of routing to an unrelated dead end.
+- Briefing 3D receives the structured rescue people and uses the same explicit search/egress paths as 2D; markers render from known coordinates without requiring a room match, and choosing a different exit cancels the previous walkthrough.
 - Briefing tabs, Vexcel aerial viewer, Ask-the-plan (highlights answer on the plan), mayday panel (wall path + browser TTS), evac sim animation.
 
 **Next**
@@ -95,6 +98,10 @@ Living handoff doc. Update your role's section and add a changelog line in the s
 
 ## Changelog
 - 2026-11-15: Live transcript movement updates preserve person identity and refresh map position/rescue routes; explicit fire spread adds active fire rooms and updates heat. Floor-plan labels and briefing panel controls no longer crowd the map.
+- 2026-11-15: Reduced floor-plan route clutter on Get out to one egress path; removed duplicate dead-end banner and improved label contrast over routes.
+- 2026-11-15: Added narrower viewport sizing for the briefing grid, key facts, and step controls to keep values and controls visible without horizontal clipping.
+- 2026-11-15: Passed structured rescue people into briefing 3D, aligned 3D search/egress overlays with the 2D plan, guarded exit walkthroughs against missing paths, and fixed search clip typing to restore the viewer build.
+- 2026-11-15: Get out now shows all reported people and routes to the selected person; no-person briefings show a clear location prompt instead of a dead-end route.
 - 2026-11-15: Rescue routes now focus on the selected person in 2D/3D; map markers select people, route alternatives collapse, and Walk follows the selected extraction route to the exit.
 - 2026-11-15: Data freshness: briefing `data_age`, "How fresh" timeline on the home Arrive step and Exterior page, "% sure" on low-confidence caller facts.
 - 2026-11-15: Floor plan room click routes around the fire, with a Way out box (clear, rerouted, blocked, on fire).
