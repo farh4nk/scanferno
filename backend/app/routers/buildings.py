@@ -73,18 +73,21 @@ def tour(bid: str, to_room: str = Query(..., description="target room id, label 
     return {"building_id": bid, **out}
 
 
+
+
 @router.get("/{bid}/simulation")
 def simulation(bid: str, rooms: str = Query(..., description="comma-separated rooms in the order to check (ids or labels)"),
                entry: str | None = Query(None, description="entry door id or side letter A-D (default: nearest exit door to the first room)"),
                exit: str | None = Query(None, description="exit door id or side letter for the way out (default: nearest to the last room)"),
-               avoid: str | None = Query(None, description="comma-separated rooms to route the way out around (fire, smoke)")):
+               avoid: str | None = Query(None, description="comma-separated rooms to route the way out around (fire, smoke)"),
+               leave: bool = Query(True, description="false: stop in the last room, no way out")):
     """One run for the whole search: in through an entry door, every room in order, then out. Includes a `clip` for the 3D player."""
     deps.building(bid)
     ids = deps.room_ids(bid, rooms)
     if not ids:
         raise HTTPException(404, "No known rooms to simulate")
     out = simulation_agent.build(layers.floorplan(bid), layers.nav(bid), layers.sides(bid).of_local, ids, entry, exit,
-                                 deps.room_ids(bid, avoid))
+                                 deps.room_ids(bid, avoid), with_out=leave)
     if out is None:
         raise HTTPException(404, "No route between an exit and those rooms")
     return {"building_id": bid, **out}

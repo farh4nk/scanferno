@@ -1,0 +1,72 @@
+{
+  "text": "Search: Charlie side door, Hallway A. Attack: 62 feet, preconnect. Caution: collapse risk.",
+  "voice": "briefing",
+  "audio_url": "/fixtures/tts/2b7d8161119a1e44.mp3",
+  "words": [
+    {
+      "word": "Search:",
+      "start": 0.023,
+      "end": 0.488
+    },
+    {
+      "word": "Charlie",
+      "start": 0.592,
+      "end": 0.906
+    },
+    {
+      "word": "side",
+      "start": 0.964,
+      "end": 1.231
+    },
+    {
+      "word": "door,",
+      "start": 1.254,
+      "end": 1.672
+    },
+    {
+      "word": "Hallway",
+      "start": 1.73,
+      "end": 2.206
+    },
+    {
+      "word": "A.",
+      "start": 2.299,
+      "end": 2.647
+    },
+    {
+      "word": "Attack:",
+      "start": 2.693,
+      "end": 3.216
+    },
+    {
+      "word": "62",
+      "start": 3.355,
+      "end": 3.796
+    },
+    {
+      "word": "feet,",
+      "start": 3.854,
+      "end": 4.18
+    },
+    {
+      "word": "preconnect.",
+      "start": 4.238,
+      "end": 4.853
+    },
+    {
+      "word": "Caution:",
+      "start": 4.899,
+      "end": 5.433
+    },
+    {
+      "word": "collapse",
+      "start": 5.491,
+      "end": 5.933
+    },
+    {
+      "word": "risk.",
+      "start": 5.991,
+      "end": 6.432
+    }
+  ]
+}

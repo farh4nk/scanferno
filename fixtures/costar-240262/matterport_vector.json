@@ -1,0 +1,4709 @@
+{
+  "floors": [
+    {
+      "id": "tsmq1wak12rhgn0mawksxcwcd",
+      "sequence": 0,
+      "label": "Floor 1"
+    }
+  ],
+  "rooms": [
+    {
+      "id": "b4qtykzcazp4iumkamm7y7h2b",
+      "classifications": [
+        {
+          "id": "k4ww3sk359ntmwgr8s75hq22a",
+          "label": "Void"
+        }
+      ],
+      "boundary": {
+        "edges": [
+          {
+            "id": "rkgbdi1izzf2teyp0f8i7hu0d",
+            "type": "wall",
+            "centerLineBias": 0.4984579381520575,
+            "thickness": 0.10040411530789374,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "xpa3rwpipek1yz1wx29app5pa",
+                "position": {
+                  "x": -5.116693959466894,
+                  "y": 16.16702692600078
+                }
+              },
+              {
+                "id": "mxiii68ecb63wc666p5knr42a",
+                "position": {
+                  "x": -5.117017431882832,
+                  "y": 16.75247731633164
+                }
+              }
+            ]
+          },
+          {
+            "id": "56k50zq8igkhs3izqriikgwdd",
+            "type": "wall",
+            "centerLineBias": 0.5017422415102069,
+            "thickness": 0.10045034065046743,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "rtnxwep42ppf53i3tuztrm4nc",
+                "position": {
+                  "x": -5.3156842061798635,
+                  "y": 16.166936404941463
+                }
+              },
+              {
+                "id": "iw926094u9q5xkhre0dzgse8b",
+                "position": {
+                  "x": -5.314085145164454,
+                  "y": 12.601963440512367
+                }
+              }
+            ]
+          },
+          {
+            "id": "s0mh796ukw2cfs87cnf5bd82c",
+            "type": "wall",
+            "centerLineBias": 0.44114796532403033,
+            "thickness": 0.08955198682669839,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "fpy2czuqq70tgppasq9892rsc",
+                "position": {
+                  "x": -8.301925530147425,
+                  "y": 16.152703387243676
+                }
+              },
+              {
+                "id": "mxiii68ecb63wc666p5knr42a",
+                "position": {
+                  "x": -5.117017431882832,
+                  "y": 16.75247731633164
+                }
+              }
+            ]
+          },
+          {
+            "id": "p9tfxm9inzi80cab609m6ahrb",
+            "type": "wall",
+            "centerLineBias": 0.5053925187020205,
+            "thickness": 0.09902515598465329,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "fpy2czuqq70tgppasq9892rsc",
+                "position": {
+                  "x": -8.301925530147425,
+                  "y": 16.152703387243676
+                }
+              },
+              {
+                "id": "iw926094u9q5xkhre0dzgse8b",
+                "position": {
+                  "x": -5.314085145164454,
+                  "y": 12.601963440512367
+                }
+              }
+            ]
+          },
+          {
+            "id": "215dxy4qfkecp7ygyc88ai9ud",
+            "type": "wall",
+            "centerLineBias": 0.49496246039566566,
+            "thickness": 0.10117813493945918,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "rtnxwep42ppf53i3tuztrm4nc",
+                "position": {
+                  "x": -5.3156842061798635,
+                  "y": 16.166936404941463
+                }
+              },
+              {
+                "id": "xpa3rwpipek1yz1wx29app5pa",
+                "position": {
+                  "x": -5.116693959466894,
+                  "y": 16.16702692600078
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "holes": []
+    },
+    {
+      "id": "ediidma5zg15dufx3n0qyq21a",
+      "classifications": [
+        {
+          "id": "k4ww3sk359ntmwgr8s75hq22a",
+          "label": "Void"
+        }
+      ],
+      "boundary": {
+        "edges": [
+          {
+            "id": "na9ucy5b9194kgxmg9p8sb3ib",
+            "type": "wall",
+            "centerLineBias": 0.5006202133597786,
+            "thickness": 0.09996862556279519,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "r0dupefphkhb8xmx77uebhiad",
+                "position": {
+                  "x": -0.5283375118475009,
+                  "y": 21.003739126599648
+                }
+              },
+              {
+                "id": "ae7sh9dq26mqxz2s18n2s9kfd",
+                "position": {
+                  "x": -4.116967625797313,
+                  "y": 16.16748589200577
+                }
+              }
+            ]
+          },
+          {
+            "id": "hezkmhd7wyfiugw2igeazhmza",
+            "type": "wall",
+            "centerLineBias": 0.49553784104226706,
+            "thickness": 0.09926323769451369,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "r0dupefphkhb8xmx77uebhiad",
+                "position": {
+                  "x": -0.5283375118475009,
+                  "y": 21.003739126599648
+                }
+              },
+              {
+                "id": "rctrdszz43phq89aghkqu9ipb",
+                "position": {
+                  "x": -0.5261859048086417,
+                  "y": 16.169085123867372
+                }
+              }
+            ]
+          },
+          {
+            "id": "kh52er2q1dgm9t6x13xet768b",
+            "type": "wall",
+            "centerLineBias": 0.5051178922656429,
+            "thickness": 0.10115156115728097,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "rctrdszz43phq89aghkqu9ipb",
+                "position": {
+                  "x": -0.5261859048086417,
+                  "y": 16.169085123867372
+                }
+              },
+              {
+                "id": "ae7sh9dq26mqxz2s18n2s9kfd",
+                "position": {
+                  "x": -4.116967625797313,
+                  "y": 16.16748589200577
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "holes": []
+    },
+    {
+      "id": "m8npxsuk79xy21dd09x9wtped",
+      "classifications": [
+        {
+          "id": "k4ww3sk359ntmwgr8s75hq22a",
+          "label": "Void"
+        }
+      ],
+      "boundary": {
+        "edges": [
+          {
+            "id": "cmpudqgb92sn53skxy530qubd",
+            "type": "wall",
+            "centerLineBias": 0.49134977429209514,
+            "thickness": 0.10186037184883358,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "t1psm37fxw0qim2yhp77r3a2d",
+                "position": {
+                  "x": -33.536032065653664,
+                  "y": 32.13076166488235
+                }
+              },
+              {
+                "id": "fhxgpxuh75czytd3r98wmgxgc",
+                "position": {
+                  "x": -35.36580566809557,
+                  "y": 32.12994324493405
+                }
+              }
+            ]
+          },
+          {
+            "id": "idkqxpwdratewy14use1nzehd",
+            "type": "wall",
+            "centerLineBias": 0.49248119851165534,
+            "thickness": 0.10174473280915562,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "fhxgpxuh75czytd3r98wmgxgc",
+                "position": {
+                  "x": -35.36580566809557,
+                  "y": 32.12994324493405
+                }
+              },
+              {
+                "id": "7a2y5ca793175a355cfw0igzc",
+                "position": {
+                  "x": -35.365507643416485,
+                  "y": 31.490306779686602
+                }
+              }
+            ]
+          },
+          {
+            "id": "gffawgqwhzimyhn2zxkm06gqd",
+            "type": "wall",
+            "centerLineBias": 0.5081890548996217,
+            "thickness": 0.10175992564074932,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "t1psm37fxw0qim2yhp77r3a2d",
+                "position": {
+                  "x": -33.536032065653664,
+                  "y": 32.13076166488235
+                }
+              },
+              {
+                "id": "7a2y5ca793175a355cfw0igzc",
+                "position": {
+                  "x": -35.365507643416485,
+                  "y": 31.490306779686602
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "holes": []
+    },
+    {
+      "id": "19ab05tns5h6y4qm42esqqpea",
+      "classifications": [
+        {
+          "id": "k4ww3sk359ntmwgr8s75hq22a",
+          "label": "Void"
+        }
+      ],
+      "boundary": {
+        "edges": [
+          {
+            "id": "zbf6ssxbmertgpbakyq6n6t1b",
+            "type": "wall",
+            "centerLineBias": 0.44945321581877795,
+            "thickness": 0.11143230137173475,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "00baqcq2e9i23i3m3bcw9syxb",
+                "position": {
+                  "x": -42.44849684073895,
+                  "y": 32.11876357706724
+                }
+              },
+              {
+                "id": "rusuc4pk66w51i52wk9xme3wc",
+                "position": {
+                  "x": -43.59465884362926,
+                  "y": 32.11823797670897
+                }
+              }
+            ]
+          },
+          {
+            "id": "8xcx87fbw2py0y2qsr31eqska",
+            "type": "wall",
+            "centerLineBias": 0.47524809631434073,
+            "thickness": 0.10530941583046977,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "7453i203rsxids6f7wyatebfb",
+                "position": {
+                  "x": -43.594357574856254,
+                  "y": 31.730752919032398
+                }
+              },
+              {
+                "id": "00baqcq2e9i23i3m3bcw9syxb",
+                "position": {
+                  "x": -42.44849684073895,
+                  "y": 32.11876357706724
+                }
+              }
+            ]
+          },
+          {
+            "id": "fz6y31ns605y8ychqt0pfbz8a",
+            "type": "wall",
+            "centerLineBias": 0.5068851344011387,
+            "thickness": 0.10149014284346293,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "7453i203rsxids6f7wyatebfb",
+                "position": {
+                  "x": -43.594357574856254,
+                  "y": 31.730752919032398
+                }
+              },
+              {
+                "id": "rusuc4pk66w51i52wk9xme3wc",
+                "position": {
+                  "x": -43.59465884362926,
+                  "y": 32.11823797670897
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "holes": []
+    },
+    {
+      "id": "613htqkzf66zz7hf7n8kzszed",
+      "classifications": [
+        {
+          "id": "byp7pz2tmt4ff47nhfx0uwzec",
+          "label": "Other"
+        }
+      ],
+      "boundary": {
+        "edges": [
+          {
+            "id": "b2em6qubctm6hxy9yx4r5g4fa",
+            "type": "wall",
+            "centerLineBias": 0.5000527584659197,
+            "thickness": 0.10010332653170648,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "wrf5da5sfuqi7th4y6cb58idb",
+                "position": {
+                  "x": -3.9403702606419206,
+                  "y": 44.3260102977525
+                }
+              },
+              {
+                "id": "2pt5tz5utre88afx1bm54brrd",
+                "position": {
+                  "x": -3.9381319128748786,
+                  "y": 39.478556477426864
+                }
+              }
+            ]
+          },
+          {
+            "id": "etnprcasqt80qpghrr40kfzra",
+            "type": "wall",
+            "centerLineBias": 0.4994707152812249,
+            "thickness": 0.09998806351005872,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "7a4y4fw6zt2gpx8tq6u9mdk8a",
+                "position": {
+                  "x": -44.78125198141594,
+                  "y": 40.01117757076641
+                }
+              },
+              {
+                "id": "5584xn5cehmypawrnw6kwsg6b",
+                "position": {
+                  "x": -45.30723487768646,
+                  "y": 40.01092734372162
+                }
+              }
+            ]
+          },
+          {
+            "id": "gt0s5izrbx58d7zy8ybigubtb",
+            "type": "wall",
+            "centerLineBias": 0.47965369109507583,
+            "thickness": 0.10438744698405328,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "tz66wece74em0f860y3zambmd",
+                "position": {
+                  "x": -24.612182674679897,
+                  "y": 41.39147729722455
+                }
+              },
+              {
+                "id": "eur8306tp8u36k3q6b3krbdkd",
+                "position": {
+                  "x": -24.6112949369908,
+                  "y": 39.468999990395226
+                }
+              }
+            ]
+          },
+          {
+            "id": "pt086me1da99sc0b33ham43xb",
+            "type": "wall",
+            "centerLineBias": 0.49432194102454485,
+            "thickness": 0.10124241139092899,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "9w049aw7imeu7urt03k2iekfa",
+                "position": {
+                  "x": -49.209622998475794,
+                  "y": 36.32575324331118
+                }
+              },
+              {
+                "id": "bwk94hk1drm23x2qgt5q6wafc",
+                "position": {
+                  "x": -47.13886740312535,
+                  "y": 38.064768213015924
+                }
+              }
+            ]
+          },
+          {
+            "id": "ttbp1h377p2y12cftstyb5knc",
+            "type": "wall",
+            "centerLineBias": 0.5087837528920048,
+            "thickness": 0.10188902961176066,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "6g3rnqgn9ceq15ze5fbz50pdc",
+                "position": {
+                  "x": -4.684441079276811,
+                  "y": 38.146750522470036
+                }
+              },
+              {
+                "id": "0daiqgzxdrk9cixu5c42ibttb",
+                "position": {
+                  "x": -1.7271937634429513,
+                  "y": 38.14814103322899
+                }
+              }
+            ]
+          },
+          {
+            "id": "wi5758670mmm44ers1a7xkbud",
+            "type": "wall",
+            "centerLineBias": 0.4995555090086836,
+            "thickness": 0.10000698737758226,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "f7nkbqxr47zhn0mti0exaht3d",
+                "position": {
+                  "x": -45.30926136591766,
+                  "y": 44.34557151152983
+                }
+              },
+              {
+                "id": "bab8n4n62rq19d0i3rs6h1mnc",
+                "position": {
+                  "x": -49.10475564708301,
+                  "y": 44.34379628423363
+                }
+              }
+            ]
+          },
+          {
+            "id": "za5h9dqrtu2ktcwey0uxt37qc",
+            "type": "wall",
+            "centerLineBias": 0.5028989756439964,
+            "thickness": 0.09962934359387238,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "kdrc8g696zbc4bqimxa1cg8cd",
+                "position": {
+                  "x": -2.9324163067776667,
+                  "y": 39.46930186424372
+                }
+              },
+              {
+                "id": "445iikdq7kysd34w00tt2z0ta",
+                "position": {
+                  "x": 0.4674286836536233,
+                  "y": 39.47092650607831
+                }
+              }
+            ]
+          },
+          {
+            "id": "1abrx47s20pp3ygaiber70wdd",
+            "type": "wall",
+            "centerLineBias": 0.5327886139695979,
+            "thickness": 0.08860639242787965,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "bdpaesxif3uhimf58p1n01xwa",
+                "position": {
+                  "x": -20.36919035541499,
+                  "y": 28.582699403526
+                }
+              },
+              {
+                "id": "agqb0mr4xdxswqi6pcmdttszb",
+                "position": {
+                  "x": -20.370801378452953,
+                  "y": 32.12462778398496
+                }
+              }
+            ]
+          },
+          {
+            "id": "hbs9p65gk7n7y1f74u7he7azb",
+            "type": "wall",
+            "centerLineBias": 0.5062588669829065,
+            "thickness": 0.09885512396057587,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "cus4yp0tc0pqfh98ezczd7sxd",
+                "position": {
+                  "x": -11.775797283126511,
+                  "y": 32.12711401374511
+                }
+              },
+              {
+                "id": "gmsrwkdn9qu6d0g35es43e9hc",
+                "position": {
+                  "x": -11.77415770655627,
+                  "y": 28.582912974701355
+                }
+              }
+            ]
+          },
+          {
+            "id": "m30f1dgdgpqdwf8s829cgw6qd",
+            "type": "wall",
+            "centerLineBias": 0.4943214257553289,
+            "thickness": 0.09901118557712246,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "0h2ku0i84qqpp4i3m08bxs03a",
+                "position": {
+                  "x": -30.855197415944442,
+                  "y": 32.122496555705695
+                }
+              },
+              {
+                "id": "1h0rh507isay1u21t8881d8fa",
+                "position": {
+                  "x": -24.004693165969925,
+                  "y": 32.125617846765145
+                }
+              }
+            ]
+          },
+          {
+            "id": "pkn2a2f1u4hmffitmsexmfi4d",
+            "type": "wall",
+            "centerLineBias": 0.49451857245057473,
+            "thickness": 0.09900715601410365,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "79qyf4ag7g4075qze498y4yea",
+                "position": {
+                  "x": -12.819363103425964,
+                  "y": 32.12805232156146
+                }
+              },
+              {
+                "id": "ws24agpn4tc35ccchrw852mwd",
+                "position": {
+                  "x": -16.209088030331408,
+                  "y": 28.580852773074994
+                }
+              }
+            ]
+          },
+          {
+            "id": "u3dc4ctmrk47cfda6s0f328sc",
+            "type": "wall",
+            "centerLineBias": 0.4925010600445524,
+            "thickness": 0.10169790237327082,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "kqb4r2b5i59gf5t11h2uk26fb",
+                "position": {
+                  "x": -35.365102144005895,
+                  "y": 30.62170894601329
+                }
+              },
+              {
+                "id": "5xq3qhxwwxbrty1fyfnqmmqxb",
+                "position": {
+                  "x": -35.36165092471329,
+                  "y": 23.16344726565141
+                }
+              }
+            ]
+          },
+          {
+            "id": "zka06967trcmtusa1wxkf2tdd",
+            "type": "wall",
+            "centerLineBias": 0.4997957700543471,
+            "thickness": 0.10013583937825024,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "8u7utirmkc0fdfz9rzeai2tda",
+                "position": {
+                  "x": -49.186247318494175,
+                  "y": 32.63659794222058
+                }
+              },
+              {
+                "id": "xzckge9gt069s7e1s2fsecabd",
+                "position": {
+                  "x": -48.715650819708934,
+                  "y": 32.63680877967827
+                }
+              }
+            ]
+          },
+          {
+            "id": "dce8twiyg7bbb5b8ip8r4w1nd",
+            "type": "wall",
+            "centerLineBias": 0.499995786830782,
+            "thickness": 0.1001370673290759,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "h9exs85z2skbsz51mxtcpstad",
+                "position": {
+                  "x": 0.23366474439119705,
+                  "y": 44.32790979865105
+                }
+              },
+              {
+                "id": "wrf5da5sfuqi7th4y6cb58idb",
+                "position": {
+                  "x": -3.9403702606419206,
+                  "y": 44.3260102977525
+                }
+              }
+            ]
+          },
+          {
+            "id": "ech30a3xwnkhkxqn66wkyct7a",
+            "type": "wall",
+            "centerLineBias": 0.49949010107309066,
+            "thickness": 0.10020088733597944,
+            "openings": [
+              {
+                "id": "w8fuk2ua8ez3b9f11b3p0ecab",
+                "height": 2.754000186920166,
+                "width": 1.3998232379265325,
+                "lowerElevation": 0.03599989414215088,
+                "relativeCenter": 0.15847610402833845,
+                "type": "doorway"
+              }
+            ],
+            "vertices": [
+              {
+                "id": "eur8306tp8u36k3q6b3krbdkd",
+                "position": {
+                  "x": -24.6112949369908,
+                  "y": 39.468999990395226
+                }
+              },
+              {
+                "id": "2pt5tz5utre88afx1bm54brrd",
+                "position": {
+                  "x": -3.9381319128748786,
+                  "y": 39.478556477426864
+                }
+              }
+            ]
+          },
+          {
+            "id": "f4i16tqakf07rhmr69kaf9cqb",
+            "type": "wall",
+            "centerLineBias": 0.4983106810456851,
+            "thickness": 0.0997555429665188,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "btdytfp7z98idxpyhrw2d46gd",
+                "position": {
+                  "x": -24.003788912479408,
+                  "y": 30.157195441921882
+                }
+              },
+              {
+                "id": "mab5g0ns91uxu8rpgn8micuia",
+                "position": {
+                  "x": -22.194831321647317,
+                  "y": 30.158032367968534
+                }
+              }
+            ]
+          },
+          {
+            "id": "kmyb0fzcdsids8dpn491kdq3a",
+            "type": "wall",
+            "centerLineBias": 0.5090817475869656,
+            "thickness": 0.1019446697662975,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "kqb4r2b5i59gf5t11h2uk26fb",
+                "position": {
+                  "x": -35.365102144005895,
+                  "y": 30.62170894601329
+                }
+              },
+              {
+                "id": "e1qe3hc807x67x2n18q17fw7a",
+                "position": {
+                  "x": -32.32020502519004,
+                  "y": 32.12182405787459
+                }
+              }
+            ]
+          },
+          {
+            "id": "kcb6u8recnww3i3ykbmixrc6a",
+            "type": "wall",
+            "centerLineBias": 0.5000389776735723,
+            "thickness": 0.10008496880799275,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "m6bzbd3zm4u3fh3w66hh18ppc",
+                "position": {
+                  "x": -39.459634964127495,
+                  "y": 44.34488725442801
+                }
+              },
+              {
+                "id": "q9cucc8p5qh4gf465mtrzen7b",
+                "position": {
+                  "x": -39.45990820540287,
+                  "y": 44.9454144307633
+                }
+              }
+            ]
+          },
+          {
+            "id": "qmqty2e7zyhb22ny17iq5ezia",
+            "type": "wall",
+            "centerLineBias": 0.49983346016476526,
+            "thickness": 0.10013126464609215,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "tyz12xdreu8c3npxu83r50t2a",
+                "position": {
+                  "x": -21.687838665080932,
+                  "y": 23.05955407459946
+                }
+              },
+              {
+                "id": "zzuurzhwhq6519fx00n45gcwb",
+                "position": {
+                  "x": -21.692020662324765,
+                  "y": 32.120621391576236
+                }
+              }
+            ]
+          },
+          {
+            "id": "qwxnrgrqkkdx5mirz4uxsb87b",
+            "type": "wall",
+            "centerLineBias": 0.5140978864037558,
+            "thickness": 0.0973349006058028,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "qkse5s68issg163nn9y1e74qb",
+                "position": {
+                  "x": -32.2323428481977,
+                  "y": 44.31915470387686
+                }
+              },
+              {
+                "id": "m92hb0siq6kk9h47nhfpn8zhc",
+                "position": {
+                  "x": -24.61357844963067,
+                  "y": 44.32280037350649
+                }
+              }
+            ]
+          },
+          {
+            "id": "ycyn9c5w9b7pkex8gimarq6tb",
+            "type": "wall",
+            "centerLineBias": 0.5034335466280686,
+            "thickness": 0.10078623419018007,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "7muyqdf09w8pn7ind10ik1fib",
+                "position": {
+                  "x": -4.682221946817218,
+                  "y": 33.43220559195025
+                }
+              },
+              {
+                "id": "6g3rnqgn9ceq15ze5fbz50pdc",
+                "position": {
+                  "x": -4.684441079276811,
+                  "y": 38.146750522470036
+                }
+              }
+            ]
+          },
+          {
+            "id": "zmutsz1hr28q2wcudiad57bfc",
+            "type": "wall",
+            "centerLineBias": 0.49582762543616843,
+            "thickness": 0.09976301066481436,
+            "openings": [
+              {
+                "id": "q4r0t0m6pwztuatz1uurk65za",
+                "height": 2.75,
+                "width": 0.46033724583832814,
+                "lowerElevation": 0.03400003910064697,
+                "relativeCenter": 0.6821736798037528,
+                "type": "doorway"
+              },
+              {
+                "id": "07iypnpi1iuh99wdii72cckaa",
+                "height": 2.75,
+                "width": 0.8774908835799212,
+                "lowerElevation": 0.03400003910064697,
+                "relativeCenter": 0.8439841578525437,
+                "type": "doorway"
+              }
+            ],
+            "vertices": [
+              {
+                "id": "0sy39iuk62ne2fpwxapa4wdbd",
+                "position": {
+                  "x": -15.976328548372754,
+                  "y": 32.12662678811659
+                }
+              },
+              {
+                "id": "agqb0mr4xdxswqi6pcmdttszb",
+                "position": {
+                  "x": -20.370801378452953,
+                  "y": 32.12462778398496
+                }
+              }
+            ]
+          },
+          {
+            "id": "zw4xdr27pibmum62e5miyupkb",
+            "type": "wall",
+            "centerLineBias": 0.5003396975708904,
+            "thickness": 0.10002558354458513,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "zfpc6cf9d11c83ten1u7mfuyc",
+                "position": {
+                  "x": -49.1818612661273,
+                  "y": 23.157053416740922
+                }
+              },
+              {
+                "id": "8u7utirmkc0fdfz9rzeai2tda",
+                "position": {
+                  "x": -49.186247318494175,
+                  "y": 32.63659794222058
+                }
+              }
+            ]
+          },
+          {
+            "id": "4mxqpi99yidrq6hcgwd263fab",
+            "type": "wall",
+            "centerLineBias": 0.5059759695254096,
+            "thickness": 0.10130363799339255,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "9gg29wrazycedefustb27i13b",
+                "position": {
+                  "x": -49.103430194194395,
+                  "y": 41.46548126265358
+                }
+              },
+              {
+                "id": "7pdk12tz6zz00gyzibgyb3dza",
+                "position": {
+                  "x": -46.9029936685769,
+                  "y": 40.0110598559351
+                }
+              }
+            ]
+          },
+          {
+            "id": "54f1m7n7sg3s93yeh3ds5r86b",
+            "type": "wall",
+            "centerLineBias": 0.5009178850965945,
+            "thickness": 0.09991260417366649,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "h9exs85z2skbsz51mxtcpstad",
+                "position": {
+                  "x": 0.23366474439119705,
+                  "y": 44.32790979865105
+                }
+              },
+              {
+                "id": "kr26t60n822i8d182datqw0wd",
+                "position": {
+                  "x": 0.23454151068984477,
+                  "y": 42.40280768710284
+                }
+              }
+            ]
+          },
+          {
+            "id": "84k3t6ps0hb1n60ea60wtz3pc",
+            "type": "wall",
+            "centerLineBias": 0.49953562008059815,
+            "thickness": 0.09999960185664829,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "skn038zdqb5s4kpiemu1xn9da",
+                "position": {
+                  "x": -38.32144010447591,
+                  "y": 44.945942332400115
+                }
+              },
+              {
+                "id": "q9cucc8p5qh4gf465mtrzen7b",
+                "position": {
+                  "x": -39.45990820540287,
+                  "y": 44.9454144307633
+                }
+              }
+            ]
+          },
+          {
+            "id": "8w9rxksw04he7qs71233b3c5d",
+            "type": "wall",
+            "centerLineBias": 0.500145784878741,
+            "thickness": 0.10012548684759272,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "4yikr9h71cb89azf5c3xbapub",
+                "position": {
+                  "x": -48.716148614908626,
+                  "y": 33.72624383622791
+                }
+              },
+              {
+                "id": "xzckge9gt069s7e1s2fsecabd",
+                "position": {
+                  "x": -48.715650819708934,
+                  "y": 32.63680877967827
+                }
+              }
+            ]
+          },
+          {
+            "id": "xdrhxsc0q56y8nncrayqeruzb",
+            "type": "wall",
+            "centerLineBias": 0.5047308266348804,
+            "thickness": 0.09914632310108855,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "dxr1y186pagaiemqgxfki52dd",
+                "position": {
+                  "x": -32.69423204148758,
+                  "y": 39.99518645833076
+                }
+              },
+              {
+                "id": "18kidkmyy6rzygqgnb242fw7c",
+                "position": {
+                  "x": -31.58359489072181,
+                  "y": 41.93792874147771
+                }
+              }
+            ]
+          },
+          {
+            "id": "2xzsia7h9frss74z0ayrdybsc",
+            "type": "wall",
+            "centerLineBias": 0.49345036863652514,
+            "thickness": 0.09660004799645283,
+            "openings": [
+              {
+                "id": "bx91c3u7wqzikw30p352c24ba",
+                "height": 2.756500005722046,
+                "width": 0.8549463902273992,
+                "lowerElevation": 0.0054999589920043945,
+                "relativeCenter": 0.5029561326674292,
+                "type": "doorway"
+              }
+            ],
+            "vertices": [
+              {
+                "id": "0h2ku0i84qqpp4i3m08bxs03a",
+                "position": {
+                  "x": -30.855197415944442,
+                  "y": 32.122496555705695
+                }
+              },
+              {
+                "id": "e1qe3hc807x67x2n18q17fw7a",
+                "position": {
+                  "x": -32.32020502519004,
+                  "y": 32.12182405787459
+                }
+              }
+            ]
+          },
+          {
+            "id": "7xiw97dd6zn7s20b2eekr773c",
+            "type": "wall",
+            "centerLineBias": 0.49937255219732907,
+            "thickness": 0.10021919495898006,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "7a4y4fw6zt2gpx8tq6u9mdk8a",
+                "position": {
+                  "x": -44.78125198141594,
+                  "y": 40.01117757076641
+                }
+              },
+              {
+                "id": "7r2rywmksnzr6iucx7zyck7ed",
+                "position": {
+                  "x": -44.782296867221085,
+                  "y": 42.17619563937324
+                }
+              }
+            ]
+          },
+          {
+            "id": "bekbin9n6fxhhicg28p6p576d",
+            "type": "wall",
+            "centerLineBias": 0.49530205335444344,
+            "thickness": 0.09916639349893373,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "ws24agpn4tc35ccchrw852mwd",
+                "position": {
+                  "x": -16.209088030331408,
+                  "y": 28.580852773074994
+                }
+              },
+              {
+                "id": "gmsrwkdn9qu6d0g35es43e9hc",
+                "position": {
+                  "x": -11.77415770655627,
+                  "y": 28.582912974701355
+                }
+              }
+            ]
+          },
+          {
+            "id": "qy15b6p97a5c85303gz0racdb",
+            "type": "wall",
+            "centerLineBias": 0.5008864377092066,
+            "thickness": 0.10035057977067426,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "0sy39iuk62ne2fpwxapa4wdbd",
+                "position": {
+                  "x": -15.976328548372754,
+                  "y": 32.12662678811659
+                }
+              },
+              {
+                "id": "79qyf4ag7g4075qze498y4yea",
+                "position": {
+                  "x": -12.819363103425964,
+                  "y": 32.12805232156146
+                }
+              }
+            ]
+          },
+          {
+            "id": "t63r3k39xkpmb9en1bywd1m2a",
+            "type": "wall",
+            "centerLineBias": 0.5039729310109445,
+            "thickness": 0.0993047182344,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "btdytfp7z98idxpyhrw2d46gd",
+                "position": {
+                  "x": -24.003788912479408,
+                  "y": 30.157195441921882
+                }
+              },
+              {
+                "id": "1h0rh507isay1u21t8881d8fa",
+                "position": {
+                  "x": -24.004693165969925,
+                  "y": 32.125617846765145
+                }
+              }
+            ]
+          },
+          {
+            "id": "uy7x6hitdxggh12td4pcax4cb",
+            "type": "wall",
+            "centerLineBias": 0.5001013361334667,
+            "thickness": 0.10011268954967245,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "kdrc8g696zbc4bqimxa1cg8cd",
+                "position": {
+                  "x": -2.9324163067776667,
+                  "y": 39.46930186424372
+                }
+              },
+              {
+                "id": "kr26t60n822i8d182datqw0wd",
+                "position": {
+                  "x": 0.23454151068984477,
+                  "y": 42.40280768710284
+                }
+              }
+            ]
+          },
+          {
+            "id": "y6k5wip8sxx63d0xawwtbfknc",
+            "type": "wall",
+            "centerLineBias": 0.49753400055652486,
+            "thickness": 0.09960165830363468,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "nibmnb83g3bpwnbf9hgctinkb",
+                "position": {
+                  "x": -49.20893330107962,
+                  "y": 34.69547615546456
+                }
+              },
+              {
+                "id": "72rasytscsytg4sth9igbb1md",
+                "position": {
+                  "x": -45.8312945807035,
+                  "y": 38.04425460683202
+                }
+              }
+            ]
+          },
+          {
+            "id": "26hxkt2si8w0u53n66u2q1ucc",
+            "type": "wall",
+            "centerLineBias": 0.4996734755066354,
+            "thickness": 0.10019305191270729,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "5w1466d368s0g0n033yip1a2c",
+                "position": {
+                  "x": -38.32112582756728,
+                  "y": 44.267335111827094
+                }
+              },
+              {
+                "id": "u5rzbt2x0h99qf4xwyamg02nd",
+                "position": {
+                  "x": -36.92573496017657,
+                  "y": 44.26798899411291
+                }
+              }
+            ]
+          },
+          {
+            "id": "4pfns515hzpqici8pqkw4mxha",
+            "type": "wall",
+            "centerLineBias": 0.5034650653916324,
+            "thickness": 0.10079184880613902,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "mab5g0ns91uxu8rpgn8micuia",
+                "position": {
+                  "x": -22.194831321647317,
+                  "y": 30.158032367968534
+                }
+              },
+              {
+                "id": "u94uu2u05mw4qdnrwty0e38nd",
+                "position": {
+                  "x": -22.195736951872586,
+                  "y": 32.12038746723384
+                }
+              }
+            ]
+          },
+          {
+            "id": "4y730aauwrryhxaic7bireqbd",
+            "type": "wall",
+            "centerLineBias": 0.4997196272493213,
+            "thickness": 0.10015133830564645,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "iuu3rdi5h2ank6q37m6x480ra",
+                "position": {
+                  "x": -45.82936754846221,
+                  "y": 33.72755242190087
+                }
+              },
+              {
+                "id": "72rasytscsytg4sth9igbb1md",
+                "position": {
+                  "x": -45.8312945807035,
+                  "y": 38.04425460683202
+                }
+              }
+            ]
+          },
+          {
+            "id": "9pcart8kwfhpm2e87227yq89d",
+            "type": "wall",
+            "centerLineBias": 0.5065850142709152,
+            "thickness": 0.0987915968292544,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "f7nkbqxr47zhn0mti0exaht3d",
+                "position": {
+                  "x": -45.30926136591766,
+                  "y": 44.34557151152983
+                }
+              },
+              {
+                "id": "5584xn5cehmypawrnw6kwsg6b",
+                "position": {
+                  "x": -45.30723487768646,
+                  "y": 40.01092734372162
+                }
+              }
+            ]
+          },
+          {
+            "id": "eqnfgw1wwagt2ai5bwkd4gw8d",
+            "type": "wall",
+            "centerLineBias": 0.5040891990838443,
+            "thickness": 0.10092012457214622,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "wnef427ewecz8zmgnqgdt539a",
+                "position": {
+                  "x": -49.12840446065607,
+                  "y": 38.063885066125174
+                }
+              },
+              {
+                "id": "bwk94hk1drm23x2qgt5q6wafc",
+                "position": {
+                  "x": -47.13886740312535,
+                  "y": 38.064768213015924
+                }
+              }
+            ]
+          },
+          {
+            "id": "f7ai8pq2ai8kn8enb0669ztrd",
+            "type": "wall",
+            "centerLineBias": 0.49748887406867925,
+            "thickness": 0.10096335955165009,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "dxr1y186pagaiemqgxfki52dd",
+                "position": {
+                  "x": -32.69423204148758,
+                  "y": 39.99518645833076
+                }
+              },
+              {
+                "id": "2812psrwhzbn64ym9tpmwpz9b",
+                "position": {
+                  "x": -30.524075402566,
+                  "y": 39.99617242552528
+                }
+              }
+            ]
+          },
+          {
+            "id": "fqgi2spxxb157ekn027zfzw4a",
+            "type": "wall",
+            "centerLineBias": 0.5136936126007392,
+            "thickness": 0.09619090812008867,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "445iikdq7kysd34w00tt2z0ta",
+                "position": {
+                  "x": 0.4674286836536233,
+                  "y": 39.47092650607831
+                }
+              },
+              {
+                "id": "0daiqgzxdrk9cixu5c42ibttb",
+                "position": {
+                  "x": -1.7271937634429513,
+                  "y": 38.14814103322899
+                }
+              }
+            ]
+          },
+          {
+            "id": "hfg61kzpdhb73x0h5pab7f8ga",
+            "type": "wall",
+            "centerLineBias": 0.5001466931719167,
+            "thickness": 0.1000632196326549,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "skn038zdqb5s4kpiemu1xn9da",
+                "position": {
+                  "x": -38.32144010447591,
+                  "y": 44.945942332400115
+                }
+              },
+              {
+                "id": "5w1466d368s0g0n033yip1a2c",
+                "position": {
+                  "x": -38.32112582756728,
+                  "y": 44.267335111827094
+                }
+              }
+            ]
+          },
+          {
+            "id": "iqzxqzkw0qbmy5ek62buk7xxd",
+            "type": "wall",
+            "centerLineBias": 0.5146922697916645,
+            "thickness": 0.09728809687787594,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "bdpaesxif3uhimf58p1n01xwa",
+                "position": {
+                  "x": -20.36919035541499,
+                  "y": 28.582699403526
+                }
+              },
+              {
+                "id": "bgdw2s7wkafmepq0rwqmcuzcd",
+                "position": {
+                  "x": -20.366663989535695,
+                  "y": 23.06015762898934
+                }
+              }
+            ]
+          },
+          {
+            "id": "k72pka3i3pgh9q6gybunzqwgc",
+            "type": "wall",
+            "centerLineBias": 0.49610769331538973,
+            "thickness": 0.09931991640059133,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "qkse5s68issg163nn9y1e74qb",
+                "position": {
+                  "x": -32.2323428481977,
+                  "y": 44.31915470387686
+                }
+              },
+              {
+                "id": "18kidkmyy6rzygqgnb242fw7c",
+                "position": {
+                  "x": -31.58359489072181,
+                  "y": 41.93792874147771
+                }
+              }
+            ]
+          },
+          {
+            "id": "uq870sc521k46p423w09rwapd",
+            "type": "wall",
+            "centerLineBias": 0.5040715012408016,
+            "thickness": 0.09928398912780866,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "4zhess0rf5ck3xf4wtwhdpkwb",
+                "position": {
+                  "x": -43.125049649377566,
+                  "y": 42.17698004493338
+                }
+              },
+              {
+                "id": "r4nfnnnup9r1iqn8s5kiq6mua",
+                "position": {
+                  "x": -43.12606046094745,
+                  "y": 44.343179670258586
+                }
+              }
+            ]
+          },
+          {
+            "id": "zqnt3chic90pyeggnwp4m4spa",
+            "type": "wall",
+            "centerLineBias": 0.5000212866196181,
+            "thickness": 0.10009068078231038,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "r4nfnnnup9r1iqn8s5kiq6mua",
+                "position": {
+                  "x": -43.12606046094745,
+                  "y": 44.343179670258586
+                }
+              },
+              {
+                "id": "m6bzbd3zm4u3fh3w66hh18ppc",
+                "position": {
+                  "x": -39.459634964127495,
+                  "y": 44.34488725442801
+                }
+              }
+            ]
+          },
+          {
+            "id": "0f3q31x1bkpshcc1dhpfsbt1c",
+            "type": "wall",
+            "centerLineBias": 0.5025483191433372,
+            "thickness": 0.100605429220128,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "4zhess0rf5ck3xf4wtwhdpkwb",
+                "position": {
+                  "x": -43.125049649377566,
+                  "y": 42.17698004493338
+                }
+              },
+              {
+                "id": "7r2rywmksnzr6iucx7zyck7ed",
+                "position": {
+                  "x": -44.782296867221085,
+                  "y": 42.17619563937324
+                }
+              }
+            ]
+          },
+          {
+            "id": "271gnnth93ucdgy3yp0s20hpd",
+            "type": "wall",
+            "centerLineBias": 0.559273990139604,
+            "thickness": 0.12318108184958847,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "m92hb0siq6kk9h47nhfpn8zhc",
+                "position": {
+                  "x": -24.61357844963067,
+                  "y": 44.32280037350649
+                }
+              },
+              {
+                "id": "tz66wece74em0f860y3zambmd",
+                "position": {
+                  "x": -24.612182674679897,
+                  "y": 41.39147729722455
+                }
+              }
+            ]
+          },
+          {
+            "id": "9q1tz15ykqudgznem5581qanc",
+            "type": "wall",
+            "centerLineBias": 0.4089696841030046,
+            "thickness": 0.12625144700153879,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "kqb4r2b5i59gf5t11h2uk26fb",
+                "position": {
+                  "x": -35.365102144005895,
+                  "y": 30.62170894601329
+                }
+              },
+              {
+                "id": "7a2y5ca793175a355cfw0igzc",
+                "position": {
+                  "x": -35.365507643416485,
+                  "y": 31.490306779686602
+                }
+              }
+            ]
+          },
+          {
+            "id": "egdwwk94g9dmt9b8xr44ret2a",
+            "type": "wall",
+            "centerLineBias": 0.508380411027026,
+            "thickness": 0.0984465300612856,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "nibmnb83g3bpwnbf9hgctinkb",
+                "position": {
+                  "x": -49.20893330107962,
+                  "y": 34.69547615546456
+                }
+              },
+              {
+                "id": "9w049aw7imeu7urt03k2iekfa",
+                "position": {
+                  "x": -49.209622998475794,
+                  "y": 36.32575324331118
+                }
+              }
+            ]
+          },
+          {
+            "id": "e859ypz4u2u9ngk5uqb26gmna",
+            "type": "wall",
+            "centerLineBias": 0.49598509721827244,
+            "thickness": 0.1009093071783024,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "en1pschi3zcqwg2wxm2b0nwbc",
+                "position": {
+                  "x": -49.12927837468368,
+                  "y": 40.0100581002938
+                }
+              },
+              {
+                "id": "7pdk12tz6zz00gyzibgyb3dza",
+                "position": {
+                  "x": -46.9029936685769,
+                  "y": 40.0110598559351
+                }
+              }
+            ]
+          },
+          {
+            "id": "h8hifcfq5y1bguxgnr2kag4bd",
+            "type": "wall",
+            "centerLineBias": 0.500156882348261,
+            "thickness": 0.10012975699962966,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "zfpc6cf9d11c83ten1u7mfuyc",
+                "position": {
+                  "x": -49.1818612661273,
+                  "y": 23.157053416740922
+                }
+              },
+              {
+                "id": "5xq3qhxwwxbrty1fyfnqmmqxb",
+                "position": {
+                  "x": -35.36165092471329,
+                  "y": 23.16344726565141
+                }
+              }
+            ]
+          },
+          {
+            "id": "prwibpc66zy7mi64hgssuximd",
+            "type": "wall",
+            "centerLineBias": 0.49978752094788403,
+            "thickness": 0.10014350687684355,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "mpsfr0s8e8xh5krk75hb87ceb",
+                "position": {
+                  "x": -3.379882078167243,
+                  "y": 32.13100644577373
+                }
+              },
+              {
+                "id": "cus4yp0tc0pqfh98ezczd7sxd",
+                "position": {
+                  "x": -11.775797283126511,
+                  "y": 32.12711401374511
+                }
+              }
+            ]
+          },
+          {
+            "id": "qg8kmmmwewi039samfzkk2d9c",
+            "type": "wall",
+            "centerLineBias": 0.5000834242999155,
+            "thickness": 0.1001100707590327,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "tyz12xdreu8c3npxu83r50t2a",
+                "position": {
+                  "x": -21.687838665080932,
+                  "y": 23.05955407459946
+                }
+              },
+              {
+                "id": "bgdw2s7wkafmepq0rwqmcuzcd",
+                "position": {
+                  "x": -20.366663989535695,
+                  "y": 23.06015762898934
+                }
+              }
+            ]
+          },
+          {
+            "id": "r0a78mux2ne29yftz4fw8au4d",
+            "type": "wall",
+            "centerLineBias": 0.5004724997041143,
+            "thickness": 0.10018302689373072,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "mpsfr0s8e8xh5krk75hb87ceb",
+                "position": {
+                  "x": -3.379882078167243,
+                  "y": 32.13100644577373
+                }
+              },
+              {
+                "id": "7muyqdf09w8pn7ind10ik1fib",
+                "position": {
+                  "x": -4.682221946817218,
+                  "y": 33.43220559195025
+                }
+              }
+            ]
+          },
+          {
+            "id": "78y03zrhstxn27fx1yby7t3ab",
+            "type": "wall",
+            "centerLineBias": 0.49356470489056303,
+            "thickness": 0.11351082958862053,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "f7cb3gm4429rw491pg7ecnz8d",
+                "position": {
+                  "x": -36.92373613508671,
+                  "y": 39.99324733436034
+                }
+              },
+              {
+                "id": "u5rzbt2x0h99qf4xwyamg02nd",
+                "position": {
+                  "x": -36.92573496017657,
+                  "y": 44.26798899411291
+                }
+              }
+            ]
+          },
+          {
+            "id": "bhegwfiksmr79ub7emyx8xwhb",
+            "type": "wall",
+            "centerLineBias": 0.5000797751441013,
+            "thickness": 0.10011164713478973,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "u94uu2u05mw4qdnrwty0e38nd",
+                "position": {
+                  "x": -22.195736951872586,
+                  "y": 32.12038746723384
+                }
+              },
+              {
+                "id": "zzuurzhwhq6519fx00n45gcwb",
+                "position": {
+                  "x": -21.692020662324765,
+                  "y": 32.120621391576236
+                }
+              }
+            ]
+          },
+          {
+            "id": "isydzpx3rp07u7gryigb48bpb",
+            "type": "wall",
+            "centerLineBias": 0.5023806269379283,
+            "thickness": 0.1009458148373,
+            "openings": [
+              {
+                "id": "y2e36wuf7nk1krr98y73i1yka",
+                "height": 2.760999917984009,
+                "width": 0.8710227436734642,
+                "lowerElevation": 0.012000083923339844,
+                "relativeCenter": 0.83942586132681,
+                "type": "doorway"
+              },
+              {
+                "id": "7c6474e42z131mxy69yadkhcc",
+                "height": 2.760999917984009,
+                "width": 0.6001528941873319,
+                "lowerElevation": 0.012000083923339844,
+                "relativeCenter": 0.6373669303546456,
+                "type": "doorway"
+              }
+            ],
+            "vertices": [
+              {
+                "id": "dxr1y186pagaiemqgxfki52dd",
+                "position": {
+                  "x": -32.69423204148758,
+                  "y": 39.99518645833076
+                }
+              },
+              {
+                "id": "f7cb3gm4429rw491pg7ecnz8d",
+                "position": {
+                  "x": -36.92373613508671,
+                  "y": 39.99324733436034
+                }
+              }
+            ]
+          },
+          {
+            "id": "k1yuzs9ka4qw4ky4q9fr2mmrb",
+            "type": "wall",
+            "centerLineBias": 0.5012774142702381,
+            "thickness": 0.09983930981307397,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "9gg29wrazycedefustb27i13b",
+                "position": {
+                  "x": -49.103430194194395,
+                  "y": 41.46548126265358
+                }
+              },
+              {
+                "id": "bab8n4n62rq19d0i3rs6h1mnc",
+                "position": {
+                  "x": -49.10475564708301,
+                  "y": 44.34379628423363
+                }
+              }
+            ]
+          },
+          {
+            "id": "zsq00zmnw5rdc5wgbm185mgba",
+            "type": "wall",
+            "centerLineBias": 0.5009388120282862,
+            "thickness": 0.10028099689088515,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "iuu3rdi5h2ank6q37m6x480ra",
+                "position": {
+                  "x": -45.82936754846221,
+                  "y": 33.72755242190087
+                }
+              },
+              {
+                "id": "4yikr9h71cb89azf5c3xbapub",
+                "position": {
+                  "x": -48.716148614908626,
+                  "y": 33.72624383622791
+                }
+              }
+            ]
+          },
+          {
+            "id": "09ni6mi5a3s5wwfwwzx43a1gb",
+            "type": "wall",
+            "centerLineBias": 0.49748995852314476,
+            "thickness": 0.09959638436866892,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "en1pschi3zcqwg2wxm2b0nwbc",
+                "position": {
+                  "x": -49.12927837468368,
+                  "y": 40.0100581002938
+                }
+              },
+              {
+                "id": "wnef427ewecz8zmgnqgdt539a",
+                "position": {
+                  "x": -49.12840446065607,
+                  "y": 38.063885066125174
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "holes": [
+        {
+          "edges": [
+            {
+              "id": "zbf6ssxbmertgpbakyq6n6t1b",
+              "type": "wall",
+              "centerLineBias": 0.44945321581877795,
+              "thickness": 0.11143230137173475,
+              "openings": [],
+              "vertices": [
+                {
+                  "id": "00baqcq2e9i23i3m3bcw9syxb",
+                  "position": {
+                    "x": -42.44849684073895,
+                    "y": 32.11876357706724
+                  }
+                },
+                {
+                  "id": "rusuc4pk66w51i52wk9xme3wc",
+                  "position": {
+                    "x": -43.59465884362926,
+                    "y": 32.11823797670897
+                  }
+                }
+              ]
+            },
+            {
+              "id": "8xcx87fbw2py0y2qsr31eqska",
+              "type": "wall",
+              "centerLineBias": 0.47524809631434073,
+              "thickness": 0.10530941583046977,
+              "openings": [],
+              "vertices": [
+                {
+                  "id": "7453i203rsxids6f7wyatebfb",
+                  "position": {
+                    "x": -43.594357574856254,
+                    "y": 31.730752919032398
+                  }
+                },
+                {
+                  "id": "00baqcq2e9i23i3m3bcw9syxb",
+                  "position": {
+                    "x": -42.44849684073895,
+                    "y": 32.11876357706724
+                  }
+                }
+              ]
+            },
+            {
+              "id": "fz6y31ns605y8ychqt0pfbz8a",
+              "type": "wall",
+              "centerLineBias": 0.5068851344011387,
+              "thickness": 0.10149014284346293,
+              "openings": [],
+              "vertices": [
+                {
+                  "id": "7453i203rsxids6f7wyatebfb",
+                  "position": {
+                    "x": -43.594357574856254,
+                    "y": 31.730752919032398
+                  }
+                },
+                {
+                  "id": "rusuc4pk66w51i52wk9xme3wc",
+                  "position": {
+                    "x": -43.59465884362926,
+                    "y": 32.11823797670897
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "edges": [
+            {
+              "id": "5ccesp3aw1k6hmtddhtdttdkd",
+              "type": "wall",
+              "centerLineBias": 0.4966784140849605,
+              "thickness": 0.09943377028711656,
+              "openings": [],
+              "vertices": [
+                {
+                  "id": "nxrk98ce7gmw4iq8ismph8had",
+                  "position": {
+                    "x": -23.237869404177513,
+                    "y": 35.91802961907327
+                  }
+                },
+                {
+                  "id": "1tstinmh9pa2za03m2syzamxd",
+                  "position": {
+                    "x": -19.620067403691486,
+                    "y": 35.91967178618416
+                  }
+                }
+              ]
+            },
+            {
+              "id": "q6mypf5at3qzkwnd92y5rh06c",
+              "type": "wall",
+              "centerLineBias": 0.49987009099206453,
+              "thickness": 0.10012173903118103,
+              "openings": [],
+              "vertices": [
+                {
+                  "id": "ssqi85ewtysz8hz4mcpa0z65b",
+                  "position": {
+                    "x": -19.621082499632973,
+                    "y": 38.13378440259994
+                  }
+                },
+                {
+                  "id": "1tstinmh9pa2za03m2syzamxd",
+                  "position": {
+                    "x": -19.620067403691486,
+                    "y": 35.91967178618416
+                  }
+                }
+              ]
+            },
+            {
+              "id": "rf1z3iwk68p557xqmespzmx0d",
+              "type": "wall",
+              "centerLineBias": 0.49980198781326024,
+              "thickness": 0.09973057246286932,
+              "openings": [
+                {
+                  "id": "ni5hyyiwbnihpbawtr8tuyqcb",
+                  "height": 2.7170000076293945,
+                  "width": 0.9104615936214872,
+                  "lowerElevation": 0.03299999237060547,
+                  "relativeCenter": 0.7056730694712968,
+                  "type": "doorway"
+                }
+              ],
+              "vertices": [
+                {
+                  "id": "u81xth6id8ugsmkfdr6hmzw4a",
+                  "position": {
+                    "x": -23.23887612796248,
+                    "y": 38.13213402309793
+                  }
+                },
+                {
+                  "id": "nxrk98ce7gmw4iq8ismph8had",
+                  "position": {
+                    "x": -23.237869404177513,
+                    "y": 35.91802961907327
+                  }
+                }
+              ]
+            },
+            {
+              "id": "mrn5h9m3bybtcfe8m78ghsubc",
+              "type": "wall",
+              "centerLineBias": 0.49911732991984115,
+              "thickness": 0.09827409535174478,
+              "openings": [],
+              "vertices": [
+                {
+                  "id": "u81xth6id8ugsmkfdr6hmzw4a",
+                  "position": {
+                    "x": -23.23887612796248,
+                    "y": 38.13213402309793
+                  }
+                },
+                {
+                  "id": "ssqi85ewtysz8hz4mcpa0z65b",
+                  "position": {
+                    "x": -19.621082499632973,
+                    "y": 38.13378440259994
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "edges": [
+            {
+              "id": "3d85zz0ippua3tuxpst6ctnca",
+              "type": "wall",
+              "centerLineBias": 0.49975369958614146,
+              "thickness": 0.09352060414714372,
+              "openings": [],
+              "vertices": [
+                {
+                  "id": "9xui3b8xf2zwf02e36f6iephd",
+                  "position": {
+                    "x": -36.96087486644179,
+                    "y": 24.017112552699793
+                  }
+                },
+                {
+                  "id": "twptik6qucqxrckdznc4zbfbd",
+                  "position": {
+                    "x": -36.96461499802617,
+                    "y": 32.13483961142813
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "edges": [
+            {
+              "id": "gzmb480tew2pdw3h73zq55bcb",
+              "type": "wall",
+              "centerLineBias": 0.7635871131849583,
+              "thickness": 0.026681264468450507,
+              "openings": [],
+              "vertices": [
+                {
+                  "id": "grw8g0hz6fc6x1k9nfhy7yw5d",
+                  "position": {
+                    "x": -29.225689693085734,
+                    "y": 33.6945537903759
+                  }
+                },
+                {
+                  "id": "dtcc1zss7ei88en69bdn6pd5a",
+                  "position": {
+                    "x": -29.226616875150288,
+                    "y": 35.67279030705753
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "edges": [
+            {
+              "id": "wa8tzfkp0zrrrbhegp5p795za",
+              "type": "wall",
+              "centerLineBias": 0.4998284055899447,
+              "thickness": 0.09562410487393154,
+              "openings": [],
+              "vertices": [
+                {
+                  "id": "bsf94bcbc32a21ggyk82t6qxd",
+                  "position": {
+                    "x": -41.56873640261444,
+                    "y": 32.132725088265516
+                  }
+                },
+                {
+                  "id": "twptik6qucqxrckdznc4zbfbd",
+                  "position": {
+                    "x": -36.96461499802617,
+                    "y": 32.13483961142813
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "edges": [
+            {
+              "id": "cmpudqgb92sn53skxy530qubd",
+              "type": "wall",
+              "centerLineBias": 0.49134977429209514,
+              "thickness": 0.10186037184883358,
+              "openings": [],
+              "vertices": [
+                {
+                  "id": "t1psm37fxw0qim2yhp77r3a2d",
+                  "position": {
+                    "x": -33.536032065653664,
+                    "y": 32.13076166488235
+                  }
+                },
+                {
+                  "id": "fhxgpxuh75czytd3r98wmgxgc",
+                  "position": {
+                    "x": -35.36580566809557,
+                    "y": 32.12994324493405
+                  }
+                }
+              ]
+            },
+            {
+              "id": "idkqxpwdratewy14use1nzehd",
+              "type": "wall",
+              "centerLineBias": 0.49248119851165534,
+              "thickness": 0.10174473280915562,
+              "openings": [],
+              "vertices": [
+                {
+                  "id": "fhxgpxuh75czytd3r98wmgxgc",
+                  "position": {
+                    "x": -35.36580566809557,
+                    "y": 32.12994324493405
+                  }
+                },
+                {
+                  "id": "7a2y5ca793175a355cfw0igzc",
+                  "position": {
+                    "x": -35.365507643416485,
+                    "y": 31.490306779686602
+                  }
+                }
+              ]
+            },
+            {
+              "id": "gffawgqwhzimyhn2zxkm06gqd",
+              "type": "wall",
+              "centerLineBias": 0.5081890548996217,
+              "thickness": 0.10175992564074932,
+              "openings": [],
+              "vertices": [
+                {
+                  "id": "t1psm37fxw0qim2yhp77r3a2d",
+                  "position": {
+                    "x": -33.536032065653664,
+                    "y": 32.13076166488235
+                  }
+                },
+                {
+                  "id": "7a2y5ca793175a355cfw0igzc",
+                  "position": {
+                    "x": -35.365507643416485,
+                    "y": 31.490306779686602
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cdz3fkt38kae7tapstpt0eaeb",
+      "classifications": [
+        {
+          "id": "byp7pz2tmt4ff47nhfx0uwzec",
+          "label": "Other"
+        }
+      ],
+      "boundary": {
+        "edges": [
+          {
+            "id": "da50fnan3dikch2wx95tfanya",
+            "type": "wall",
+            "centerLineBias": 0.4760451692927795,
+            "thickness": 0.10878899394759661,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "1smp7786t8eeazgi3w8ea8p0a",
+                "position": {
+                  "x": -0.5278759841741476,
+                  "y": 28.795843165782944
+                }
+              },
+              {
+                "id": "0gk0cdtqz8tr3h7tk0sbt6mpd",
+                "position": {
+                  "x": -0.5275851982205378,
+                  "y": 28.147542345844034
+                }
+              }
+            ]
+          },
+          {
+            "id": "fiuf0rrw61zhedt166z9taa4a",
+            "type": "wall",
+            "centerLineBias": 0.5027092254074865,
+            "thickness": 0.09963071797675689,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "ikwsqrzh9itd779xc1ec2ufqd",
+                "position": {
+                  "x": -0.5290563332291569,
+                  "y": 22.748459624162244
+                }
+              },
+              {
+                "id": "zemzpgeks75ktq704pb6banzc",
+                "position": {
+                  "x": -0.5299788492029968,
+                  "y": 24.999630615556562
+                }
+              }
+            ]
+          },
+          {
+            "id": "ki2sddp81h0xc5rr7maed2p4c",
+            "type": "wall",
+            "centerLineBias": 0.4992385664421301,
+            "thickness": 0.09994599718561542,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "krps2b23dtggf7z9d13x1eqnb",
+                "position": {
+                  "x": 5.520416658744747,
+                  "y": 12.891595132362504
+                }
+              },
+              {
+                "id": "agd415wa0uewm6sn5m19s7t9b",
+                "position": {
+                  "x": 5.517917274271924,
+                  "y": 18.423408049677082
+                }
+              }
+            ]
+          },
+          {
+            "id": "ktg5npntiee9wbtyqsca5tpia",
+            "type": "wall",
+            "centerLineBias": 0.49982045494058824,
+            "thickness": 0.1001337062311286,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "0ymhiax283apuu546bnqyzw5a",
+                "position": {
+                  "x": 11.570266719422031,
+                  "y": 38.15747348352527
+                }
+              },
+              {
+                "id": "qwsgpc27teqwwutfgbsmx094c",
+                "position": {
+                  "x": 6.84152661563282,
+                  "y": 38.155280227743226
+                }
+              }
+            ]
+          },
+          {
+            "id": "si7fp81twaze9ngg22ueczhtd",
+            "type": "wall",
+            "centerLineBias": 0.4986361156802671,
+            "thickness": 0.09982060036173268,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "6n5wc39yrrag8u08g2cxharfd",
+                "position": {
+                  "x": 8.266610458468529,
+                  "y": 39.25099098018151
+                }
+              },
+              {
+                "id": "6k0p4dte0mz97aqz8szp54knd",
+                "position": {
+                  "x": 7.259961133448205,
+                  "y": 40.256683396032
+                }
+              }
+            ]
+          },
+          {
+            "id": "witd9s8n9xatwrr80qfu34qsd",
+            "type": "wall",
+            "centerLineBias": 0.3548148686584547,
+            "thickness": 0.07640795493576405,
+            "openings": [
+              {
+                "id": "gyw0wzen7nyyag65z64dsascc",
+                "height": 2.750999927520752,
+                "width": 0.8042216144780141,
+                "lowerElevation": 0.006999969482421875,
+                "relativeCenter": 0.7695271112632956,
+                "type": "doorway"
+              }
+            ],
+            "vertices": [
+              {
+                "id": "r0dupefphkhb8xmx77uebhiad",
+                "position": {
+                  "x": -0.5283375118475009,
+                  "y": 21.003739126599648
+                }
+              },
+              {
+                "id": "ikwsqrzh9itd779xc1ec2ufqd",
+                "position": {
+                  "x": -0.5290563332291569,
+                  "y": 22.748459624162244
+                }
+              }
+            ]
+          },
+          {
+            "id": "7txm1hpi7420ut74znmwpb00a",
+            "type": "wall",
+            "centerLineBias": 0.501160171867036,
+            "thickness": 0.10461723279965666,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "f86ub4tg73gtkbx3f3eekr69d",
+                "position": {
+                  "x": -5.230751067839043,
+                  "y": 2.7391678529177423
+                }
+              },
+              {
+                "id": "imibnrif03y4sp5witqa3bngb",
+                "position": {
+                  "x": -9.458767588758912,
+                  "y": 2.73719627697289
+                }
+              }
+            ]
+          },
+          {
+            "id": "8acex9610xc1iqr7rs2hpmfnc",
+            "type": "wall",
+            "centerLineBias": 0.4968632217371549,
+            "thickness": 0.0995635510958411,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "sm6qm8781p71du7n4k2swbp5b",
+                "position": {
+                  "x": -9.461226599400673,
+                  "y": 8.728327043042679
+                }
+              },
+              {
+                "id": "e6b5769t5u18xb4kxqkm7nyhd",
+                "position": {
+                  "x": -9.460755532136464,
+                  "y": 7.775270236169439
+                }
+              }
+            ]
+          },
+          {
+            "id": "cbzcz15cazdtiinhg7serb6sd",
+            "type": "wall",
+            "centerLineBias": 0.5001143877935448,
+            "thickness": 0.10012022081945303,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "yy8g2pgsqx9hf2hnzqd9yih0b",
+                "position": {
+                  "x": -0.508512899190157,
+                  "y": -3.6312300226963004
+                }
+              },
+              {
+                "id": "sy1w3xh3sau6u4tir5nzk9msc",
+                "position": {
+                  "x": 1.0963117406133287,
+                  "y": -3.6304849478971555
+                }
+              }
+            ]
+          },
+          {
+            "id": "gk2gad1eq0bysu3mq5pa8b96c",
+            "type": "wall",
+            "centerLineBias": 0.49890582358621766,
+            "thickness": 0.09987687267149171,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "x8k1hmi8799gbnfekkz2ex9ad",
+                "position": {
+                  "x": -9.475667225299416,
+                  "y": 16.15214014163858
+                }
+              },
+              {
+                "id": "ks5ced49qz9tph66ei820wn5a",
+                "position": {
+                  "x": -9.4741176895033,
+                  "y": 12.918743347796608
+                }
+              }
+            ]
+          },
+          {
+            "id": "pukpq5c1hm1yr5bhd5da0gehd",
+            "type": "wall",
+            "centerLineBias": 0.5044116462157393,
+            "thickness": 0.0992218736711999,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "rx6ztgkskg4sy77x9c668dpec",
+                "position": {
+                  "x": -6.37596638975259,
+                  "y": 7.776750001764583
+                }
+              },
+              {
+                "id": "e6b5769t5u18xb4kxqkm7nyhd",
+                "position": {
+                  "x": -9.460755532136464,
+                  "y": 7.775270236169439
+                }
+              }
+            ]
+          },
+          {
+            "id": "q3t623dxbbsmgz7x1m1i2sz2d",
+            "type": "wall",
+            "centerLineBias": 0.4998357919070673,
+            "thickness": 0.10012318392044334,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "1im599frtsbsyt3yxm8tcf2ac",
+                "position": {
+                  "x": 6.4786555011161155,
+                  "y": 39.474667383165496
+                }
+              },
+              {
+                "id": "6k0p4dte0mz97aqz8szp54knd",
+                "position": {
+                  "x": 7.259961133448205,
+                  "y": 40.256683396032
+                }
+              }
+            ]
+          },
+          {
+            "id": "ruyf2upat949tt1w37wptittb",
+            "type": "wall",
+            "centerLineBias": 0.4997373284964642,
+            "thickness": 0.10004018338078176,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "8f4epzbr3ixfex6s4pz9ra4qc",
+                "position": {
+                  "x": -5.312417454282376,
+                  "y": 4.035232644690604
+                }
+              },
+              {
+                "id": "8720agxzeist32n0a51ts57qb",
+                "position": {
+                  "x": -9.460826056479627,
+                  "y": 6.9413889628305805
+                }
+              }
+            ]
+          },
+          {
+            "id": "13be26is0ncpuzm3w6hm0ak4c",
+            "type": "wall",
+            "centerLineBias": 0.5007050509364431,
+            "thickness": 0.09995167141732574,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "4yr46qmyh8trac9y2xkyu50ab",
+                "position": {
+                  "x": 4.412065399262731,
+                  "y": 42.6788552030393
+                }
+              },
+              {
+                "id": "k6ceitccesi9afbmxdq53tabb",
+                "position": {
+                  "x": 1.4056953767917304,
+                  "y": 39.472257312458915
+                }
+              }
+            ]
+          },
+          {
+            "id": "33bn98e5m3zi08rigsg3ykiub",
+            "type": "wall",
+            "centerLineBias": 0.4999867903678995,
+            "thickness": 0.10009226929246381,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "mcaud452d8mbdzpm86s9nncxc",
+                "position": {
+                  "x": -1.6474588390777472,
+                  "y": 24.99914169323739
+                }
+              },
+              {
+                "id": "zemzpgeks75ktq704pb6banzc",
+                "position": {
+                  "x": -0.5299788492029968,
+                  "y": 24.999630615556562
+                }
+              }
+            ]
+          },
+          {
+            "id": "5k5ezayn0qe177x3bmrhy99ad",
+            "type": "wall",
+            "centerLineBias": 0.500008050864515,
+            "thickness": 0.10009469886126122,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "ck5sutuhq3xdd5dex9zsmc89b",
+                "position": {
+                  "x": 11.56976763302187,
+                  "y": 39.25246906733098
+                }
+              },
+              {
+                "id": "6n5wc39yrrag8u08g2cxharfd",
+                "position": {
+                  "x": 8.266610458468529,
+                  "y": 39.25099098018151
+                }
+              }
+            ]
+          },
+          {
+            "id": "b4c1zbfaasksqhinnwxnhds6c",
+            "type": "wall",
+            "centerLineBias": 0.4998626507598405,
+            "thickness": 0.1001253139670228,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "yy8g2pgsqx9hf2hnzqd9yih0b",
+                "position": {
+                  "x": -0.508512899190157,
+                  "y": -3.6312300226963004
+                }
+              },
+              {
+                "id": "uk9ngrszdg40h8nrtxipa51ib",
+                "position": {
+                  "x": -0.5073095473039272,
+                  "y": -6.214173278189779
+                }
+              }
+            ]
+          },
+          {
+            "id": "iwgfzbc3kr311fd3i9frcx0qb",
+            "type": "wall",
+            "centerLineBias": 0.4930206983211921,
+            "thickness": 0.10156766838478978,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "1fi30mq4eq6aau3ikfe6zamba",
+                "position": {
+                  "x": 5.522071419656911,
+                  "y": 19.19832751997341
+                }
+              },
+              {
+                "id": "c635phmg0e9eaaqrwr3pkfkca",
+                "position": {
+                  "x": 5.515593751016133,
+                  "y": 33.203062382585976
+                }
+              }
+            ]
+          },
+          {
+            "id": "wmhyq5s227rgf8w4em04fc78a",
+            "type": "wall",
+            "centerLineBias": 0.5001442611089804,
+            "thickness": 0.10012849235277614,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "87s6gsekmewbbsgex5s1hk3ab",
+                "position": {
+                  "x": -5.073848476623165,
+                  "y": -6.216262785652522
+                }
+              },
+              {
+                "id": "uk9ngrszdg40h8nrtxipa51ib",
+                "position": {
+                  "x": -0.5073095473039272,
+                  "y": -6.214173278189779
+                }
+              }
+            ]
+          },
+          {
+            "id": "1wf1ke0i3z41heqashkmbezfc",
+            "type": "wall",
+            "centerLineBias": 0.5014084604331854,
+            "thickness": 0.10048156681919952,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "1im599frtsbsyt3yxm8tcf2ac",
+                "position": {
+                  "x": 6.4786555011161155,
+                  "y": 39.474667383165496
+                }
+              },
+              {
+                "id": "k6ceitccesi9afbmxdq53tabb",
+                "position": {
+                  "x": 1.4056953767917304,
+                  "y": 39.472257312458915
+                }
+              }
+            ]
+          },
+          {
+            "id": "64ebnrgzaacxbkixzgk5xg3mb",
+            "type": "wall",
+            "centerLineBias": 0.49967722652521607,
+            "thickness": 0.1001572831579496,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "1pywkewx7c8bdcz8kgihpby6b",
+                "position": {
+                  "x": -5.044680131561874,
+                  "y": 11.415307286342864
+                }
+              },
+              {
+                "id": "ks5ced49qz9tph66ei820wn5a",
+                "position": {
+                  "x": -9.4741176895033,
+                  "y": 12.918743347796608
+                }
+              }
+            ]
+          },
+          {
+            "id": "7m8wkzd83sawc2c3k0mbubamd",
+            "type": "wall",
+            "centerLineBias": 0.5020090758393841,
+            "thickness": 0.0996947235827469,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "sptsem49pazuwkfikcpudgn3c",
+                "position": {
+                  "x": 6.826510460521473,
+                  "y": 11.69056811798523
+                }
+              },
+              {
+                "id": "pcya6btswmp353m8beptpk5xc",
+                "position": {
+                  "x": 1.089278077865108,
+                  "y": 11.687938479546897
+                }
+              }
+            ]
+          },
+          {
+            "id": "8mmx36nd6xb383a6w9qdyicyc",
+            "type": "wall",
+            "centerLineBias": 0.49868127416842134,
+            "thickness": 0.10036182438741796,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "31di15rdpugfrgadc1nq7xiyb",
+                "position": {
+                  "x": 4.411304177112239,
+                  "y": 44.32979511619976
+                }
+              },
+              {
+                "id": "4yr46qmyh8trac9y2xkyu50ab",
+                "position": {
+                  "x": 4.412065399262731,
+                  "y": 42.6788552030393
+                }
+              }
+            ]
+          },
+          {
+            "id": "dd8bwr9rk7erbn1pkd46d8mpa",
+            "type": "wall",
+            "centerLineBias": 0.49729375412816124,
+            "thickness": 0.09955773695295171,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "cgf0m1ybezfmth7gdf3qsg03b",
+                "position": {
+                  "x": -3.5301920981630595,
+                  "y": 33.68414930168757
+                }
+              },
+              {
+                "id": "khrf97andac6hyttb3mubwyrd",
+                "position": {
+                  "x": -0.5287471450187039,
+                  "y": 30.69497368489911
+                }
+              }
+            ]
+          },
+          {
+            "id": "yxt0u644rys4qiyg5yd5yqpxd",
+            "type": "wall",
+            "centerLineBias": 0.49707384973242136,
+            "thickness": 0.10076148210543497,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "87s6gsekmewbbsgex5s1hk3ab",
+                "position": {
+                  "x": -5.073848476623165,
+                  "y": -6.216262785652522
+                }
+              },
+              {
+                "id": "78g8rzbbrdweqpfbp2bimnaha",
+                "position": {
+                  "x": -5.074758536620296,
+                  "y": -4.242366070868295
+                }
+              }
+            ]
+          },
+          {
+            "id": "5xihpsxde8b8piu50z35538xb",
+            "type": "wall",
+            "centerLineBias": 0.4884959493247981,
+            "thickness": 0.1046073237009685,
+            "openings": [
+              {
+                "id": "zxaitnumiepa99d2s89z8hx7c",
+                "height": 2.759999990463257,
+                "width": 0.9145850066949532,
+                "lowerElevation": -0.021000027656555176,
+                "relativeCenter": 0.457417634962455,
+                "type": "doorway"
+              }
+            ],
+            "vertices": [
+              {
+                "id": "ae7sh9dq26mqxz2s18n2s9kfd",
+                "position": {
+                  "x": -4.116967625797313,
+                  "y": 16.16748589200577
+                }
+              },
+              {
+                "id": "xpa3rwpipek1yz1wx29app5pa",
+                "position": {
+                  "x": -5.116693959466894,
+                  "y": 16.16702692600078
+                }
+              }
+            ]
+          },
+          {
+            "id": "gyyskp4qydr6d23w1bp13q3xa",
+            "type": "wall",
+            "centerLineBias": 0.4945107006049884,
+            "thickness": 0.10027293844964393,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "78g8rzbbrdweqpfbp2bimnaha",
+                "position": {
+                  "x": -5.074758536620296,
+                  "y": -4.242366070868295
+                }
+              },
+              {
+                "id": "cugg6cm3d4ufzmzrumzwyre5c",
+                "position": {
+                  "x": -5.077222600461052,
+                  "y": 1.0450309602711916
+                }
+              }
+            ]
+          },
+          {
+            "id": "gekfs530d9wyi41gb5xi6a1ib",
+            "type": "wall",
+            "centerLineBias": 0.500875368133222,
+            "thickness": 0.09991770899415432,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "uis3fxfpsdnf29735i1mtt2dd",
+                "position": {
+                  "x": -0.36316986600456996,
+                  "y": 38.110867297623564
+                }
+              },
+              {
+                "id": "hp0g6nththw5q7mmrquqba0md",
+                "position": {
+                  "x": -4.274054575234791,
+                  "y": 37.20980677948064
+                }
+              }
+            ]
+          },
+          {
+            "id": "hezkmhd7wyfiugw2igeazhmza",
+            "type": "wall",
+            "centerLineBias": 0.49553784104226706,
+            "thickness": 0.09926323769451369,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "r0dupefphkhb8xmx77uebhiad",
+                "position": {
+                  "x": -0.5283375118475009,
+                  "y": 21.003739126599648
+                }
+              },
+              {
+                "id": "rctrdszz43phq89aghkqu9ipb",
+                "position": {
+                  "x": -0.5261859048086417,
+                  "y": 16.169085123867372
+                }
+              }
+            ]
+          },
+          {
+            "id": "m6a6m4mheke46rz5nwcaipnyd",
+            "type": "wall",
+            "centerLineBias": 0.5048999572056768,
+            "thickness": 0.09912125016748334,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "krps2b23dtggf7z9d13x1eqnb",
+                "position": {
+                  "x": 5.520416658744747,
+                  "y": 12.891595132362504
+                }
+              },
+              {
+                "id": "k2e3c1g689hkq89299eyuwdzd",
+                "position": {
+                  "x": 6.825956501170864,
+                  "y": 12.892189938789846
+                }
+              }
+            ]
+          },
+          {
+            "id": "pe5iwy9yz18usqg73pa2mr7ha",
+            "type": "wall",
+            "centerLineBias": 0.5022574941736782,
+            "thickness": 0.09964586242893955,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "3inwcgy2xwck5z9tqs17g5q7a",
+                "position": {
+                  "x": 4.459201531002056,
+                  "y": 18.422932685590887
+                }
+              },
+              {
+                "id": "agd415wa0uewm6sn5m19s7t9b",
+                "position": {
+                  "x": 5.517917274271924,
+                  "y": 18.423408049677082
+                }
+              }
+            ]
+          },
+          {
+            "id": "syg3attuimwm4iabusdeswxrd",
+            "type": "wall",
+            "centerLineBias": 0.4993485811291172,
+            "thickness": 0.10009301580887417,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "8720agxzeist32n0a51ts57qb",
+                "position": {
+                  "x": -9.460826056479627,
+                  "y": 6.9413889628305805
+                }
+              },
+              {
+                "id": "imibnrif03y4sp5witqa3bngb",
+                "position": {
+                  "x": -9.458767588758912,
+                  "y": 2.73719627697289
+                }
+              }
+            ]
+          },
+          {
+            "id": "tp058whe6c2232t7zfw5uncpc",
+            "type": "wall",
+            "centerLineBias": 0.49153970084854576,
+            "thickness": 0.10189129608234711,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "1smp7786t8eeazgi3w8ea8p0a",
+                "position": {
+                  "x": -0.5278759841741476,
+                  "y": 28.795843165782944
+                }
+              },
+              {
+                "id": "khrf97andac6hyttb3mubwyrd",
+                "position": {
+                  "x": -0.5287471450187039,
+                  "y": 30.69497368489911
+                }
+              }
+            ]
+          },
+          {
+            "id": "u6wskz3xb6hxyd05xsx1g1era",
+            "type": "wall",
+            "centerLineBias": 0.49714293960270517,
+            "thickness": 0.10068221750222366,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "zk4y5mckxy2pzefcr8cs3iutd",
+                "position": {
+                  "x": 1.0766733024837254,
+                  "y": 35.12939160312353
+                }
+              },
+              {
+                "id": "qcycy3amxm1zauy414uh122xd",
+                "position": {
+                  "x": 1.086938985801337,
+                  "y": 12.892247333325146
+                }
+              }
+            ]
+          },
+          {
+            "id": "xyyncdpyuuikck87u4195fa5a",
+            "type": "wall",
+            "centerLineBias": 1.0,
+            "thickness": 0.05004230301775086,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "cgf0m1ybezfmth7gdf3qsg03b",
+                "position": {
+                  "x": -3.5301920981630595,
+                  "y": 33.68414930168757
+                }
+              },
+              {
+                "id": "cm8b5pu8sx0xzr249ux19kgac",
+                "position": {
+                  "x": -0.36107728848516474,
+                  "y": 33.685627599901125
+                }
+              }
+            ]
+          },
+          {
+            "id": "x64dx2r6hce8t7qmie7pwtc7a",
+            "type": "wall",
+            "centerLineBias": 0.49989052599198225,
+            "thickness": 0.10011861260912092,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "mcaud452d8mbdzpm86s9nncxc",
+                "position": {
+                  "x": -1.6474588390777472,
+                  "y": 24.99914169323739
+                }
+              },
+              {
+                "id": "spm8fb8i8z1ug4dhgq4ubikia",
+                "position": {
+                  "x": -1.6491976522594545,
+                  "y": 28.795329726681103
+                }
+              }
+            ]
+          },
+          {
+            "id": "0e8h321nzeyiw897q94tqk1fc",
+            "type": "wall",
+            "centerLineBias": 0.5000044316546313,
+            "thickness": 0.10009336724176311,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "1fi30mq4eq6aau3ikfe6zamba",
+                "position": {
+                  "x": 5.522071419656911,
+                  "y": 19.19832751997341
+                }
+              },
+              {
+                "id": "s8fzrfxy6wadenxxt04itg1gd",
+                "position": {
+                  "x": 6.850323571290857,
+                  "y": 19.198925479253813
+                }
+              }
+            ]
+          },
+          {
+            "id": "1e2f7kg6e8hrzd3qk6kmz7ngc",
+            "type": "wall",
+            "centerLineBias": 0.49290919555753365,
+            "thickness": 0.10154369532443068,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "8f4epzbr3ixfex6s4pz9ra4qc",
+                "position": {
+                  "x": -5.312417454282376,
+                  "y": 4.035232644690604
+                }
+              },
+              {
+                "id": "cukty22b34tnetskay6ts1hha",
+                "position": {
+                  "x": -5.315169653379691,
+                  "y": 10.02646119785821
+                }
+              }
+            ]
+          },
+          {
+            "id": "56k50zq8igkhs3izqriikgwdd",
+            "type": "wall",
+            "centerLineBias": 0.5017422415102069,
+            "thickness": 0.10045034065046743,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "rtnxwep42ppf53i3tuztrm4nc",
+                "position": {
+                  "x": -5.3156842061798635,
+                  "y": 16.166936404941463
+                }
+              },
+              {
+                "id": "iw926094u9q5xkhre0dzgse8b",
+                "position": {
+                  "x": -5.314085145164454,
+                  "y": 12.601963440512367
+                }
+              }
+            ]
+          },
+          {
+            "id": "d79ttrnc14ig8mx66ptcf7zqc",
+            "type": "wall",
+            "centerLineBias": 0.5001753152223896,
+            "thickness": 0.10013546914685836,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "uis3fxfpsdnf29735i1mtt2dd",
+                "position": {
+                  "x": -0.36316986600456996,
+                  "y": 38.110867297623564
+                }
+              },
+              {
+                "id": "cm8b5pu8sx0xzr249ux19kgac",
+                "position": {
+                  "x": -0.36107728848516474,
+                  "y": 33.685627599901125
+                }
+              }
+            ]
+          },
+          {
+            "id": "fqgi2spxxb157ekn027zfzw4a",
+            "type": "wall",
+            "centerLineBias": 0.5136936126007392,
+            "thickness": 0.09619090812008867,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "445iikdq7kysd34w00tt2z0ta",
+                "position": {
+                  "x": 0.4674286836536233,
+                  "y": 39.47092650607831
+                }
+              },
+              {
+                "id": "0daiqgzxdrk9cixu5c42ibttb",
+                "position": {
+                  "x": -1.7271937634429513,
+                  "y": 38.14814103322899
+                }
+              }
+            ]
+          },
+          {
+            "id": "k7eqq15hwc8dpm61p172ga0tb",
+            "type": "wall",
+            "centerLineBias": 0.4848948909790841,
+            "thickness": 0.10619926809356223,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "fei04a3h99des53d4u8ifemwb",
+                "position": {
+                  "x": 5.514674568660285,
+                  "y": 35.19044096871816
+                }
+              },
+              {
+                "id": "c635phmg0e9eaaqrwr3pkfkca",
+                "position": {
+                  "x": 5.515593751016133,
+                  "y": 33.203062382585976
+                }
+              }
+            ]
+          },
+          {
+            "id": "mzegb0zhkxyt7zqyx71h01wxa",
+            "type": "wall",
+            "centerLineBias": 0.4992570116386565,
+            "thickness": 0.09994598821662388,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "gq3t57e7id0ddix168ib8xkmd",
+                "position": {
+                  "x": -9.455390797401204,
+                  "y": -4.244442653503758
+                }
+              },
+              {
+                "id": "78g8rzbbrdweqpfbp2bimnaha",
+                "position": {
+                  "x": -5.074758536620296,
+                  "y": -4.242366070868295
+                }
+              }
+            ]
+          },
+          {
+            "id": "rzwahfstfyphrif7bcci7awya",
+            "type": "wall",
+            "centerLineBias": 0.5049402566615885,
+            "thickness": 0.10109161649666727,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "1pywkewx7c8bdcz8kgihpby6b",
+                "position": {
+                  "x": -5.044680131561874,
+                  "y": 11.415307286342864
+                }
+              },
+              {
+                "id": "sm6qm8781p71du7n4k2swbp5b",
+                "position": {
+                  "x": -9.461226599400673,
+                  "y": 8.728327043042679
+                }
+              }
+            ]
+          },
+          {
+            "id": "wzygffru70epamwftimf97cca",
+            "type": "wall",
+            "centerLineBias": 0.5000349095439025,
+            "thickness": 0.10010164544625476,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "1smp7786t8eeazgi3w8ea8p0a",
+                "position": {
+                  "x": -0.5278759841741476,
+                  "y": 28.795843165782944
+                }
+              },
+              {
+                "id": "spm8fb8i8z1ug4dhgq4ubikia",
+                "position": {
+                  "x": -1.6491976522594545,
+                  "y": 28.795329726681103
+                }
+              }
+            ]
+          },
+          {
+            "id": "yz8a8m530k6mucwtuiymwu9rd",
+            "type": "wall",
+            "centerLineBias": 0.49980551294040276,
+            "thickness": 0.10013926028059288,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "pcya6btswmp353m8beptpk5xc",
+                "position": {
+                  "x": 1.089278077865108,
+                  "y": 11.687938479546897
+                }
+              },
+              {
+                "id": "sy1w3xh3sau6u4tir5nzk9msc",
+                "position": {
+                  "x": 1.0963117406133287,
+                  "y": -3.6304849478971555
+                }
+              }
+            ]
+          },
+          {
+            "id": "yfhrne260fkcbinigr42ggm1c",
+            "type": "wall",
+            "centerLineBias": 0.49984654749984225,
+            "thickness": 0.1001092897966218,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "31di15rdpugfrgadc1nq7xiyb",
+                "position": {
+                  "x": 4.411304177112239,
+                  "y": 44.32979511619976
+                }
+              },
+              {
+                "id": "rad6x3yhh2gupih8bqm3c4whc",
+                "position": {
+                  "x": 0.46518811400045285,
+                  "y": 44.327974286208445
+                }
+              }
+            ]
+          },
+          {
+            "id": "6qngq6kwk214ii9r0pi00f58d",
+            "type": "wall",
+            "centerLineBias": 0.5019733763318421,
+            "thickness": 0.10048918704768244,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "3inwcgy2xwck5z9tqs17g5q7a",
+                "position": {
+                  "x": 4.459201531002056,
+                  "y": 18.422932685590887
+                }
+              },
+              {
+                "id": "qcycy3amxm1zauy414uh122xd",
+                "position": {
+                  "x": 1.086938985801337,
+                  "y": 12.892247333325146
+                }
+              }
+            ]
+          },
+          {
+            "id": "n81efrfnc7eqz2hz8q1384xtc",
+            "type": "wall",
+            "centerLineBias": 0.5141936318680567,
+            "thickness": 0.09733214534697011,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "x8k1hmi8799gbnfekkz2ex9ad",
+                "position": {
+                  "x": -9.475667225299416,
+                  "y": 16.15214014163858
+                }
+              },
+              {
+                "id": "fpy2czuqq70tgppasq9892rsc",
+                "position": {
+                  "x": -8.301925530147425,
+                  "y": 16.152703387243676
+                }
+              }
+            ]
+          },
+          {
+            "id": "t0haqb7ix4gb6n122bt5z59na",
+            "type": "wall",
+            "centerLineBias": 0.4898123222757315,
+            "thickness": 0.10217433596841186,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "cukty22b34tnetskay6ts1hha",
+                "position": {
+                  "x": -5.315169653379691,
+                  "y": 10.02646119785821
+                }
+              },
+              {
+                "id": "rx6ztgkskg4sy77x9c668dpec",
+                "position": {
+                  "x": -6.37596638975259,
+                  "y": 7.776750001764583
+                }
+              }
+            ]
+          },
+          {
+            "id": "x08s4ipc16emb9fad5gwec1rc",
+            "type": "wall",
+            "centerLineBias": 0.499614678527423,
+            "thickness": 0.1001698956323793,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "445iikdq7kysd34w00tt2z0ta",
+                "position": {
+                  "x": 0.4674286836536233,
+                  "y": 39.47092650607831
+                }
+              },
+              {
+                "id": "rad6x3yhh2gupih8bqm3c4whc",
+                "position": {
+                  "x": 0.46518811400045285,
+                  "y": 44.327974286208445
+                }
+              }
+            ]
+          },
+          {
+            "id": "68uara12uh8fagbw85qdkg7nb",
+            "type": "wall",
+            "centerLineBias": 0.4999558907983797,
+            "thickness": 0.10010456736548312,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "ck5sutuhq3xdd5dex9zsmc89b",
+                "position": {
+                  "x": 11.56976763302187,
+                  "y": 39.25246906733098
+                }
+              },
+              {
+                "id": "0ymhiax283apuu546bnqyzw5a",
+                "position": {
+                  "x": 11.570266719422031,
+                  "y": 38.15747348352527
+                }
+              }
+            ]
+          },
+          {
+            "id": "6rmagh15aszzknu454y83ziyd",
+            "type": "wall",
+            "centerLineBias": 0.5031202987653259,
+            "thickness": 0.09947716915695165,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "c635phmg0e9eaaqrwr3pkfkca",
+                "position": {
+                  "x": 5.515593751016133,
+                  "y": 33.203062382585976
+                }
+              },
+              {
+                "id": "r3rh368adggwa439ud85a94ba",
+                "position": {
+                  "x": 3.657754221828184,
+                  "y": 33.20220246042423
+                }
+              }
+            ]
+          },
+          {
+            "id": "dhwi3swxcrndr1c2dqmwny9wa",
+            "type": "wall",
+            "centerLineBias": 0.5034988904372185,
+            "thickness": 0.09980445246224688,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "zemzpgeks75ktq704pb6banzc",
+                "position": {
+                  "x": -0.5299788492029968,
+                  "y": 24.999630615556562
+                }
+              },
+              {
+                "id": "atgr3cfper34fwufftsy3xerc",
+                "position": {
+                  "x": -0.5302401737153946,
+                  "y": 25.628336491223962
+                }
+              }
+            ]
+          },
+          {
+            "id": "d9h8knc94h9q9z423m8pbpypd",
+            "type": "wall",
+            "centerLineBias": 0.5000237872340222,
+            "thickness": 0.10008897636757134,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "k2e3c1g689hkq89299eyuwdzd",
+                "position": {
+                  "x": 6.825956501170864,
+                  "y": 12.892189938789846
+                }
+              },
+              {
+                "id": "sptsem49pazuwkfikcpudgn3c",
+                "position": {
+                  "x": 6.826510460521473,
+                  "y": 11.69056811798523
+                }
+              }
+            ]
+          },
+          {
+            "id": "isu5isiw7a8nchidadx2pat6c",
+            "type": "wall",
+            "centerLineBias": 0.49210666363242295,
+            "thickness": 0.10169815731777869,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "hp0g6nththw5q7mmrquqba0md",
+                "position": {
+                  "x": -4.274054575234791,
+                  "y": 37.20980677948064
+                }
+              },
+              {
+                "id": "0daiqgzxdrk9cixu5c42ibttb",
+                "position": {
+                  "x": -1.7271937634429513,
+                  "y": 38.14814103322899
+                }
+              }
+            ]
+          },
+          {
+            "id": "kh52er2q1dgm9t6x13xet768b",
+            "type": "wall",
+            "centerLineBias": 0.5051178922656429,
+            "thickness": 0.10115156115728097,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "rctrdszz43phq89aghkqu9ipb",
+                "position": {
+                  "x": -0.5261859048086417,
+                  "y": 16.169085123867372
+                }
+              },
+              {
+                "id": "ae7sh9dq26mqxz2s18n2s9kfd",
+                "position": {
+                  "x": -4.116967625797313,
+                  "y": 16.16748589200577
+                }
+              }
+            ]
+          },
+          {
+            "id": "p9tfxm9inzi80cab609m6ahrb",
+            "type": "wall",
+            "centerLineBias": 0.5053925187020205,
+            "thickness": 0.09902515598465329,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "fpy2czuqq70tgppasq9892rsc",
+                "position": {
+                  "x": -8.301925530147425,
+                  "y": 16.152703387243676
+                }
+              },
+              {
+                "id": "iw926094u9q5xkhre0dzgse8b",
+                "position": {
+                  "x": -5.314085145164454,
+                  "y": 12.601963440512367
+                }
+              }
+            ]
+          },
+          {
+            "id": "w1qk6xbrur7kegcffgi3ufg1c",
+            "type": "wall",
+            "centerLineBias": 0.5002096145245932,
+            "thickness": 0.10013926971334049,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "s8fzrfxy6wadenxxt04itg1gd",
+                "position": {
+                  "x": 6.850323571290857,
+                  "y": 19.198925479253813
+                }
+              },
+              {
+                "id": "qwsgpc27teqwwutfgbsmx094c",
+                "position": {
+                  "x": 6.84152661563282,
+                  "y": 38.155280227743226
+                }
+              }
+            ]
+          },
+          {
+            "id": "ys2szy00i1q00m7tgyi6gng6c",
+            "type": "wall",
+            "centerLineBias": 0.5037787569689166,
+            "thickness": 0.10085480627165594,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "zk4y5mckxy2pzefcr8cs3iutd",
+                "position": {
+                  "x": 1.0766733024837254,
+                  "y": 35.12939160312353
+                }
+              },
+              {
+                "id": "r3rh368adggwa439ud85a94ba",
+                "position": {
+                  "x": 3.657754221828184,
+                  "y": 33.20220246042423
+                }
+              }
+            ]
+          },
+          {
+            "id": "215dxy4qfkecp7ygyc88ai9ud",
+            "type": "wall",
+            "centerLineBias": 0.49496246039566566,
+            "thickness": 0.10117813493945918,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "rtnxwep42ppf53i3tuztrm4nc",
+                "position": {
+                  "x": -5.3156842061798635,
+                  "y": 16.166936404941463
+                }
+              },
+              {
+                "id": "xpa3rwpipek1yz1wx29app5pa",
+                "position": {
+                  "x": -5.116693959466894,
+                  "y": 16.16702692600078
+                }
+              }
+            ]
+          },
+          {
+            "id": "9hnb20uccsri1cwrbu1wyf5ib",
+            "type": "wall",
+            "centerLineBias": 0.5002821879082493,
+            "thickness": 0.1001408839917937,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "gq3t57e7id0ddix168ib8xkmd",
+                "position": {
+                  "x": -9.455390797401204,
+                  "y": -4.244442653503758
+                }
+              },
+              {
+                "id": "imibnrif03y4sp5witqa3bngb",
+                "position": {
+                  "x": -9.458767588758912,
+                  "y": 2.73719627697289
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "holes": [
+        {
+          "edges": [
+            {
+              "id": "cipbby2r2nd7w0qtd3ic4nmca",
+              "type": "wall",
+              "centerLineBias": 0.4990923215097287,
+              "thickness": 0.10128144913553787,
+              "openings": [],
+              "vertices": [
+                {
+                  "id": "8zixu74r87ugqge3agtwaf25a",
+                  "position": {
+                    "x": -1.4420970784133986,
+                    "y": -0.1407479214120655
+                  }
+                },
+                {
+                  "id": "0m4gq31ru24u5psa4frxq52yb",
+                  "position": {
+                    "x": -0.47881379906271065,
+                    "y": -0.14031769510267786
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "edges": [
+            {
+              "id": "1eb1i7siu8iuf0k0pdqsmh8ya",
+              "type": "wall",
+              "centerLineBias": 0.5001999761363721,
+              "thickness": 0.1020658420518035,
+              "openings": [],
+              "vertices": [
+                {
+                  "id": "nzyri325yfwf7mb6gmp1z8aza",
+                  "position": {
+                    "x": -0.5203386072954467,
+                    "y": 14.159035711984634
+                  }
+                },
+                {
+                  "id": "ip6d0783qdkuwurrqkh5n6ckc",
+                  "position": {
+                    "x": -0.5206498230499551,
+                    "y": 14.887729732182066
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "xy2x8mpaaqknp7q2c3nnbw1ma",
+      "classifications": [
+        {
+          "id": "byp7pz2tmt4ff47nhfx0uwzec",
+          "label": "Other"
+        }
+      ],
+      "boundary": {
+        "edges": [
+          {
+            "id": "na9ucy5b9194kgxmg9p8sb3ib",
+            "type": "wall",
+            "centerLineBias": 0.5006202133597786,
+            "thickness": 0.09996862556279519,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "r0dupefphkhb8xmx77uebhiad",
+                "position": {
+                  "x": -0.5283375118475009,
+                  "y": 21.003739126599648
+                }
+              },
+              {
+                "id": "ae7sh9dq26mqxz2s18n2s9kfd",
+                "position": {
+                  "x": -4.116967625797313,
+                  "y": 16.16748589200577
+                }
+              }
+            ]
+          },
+          {
+            "id": "witd9s8n9xatwrr80qfu34qsd",
+            "type": "wall",
+            "centerLineBias": 0.3548148686584547,
+            "thickness": 0.07640795493576405,
+            "openings": [
+              {
+                "id": "gyw0wzen7nyyag65z64dsascc",
+                "height": 2.750999927520752,
+                "width": 0.8042216144780141,
+                "lowerElevation": 0.006999969482421875,
+                "relativeCenter": 0.7695271112632956,
+                "type": "doorway"
+              }
+            ],
+            "vertices": [
+              {
+                "id": "r0dupefphkhb8xmx77uebhiad",
+                "position": {
+                  "x": -0.5283375118475009,
+                  "y": 21.003739126599648
+                }
+              },
+              {
+                "id": "ikwsqrzh9itd779xc1ec2ufqd",
+                "position": {
+                  "x": -0.5290563332291569,
+                  "y": 22.748459624162244
+                }
+              }
+            ]
+          },
+          {
+            "id": "0tq0g1zb08miestax66p4w54a",
+            "type": "wall",
+            "centerLineBias": 0.5072262690258835,
+            "thickness": 0.09871676268989496,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "fpy2czuqq70tgppasq9892rsc",
+                "position": {
+                  "x": -8.301925530147425,
+                  "y": 16.152703387243676
+                }
+              },
+              {
+                "id": "tiyfmg7sfur41kfs21i9cu5dd",
+                "position": {
+                  "x": -7.289490788294202,
+                  "y": 17.48198213112933
+                }
+              }
+            ]
+          },
+          {
+            "id": "euiwc6f74rkt0ie14s5czu2mc",
+            "type": "wall",
+            "centerLineBias": 0.4998496787893608,
+            "thickness": 0.100063611967607,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "e26bgmm5efqu157595cn26twb",
+                "position": {
+                  "x": -9.518849521351894,
+                  "y": 23.0895671182465
+                }
+              },
+              {
+                "id": "cn41812my521uinsgn8cmrurb",
+                "position": {
+                  "x": -9.516260470218345,
+                  "y": 17.480954921764514
+                }
+              }
+            ]
+          },
+          {
+            "id": "rkgbdi1izzf2teyp0f8i7hu0d",
+            "type": "wall",
+            "centerLineBias": 0.4984579381520575,
+            "thickness": 0.10040411530789374,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "xpa3rwpipek1yz1wx29app5pa",
+                "position": {
+                  "x": -5.116693959466894,
+                  "y": 16.16702692600078
+                }
+              },
+              {
+                "id": "mxiii68ecb63wc666p5knr42a",
+                "position": {
+                  "x": -5.117017431882832,
+                  "y": 16.75247731633164
+                }
+              }
+            ]
+          },
+          {
+            "id": "0wyeqnu282xr0bxppri7hsc2a",
+            "type": "wall",
+            "centerLineBias": 0.5087530284218228,
+            "thickness": 0.09560405368815522,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "244q6zq89rzcrqm1xed65y1md",
+                "position": {
+                  "x": -6.706827333424738,
+                  "y": 18.246989392331486
+                }
+              },
+              {
+                "id": "tiyfmg7sfur41kfs21i9cu5dd",
+                "position": {
+                  "x": -7.289490788294202,
+                  "y": 17.48198213112933
+                }
+              }
+            ]
+          },
+          {
+            "id": "8cpz3ry3xq7xdd6e91dda1c1c",
+            "type": "wall",
+            "centerLineBias": 0.4995092189691601,
+            "thickness": 0.09999581921797249,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "ikwsqrzh9itd779xc1ec2ufqd",
+                "position": {
+                  "x": -0.5290563332291569,
+                  "y": 22.748459624162244
+                }
+              },
+              {
+                "id": "my5fgiwptt0qkbkk4zbwp6u3c",
+                "position": {
+                  "x": -1.3585328352576491,
+                  "y": 22.748103385857018
+                }
+              }
+            ]
+          },
+          {
+            "id": "zdzka8pgcka88wc0eme4r632a",
+            "type": "wall",
+            "centerLineBias": 0.5024758408092204,
+            "thickness": 0.10059406334952428,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "cn41812my521uinsgn8cmrurb",
+                "position": {
+                  "x": -9.516260470218345,
+                  "y": 17.480954921764514
+                }
+              },
+              {
+                "id": "tiyfmg7sfur41kfs21i9cu5dd",
+                "position": {
+                  "x": -7.289490788294202,
+                  "y": 17.48198213112933
+                }
+              }
+            ]
+          },
+          {
+            "id": "5xihpsxde8b8piu50z35538xb",
+            "type": "wall",
+            "centerLineBias": 0.4884959493247981,
+            "thickness": 0.1046073237009685,
+            "openings": [
+              {
+                "id": "zxaitnumiepa99d2s89z8hx7c",
+                "height": 2.759999990463257,
+                "width": 0.9145850066949532,
+                "lowerElevation": -0.021000027656555176,
+                "relativeCenter": 0.457417634962455,
+                "type": "doorway"
+              }
+            ],
+            "vertices": [
+              {
+                "id": "ae7sh9dq26mqxz2s18n2s9kfd",
+                "position": {
+                  "x": -4.116967625797313,
+                  "y": 16.16748589200577
+                }
+              },
+              {
+                "id": "xpa3rwpipek1yz1wx29app5pa",
+                "position": {
+                  "x": -5.116693959466894,
+                  "y": 16.16702692600078
+                }
+              }
+            ]
+          },
+          {
+            "id": "xp1pimbfwdmwxicf7m41xdrkb",
+            "type": "wall",
+            "centerLineBias": 0.49996979150725296,
+            "thickness": 0.1000996200348054,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "a2ie72cr7e9h0ptrttd448i4b",
+                "position": {
+                  "x": -1.3586725910967807,
+                  "y": 23.09333281969825
+                }
+              },
+              {
+                "id": "my5fgiwptt0qkbkk4zbwp6u3c",
+                "position": {
+                  "x": -1.3585328352576491,
+                  "y": 22.748103385857018
+                }
+              }
+            ]
+          },
+          {
+            "id": "s0mh796ukw2cfs87cnf5bd82c",
+            "type": "wall",
+            "centerLineBias": 0.44114796532403033,
+            "thickness": 0.08955198682669839,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "fpy2czuqq70tgppasq9892rsc",
+                "position": {
+                  "x": -8.301925530147425,
+                  "y": 16.152703387243676
+                }
+              },
+              {
+                "id": "mxiii68ecb63wc666p5knr42a",
+                "position": {
+                  "x": -5.117017431882832,
+                  "y": 16.75247731633164
+                }
+              }
+            ]
+          },
+          {
+            "id": "3seq57wm8rcxzmf8uzumwqf3b",
+            "type": "wall",
+            "centerLineBias": 0.5001440354348313,
+            "thickness": 0.10012738008763032,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "a2ie72cr7e9h0ptrttd448i4b",
+                "position": {
+                  "x": -1.3586725910967807,
+                  "y": 23.09333281969825
+                }
+              },
+              {
+                "id": "e26bgmm5efqu157595cn26twb",
+                "position": {
+                  "x": -9.518849521351894,
+                  "y": 23.0895671182465
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "holes": []
+    },
+    {
+      "id": "tt6gm2a0463x9wmnx7rn6gugc",
+      "classifications": [
+        {
+          "id": "byp7pz2tmt4ff47nhfx0uwzec",
+          "label": "Other"
+        }
+      ],
+      "boundary": {
+        "edges": [
+          {
+            "id": "5tf3c0mmriitgtytdf0nn746c",
+            "type": "wall",
+            "centerLineBias": 0.5025148569561526,
+            "thickness": 0.09959827392039153,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "s73aswmbmr7sd64du4q6rebuc",
+                "position": {
+                  "x": -20.426931756220366,
+                  "y": 44.32480795091564
+                }
+              },
+              {
+                "id": "enfmr0uyryxzrkf9ee4d6wafd",
+                "position": {
+                  "x": -20.424883946952512,
+                  "y": 40.030718272079575
+                }
+              }
+            ]
+          },
+          {
+            "id": "kmeq4gc145hbh1c1ereqfrx9c",
+            "type": "wall",
+            "centerLineBias": 0.48383858771077787,
+            "thickness": 0.09695870984613016,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "tz66wece74em0f860y3zambmd",
+                "position": {
+                  "x": -24.612182674679897,
+                  "y": 41.39147729722455
+                }
+              },
+              {
+                "id": "enfmr0uyryxzrkf9ee4d6wafd",
+                "position": {
+                  "x": -20.424883946952512,
+                  "y": 40.030718272079575
+                }
+              }
+            ]
+          },
+          {
+            "id": "pmska6byxx7bz50n9s44hpi9b",
+            "type": "wall",
+            "centerLineBias": 0.513909909106487,
+            "thickness": 0.09719611976387878,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "m92hb0siq6kk9h47nhfpn8zhc",
+                "position": {
+                  "x": -24.61357844963067,
+                  "y": 44.32280037350649
+                }
+              },
+              {
+                "id": "s73aswmbmr7sd64du4q6rebuc",
+                "position": {
+                  "x": -20.426931756220366,
+                  "y": 44.32480795091564
+                }
+              }
+            ]
+          },
+          {
+            "id": "271gnnth93ucdgy3yp0s20hpd",
+            "type": "wall",
+            "centerLineBias": 0.559273990139604,
+            "thickness": 0.12318108184958847,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "m92hb0siq6kk9h47nhfpn8zhc",
+                "position": {
+                  "x": -24.61357844963067,
+                  "y": 44.32280037350649
+                }
+              },
+              {
+                "id": "tz66wece74em0f860y3zambmd",
+                "position": {
+                  "x": -24.612182674679897,
+                  "y": 41.39147729722455
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "holes": []
+    },
+    {
+      "id": "h26t7ky77ew74yb0pg8qqf5rd",
+      "classifications": [
+        {
+          "id": "byp7pz2tmt4ff47nhfx0uwzec",
+          "label": "Other"
+        }
+      ],
+      "boundary": {
+        "edges": [
+          {
+            "id": "nayhxb0mwgm3t21fi93i03xga",
+            "type": "wall",
+            "centerLineBias": 0.48316423203894143,
+            "thickness": 0.09683076046535491,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "dxr1y186pagaiemqgxfki52dd",
+                "position": {
+                  "x": -32.69423204148758,
+                  "y": 39.99518645833076
+                }
+              },
+              {
+                "id": "54mbfq80u54z58qcdcdnqux3b",
+                "position": {
+                  "x": -32.6946297277645,
+                  "y": 40.88018527695941
+                }
+              }
+            ]
+          },
+          {
+            "id": "eykxynssbabzpqcdzefy3sfqb",
+            "type": "wall",
+            "centerLineBias": 0.5000302210237557,
+            "thickness": 0.10008642220630651,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "8181m5n4s5hhpi0056en4cbcb",
+                "position": {
+                  "x": -33.71267924808948,
+                  "y": 40.8797135337523
+                }
+              },
+              {
+                "id": "54mbfq80u54z58qcdcdnqux3b",
+                "position": {
+                  "x": -32.6946297277645,
+                  "y": 40.88018527695941
+                }
+              }
+            ]
+          },
+          {
+            "id": "r70ia79k1px84t0swhm8i11ia",
+            "type": "wall",
+            "centerLineBias": 0.5000206942995928,
+            "thickness": 0.10009662040543664,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "8181m5n4s5hhpi0056en4cbcb",
+                "position": {
+                  "x": -33.71267924808948,
+                  "y": 40.8797135337523
+                }
+              },
+              {
+                "id": "8ks4awwu8pbif4ert13nf52fb",
+                "position": {
+                  "x": -33.714263535114334,
+                  "y": 44.269491578619245
+                }
+              }
+            ]
+          },
+          {
+            "id": "78y03zrhstxn27fx1yby7t3ab",
+            "type": "wall",
+            "centerLineBias": 0.49356470489056303,
+            "thickness": 0.11351082958862053,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "f7cb3gm4429rw491pg7ecnz8d",
+                "position": {
+                  "x": -36.92373613508671,
+                  "y": 39.99324733436034
+                }
+              },
+              {
+                "id": "u5rzbt2x0h99qf4xwyamg02nd",
+                "position": {
+                  "x": -36.92573496017657,
+                  "y": 44.26798899411291
+                }
+              }
+            ]
+          },
+          {
+            "id": "isydzpx3rp07u7gryigb48bpb",
+            "type": "wall",
+            "centerLineBias": 0.5023806269379283,
+            "thickness": 0.1009458148373,
+            "openings": [
+              {
+                "id": "y2e36wuf7nk1krr98y73i1yka",
+                "height": 2.760999917984009,
+                "width": 0.8710227436734642,
+                "lowerElevation": 0.012000083923339844,
+                "relativeCenter": 0.83942586132681,
+                "type": "doorway"
+              },
+              {
+                "id": "7c6474e42z131mxy69yadkhcc",
+                "height": 2.760999917984009,
+                "width": 0.6001528941873319,
+                "lowerElevation": 0.012000083923339844,
+                "relativeCenter": 0.6373669303546456,
+                "type": "doorway"
+              }
+            ],
+            "vertices": [
+              {
+                "id": "dxr1y186pagaiemqgxfki52dd",
+                "position": {
+                  "x": -32.69423204148758,
+                  "y": 39.99518645833076
+                }
+              },
+              {
+                "id": "f7cb3gm4429rw491pg7ecnz8d",
+                "position": {
+                  "x": -36.92373613508671,
+                  "y": 39.99324733436034
+                }
+              }
+            ]
+          },
+          {
+            "id": "u9i9cfb50bz5xqhb34kabfy6d",
+            "type": "wall",
+            "centerLineBias": 0.4999672396302708,
+            "thickness": 0.10011087504463015,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "8ks4awwu8pbif4ert13nf52fb",
+                "position": {
+                  "x": -33.714263535114334,
+                  "y": 44.269491578619245
+                }
+              },
+              {
+                "id": "u5rzbt2x0h99qf4xwyamg02nd",
+                "position": {
+                  "x": -36.92573496017657,
+                  "y": 44.26798899411291
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "holes": []
+    },
+    {
+      "id": "3m54yff1z7crxaywd8if9rb0d",
+      "classifications": [
+        {
+          "id": "byp7pz2tmt4ff47nhfx0uwzec",
+          "label": "Other"
+        }
+      ],
+      "boundary": {
+        "edges": [
+          {
+            "id": "qts3n9mmsf235fr4ytfw28yhc",
+            "type": "wall",
+            "centerLineBias": 0.499995161683805,
+            "thickness": 0.10009362771134243,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "zbiumpf0me8tuh2sb23snkc0d",
+                "position": {
+                  "x": -17.822960493200995,
+                  "y": 29.49948879622016
+                }
+              },
+              {
+                "id": "xugz4nds4yuu0682xgsumckrd",
+                "position": {
+                  "x": -17.82254687098737,
+                  "y": 28.58385417980168
+                }
+              }
+            ]
+          },
+          {
+            "id": "1abrx47s20pp3ygaiber70wdd",
+            "type": "wall",
+            "centerLineBias": 0.5327886139695979,
+            "thickness": 0.08860639242787965,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "bdpaesxif3uhimf58p1n01xwa",
+                "position": {
+                  "x": -20.36919035541499,
+                  "y": 28.582699403526
+                }
+              },
+              {
+                "id": "agqb0mr4xdxswqi6pcmdttszb",
+                "position": {
+                  "x": -20.370801378452953,
+                  "y": 32.12462778398496
+                }
+              }
+            ]
+          },
+          {
+            "id": "cknquxpgqzsa323f35mepdcsc",
+            "type": "wall",
+            "centerLineBias": 0.5000401119885817,
+            "thickness": 0.10008686553451056,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "0sy39iuk62ne2fpwxapa4wdbd",
+                "position": {
+                  "x": -15.976328548372754,
+                  "y": 32.12662678811659
+                }
+              },
+              {
+                "id": "p8199dyrrbmwr6xy61gap1ssb",
+                "position": {
+                  "x": -15.975133508939786,
+                  "y": 29.500331986505326
+                }
+              }
+            ]
+          },
+          {
+            "id": "zmutsz1hr28q2wcudiad57bfc",
+            "type": "wall",
+            "centerLineBias": 0.49582762543616843,
+            "thickness": 0.09976301066481436,
+            "openings": [
+              {
+                "id": "q4r0t0m6pwztuatz1uurk65za",
+                "height": 2.75,
+                "width": 0.46033724583832814,
+                "lowerElevation": 0.03400003910064697,
+                "relativeCenter": 0.6821736798037528,
+                "type": "doorway"
+              },
+              {
+                "id": "07iypnpi1iuh99wdii72cckaa",
+                "height": 2.75,
+                "width": 0.8774908835799212,
+                "lowerElevation": 0.03400003910064697,
+                "relativeCenter": 0.8439841578525437,
+                "type": "doorway"
+              }
+            ],
+            "vertices": [
+              {
+                "id": "0sy39iuk62ne2fpwxapa4wdbd",
+                "position": {
+                  "x": -15.976328548372754,
+                  "y": 32.12662678811659
+                }
+              },
+              {
+                "id": "agqb0mr4xdxswqi6pcmdttszb",
+                "position": {
+                  "x": -20.370801378452953,
+                  "y": 32.12462778398496
+                }
+              }
+            ]
+          },
+          {
+            "id": "bxht0xz66x6ppxu8s29tqwnea",
+            "type": "wall",
+            "centerLineBias": 0.5000853017838355,
+            "thickness": 0.10011289059650036,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "bdpaesxif3uhimf58p1n01xwa",
+                "position": {
+                  "x": -20.36919035541499,
+                  "y": 28.582699403526
+                }
+              },
+              {
+                "id": "xugz4nds4yuu0682xgsumckrd",
+                "position": {
+                  "x": -17.82254687098737,
+                  "y": 28.58385417980168
+                }
+              }
+            ]
+          },
+          {
+            "id": "2fhn80e22gddbn1h360xyr6za",
+            "type": "wall",
+            "centerLineBias": 0.5002197554070549,
+            "thickness": 0.10013648326511225,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "zbiumpf0me8tuh2sb23snkc0d",
+                "position": {
+                  "x": -17.822960493200995,
+                  "y": 29.49948879622016
+                }
+              },
+              {
+                "id": "p8199dyrrbmwr6xy61gap1ssb",
+                "position": {
+                  "x": -15.975133508939786,
+                  "y": 29.500331986505326
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "holes": []
+    },
+    {
+      "id": "2qdmc5i9byxi79ry1pxdkqzea",
+      "classifications": [
+        {
+          "id": "byp7pz2tmt4ff47nhfx0uwzec",
+          "label": "Other"
+        }
+      ],
+      "boundary": {
+        "edges": [
+          {
+            "id": "5ccesp3aw1k6hmtddhtdttdkd",
+            "type": "wall",
+            "centerLineBias": 0.4966784140849605,
+            "thickness": 0.09943377028711656,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "nxrk98ce7gmw4iq8ismph8had",
+                "position": {
+                  "x": -23.237869404177513,
+                  "y": 35.91802961907327
+                }
+              },
+              {
+                "id": "1tstinmh9pa2za03m2syzamxd",
+                "position": {
+                  "x": -19.620067403691486,
+                  "y": 35.91967178618416
+                }
+              }
+            ]
+          },
+          {
+            "id": "q6mypf5at3qzkwnd92y5rh06c",
+            "type": "wall",
+            "centerLineBias": 0.49987009099206453,
+            "thickness": 0.10012173903118103,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "ssqi85ewtysz8hz4mcpa0z65b",
+                "position": {
+                  "x": -19.621082499632973,
+                  "y": 38.13378440259994
+                }
+              },
+              {
+                "id": "1tstinmh9pa2za03m2syzamxd",
+                "position": {
+                  "x": -19.620067403691486,
+                  "y": 35.91967178618416
+                }
+              }
+            ]
+          },
+          {
+            "id": "rf1z3iwk68p557xqmespzmx0d",
+            "type": "wall",
+            "centerLineBias": 0.49980198781326024,
+            "thickness": 0.09973057246286932,
+            "openings": [
+              {
+                "id": "ni5hyyiwbnihpbawtr8tuyqcb",
+                "height": 2.7170000076293945,
+                "width": 0.9104615936214872,
+                "lowerElevation": 0.03299999237060547,
+                "relativeCenter": 0.7056730694712968,
+                "type": "doorway"
+              }
+            ],
+            "vertices": [
+              {
+                "id": "u81xth6id8ugsmkfdr6hmzw4a",
+                "position": {
+                  "x": -23.23887612796248,
+                  "y": 38.13213402309793
+                }
+              },
+              {
+                "id": "nxrk98ce7gmw4iq8ismph8had",
+                "position": {
+                  "x": -23.237869404177513,
+                  "y": 35.91802961907327
+                }
+              }
+            ]
+          },
+          {
+            "id": "mrn5h9m3bybtcfe8m78ghsubc",
+            "type": "wall",
+            "centerLineBias": 0.49911732991984115,
+            "thickness": 0.09827409535174478,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "u81xth6id8ugsmkfdr6hmzw4a",
+                "position": {
+                  "x": -23.23887612796248,
+                  "y": 38.13213402309793
+                }
+              },
+              {
+                "id": "ssqi85ewtysz8hz4mcpa0z65b",
+                "position": {
+                  "x": -19.621082499632973,
+                  "y": 38.13378440259994
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "holes": []
+    },
+    {
+      "id": "a5f9age4zzxewres6iqux2emc",
+      "classifications": [
+        {
+          "id": "byp7pz2tmt4ff47nhfx0uwzec",
+          "label": "Other"
+        }
+      ],
+      "boundary": {
+        "edges": [
+          {
+            "id": "g2sypc59fefqu7x84ix5ewk4a",
+            "type": "wall",
+            "centerLineBias": 0.498684091631792,
+            "thickness": 0.10035659679822677,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "0h2ku0i84qqpp4i3m08bxs03a",
+                "position": {
+                  "x": -30.855197415944442,
+                  "y": 32.122496555705695
+                }
+              },
+              {
+                "id": "mayeb2embyd2trf0zqyyf6wnb",
+                "position": {
+                  "x": -30.119982179644996,
+                  "y": 29.48190288510107
+                }
+              }
+            ]
+          },
+          {
+            "id": "2xzsia7h9frss74z0ayrdybsc",
+            "type": "wall",
+            "centerLineBias": 0.49345036863652514,
+            "thickness": 0.09660004799645283,
+            "openings": [
+              {
+                "id": "bx91c3u7wqzikw30p352c24ba",
+                "height": 2.756500005722046,
+                "width": 0.8549463902273992,
+                "lowerElevation": 0.0054999589920043945,
+                "relativeCenter": 0.5029561326674292,
+                "type": "doorway"
+              }
+            ],
+            "vertices": [
+              {
+                "id": "0h2ku0i84qqpp4i3m08bxs03a",
+                "position": {
+                  "x": -30.855197415944442,
+                  "y": 32.122496555705695
+                }
+              },
+              {
+                "id": "e1qe3hc807x67x2n18q17fw7a",
+                "position": {
+                  "x": -32.32020502519004,
+                  "y": 32.12182405787459
+                }
+              }
+            ]
+          },
+          {
+            "id": "i63yhitp8trzsd6h6ehm0xxed",
+            "type": "wall",
+            "centerLineBias": 0.5009217758928848,
+            "thickness": 0.09990976712263927,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "smg896uti1rtyz5temwm5hxrb",
+                "position": {
+                  "x": -32.31898404245477,
+                  "y": 29.480883703101792
+                }
+              },
+              {
+                "id": "e1qe3hc807x67x2n18q17fw7a",
+                "position": {
+                  "x": -32.32020502519004,
+                  "y": 32.12182405787459
+                }
+              }
+            ]
+          },
+          {
+            "id": "bhptzwfmuh3k6hu2xzm3rcrgc",
+            "type": "wall",
+            "centerLineBias": 0.5007975449760265,
+            "thickness": 0.1002586211667981,
+            "openings": [],
+            "vertices": [
+              {
+                "id": "smg896uti1rtyz5temwm5hxrb",
+                "position": {
+                  "x": -32.31898404245477,
+                  "y": 29.480883703101792
+                }
+              },
+              {
+                "id": "mayeb2embyd2trf0zqyyf6wnb",
+                "position": {
+                  "x": -30.119982179644996,
+                  "y": 29.48190288510107
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "holes": []
+    }
+  ]
+}

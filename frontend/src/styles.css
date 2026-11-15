@@ -356,15 +356,15 @@ svg.mi { width: 22px; height: 22px; } .ip { fill: var(--white); } .iad { fill: v
 .caption .vload { color: var(--fire); font-weight: 800; }
 .para .said { color: var(--dim); } .para mark { background: var(--fire); color: var(--ink); border-radius: 3px; padding: 0 2px; }
 /* guided clips: caption and controls over the 3D model */
-.tour-bar { position: absolute; left: 12px; right: 12px; bottom: 12px; max-width: 640px; margin: 0 auto; padding: 10px 14px 12px; border-radius: 10px; background: rgba(15,17,21,.9); border: 2px solid #38bdf8; backdrop-filter: blur(6px); display: flex; flex-direction: column; gap: 8px; }
+.tour-bar { position: absolute; left: 12px; right: 12px; bottom: 12px; max-width: 460px; margin: 0 auto; padding: 6px 10px 8px; border-radius: 8px; background: rgba(15,17,21,.9); border: 1.5px solid #38bdf8; backdrop-filter: blur(6px); display: flex; flex-direction: column; gap: 5px; }
 .tour-bar.out { border-color: #22c55e; }
 .tour-head { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--dim); } .tour-head b { color: var(--white); font-size: 14px; } .tour-head .x { margin-left: auto; width: 28px; height: 28px; border-radius: 6px; background: var(--road); color: var(--white); }
-.tour-cap { font-size: 20px; font-weight: 800; line-height: 1.25; min-height: 2.5em; color: var(--white); }
-.tour-prog { height: 6px; border-radius: 3px; background: var(--road); overflow: hidden; } .tour-prog i { display: block; height: 100%; background: #38bdf8; transition: width .6s linear; } .tour-bar.out .tour-prog i { background: #22c55e; }
+.tour-cap { font-size: 14px; font-weight: 700; line-height: 1.3; min-height: 2.6em; color: var(--white); }
+.tour-prog { height: 4px; border-radius: 3px; background: var(--road); overflow: hidden; } .tour-prog i { display: block; height: 100%; background: #38bdf8; transition: width .6s linear; } .tour-bar.out .tour-prog i { background: #22c55e; }
 .tour-ctl { display: flex; align-items: center; gap: 6px; } .tour-ctl .sp { flex: 1; }
-.tour-ctl button { height: 38px; min-width: 38px; padding: 0 10px; border-radius: 6px; background: var(--road); color: var(--white); font-weight: 800; font-size: 13px; display: inline-flex; align-items: center; justify-content: center; }
+.tour-ctl button { height: 30px; min-width: 30px; padding: 0 8px; border-radius: 6px; background: var(--road); color: var(--white); font-weight: 800; font-size: 12px; display: inline-flex; align-items: center; justify-content: center; }
 .tour-ctl button.f, .tour-ctl button.on { background: var(--fire); color: var(--ink); } .tour-ctl button:disabled { opacity: .4; }
-.tour-ctl svg { width: 18px; height: 18px; }
+.tour-ctl svg { width: 16px; height: 16px; }
 /* picker in the room panel */
 .tourpick { display: flex; flex-direction: column; gap: 8px; margin: 14px 0; padding-top: 12px; border-top: 1px solid var(--rule); }
 .tourpick .btns { display: flex; gap: 8px; } .tourpick .btns .btn { flex: 1; height: 44px; }
@@ -379,11 +379,11 @@ svg.mi { width: 22px; height: 22px; } .ip { fill: var(--white); } .iad { fill: v
 /* path simulation */
 .rm.chk:not(.hf):not(.victim) { fill: #15301f; stroke: #3f8f5f; } .ord.chk circle { fill: #7dffb3; }
 .simplan .ag { transition: none; stroke: var(--fire); stroke-width: 4; }
-.simbar { flex: none; display: flex; flex-direction: column; gap: 8px; padding: 10px 6px 4px; }
-.simcap { font-size: 20px; font-weight: 800; line-height: 1.25; min-height: 2.5em; } .simphase { display: inline-block; margin-right: 10px; padding: 2px 10px; border-radius: 6px; background: var(--fire); color: var(--ink); font-size: 13px; text-transform: uppercase; letter-spacing: .08em; vertical-align: 2px; }
+.simbar { flex: none; display: flex; flex-direction: column; gap: 5px; padding: 6px 6px 2px; }
+.simcap { font-size: 15px; font-weight: 700; line-height: 1.3; min-height: 2.6em; } .simphase { display: inline-block; margin-right: 10px; padding: 1px 8px; border-radius: 6px; background: var(--fire); color: var(--ink); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; vertical-align: 2px; }
 .simbar.in .simphase { background: #4dd0ff; } .simbar.out .simphase { background: #7dffb3; }
 .simscrub { width: 100%; accent-color: var(--fire); height: 24px; margin: 0; }
-.simbar .tour-ctl button { height: 44px; min-width: 44px; }
+.simbar .tour-ctl button { height: 34px; min-width: 34px; }
 .simlist { display: flex; flex-direction: column; gap: 4px; overflow: auto; min-height: 0; flex: 1; }
 .simrow { display: flex; align-items: center; gap: 12px; padding: 8px 10px; border-radius: 8px; text-align: left; background: none; width: 100%; }
 .simrow:hover { background: var(--road2); } .simrow.now { background: #2e1d16; box-shadow: inset 0 0 0 2px var(--fire); }
@@ -657,3 +657,9 @@ svg.mi { width: 22px; height: 22px; } .ip { fill: var(--white); } .iad { fill: v
 .brow em { font-style: normal; font-size: 12px; font-weight: 800; color: var(--dim); white-space: nowrap; } .brow.on em { color: var(--fire); }
 .bpick input { background: var(--road2); color: var(--ink); border: 0; height: 44px; border-radius: 8px; padding: 0 12px; font: inherit; font-weight: 600; }
 .bpick input::placeholder { color: var(--dim); }
+
+.simmenu { position: relative; display: inline-flex; }
+.simdrop { position: absolute; right: 0; bottom: 100%; padding-bottom: 6px; z-index: 30; min-width: 230px; display: flex; flex-direction: column; gap: 4px; }
+.simdrop button { text-align: left; padding: 10px 14px; border-radius: 8px; background: var(--ink); border: 1.5px solid var(--road); color: var(--white); display: flex; flex-direction: column; gap: 2px; }
+.simdrop button:hover, .simdrop button:focus-visible { border-color: var(--fire); }
+.simdrop b { font-size: 15px; } .simdrop small { font-size: 12px; opacity: .7; }

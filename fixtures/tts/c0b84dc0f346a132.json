@@ -1,0 +1,57 @@
+{
+  "text": "Skylux on Wilshire, 1027 Wilshire Boulevard. . Fire location unknown.",
+  "voice": "briefing",
+  "audio_url": "/fixtures/tts/c0b84dc0f346a132.mp3",
+  "words": [
+    {
+      "word": "Skylux",
+      "start": 0.023,
+      "end": 0.499
+    },
+    {
+      "word": "on",
+      "start": 0.58,
+      "end": 0.697
+    },
+    {
+      "word": "Wilshire,",
+      "start": 0.731,
+      "end": 1.265
+    },
+    {
+      "word": "1027",
+      "start": 1.532,
+      "end": 2.252
+    },
+    {
+      "word": "Wilshire",
+      "start": 2.299,
+      "end": 2.589
+    },
+    {
+      "word": "Boulevard.",
+      "start": 2.612,
+      "end": 3.135
+    },
+    {
+      "word": ".",
+      "start": 3.262,
+      "end": 3.286
+    },
+    {
+      "word": "Fire",
+      "start": 3.425,
+      "end": 3.657
+    },
+    {
+      "word": "location",
+      "start": 3.68,
+      "end": 4.145
+    },
+    {
+      "word": "unknown.",
+      "start": 4.272,
+      "end": 4.853
+    }
+  ]
+}

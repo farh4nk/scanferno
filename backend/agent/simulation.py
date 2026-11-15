@@ -52,7 +52,7 @@ def _nodes_between(nav: NavGraph, a: str, b: str) -> list | None:
 
 
 def build(fp: dict, nav: NavGraph, side_of, rooms: list[str], entry: str | None = None, exit_: str | None = None,
-          avoid=(), reasons: dict | None = None) -> dict | None:
+          avoid=(), reasons: dict | None = None, with_out: bool = True) -> dict | None:
     """`rooms`: room ids in the order to check. Rooms that cannot be reached from the entry are skipped."""
     t = Tour(fp, nav, side_of)
     order: list[str] = []
@@ -67,8 +67,8 @@ def build(fp: dict, nav: NavGraph, side_of, rooms: list[str], entry: str | None 
         return None
     reachable = nav.exit_distances(order[0])
     order = [r for r in order if r == order[0] or nav.between(order[0], r)]
-    out = t.pick_exit(order[-1], exit_, avoid)
-    if not out:
+    out = t.pick_exit(order[-1], exit_, avoid) if with_out else None
+    if with_out and not out:
         return None
 
     anchors = {rid: inside_point(nav.spaces[rid], nav.g.nodes[("room", rid)]["pos"]) for rid in order}
@@ -77,8 +77,9 @@ def build(fp: dict, nav: NavGraph, side_of, rooms: list[str], entry: str | None 
     legs.append({"kind": "in", "from": into["exit_door_id"], "to": order[0], "polyline": _walk(nav, in_nodes, anchors)})
     for a, b in zip(order, order[1:]):
         legs.append({"kind": "search", "from": a, "to": b, "polyline": _walk(nav, _nodes_between(nav, a, b), anchors)})
-    out_nodes = [n for n in out["nodes"] if n != "outside"]
-    legs.append({"kind": "out", "from": order[-1], "to": out["exit_door_id"], "polyline": _walk(nav, out_nodes, anchors)})
+    if out:
+        out_nodes = [n for n in out["nodes"] if n != "outside"]
+        legs.append({"kind": "out", "from": order[-1], "to": out["exit_door_id"], "polyline": _walk(nav, out_nodes, anchors)})
 
     # distance along the whole run at the end of each leg; the stop for room i is where leg i ends
     s = 0.0
@@ -96,15 +97,16 @@ def build(fp: dict, nav: NavGraph, side_of, rooms: list[str], entry: str | None 
     for i, rid in enumerate(order):
         stops.append({"room_id": rid, "label": t.label(rid), "order": i + 1, "at_m": legs[i]["end_m"], "xy": list(anchors[rid]),
                       "reason": reasons.get(rid), "fire": rid in set(avoid)})
-    entry_info, exit_info = t.door_info(into["exit_door_id"]), t.door_info(out["exit_door_id"])
+    entry_info, exit_info = t.door_info(into["exit_door_id"]), (t.door_info(out["exit_door_id"]) if out else None)
     steps = [{"at_m": 0.0, "xy": poly[0], "room_id": order[0], "door_id": into["exit_door_id"], "turn_deg": None,
               "text": f"Enter at the side {entry_info['side']} door. {n} room{'s' if n != 1 else ''} to check, in order."}]
     for st in stops:
         why = f" {st['reason']}" if st["reason"] else ""
         steps.append({"at_m": st["at_m"], "xy": st["xy"], "room_id": st["room_id"], "door_id": None, "turn_deg": None,
                       "text": f"Room {st['order']} of {n}: {st['label']}.{why}".rstrip()})
-    steps.append({"at_m": total, "xy": poly[-1], "room_id": None, "door_id": exit_info["door_id"], "turn_deg": None,
-                  "text": f"All {n} room{'s' if n != 1 else ''} checked. Out the side {exit_info['side']} door, {legs[-1]['distance_m']:.0f} m from {t.label(order[-1])}."})
+    if exit_info:
+        steps.append({"at_m": total, "xy": poly[-1], "room_id": None, "door_id": exit_info["door_id"], "turn_deg": None,
+                      "text": f"All {n} room{'s' if n != 1 else ''} checked. Out the side {exit_info['side']} door, {legs[-1]['distance_m']:.0f} m from {t.label(order[-1])}."})
     steps.sort(key=lambda x: x["at_m"])
     return {
         "entry": entry_info,
@@ -115,8 +117,8 @@ def build(fp: dict, nav: NavGraph, side_of, rooms: list[str], entry: str | None 
         "polyline": poly,
         "total_m": total,
         "in_m": legs[0]["distance_m"],
-        "search_m": round(sum(leg["distance_m"] for leg in legs[1:-1]), 1),
-        "out_m": legs[-1]["distance_m"],
+        "search_m": round(sum(leg["distance_m"] for leg in legs if leg["kind"] == "search"), 1),
+        "out_m": legs[-1]["distance_m"] if out else 0.0,
         "entries": sorted((dict(t.door_info(i), distance_m=m) for i, m in reachable.items()), key=lambda e: e["distance_m"]),
         "avoided": list(avoid),
         # same shape as a tour clip, so viewer3d's tourPlayer can fly the whole run

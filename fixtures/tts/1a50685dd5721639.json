@@ -1,0 +1,77 @@
+{
+  "text": "Search: Alpha side door, Open area A. Attack: 67 feet, preconnect. Caution: collapse risk.",
+  "voice": "briefing",
+  "audio_url": "/fixtures/tts/1a50685dd5721639.mp3",
+  "words": [
+    {
+      "word": "Search:",
+      "start": 0.023,
+      "end": 0.534
+    },
+    {
+      "word": "Alpha",
+      "start": 0.639,
+      "end": 0.894
+    },
+    {
+      "word": "side",
+      "start": 0.94,
+      "end": 1.161
+    },
+    {
+      "word": "door,",
+      "start": 1.196,
+      "end": 1.602
+    },
+    {
+      "word": "Open",
+      "start": 1.741,
+      "end": 1.973
+    },
+    {
+      "word": "area",
+      "start": 2.02,
+      "end": 2.31
+    },
+    {
+      "word": "A.",
+      "start": 2.403,
+      "end": 2.786
+    },
+    {
+      "word": "Attack:",
+      "start": 3.018,
+      "end": 3.541
+    },
+    {
+      "word": "67",
+      "start": 3.599,
+      "end": 4.203
+    },
+    {
+      "word": "feet,",
+      "start": 4.272,
+      "end": 4.621
+    },
+    {
+      "word": "preconnect.",
+      "start": 4.795,
+      "end": 5.515
+    },
+    {
+      "word": "Caution:",
+      "start": 5.689,
+      "end": 6.281
+    },
+    {
+      "word": "collapse",
+      "start": 6.49,
+      "end": 6.989
+    },
+    {
+      "word": "risk.",
+      "start": 7.256,
+      "end": 7.79
+    }
+  ]
+}

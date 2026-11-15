@@ -234,7 +234,8 @@ export default function Home({ k, plan, briefing, feed, go, building, mode, onSt
   const [flash, setFlash] = useState(null)
   const live = ['live', 'connecting', 'paused'].includes(feed.status)
   const [narrating, setNarrating] = useState(false)
-  const [sim, setSim] = useState(false)
+  const [sim, setSim] = useState(false) // false | 'target' | 'total'
+  const [simMenu, setSimMenu] = useState(false)
   // the right-hand panel can fold away so the plan or 3D model gets the whole width; remembered per browser
   const [sideOpen, setSideOpen] = useState(() => { try { return localStorage.getItem('scanferno.sideOpen') !== '0' } catch { return true } })
   const toggleSide = () => setSideOpen((v) => { try { localStorage.setItem('scanferno.sideOpen', v ? '0' : '1') } catch { /* storage unavailable */ } return !v })
@@ -349,7 +350,7 @@ export default function Home({ k, plan, briefing, feed, go, building, mode, onSt
       {mode === 'live' && <audio ref={rec} src={feed.recordingUrl || undefined} hidden onPlay={() => setHear((h) => ({ ...h, playing: true }))} onPause={() => setHear((h) => ({ ...h, playing: false }))} onEnded={() => setHear({ playing: false, t: 0 })} onLoadedMetadata={(e) => { const a = e.currentTarget; if (a.duration === Infinity) { /* MediaRecorder files carry no length: read to the end once so seeking works */ a.currentTime = 1e101; const fix = () => { a.removeEventListener('timeupdate', fix); a.currentTime = 0 }; a.addEventListener('timeupdate', fix) } }} onTimeUpdate={(e) => setHear({ playing: !e.currentTarget.paused, t: e.currentTarget.currentTime })} />}
       <KeyBand k={k} step={step} blank={blank} selectedPerson={selectedPerson} selectedEgress={selectedEgress} peopleCount={people.length} />
       <div className="stagerow">
-      {sim ? <PathSim k={k} building={building} plan={plan} briefing={briefing} onClose={() => setSim(false)} /> : <>
+      {sim ? <PathSim mode={sim} k={k} building={building} plan={plan} briefing={briefing} onClose={() => setSim(false)} /> : <>
       <div className="stage panel">
         <div className={`stagehead ${live ? 'live' : ''}`}>
           <div className="stagehead-l">
@@ -422,7 +423,16 @@ export default function Home({ k, plan, briefing, feed, go, building, mode, onSt
         <button className="btn f play" onClick={toggle} disabled={buildingBriefing && !narrating} title={mode === 'live' ? 'Read out the briefing built from your call' : undefined}>
           {buildingBriefing && !narrating ? <><span className="dotlive" />Building…</> : <><Icon name={narrating ? 'pause' : 'speak'} />{narrating ? 'Stop' : mode === 'live' ? 'Play call briefing' : 'Play'}</>}
         </button>
-        <button className={`btn play ${sim ? 'on' : ''}`} onClick={() => { stop(); setReading(false); setSim((v) => !v) }} disabled={!k.plan_.length} title="Animate the whole search: every room in order, then the way out"><Icon name="route" />Path simulation</button>
+        <div className="simmenu" onMouseEnter={() => setSimMenu(true)} onMouseLeave={() => setSimMenu(false)} onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget)) setSimMenu(false) }}>
+          <button className={`btn play ${sim ? 'on' : ''}`} disabled={!k.plan_.length} aria-haspopup="menu" aria-expanded={simMenu}
+            onClick={() => { if (sim) { setSim(false); setSimMenu(false) } else setSimMenu((v) => !v) }} title="Animate a run through the building"><Icon name="route" />Path simulation</button>
+          {simMenu && !sim && (
+            <div className="simdrop" role="menu">
+              <button role="menuitem" onClick={() => { stop(); setReading(false); setSim('target'); setSimMenu(false) }}><b>Path to target</b><small>In to the person to save, then out</small></button>
+              <button role="menuitem" onClick={() => { stop(); setReading(false); setSim('total'); setSimMenu(false) }}><b>Total path</b><small>Every room in order, then out</small></button>
+            </div>
+          )}
+        </div>
         <button className={`btn play ${reading ? 'on' : ''}`} onClick={() => setReading((r) => !r)}><Icon name="facts" />{reading ? 'Close text' : 'Read'}</button>
       </div>}
 
