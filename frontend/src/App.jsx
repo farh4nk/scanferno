@@ -250,7 +250,7 @@ export default function App() {
 
       <main className="main">
         {!k ? <div className="page"><p className="empty">{error ? 'Waiting for the backend…' : 'Loading the building…'}</p></div>
-          : route.id === 'home' ? <Home k={k} plan={plan} briefing={briefing} feed={feed} go={go} building={building} mode={mode} onStartLive={() => startLive()} onRestore={restoreLive} canLive={canLive} />
+          : route.id === 'home' ? <Home k={k} plan={plan} briefing={briefing} feed={feed} go={go} building={building} mode={mode} onStartLive={() => startLive()} onRestore={restoreLive} canLive={canLive} buildings={buildings} onPickBuilding={openBuilding} />
             : route.id === 'all' ? <AllPage go={go} pages={PAGES} k={k} />
               : page ? <page.C key={`${route.id}-${buildingId}-${JSON.stringify(route.params)}`} ctx={ctx} k={k} go={go} />
                 : <div className="page"><p className="empty">Unknown page. <button className="lnk" onClick={() => go('home')}>Back to the briefing</button></p></div>}

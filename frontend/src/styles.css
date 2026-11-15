@@ -641,6 +641,23 @@ svg.mi { width: 22px; height: 22px; } .ip { fill: var(--white); } .iad { fill: v
 .stagerow .stage.panel { height: calc(100vh - var(--strip-h, 76px) - 142px); }
 .stagerow .stage.panel { min-height: 360px; }
 .stagerow .planwrap, .stagerow .stage .viewer3d { min-height: 0; }
+
+/* choosing the building for a live test */
+.bpick { margin: 0 0 22px; }
+.bpick h4 { margin: 0 0 10px; display: flex; justify-content: space-between; align-items: baseline; gap: 10px; font-size: 13px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--fire); }
+.bpick h4 span { text-transform: none; letter-spacing: 0; color: var(--dim); font-weight: 600; font-size: 13px; }
+.bpick input { width: 100%; margin-bottom: 10px; }
+.blist { max-height: 330px; overflow: auto; display: flex; flex-direction: column; gap: 6px; padding-right: 4px; }
+.brow { display: grid; grid-template-columns: 18px minmax(0, 1fr) auto; gap: 12px; align-items: center; text-align: left; padding: 10px 12px; border-radius: 10px; background: var(--road2); border: 2px solid transparent; }
+.brow:hover:not(:disabled) { background: #2e241f; } .brow:disabled { opacity: .6; cursor: default; }
+.brow i { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--dim); }
+.brow.on { border-color: var(--fire); } .brow.on i { border-color: var(--fire); background: var(--fire); }
+.brow span { min-width: 0; } .brow b { display: block; font-size: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.brow small { display: block; font-size: 13px; color: var(--dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.brow em { font-style: normal; font-size: 12px; font-weight: 800; color: var(--dim); white-space: nowrap; } .brow.on em { color: var(--fire); }
+.bpick input { background: var(--road2); color: var(--ink); border: 0; height: 44px; border-radius: 8px; padding: 0 12px; font: inherit; font-weight: 600; }
+.bpick input::placeholder { color: var(--dim); }
+
 .simmenu { position: relative; display: inline-flex; }
 .simdrop { position: absolute; right: 0; bottom: 100%; padding-bottom: 6px; z-index: 30; min-width: 230px; display: flex; flex-direction: column; gap: 4px; }
 .simdrop button { text-align: left; padding: 10px 14px; border-radius: 8px; background: var(--ink); border: 1.5px solid var(--road); color: var(--white); display: flex; flex-direction: column; gap: 2px; }

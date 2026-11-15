@@ -136,6 +136,7 @@ The core technical depth: turning raw Matterport geometry into decisions.
 | 8.13 | Start live call from the header: mic → ElevenLabs transcript → call sheet → briefing | ✅ | P0 | Header "Start live call" (`App.jsx` `startLive`), `components/LiveBar.jsx` (clock, mic meter, End call), Home side panel `brief/LiveSide.jsx` (call sheet fills field by field, transcript with Dispatch/Caller). First voice is the dispatcher. Out of ElevenLabs credits → 402 with a "Use browser speech instead" button |
 | 8.14 | Demo / Live test mode switch for the whole app | ✅ | P0 | Header switch (`components/ModeSwitch.jsx`, remembered in localStorage). Demo: preset briefing + scripted calls. Live test: no scripted calls, blank slate until the call produces facts (nothing playable), then the briefing is built from the call; side panel has Call sheet / Briefing tabs. Test scripts in [LIVE_TEST_SCRIPTS.md](LIVE_TEST_SCRIPTS.md) |
 | 8.15 | Roomier, scrolling briefing page | ✅ | P1 | Four bands (key facts, plan + step beside it, sticky steps bar, "know before you trust it"); tools row scrolls with the page; the plan stays in view while the side panel scrolls |
+| 8.16 | Choose the building in Live test mode | ✅ | P0 | `components/BuildingPicker.jsx` in the live blank slate: ready buildings first, then the other CoStar-linked scanned buildings (searchable), set up through `POST /ondemand/{id}` on pick. Demo mode is unchanged. Sides and exits on set-up buildings are guesses (caveats show it) |
 
 ---
 

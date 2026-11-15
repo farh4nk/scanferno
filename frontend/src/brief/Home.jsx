@@ -6,6 +6,7 @@ import { SIDE_NAME, STEPS, hazardName, stepScript } from './model'
 import { Freshness, DeadEndPict, DistScale, EnterPict, ExitBars, ExitPict, FirePict, HoseGauge, Ring, SearchChain, Section, TrappedPict, WatchPict } from './Diagrams'
 import Icon from '../ui/Icon'
 import LiveSide from './LiveSide'
+import BuildingPicker from '../components/BuildingPicker'
 import { listLiveSessions } from '../api'
 import Viewer3D from '../components/Viewer3D'
 import PathSim from './PathSim'
@@ -29,7 +30,7 @@ function TrustSection({ k }) {
 }
 
 // Live test, before the call: say what will happen instead of showing someone else's facts
-function LiveIntro({ onStart, onRestore, buildingId, canLive }) {
+function LiveIntro({ onStart, onRestore, buildingId, canLive, buildings, onPick }) {
   const [recent, setRecent] = useState([])
   useEffect(() => { let on = true; listLiveSessions().then((l) => on && setRecent(l.filter((x) => x.building_id === buildingId).slice(0, 3))).catch(() => {}); return () => { on = false } }, [buildingId])
   return (
@@ -37,6 +38,7 @@ function LiveIntro({ onStart, onRestore, buildingId, canLive }) {
       <h3>Live test <span>nothing is preloaded</span></h3>
       <p>Press start and talk: one person plays the caller, one plays the dispatcher. The dispatcher speaks first.</p>
       <ol><li>Your voices are transcribed as you speak.</li><li>The call sheet fills in address, floor, side, trapped and hazards.</li><li>The plan and the briefing update with every fact.</li></ol>
+      {buildings.length > 0 && <BuildingPicker buildings={buildings} currentId={buildingId} onPick={onPick} />}
       <button className="btn f wide" onClick={onStart} disabled={!canLive}><Icon name="mic" />Start live call</button>
       {recent.length > 0 && (
         <div className="recent">
@@ -224,7 +226,7 @@ function StepPanel({ k, step, briefing, go, people, selectedPerson, selectedEgre
   return null
 }
 
-export default function Home({ k, plan, briefing, feed, go, building, mode, onStartLive, onRestore, canLive }) {
+export default function Home({ k, plan, briefing, feed, go, building, mode, onStartLive, onRestore, canLive, buildings = [], onPickBuilding }) {
   const [step, setStep] = useState(0)
   const [view, setView] = useState('2d')
   const [selectedPersonId, setSelectedPersonId] = useState(null)
@@ -404,7 +406,7 @@ export default function Home({ k, plan, briefing, feed, go, building, mode, onSt
               </button>
             ))}
           </div>
-        ) : blank ? (hasCall ? <LiveSide feed={feed} onSeek={hasRec ? seekRec : undefined} hearT={hasRec && hear.playing ? hear.t : null} /> : <LiveIntro onStart={onStartLive} onRestore={onRestore} buildingId={building?.id} canLive={canLive} />)
+        ) : blank ? (hasCall ? <LiveSide feed={feed} onSeek={hasRec ? seekRec : undefined} hearT={hasRec && hear.playing ? hear.t : null} /> : <LiveIntro onStart={onStartLive} onRestore={onRestore} buildingId={building?.id} canLive={canLive} buildings={buildings} onPick={onPickBuilding} />)
           : hasCall && tab === 'call' ? <LiveSide feed={feed} onSeek={hasRec ? seekRec : undefined} hearT={hasRec && hear.playing ? hear.t : null} />
             : <StepPanel k={k} step={step} briefing={briefing} go={go} people={people} selectedPerson={selectedPerson}
               selectedEgress={selectedEgress} onSelectPerson={setSelectedPersonId} />}

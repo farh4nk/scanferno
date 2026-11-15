@@ -4,7 +4,7 @@ Two people, one microphone. Open the app, switch the header to **Live test**, pr
 The dispatcher speaks first (the first voice heard is labeled Dispatch). Normal pace, one at a time, pause about a second between lines.
 The transcript refreshes every few seconds, so give each answer a moment to land.
 
-Building for all scripts: Vibe Hobby, 8866 Gulf Freeway.
+Building for these scripts: Vibe Hobby, 8866 Gulf Freeway (the default). To test another building, pick it under "Where is the fire?" on the Live test blank slate and change the address and the room numbers in the script to match its plan.
 
 ## Script A: back of the building, trapped coworker (about 1 minute)
 
