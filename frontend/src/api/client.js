@@ -1,5 +1,7 @@
 // Low-level transport to the FastAPI backend. Endpoint functions live in ./index.js.
-export const API = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+// Production builds (Vercel) default to the deployed Render backend; dev stays on localhost.
+export const API = (import.meta.env.VITE_API_URL ||
+  (import.meta.env.PROD ? 'https://scanferno.onrender.com' : 'http://localhost:8000')).replace(/\/$/, '')
 
 const qs = (params = {}) => {
   const p = Object.entries(params).filter(([, v]) => v != null && v !== '')
