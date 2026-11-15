@@ -11,7 +11,7 @@
 }
 * { box-sizing: border-box; }
 html, body, #root { height: 100%; margin: 0; }
-body { background: var(--night); color: var(--white); font: 16px/1.4 Overpass, system-ui, sans-serif; font-variant-numeric: tabular-nums; min-width: 1100px; }
+body { background: var(--night); color: var(--white); font: 16px/1.4 Overpass, system-ui, sans-serif; font-variant-numeric: tabular-nums; }
 ::selection { background: var(--fire); color: var(--ink); }
 button, input, select { font: inherit; color: inherit; }
 button { border: 0; background: none; cursor: pointer; padding: 0; }
@@ -139,7 +139,8 @@ svg.plan { width: 100%; height: 100%; display: block; }
 .rm.click { cursor: pointer; } .rm.click:hover { fill: #2d231f; }
 .rm.hf { fill: url(#hatch); stroke: var(--red); stroke-width: 5; } .rm.victim { fill: var(--red); stroke: var(--red); }
 .rm.sel { stroke: var(--fire); stroke-width: 8; } .rm.de { stroke: var(--fire); stroke-width: 7; }
-.route { fill: none; stroke: var(--fire); stroke-width: 11; stroke-linecap: round; stroke-linejoin: round; }
+.route { fill: none; stroke: var(--fire); stroke-width: 9; stroke-linecap: round; stroke-linejoin: round; }
+.route.primary { stroke-width: 7; }
 .route.thin { stroke-width: 5; opacity: .55; } .route.done { stroke: #6b5c52; }
 .route.in { stroke: #4dd0ff; } .route.out { stroke: #7dffb3; }
 .route.go { stroke-width: 14; stroke-dasharray: 2 22; animation: march 1s linear infinite; } @keyframes march { to { stroke-dashoffset: -24; } }
@@ -157,7 +158,7 @@ svg.plan { width: 100%; height: 100%; display: block; }
 .hoseln { fill: none; stroke: var(--white); stroke-width: 7; stroke-dasharray: 16 10; stroke-linecap: round; }
 .ex { fill: var(--white); stroke: var(--fire); stroke-width: 4; } .ex.hi { fill: var(--fire); stroke: var(--white); stroke-width: 5; }
 .ord circle { fill: var(--white); } .ord text { font: 800 20px Overpass; fill: var(--ink); text-anchor: middle; }
-.lbl { font: 600 15px Overpass; fill: #8a7b71; text-anchor: middle; pointer-events: none; }
+.lbl { font: 600 15px Overpass; fill: #a9998e; stroke: #211a17; stroke-width: 4px; stroke-linejoin: round; paint-order: stroke fill; text-anchor: middle; pointer-events: none; }
 .sidel { font: 800 22px Overpass; fill: var(--dim); text-anchor: middle; }
 .ag { fill: var(--white); transition: cx .38s linear, cy .38s linear; }
 .tag rect { fill: var(--night); stroke: #6b5c52; stroke-width: 2; } .tag text { font: 800 17px Overpass; fill: var(--white); text-anchor: middle; letter-spacing: .04em; }
@@ -171,7 +172,7 @@ svg.plan { width: 100%; height: 100%; display: block; }
 .kcell { background: var(--road2); border-radius: 12px; padding: 10px 14px; display: flex; align-items: center; gap: 12px; min-width: 0; transition: background .3s, transform .3s, box-shadow .3s; }
 .kcell > div { min-width: 0; } .kcell svg.dg { flex: none; width: 58px; height: 58px; }
 .kcell span { display: block; font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: .12em; color: var(--fire); }
-.kcell b { display: block; font-size: 28px; font-weight: 800; line-height: 1.1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.kcell b { display: block; font-size: clamp(18px, 1.8vw, 24px); font-weight: 800; line-height: 1.1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .kcell em { display: block; font-style: normal; font-size: 13px; font-weight: 700; color: var(--dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px; }
 .kcell.hot em { color: var(--white); opacity: .85; }
 .kcell.hot { background: var(--red); } .kcell.hot span { color: var(--white); opacity: .85; }
@@ -395,7 +396,7 @@ svg.mi { width: 22px; height: 22px; } .ip { fill: var(--white); } .iad { fill: v
 .tour-bar.search { border-color: var(--fire); } .tour-bar.search .tour-prog i { background: var(--fire); }
 
 /* collapsible side panel on the briefing page */
-.brief.noside { grid-template-columns: 1fr; } .brief.noside .side { display: none; } .brief.noside .stepper { grid-column: 1 / -1; }
+.brief.noside { grid-template-columns: 1fr; } .brief.noside .side { display: none; } .brief.noside .keyband, .brief.noside .stepper { grid-column: 1 / -1; }
 .side-head { position: sticky; top: 0; z-index: 1; display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 4px 2px 6px; background: var(--night); }
 .side-head > b { color: var(--dim); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; }
 .side-collapse { display: inline-flex; align-items: center; gap: 8px; height: 34px; padding: 0 10px; border: 1px solid var(--rule); border-radius: 7px; background: var(--road2); color: var(--white); font-size: 12px; font-weight: 800; }
@@ -436,6 +437,9 @@ svg.mi { width: 22px; height: 22px; } .ip { fill: var(--white); } .iad { fill: v
 .route-alternatives[open] summary { color: var(--white); }
 .route-alternatives .route-choice { margin-top: 5px; }
 .route-badge { display: inline-flex; margin-top: 5px; padding: 2px 8px; border-radius: 12px; background: #3a251b; color: #ffb08d; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; }
+.egress-empty p { margin: 0 0 12px; }
+.egress-add { width: 100%; }
+.egress-unavailable { border-left: 3px solid var(--fire); }
 .rescue-warning { margin: 10px 0; padding: 10px 12px; border-left: 3px solid var(--fire); background: var(--road2); color: var(--white); font-size: 13px; }
 .rescue-map-panel { overflow: hidden; padding: 16px; }
 .rescue-map-header { display: flex; justify-content: space-between; align-items: center; gap: 14px; flex: none; }
@@ -465,4 +469,19 @@ svg.mi { width: 22px; height: 22px; } .ip { fill: var(--white); } .iad { fill: v
   .rescue-layout { grid-template-columns: minmax(300px, 350px) minmax(0, 1fr); gap: 14px; }
   .rescue-route-summary { grid-template-columns: 1fr auto; }
   .rescue-route-summary-label { grid-column: 1 / -1; }
+}
+
+@media (max-width: 1100px) {
+  .page { padding: 18px; }
+  .brief { grid-template-columns: minmax(0, 1fr) minmax(300px, 36vw); }
+  .brief.noside { grid-template-columns: minmax(0, 1fr); }
+  .keyband { gap: 7px; }
+  .kcell { gap: 6px; padding: 6px; }
+  .kcell svg.dg { width: 34px; height: 34px; }
+  .kcell b { font-size: clamp(14px, 1.9vw, 18px); white-space: normal; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+  .kcell em { font-size: 11px; }
+  .stepper { flex-wrap: wrap; gap: 6px; }
+  .stp { flex: 1 1 calc(25% - 6px); min-width: 0; height: 48px; gap: 6px; padding: 0 8px; font-size: 16px; }
+  .stp i { flex: none; width: 28px; height: 28px; }
+  .btn.play { height: 48px; padding: 0 14px; }
 }
