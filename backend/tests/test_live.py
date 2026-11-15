@@ -190,3 +190,28 @@ def test_stutter_detector_flags_stretched_words_only():
     from dispatch.elevenlabs import _glitchy
     assert _glitchy([{"word": "follow", "start": 6.2, "end": 7.73}])          # the real stutter we heard
     assert not _glitchy([{"word": "follow", "start": 6.38, "end": 6.63}, {"word": "8866", "start": 0.8, "end": 1.98}])
+
+
+def test_audio_out_of_credits_is_402(monkeypatch):
+    import httpx
+
+    def broke(audio, name):
+        req = httpx.Request("POST", "https://api.elevenlabs.io/v1/speech-to-text")
+        raise httpx.HTTPStatusError("401", request=req, response=httpx.Response(401, request=req, json={"detail": {"code": "quota_exceeded"}}))
+
+    monkeypatch.setattr(elevenlabs, "stt", broke)
+    sid = _new()
+    r = client.post(f"/live/sessions/{sid}/audio", files={"file": ("call.webm", b"x", "audio/webm")})
+    assert r.status_code == 402 and "out of credits" in r.json()["detail"]
+
+
+def test_recent_calls_and_recording(monkeypatch):
+    cached = cache.load_json("calls", "vibe-1-clean", "transcript.json")
+    monkeypatch.setattr(elevenlabs, "stt", lambda audio, name: cached)
+    sid = _new()
+    assert client.get(f"/live/sessions/{sid}/audio").status_code == 404  # nothing recorded yet
+    client.post(f"/live/sessions/{sid}/audio", files={"file": ("call.webm", b"fake-audio", "audio/webm")})
+    row = next(r for r in client.get("/live/sessions").json() if r["session_id"] == sid)
+    assert row["has_audio"] and row["lines"] > 2 and row["preview"]
+    r = client.get(f"/live/sessions/{sid}/audio")
+    assert r.status_code == 200 and r.content == b"fake-audio" and r.headers["content-type"] == "audio/webm"

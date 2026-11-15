@@ -1,6 +1,7 @@
 """Live calls happening now (see dispatch/session.py): mic or file audio through ElevenLabs STT, or
 utterances recognized in the browser / typed. Every update returns the session state."""
-from fastapi import APIRouter, Body, Form, HTTPException, UploadFile
+import httpx
+from fastapi import APIRouter, Body, Form, HTTPException, Response, UploadFile
 
 from app import deps
 from data import layers
@@ -14,6 +15,31 @@ def _session(sid: str) -> session.Session:
     if s is None:
         raise HTTPException(404, f"No live session {sid} (sessions end when the API restarts)")
     return s
+
+
+@router.get("/sessions")
+def recent():
+    """Calls taken since the API started (newest first), so a page reload can pick one back up."""
+    out = []
+    for s in sorted(session.SESSIONS.values(), key=lambda x: x.created, reverse=True):
+        if not s.utterances:
+            continue
+        first = next((u["text"] for u in s.utterances if u["role"] == "caller"), s.utterances[0]["text"])
+        out.append({"session_id": s.id, "building_id": s.building_id, "started_at": s.created, "lines": len(s.utterances),
+                    "has_audio": bool(s.audio), "preview": first[:90]})
+    return out[:10]
+
+
+@router.get("/sessions/{sid}/audio")
+def recording(sid: str):
+    """The mic recording of this call, as it was uploaded."""
+    s = _session(sid)
+    if not s.audio:
+        raise HTTPException(404, "This call has no recording")
+    data, name = s.audio
+    ext = name.rsplit(".", 1)[-1].lower() if "." in name else "webm"
+    kind = {"webm": "audio/webm", "ogg": "audio/ogg", "m4a": "audio/mp4", "mp4": "audio/mp4", "wav": "audio/wav", "mp3": "audio/mpeg"}.get(ext, "application/octet-stream")
+    return Response(data, media_type=kind)
 
 
 @router.post("/sessions")
@@ -39,8 +65,23 @@ async def audio(sid: str, file: UploadFile, first_role: str = Form("dispatcher")
         return s.transcribe(data, file.filename or "call.webm", first_role)
     except elevenlabs.NotConfigured as e:
         raise HTTPException(503, str(e))
+    except httpx.HTTPStatusError as e:
+        raise HTTPException(*_stt_error(e))
     except Exception as e:
         raise HTTPException(502, f"Transcription failed: {type(e).__name__}: {e}")
+
+
+def _stt_error(e: httpx.HTTPStatusError) -> tuple[int, str]:
+    """ElevenLabs answers an empty quota with a 401; say what actually happened (402 = out of credits)."""
+    try:
+        code = e.response.json()["detail"]["code"]
+    except Exception:
+        code = ""
+    if code == "quota_exceeded":
+        return 402, "ElevenLabs is out of credits, so it can't transcribe. Top up the account, or use browser speech."
+    if e.response.status_code in (401, 403):
+        return 503, "ElevenLabs rejected the API key (it may lack the speech-to-text permission)."
+    return 502, f"Transcription failed: ElevenLabs returned {e.response.status_code}"
 
 
 @router.post("/sessions/{sid}/utterances")

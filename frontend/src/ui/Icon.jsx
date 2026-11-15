@@ -18,6 +18,7 @@ const P = {
   play: <path d="M7 5l12 7-12 7z" />,
   pause: <path d="M8 5v14M16 5v14" />,
   stop: <path d="M6 6h12v12H6z" />,
+  mic: <path d="M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3zM5 11a7 7 0 0 0 14 0M12 18v3M9 21h6" />,
   speak: <path d="M5 9v6h4l5 4V5L9 9zM17 9a4 4 0 0 1 0 6" />,
   model: <path d="M12 3l8 4.5v9L12 21l-8-4.5v-9zM12 12l8-4.5M12 12v9M12 12L4 7.5" />,
   route: <path d="M6 20a2 2 0 1 0 0-.1M18 4a2 2 0 1 0 0 .1M8 20h7a4 4 0 0 0 0-8H9a4 4 0 0 1 0-8h7" />,

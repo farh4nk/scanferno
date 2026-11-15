@@ -30,7 +30,7 @@ export function CallPage({ ctx }) {
       <div className="col">
         <div className="panel">
           <h2>Source</h2>
-          <div className="seg"><button className={source === 'replay' ? 'on' : ''} onClick={() => switchSource('replay')}>Replay</button><button className={source === 'live' ? 'on' : ''} onClick={() => switchSource('live')}>Live</button></div>
+          <p className="note">{source === 'live' ? 'Live test: the call you take builds the briefing.' : 'Demo: replay a scripted call on the preset briefing.'}</p>
           {source === 'replay' && <>
             <select className="sel" value={callId} onChange={(e) => setCallId(e.target.value)} disabled={!calls.length}>
               {!calls.length && <option value="">No scripted calls for this building</option>}

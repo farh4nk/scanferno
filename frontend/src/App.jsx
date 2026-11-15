@@ -1,8 +1,11 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { getBuildings, getCalls, health } from './api'
+import { getBuildings, getCalls, health, listLiveSessions } from './api'
 import { useCallPlayer } from './hooks/useCallPlayer'
 import CallBar from './brief/CallBar'
-import { useListen } from './hooks/useListen'
+import { SpeechRecognition, canRecord, useListen } from './hooks/useListen'
+import LiveBar from './components/LiveBar'
+import ModeSwitch from './components/ModeSwitch'
+import Logo from './components/Logo'
 import { useBuildingData } from './hooks/useBuildingData'
 import { deriveBrief } from './brief/model'
 import Home from './brief/Home'
@@ -57,7 +60,9 @@ export default function App() {
   const [buildings, setBuildings] = useState([])
   const [calls, setCalls] = useState([])
   const [caps, setCaps] = useState({ llm: null, stt: false })
-  const [source, setSource] = useState('replay')
+  // Demo: preset briefing + scripted calls. Live test: the briefing is built from the call you take.
+  const [mode, setMode] = useState(() => { try { return localStorage.getItem('scanferno.mode') === 'live' ? 'live' : 'demo' } catch { return 'demo' } })
+  const source = mode === 'live' ? 'live' : 'replay'
   const [buildingId, setBuildingId] = useState(initialBuilding)
   const [property, setProperty] = useState(null)
   const [callId, setCallId] = useState('')
@@ -138,31 +143,57 @@ export default function App() {
   const call = calls.find((c) => c.call_id === callId)
   const running = ['connecting', 'live', 'paused'].includes(live.status)
   const listening = listen.listening || listen.status === 'connecting'
-  const startCall = () => { if (call) { if (source !== 'replay') setSource('replay'); live.start(call, speed) } }
-  const switchSource = (s) => { live.reset(); listen.stop(); setSource(s) }
+  // a reloaded tab picks its live call back up (transcript, briefing, recording) while the API still has it
+  useEffect(() => {
+    if (mode !== 'live' || listen.sessionId || listen.utterances.length) return
+    let keep = null
+    try { keep = sessionStorage.getItem('scanferno.liveSid') } catch { /* storage unavailable */ }
+    if (!keep) return
+    listLiveSessions().then((l) => { const m = l.find((x) => x.session_id === keep && x.building_id === buildingId); if (m) listen.restore(m.session_id, { hasAudio: m.has_audio }) }).catch(() => {})
+  }, [mode, buildingId]) // eslint-disable-line react-hooks/exhaustive-deps
+  const restoreLive = (id, hasAudio) => { live.reset(); listen.restore(id, { hasAudio }).catch(() => {}) }
+  const chooseMode = (m) => { setMode(m); try { localStorage.setItem('scanferno.mode', m) } catch { /* storage unavailable */ } }
+  const switchMode = (m) => { if (m === mode) return; live.reset(); listen.reset(); chooseMode(m); go('home') }
+  const startLive = (input) => {
+    live.reset(); listen.reset(); chooseMode('live'); go('home')
+    listen.start(input || (caps.stt && canRecord ? 'server' : 'browser'), { firstRole: 'dispatcher' })
+  }
+  const startCall = () => { if (call) live.start(call, speed) }
   const onSaved = (id) => getCalls().then((c) => { setCalls(c); setCallId(id) })
 
+  // the plan is sized to what is left of the window under the header, whatever height the header has
+  useEffect(() => {
+    const el = document.querySelector('.strip'); if (!el) return undefined
+    const set = () => document.documentElement.style.setProperty('--strip-h', `${el.offsetHeight}px`)
+    set(); const ro = new ResizeObserver(set); ro.observe(el)
+    return () => ro.disconnect()
+  }, [])
+
   const ctx = {
-    plan, briefing, feed, building, buildingId, params: route.params, source, switchSource, calls: buildingCalls, callId,
+    plan, briefing, feed, building, buildingId, params: route.params, source, mode, switchSource: (s) => switchMode(s === 'live' ? 'live' : 'demo'), calls: buildingCalls, callId,
     setCallId: (id) => { live.reset(); setCallId(id) }, speed, setSpeed: (s) => { setSpeed(s); if (live.loaded) live.setRate(s) }, seek: live.loaded ? live.seek : null, startCall, stopCall: live.reset, running, listen, caps, onSaved,
   }
   const page = PAGES.find((p) => p.id === route.id)
   const name = briefing?.building?.name || building?.name || 'Loading…'
   const address = briefing?.building?.address?.replace(/, [A-Z]{2}$/, '') || building?.address || ''
-  const callBtn = running || listening
-    ? (source === 'live' ? <button className="btn" onClick={() => listen.stop()}><span className="dotlive" />Live call<Icon name="stop" /></button> : null)
-    : <button className="btn" onClick={startCall} disabled={!call}><Icon name="play" />{feed.utterances.length ? 'Replay call' : 'Play call'}</button>
+  const canLive = (caps.stt && canRecord) || !!SpeechRecognition
+  const callBtn = mode === 'live'
+    ? (listening
+      ? <LiveBar listen={listen} onEnd={() => listen.stop()} />
+      : <button className="btn f" onClick={() => startLive()} disabled={!canLive} title={canLive ? 'Take a call with the microphone' : 'This browser cannot record audio'}><Icon name="mic" />{listen.utterances.length ? 'New live call' : 'Start live call'}</button>)
+    : (running ? null
+      : <button className="btn f" onClick={startCall} disabled={!call} title="Replay a scripted call"><Icon name="play" />{live.loaded ? 'Replay demo call' : 'Play demo call'}</button>)
 
   return (
     <div className="app">
       <header className="strip">
         <div className="strip-main">
           <button className="brand-lockup" onClick={() => go('home')} aria-label="Scanferno briefing">
-            <span className="sf">SF</span><span className="bld">{name}<small>{address}</small></span>
+            <Logo size={40} /><span className="bld">{name}<small>{address}</small></span>
           </button>
           {route.id !== 'home' && <span className="crumb">{page?.group || 'Tools'} › <b>{page?.name || 'All tools'}</b></span>}
-          {callBtn}
           <div className="search-wrap"><AddressSearch current={building} onOpenBuilding={openBuilding} onOpenProperty={setProperty} /></div>
+          <div className="ml strip-end"><ModeSwitch mode={mode} onChange={switchMode} calling={listening} />{callBtn}</div>
         </div>
         <nav className="feature-nav" aria-label="Application features">
           <button type="button" className={`nav-home ${route.id === 'home' ? 'active' : ''}`} onClick={() => go('home')} aria-current={route.id === 'home' ? 'page' : undefined}>
@@ -200,9 +231,13 @@ export default function App() {
         </nav>
       </header>
 
-      {source === 'replay' && live.loaded && <CallBar player={live} />}
+      {mode === 'demo' && live.loaded && <CallBar player={live} />}
 
-      {(error || dataError || feed.error) && <div className="banner" role="alert">{error || dataError || feed.error}</div>}
+      {(error || dataError || feed.error) && (
+        <div className="banner" role="alert">{error || dataError || feed.error}
+          {listen.quota && SpeechRecognition && <button className="btn" onClick={() => startLive('browser')}>Use browser speech instead</button>}
+        </div>
+      )}
       {addressHint?.hit && (
         <div className="addr-chip" role="status">
           <span>Heard <b>{addressHint.query}</b> <span className="muted">→ {addressHint.hit.name || addressHint.hit.address}</span></span>
@@ -215,7 +250,7 @@ export default function App() {
 
       <main className="main">
         {!k ? <div className="page"><p className="empty">{error ? 'Waiting for the backend…' : 'Loading the building…'}</p></div>
-          : route.id === 'home' ? <Home k={k} plan={plan} briefing={briefing} feed={feed} go={go} building={building} />
+          : route.id === 'home' ? <Home k={k} plan={plan} briefing={briefing} feed={feed} go={go} building={building} mode={mode} onStartLive={() => startLive()} onRestore={restoreLive} canLive={canLive} />
             : route.id === 'all' ? <AllPage go={go} pages={PAGES} k={k} />
               : page ? <page.C key={`${route.id}-${buildingId}-${JSON.stringify(route.params)}`} ctx={ctx} k={k} go={go} />
                 : <div className="page"><p className="empty">Unknown page. <button className="lnk" onClick={() => go('home')}>Back to the briefing</button></p></div>}

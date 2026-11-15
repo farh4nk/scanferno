@@ -29,7 +29,7 @@ async function request(path, opts) {
   if (!r.ok) {
     let msg = r.statusText
     try { msg = (await r.json()).detail || msg } catch { /* not JSON */ }
-    throw new Error(msg)
+    throw Object.assign(new Error(msg), { status: r.status })
   }
   return r.json()
 }

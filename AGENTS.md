@@ -44,7 +44,7 @@ Per building: `matterport_vector.json` (raw floor plan), `costar.json` (building
 
 ## API (backend/app/routers/, wired in app/main.py)
 
-One router file per area (`buildings.py`, `calls.py`, `dispatch.py`, `search.py`); shared 404 lookups in `app/deps.py`. The frontend mirrors this with one function per endpoint in `frontend/src/api/index.js`; components and hooks (`frontend/src/hooks/`) never call `fetch` directly. Frontend layout: `src/App.jsx` (state, `#page` routes), `src/brief/` (home briefing: `model.js` derives the facts, `PlanSvg.jsx` draws every floor plan, `Diagrams.jsx`), `src/pages/Pages.jsx` (one page per tool). Design rules for UI work: `PRODUCT.md`. Adding an endpoint means touching both, plus a test.
+One router file per area (`buildings.py`, `calls.py`, `dispatch.py`, `search.py`); shared 404 lookups in `app/deps.py`. The frontend mirrors this with one function per endpoint in `frontend/src/api/index.js`; components and hooks (`frontend/src/hooks/`) never call `fetch` directly. Modes: the header switch picks **Demo** (preset briefing + scripted calls) or **Live test** (mic call builds the briefing; scripts in `docs/LIVE_TEST_SCRIPTS.md`). Frontend layout: `src/App.jsx` (state, mode, `#page` routes), `src/brief/` (home briefing: `model.js` derives the facts, `PlanSvg.jsx` draws every floor plan, `Diagrams.jsx`), `src/pages/Pages.jsx` (one page per tool). Design rules for UI work: `PRODUCT.md`. Adding an endpoint means touching both, plus a test.
 
 | Endpoint | Returns |
 |---|---|
