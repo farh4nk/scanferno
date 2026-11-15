@@ -57,7 +57,7 @@ export function flow(layer: Layer, points: XY[], opts: { color?: string; speed?:
  * center. `xray` adds a faint copy drawn through walls plus an exit beacon, so the way out stays visible
  * from anywhere in walk mode.
  */
-export function drawRoute(layer: Layer, route: Route, fp?: Floorplan, color = '#22d3ee', opts: { from?: XY; xray?: boolean } = {}) {
+export function drawRoute(layer: Layer, route: Route, fp?: Floorplan, color = '#22d3ee', opts: { from?: XY; xray?: boolean; endLabel?: string } = {}) {
   const line = opts.from && route.polyline.length > 1 ? [opts.from, ...route.polyline.slice(1)] : route.polyline
   const end = line[line.length - 1]
   layer.path(line, { color, radius: 0.08, opacity: 0.95 })
@@ -68,7 +68,8 @@ export function drawRoute(layer: Layer, route: Route, fp?: Floorplan, color = '#
   }
   const exit = fp?.doors.find((d) => d.id === route.exit_door_id)
   const dist = opts.from ? pathLength(line) : route.distance_m
-  layer.label(end, `${dist.toFixed(0)} m to exit${exit?.side ? ` ${exit.side}` : ''}`,
+  const label = opts.endLabel ? `${dist.toFixed(0)} m · ${opts.endLabel}` : `${dist.toFixed(0)} m to exit${exit?.side ? ` ${exit.side}` : ''}`
+  layer.label(end, label,
     { height: opts.xray ? 2.5 : 1.0, color, size: 0.3 })
 }
 

@@ -9,6 +9,8 @@ Living handoff doc. Update your role's section and add a changelog line in the s
 - 3 hero buildings picked by verified scan quality; all data cached in `fixtures/` (`scripts/pick_heroes`, `scripts/fetch_fixtures`).
 - Dispatch pipeline: audio -> diarized transcript -> live dispatch records via Gemini, with deterministic room matching (`dispatch/`). Two Vibe Hobby calls processed: `vibe-1-clean`, `vibe-2-messy`.
 - API: buildings, calls, SSE replay, typed extract, transcribe, static fixtures (`app/main.py`).
+- Live sessions accept validated manual fire/person room overrides; overrides survive new transcript extraction and rebuild briefing, heat, and rescue outputs.
+- Live transcript reconciliation updates a named person's room or within-room position from explicit movement statements; explicit fire-spread statements retain active fire areas and recompute heat/routes. Manual room overrides remain higher priority.
 
 **Next**
 1. Regenerate call audio with real ElevenLabs voices (waiting on Voices: Read for the key).
@@ -25,8 +27,11 @@ Living handoff doc. Update your role's section and add a changelog line in the s
 
 **Done**
 - Fire heat field (`geometry/heat.py`) and per-person rescue plan (`agent/rescue.py`).
+- Live rescue recommendations now pair each person's best risk-weighted entry and extraction routes, with combined distance/time; locations still update from transcript and manual overrides.
+- Rescue markers keep stable person IDs across transcript location updates; a victim's own exterior window remains an extraction option even when that room is modeled as untenable, while unsafe windows are excluded as entry points.
 - Live wire-up (`agent/live_geometry.py`): nest `heat` + `rescue` on live/SSE briefings; CoStar/Vexcel/maze risk modifiers; address `building_match` + session rebind; `POST .../tick`.
 - Frontend: danger zones + person markers + in/out routes on Rescue; Walk rescue on 3D; spoken address auto-opens a ready building.
+- Rescue view shows selectable people in 2D/3D and only the selected person's routes; alternate entry/exit options are collapsed, and the 3D walkthrough follows the selected person to a chosen door exit.
 
 **Next**
 1. Multi-floor heat.
@@ -66,8 +71,10 @@ Living handoff doc. Update your role's section and add a changelog line in the s
 - All spoken output is ElevenLabs via `POST /speech`: the `briefing` voice (Bill, picked by ear; `eleven_flash_v2_5`, speed 1.2 plus 1.1x playback, low stability) reads a dispatch-style script ("Fire, Charlie side, third floor. Caution: oxygen cylinders. Egress: 8 meters, Alpha side."), generated in the background once the briefing settles so Play starts at once ( word-timed captions, cached in `fixtures/tts/`); the browser voice is gone. The briefing steps are fetched one at a time, current step first; the backend allows 2 ElevenLabs requests at once and retries 429s (`ELEVENLABS_CONCURRENCY`).
 - Calls replay from `GET /calls/{id}/frames` (`src/hooks/useCallPlayer.js`) with a transport bar under the top strip (`src/brief/CallBar.jsx`): play/pause, previous/next fact, scrub bar with Fire / Trapped / Hazard markers, 1–2× speed, Space and arrow keys. Click a transcript line to jump there. The spoken briefing can skip steps (⏮ ⏭, or click a step while it plays).
 - During a call the home plan goes live: everything known so far is drawn at once, rooms named in each update flash, and a NEW banner quotes the change (from the stream's `changes`). Clicking a step takes over; when the call ends it lands on Search.
+- Dispatch facts include a clickable floor plan for assigning fire and person rooms during live calls; manual choices are labeled, persist over audio updates, and can be returned to transcript-derived locations. Property search's create/open briefing action is prominent and sticky.
 - 3D model is first-class: a 2D/3D switch on the home plan (briefing overlays follow the step) and a `#model` page, first in the toolbar.
 - One page per job behind `#hash` routes (`src/pages/Pages.jsx`): 3D model, Call (replay + live mic), Dispatch facts, Rescue, Entry, Hazards, Hose, Exterior, Aerial, Floor plan (2D + 3D), Mayday (steps + speak), Evacuation, Ask, All tools.
+- Persistent navigation groups every page into Incident, Response, and Building; active location stays visible across pages, and All tools is a three-column feature directory.
 - Shared pieces: `src/brief/model.js` (derives the briefing facts from floorplan + briefing + record, no building-specific code), `src/brief/PlanSvg.jsx` (one plan renderer), `src/brief/Diagrams.jsx`, `src/ui/Icon.jsx`.
 - Removed the old panels (Briefing, Dispatch, Transcript, Mayday, Evac, Ask, Aerial, FloorPlan, SourceTags); kept AddressSearch, PropertyCard, LivePanel, Viewer3D.
 - Aerial photos are annotated (`src/brief/Aerial.jsx` + hand-placed `fixtures/<id>/vexcel/annotations.json`, Vibe Hobby only): each wall gets its side letter, the fire side is hatched red, search entry and aerial staging marked, plus entrances and roof features. The Aerial page opens on the burning wall. Vexcel names obliques by the camera's direction, so the front (south) wall is `oblique-north`; `frontView` was showing the rear and is fixed.
@@ -77,6 +84,7 @@ Living handoff doc. Update your role's section and add a changelog line in the s
 - React + Vite app in `frontend/` (`npm install && npm run dev`, http://localhost:5173; backend URL via `VITE_API_URL`, default http://localhost:8000).
 - Live call view: SSE `/calls/{id}/live` drives transcript, dispatch record (changed fields flash), briefing, mayday; audio starts when the stream opens.
 - SVG floor plan: maze heat, search order, trapped marker, fire area, exit routes, doors/windows, sides A-D, room click shows route + maze reasons.
+- Room labels now fit within their room polygons, and the briefing side-panel control sits with the panel header or 2D/3D controls instead of floating over the plan.
 - Briefing tabs, Vexcel aerial viewer, Ask-the-plan (highlights answer on the plan), mayday panel (wall path + browser TTS), evac sim animation.
 
 **Next**
@@ -86,8 +94,14 @@ Living handoff doc. Update your role's section and add a changelog line in the s
 **Unblocked by:** aerial images at `/fixtures/<id>/vexcel/*.jpg`, calls at `/calls/{id}` and `/calls/{id}/replay` (SSE), sample briefing at `fixtures/sample/briefing.json`.
 
 ## Changelog
+- 2026-11-15: Live transcript movement updates preserve person identity and refresh map position/rescue routes; explicit fire spread adds active fire rooms and updates heat. Floor-plan labels and briefing panel controls no longer crowd the map.
+- 2026-11-15: Rescue routes now focus on the selected person in 2D/3D; map markers select people, route alternatives collapse, and Walk follows the selected extraction route to the exit.
 - 2026-11-15: Data freshness: briefing `data_age`, "How fresh" timeline on the home Arrive step and Exterior page, "% sure" on low-confidence caller facts.
 - 2026-11-15: Floor plan room click routes around the fire, with a Way out box (clear, rerouted, blocked, on fire).
+- 2026-11-15: Live fire/person location overrides on the clickable dispatch floor plan; person markers follow transcript updates; search property briefing action promoted.
+- 2026-11-15: Rescue planner now exposes per-person recommended entry/extraction pairs and the Rescue view updates route selection live, with improved 2D/3D heat and route markers.
+- 2026-11-15: Reorganized the persistent feature navigation and All tools directory into Incident, Response, and Building groups.
+- 2026-11-15: Fixed Dispatch Facts rendering by passing the derived briefing model into the page component.
 - 2026-11-15: Annotated aerial photos (sides, fire side, staging, entrances) for Vibe Hobby; front photo now shows the actual front wall.
 - 2026-11-14: Ion 3D hang fix: reuse floorplan.json, skip ondemand rebuild on cache hit, mark onboarded buildings ready in search.
 

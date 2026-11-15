@@ -17,21 +17,25 @@ const DEFAULT_BUILDING = 'costar-239873'
 const initialBuilding = () => new URLSearchParams(window.location.search).get('building') || DEFAULT_BUILDING
 
 export const PAGES = [
-  { id: 'call', name: 'Call', group: 'The call', C: CallPage },
-  { id: 'facts', name: 'Dispatch facts', group: 'The call', C: FactsPage },
-  { id: 'rescue', name: 'Rescue', group: 'Before entry', alert: true, C: RescuePage },
-  { id: 'entry', name: 'Entry', group: 'Before entry', C: EntryPage },
-  { id: 'hazards', name: 'Hazards', group: 'Before entry', C: HazardsPage },
-  { id: 'hose', name: 'Hose', group: 'Before entry', C: HosePage },
-  { id: 'exterior', name: 'Exterior', group: 'Before entry', C: ExteriorPage },
-  { id: 'aerial', name: 'Aerial photos', group: 'Before entry', C: AerialPage },
-  { id: 'model', name: '3D model', group: 'Inside', C: ModelPage },
-  { id: 'plan', name: 'Floor plan', group: 'Inside', C: PlanPage },
-  { id: 'mayday', name: 'Mayday', group: 'Inside', alert: true, C: MaydayPage },
-  { id: 'evac', name: 'Evacuation', group: 'Inside', C: EvacPage },
-  { id: 'ask', name: 'Ask', group: 'Anywhere', C: AskPage },
+  { id: 'call', name: 'Call', group: 'Incident', C: CallPage },
+  { id: 'facts', name: 'Dispatch facts', group: 'Incident', C: FactsPage },
+  { id: 'rescue', name: 'Rescue', group: 'Response', alert: true, C: RescuePage },
+  { id: 'entry', name: 'Entry', group: 'Response', C: EntryPage },
+  { id: 'hose', name: 'Hose', group: 'Response', C: HosePage },
+  { id: 'evac', name: 'Evacuation', group: 'Response', C: EvacPage },
+  { id: 'mayday', name: 'Mayday', group: 'Response', alert: true, C: MaydayPage },
+  { id: 'hazards', name: 'Hazards', group: 'Building', C: HazardsPage },
+  { id: 'exterior', name: 'Exterior', group: 'Building', C: ExteriorPage },
+  { id: 'aerial', name: 'Aerial photos', group: 'Building', C: AerialPage },
+  { id: 'model', name: '3D model', group: 'Building', C: ModelPage },
+  { id: 'plan', name: 'Floor plan', group: 'Building', C: PlanPage },
+  { id: 'ask', name: 'Ask', group: 'Building', C: AskPage },
 ]
-const TOOLS = ['model', 'call', 'plan', 'mayday', 'evac', 'aerial', 'ask']
+const NAV_GROUPS = [
+  { name: 'Incident', icon: 'call' },
+  { name: 'Response', icon: 'rescue' },
+  { name: 'Building', icon: 'model' },
+]
 
 // #page?key=value routing, so the browser back button and shared links work
 const readHash = () => {
@@ -143,7 +147,6 @@ export default function App() {
     setCallId: (id) => { live.reset(); setCallId(id) }, speed, setSpeed: (s) => { setSpeed(s); if (live.loaded) live.setRate(s) }, seek: live.loaded ? live.seek : null, startCall, stopCall: live.reset, running, listen, caps, onSaved,
   }
   const page = PAGES.find((p) => p.id === route.id)
-  const next = page && PAGES[PAGES.indexOf(page) + 1]
   const name = briefing?.building?.name || building?.name || 'Loading…'
   const address = briefing?.building?.address?.replace(/, [A-Z]{2}$/, '') || building?.address || ''
   const callBtn = running || listening
@@ -153,15 +156,48 @@ export default function App() {
   return (
     <div className="app">
       <header className="strip">
-        {route.id === 'home'
-          ? <><div className="sf" aria-label="Scanferno">SF</div><span className="bld">{name}<small>{address}</small></span></>
-          : <><button className="btn" onClick={() => go('home')}><Icon name="back" />Briefing</button>
-            <span className="crumb">{page?.group || 'Tools'} › <b>{page?.name || 'All tools'}</b></span><span className="bld dim">{name}</span></>}
-        {callBtn}
-        <div className="search-wrap"><AddressSearch current={building} onOpenBuilding={openBuilding} onOpenProperty={setProperty} /></div>
-        {route.id === 'home'
-          ? <nav className="tools ml">{TOOLS.map((t) => <button key={t} onClick={() => go(t)}>{PAGES.find((p) => p.id === t).name.replace('Aerial photos', 'Photos').replace('Floor plan', 'Plan')}</button>)}<button onClick={() => go('all')}>All</button></nav>
-          : next && <button className="btn f ml" onClick={() => go(next.id)}>Next: {next.name}<Icon name="arrow" /></button>}
+        <div className="strip-main">
+          <button className="brand-lockup" onClick={() => go('home')} aria-label="Scanferno briefing">
+            <span className="sf">SF</span><span className="bld">{name}<small>{address}</small></span>
+          </button>
+          {route.id !== 'home' && <span className="crumb">{page?.group || 'Tools'} › <b>{page?.name || 'All tools'}</b></span>}
+          {callBtn}
+          <div className="search-wrap"><AddressSearch current={building} onOpenBuilding={openBuilding} onOpenProperty={setProperty} /></div>
+        </div>
+        <nav className="feature-nav" aria-label="Application features">
+          <button type="button" className={`nav-home ${route.id === 'home' ? 'active' : ''}`} onClick={() => go('home')} aria-current={route.id === 'home' ? 'page' : undefined}>
+            <Icon name="brief" /><span>Briefing</span>
+          </button>
+          <div className="nav-groups">
+            {NAV_GROUPS.map((group) => {
+              const items = PAGES.filter((p) => p.group === group.name)
+              const active = items.some((p) => p.id === route.id)
+              return <details key={`${group.name}-${route.id}`} className={`nav-group ${active ? 'active' : ''}`}
+                onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget)) e.currentTarget.open = false }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Escape') {
+                    e.preventDefault()
+                    e.currentTarget.open = false
+                    e.currentTarget.querySelector('summary')?.focus()
+                  }
+                }}>
+                <summary><Icon name={group.icon} /><span>{group.name}</span><i>{items.length}</i></summary>
+                <div className="nav-menu" role="group" aria-label={`${group.name} features`}>
+                  {items.map((item) => (
+                    <button key={item.id} type="button" className={`nav-link ${item.id === route.id ? 'active' : ''} ${item.alert ? 'alert' : ''}`}
+                      aria-current={item.id === route.id ? 'page' : undefined}
+                      onClick={(e) => { e.currentTarget.closest('details').open = false; go(item.id) }}>
+                      <Icon name={item.id} /><span>{item.name}</span>{item.alert && <i className="nav-alert" aria-label="Priority tool" />}
+                    </button>
+                  ))}
+                </div>
+              </details>
+            })}
+          </div>
+          <button type="button" className={`nav-all ${route.id === 'all' ? 'active' : ''}`} onClick={() => go('all')} aria-current={route.id === 'all' ? 'page' : undefined}>
+            <Icon name="all" /><span>All tools</span>
+          </button>
+        </nav>
       </header>
 
       {source === 'replay' && live.loaded && <CallBar player={live} />}

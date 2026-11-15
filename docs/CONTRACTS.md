@@ -32,6 +32,8 @@ Updated live as the transcript grows. `side` uses fireground sides: A = street f
 
 Real records (from `dispatch/extract.py`) also carry: `cross_street`, `fire_location`, per-person `trapped[].location` / `confidence` / optional `room_match` (why a room was picked), and `changed` (fields that moved this update: highlight these in the UI).
 
+Live dispatch records may also carry `fire_locations` (the active caller-reported areas) and `fire_spread` (the latest fire-location statement explicitly reports spread). `fire_room_ids` resolves all active locations; a correction without spread replaces the prior area.
+
 **Real calls to build the UI against:** `GET /calls/vibe-1-clean` returns the script, `audio_url`, `utterances` and `timeline` ([{t, utterance_index, record}]). `GET /calls/{id}/replay` streams the same as server-sent events (`utterance`, `record`, `done`) in call time; start the audio when the stream opens. Files: `fixtures/calls/<id>/`.
 
 ## 3. costar.json (built from the CoStar kit by `data/costar.py`)
@@ -106,7 +108,14 @@ Sample: [fixtures/sample/briefing.json](../fixtures/sample/briefing.json)
   "briefing": {
     "...": "briefing.json with changes",
     "heat": {"minutes": 2.5, "spread_m": 7.8, "rooms": {"r-kitchen": {"danger": 0.82, "zone": "untenable"}}, "zones": {}},
-    "rescue": {"people": [{"id": "p1", "room_id": "...", "position": [0, 0], "entry": {"polyline": [], "text": "..."}, "extraction": {"polyline": [], "text": "..."}}]}
+    "rescue": {
+      "route_objective": "minimum modeled response time with fire-exposure penalties",
+      "people": [{
+        "id": "p1", "room_id": "...", "position": [0, 0],
+        "entry": {"polyline": [], "text": "..."}, "extraction": {"polyline": [], "text": "..."},
+        "recommended_route": {"entry": {}, "extraction": {}, "distance_m": 24.0, "time_s": 80, "same_exit": true}
+      }]
+    }
   },
   "building_match": {"query": "8866 Gulf Freeway", "hit": {"building_id": "costar-239873", "status": "ready", "score": 1.0}, "auto": true},
   "mayday": null,
@@ -117,3 +126,9 @@ Sample: [fixtures/sample/briefing.json](../fixtures/sample/briefing.json)
 ```
 
 `extracted` is false when the caller lines didn't change, so the record is the same as before. `mayday` is the section 5 response once someone says "mayday". `heat` / `rescue` are nested on every live/replay briefing once fire or trapped facts exist (`agent/live_geometry.py`); cell grids are omitted from live payloads. `building_match.auto` is true only for a ready hit with score ≥ 0.75 — the UI may `POST /live/sessions/{sid}/building` to rebind. `POST .../tick` recomputes heat with elapsed minutes. `POST .../save` returns `{call_id}`. That call then works with `/calls/{id}`, `/replay` and `/live` like a scripted one (`script.json` has `"kind": "live"`). `/calls/{id}/live` also emits `building_match` SSE events.
+
+The rescue planner recomputes each located person's entry and extraction options from the current dispatch record, fire-spread estimate, and floor-plan graph. `recommended_route` pairs the best estimated entry and exit, reporting their combined distance and estimated time. This is a risk-weighted graph calculation, not a language-model-generated path; modeled heat is not a sensor reading. The frontend may show all people, including those whose location has not matched to a scanned room yet.
+
+Rescue person `id` values are stable for the same normalized description across live transcript updates, so selected markers remain selected when a location changes. Live briefing `changes` may include `person_moved` or `fire_spread`; both trigger a map update, and fire spread includes the new room while retaining earlier active fire areas.
+
+`POST /live/sessions/{sid}/locations` accepts `{fire_room_id, people}`. Room ids must belong to the session building's floor plan. `people` entries are `{description, room_id, manual}`: `manual: false` overrides a transcript-detected person's room; `manual: true` adds a person. These assignments take priority over later transcript extraction until cleared by sending `fire_room_id: null` and/or removing a person entry. Each response includes `location_overrides`; dispatch people identify their location source as `manual` or `transcription`.

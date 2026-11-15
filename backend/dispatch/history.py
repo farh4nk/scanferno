@@ -14,7 +14,7 @@ def _empty(v) -> bool:
 
 def _values(record: dict) -> dict:
     out = {f: record.get(f) for f in FIELDS}
-    out["trapped"] = [t.get("location") or t.get("description") for t in record.get("trapped") or []]
+    out["trapped"] = [t.get("location") or t.get("near") or t.get("description") for t in record.get("trapped") or []]
     return out
 
 
@@ -31,7 +31,8 @@ def track(state: dict, record: dict, t: float) -> dict:
         if _empty(value):
             continue
         old = last.get(field)
-        if old is not None and old != value and _is_correction(old, value):
+        spread_addition = field == "fire_location" and record.get("fire_spread")
+        if old is not None and old != value and _is_correction(old, value) and not spread_addition:
             corrections.setdefault(field, []).append({"from": old, "to": value, "t": t})
         last[field] = value
     return corrections
