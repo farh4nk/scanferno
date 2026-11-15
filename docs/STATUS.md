@@ -86,6 +86,7 @@ Living handoff doc. Update your role's section and add a changelog line in the s
 **Unblocked by:** aerial images at `/fixtures/<id>/vexcel/*.jpg`, calls at `/calls/{id}` and `/calls/{id}/replay` (SSE), sample briefing at `fixtures/sample/briefing.json`.
 
 ## Changelog
+- 2026-11-15: Floor plan room click routes around the fire, with a Way out box (clear, rerouted, blocked, on fire).
 - 2026-11-15: Annotated aerial photos (sides, fire side, staging, entrances) for Vibe Hobby; front photo now shows the actual front wall.
 - 2026-11-14: Ion 3D hang fix: reuse floorplan.json, skip ondemand rebuild on cache hit, mark onboarded buildings ready in search.
 
