@@ -1,0 +1,72 @@
+{
+  "text": "Search: Charlie side door, Hallway A. Attack: 62 feet, preconnect. Caution: oxygen cylinders.",
+  "voice": "briefing",
+  "audio_url": "/fixtures/tts/3398a19e681ef6d4.mp3",
+  "words": [
+    {
+      "word": "Search:",
+      "start": 0.023,
+      "end": 0.464
+    },
+    {
+      "word": "Charlie",
+      "start": 0.569,
+      "end": 0.848
+    },
+    {
+      "word": "side",
+      "start": 0.906,
+      "end": 1.137
+    },
+    {
+      "word": "door,",
+      "start": 1.161,
+      "end": 1.52
+    },
+    {
+      "word": "Hallway",
+      "start": 1.555,
+      "end": 1.985
+    },
+    {
+      "word": "A.",
+      "start": 2.066,
+      "end": 2.414
+    },
+    {
+      "word": "Attack:",
+      "start": 2.623,
+      "end": 3.158
+    },
+    {
+      "word": "62",
+      "start": 3.25,
+      "end": 3.75
+    },
+    {
+      "word": "feet,",
+      "start": 3.784,
+      "end": 4.098
+    },
+    {
+      "word": "preconnect.",
+      "start": 4.156,
+      "end": 4.841
+    },
+    {
+      "word": "Caution:",
+      "start": 4.98,
+      "end": 5.503
+    },
+    {
+      "word": "oxygen",
+      "start": 5.596,
+      "end": 6.06
+    },
+    {
+      "word": "cylinders.",
+      "start": 6.13,
+      "end": 6.71
+    }
+  ]
+}

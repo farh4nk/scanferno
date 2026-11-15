@@ -33,8 +33,12 @@ function between(pts, from, to) {
 const pointAt = (pts, d) => { const p = between(pts, d, d + 1e-6); return p[0] || pts[pts.length - 1] }
 const fmt = (m) => `${Math.round(m)} m`
 
-export default function PathSim({ k, building, plan, briefing, onClose }) {
-  const rooms = useMemo(() => k.plan_.map((s) => s.room_id), [k.plan_])
+export default function PathSim({ k, building, plan, briefing, onClose, mode = 'target' }) {
+  const total = mode === 'total'
+  // the run is just the way in to the person to save (or the top search room when nobody is located)
+  const target = k.victim || k.plan_[0]?.room_id
+  const planIds = k.plan_.map((x) => x.room_id).join()
+  const rooms = useMemo(() => (total ? planIds.split(',').filter(Boolean) : target ? [target] : []), [total, target, planIds])
   const fire = k.fireIds
   const [entry, setEntry] = useState(null)
   const [sim, setSim] = useState(null)
@@ -51,11 +55,11 @@ export default function PathSim({ k, building, plan, briefing, onClose }) {
     if (!rooms.length) return undefined
     let alive = true
     setErr(null)
-    getSimulation(building.id, rooms, { entry: entry || k.search?.door_id || undefined, avoid: fire })
+    getSimulation(building.id, rooms, { entry: entry || k.search?.door_id || undefined, avoid: fire, })
       .then((r) => { if (!alive) return; setSim(r); sRef.current = 0; dwell.current = 0; setS(0); setPlaying(true) })
       .catch((e) => alive && setErr(e.message))
     return () => { alive = false }
-  }, [building.id, rooms.join(), entry, fire.join()]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [building.id, rooms.join(), entry, fire.join(), total]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // the 2D animation: walk the polyline, stop in each room for a moment
   useEffect(() => {
@@ -97,7 +101,7 @@ export default function PathSim({ k, building, plan, briefing, onClose }) {
   const finished = s >= sim.total_m
   const tags = [
     { at: sim.entry.position, dy: 44, text: `ENTER · SIDE ${sim.entry.side}`, cls: 'f' },
-    { at: sim.exit.position, dy: -44, text: `EXIT · SIDE ${sim.exit.side}`, cls: 'f' },
+    ...(sim.exit ? [{ at: sim.exit.position, dy: -44, text: `EXIT · SIDE ${sim.exit.side}`, cls: 'f' }] : []),
   ]
   const jumpTo = (d) => { setPlaying(false); seek(d) }
 
@@ -115,7 +119,7 @@ export default function PathSim({ k, building, plan, briefing, onClose }) {
         </div>
         {view === '2d' && (
           <div className={`simbar ${phase}`}>
-            <div className="simcap" aria-live="polite"><span className="simphase">{phase === 'in' ? 'In' : phase === 'out' ? 'Out' : `Room ${here?.order ?? nextStop?.order ?? sim.stops.length} of ${sim.stops.length}`}</span>{caption}</div>
+            <div className="simcap" aria-live="polite"><span className="simphase">{phase === 'in' ? 'In' : phase === 'out' ? 'Out' : total ? `Room ${here?.order ?? nextStop?.order ?? sim.stops.length} of ${sim.stops.length}` : 'There'}</span>{caption}</div>
             <input className="simscrub" type="range" min={0} max={sim.total_m} step={0.1} value={s} aria-label="Position along the run"
               onChange={(e) => jumpTo(+e.target.value)} />
             <div className="tour-ctl">
@@ -133,18 +137,24 @@ export default function PathSim({ k, building, plan, briefing, onClose }) {
       </div>
       <div className="side" id="side-panel">
         <div className="sign"><div>
-          <small>Path simulation</small>
-          <div className="big">{sim.rooms.length} rooms · {fmt(sim.total_m)}</div>
-          <div className="sub">in {fmt(sim.in_m)} · search {fmt(sim.search_m)} · out {fmt(sim.out_m)}</div>
+          {total ? <>
+            <small>Total path</small>
+            <div className="big">{sim.rooms.length} rooms · {fmt(sim.total_m)}</div>
+            <div className="sub">in {fmt(sim.in_m)} · search {fmt(sim.search_m)} · out {fmt(sim.out_m)}</div>
+          </> : <>
+            <small>Path to target</small>
+            <div className="big">{sim.stops[0].label} · {fmt(sim.total_m)}</div>
+            <div className="sub">in {fmt(sim.in_m)} · out {fmt(sim.out_m)}</div>
+          </>}
         </div></div>
         <div className="card">
-          <h3>Enter by <span>the way out is the nearest exit to the last room</span></h3>
+          <h3>Enter by <span>{total ? 'the way out is the nearest exit to the last room' : 'the way out is the nearest exit to the target'}</span></h3>
           <select className="sel" style={{ margin: 0 }} value={sim.entry.door_id} onChange={(e) => setEntry(e.target.value)} aria-label="Entry door">
-            {sim.entries.map((e) => <option key={e.door_id} value={e.door_id}>Side {e.side} door · {fmt(e.distance_m)} to the first room</option>)}
+            {sim.entries.map((e) => <option key={e.door_id} value={e.door_id}>Side {e.side} door · {fmt(e.distance_m)} to the {total ? 'first ' : ''}room</option>)}
           </select>
         </div>
         <div className="card simlist">
-          <h3>Rooms in order <span>tap to jump</span></h3>
+          <h3>{total ? 'Rooms in order' : 'Target'} <span>tap to jump</span></h3>
           {sim.stops.map((st) => {
             const state = checked.has(st.room_id) ? 'done' : here?.room_id === st.room_id ? 'now' : ''
             const why = k.plan_.find((p) => p.room_id === st.room_id)?.reason
@@ -154,9 +164,11 @@ export default function PathSim({ k, building, plan, briefing, onClose }) {
               </button>
             )
           })}
-          <button className={`simrow exit ${finished ? 'now' : ''}`} onClick={() => jumpTo(sim.total_m)}>
-            <i><Icon name="arrow" /></i><div><b>Exit plan</b><small>Side {sim.exit.side} door, {fmt(sim.out_m)} from {sim.stops.at(-1).label}</small></div><span>{fmt(sim.total_m)}</span>
-          </button>
+          {sim.exit && (
+            <button className={`simrow exit ${finished ? 'now' : ''}`} onClick={() => jumpTo(sim.total_m)}>
+              <i><Icon name="arrow" /></i><div><b>Exit plan</b><small>Side {sim.exit.side} door, {fmt(sim.out_m)} from {sim.stops.at(-1).label}</small></div><span>{fmt(sim.total_m)}</span>
+            </button>
+          )}
         </div>
         <button className="btn wide" style={{ flex: 'none' }} onClick={onClose}>Close simulation</button>
       </div>

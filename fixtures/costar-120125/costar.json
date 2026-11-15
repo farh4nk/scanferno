@@ -1,0 +1,19 @@
+{
+  "costar_property_id": 120125,
+  "building_name": "The Granada Buildings",
+  "address": "672 La Fayette Park Pl, Los Angeles, CA",
+  "lat": 34.0603131,
+  "lon": -118.2836021,
+  "property_type": "Office",
+  "stories": 4,
+  "current_tenant_count": 8,
+  "tenants": [],
+  "matterport_model_ids": [
+    "QC6ELeM7EtZ",
+    "DzDwPd5j7gR",
+    "KtK1GN87oX5",
+    "5t632etbD5v",
+    "jBdzc5ZwCzJ",
+    "5LSByZUGBkU"
+  ]
+}

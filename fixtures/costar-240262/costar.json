@@ -1,0 +1,15 @@
+{
+  "costar_property_id": 240262,
+  "building_name": "Greenbriar Atrium I",
+  "address": "16630 Imperial Valley Dr, Houston, TX",
+  "lat": 29.9415732,
+  "lon": -95.3954711,
+  "property_type": "Office",
+  "stories": 2,
+  "current_tenant_count": 20,
+  "tenants": [],
+  "matterport_model_ids": [
+    "cvcUKq4RNH4",
+    "Qo8RAcWhyaG"
+  ]
+}
