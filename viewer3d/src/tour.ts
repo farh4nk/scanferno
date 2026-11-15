@@ -10,20 +10,25 @@
  * along it, preferring sweeps in the same room so the camera never hops through a wall, then fly from
  * sweep to sweep facing down the route. The route is drawn into the `tour` layer; captions come from the
  * clip's steps and are reported through `onChange`.
+ *
+ * A path simulation clip also lists `segments`: each walking leg and the room it ends inside. Legs are flown as
+ * above, and each one finishes on a sweep inside its room, looking across it, so every room is entered.
+ * Nothing else is done inside a room.
  */
-import { nearestAlong, pathLength, pointAlong } from './draw/paths'
+import { pathLength, pointAlong } from './draw/paths'
 import type { Overlay } from './overlay'
 import { roomAt } from './picking'
 import type { Showcase } from './showcase'
-import type { Floorplan, TourClip, XY } from './types'
+import type { Floorplan, TourClip, TourSegment, XY } from './types'
 import { sweeps } from './walk'
 
-/** A camera stop: stand on `sweepId`, `s` meters along the route, looking at `look`. */
+/** A camera stop: stand on `sweepId`, `s` meters along the route, looking at `look`, staying `hold` ms. */
 export interface Shot {
   sweepId: string
   s: number
   at: XY
   look: XY
+  hold?: number
 }
 
 export type TourState = 'idle' | 'loading' | 'playing' | 'paused' | 'done' | 'error'
@@ -53,33 +58,62 @@ export interface TourPlayer {
   onChange(cb: (e: TourEvent) => void): () => void
 }
 
-const SAMPLE_M = 1.5
+const SAMPLE_M = 2
 const MAX_SNAP_M = 4
 const OTHER_ROOM_PENALTY_M = 3
 const LOOK_AHEAD_M = 3.5
-const WALK_MPS = 2.4
-const COLORS = { in: '#38bdf8', out: '#22c55e' }
+const WALK_MPS = 3
+const COLORS: Record<TourClip['kind'], string> = { in: '#38bdf8', out: '#22c55e', search: '#ff7a1a' }
+
+const NEAR_ROOM_M = 5 // a room with no sweep inside borrows the nearest one this close
+const INSIDE_HOLD_MS = 700 // pause inside the room, looking across it
+
+interface Stop {
+  id: string
+  at: XY
+  /** Smallest floor plan room containing the sweep. */
+  room: string | null
+  /** Matterport's own room tag for the sweep. */
+  mp: string | null
+}
+
+const dist = (a: XY, b: XY) => Math.hypot(a[0] - b[0], a[1] - b[1])
 
 /** Camera stops along a clip, in order. Empty if the model has no usable sweeps near the route. */
 export async function planShots(showcase: Showcase, overlay: Overlay, fp: Floorplan, clip: TourClip): Promise<Shot[]> {
   const all = await sweeps(showcase)
-  const stops = all.map((sw) => {
+  const stops: Stop[] = all.map((sw) => {
     const at = overlay.toLocal(sw.position)
-    return { id: sw.id, at, room: roomAt(fp, at)?.id ?? null }
+    return { id: sw.id, at, room: roomAt(fp, at)?.id ?? null, mp: sw.roomInfo?.id ?? null }
   })
-  const line = clip.polyline
+  if (!clip.segments?.length) return walkShots(stops, fp, clip.polyline, 0, pathLength(clip.polyline), [])
+  const shots: Shot[] = []
+  for (const seg of clip.segments) {
+    shots.push(...walkShots(stops, fp, seg.polyline, seg.start_m, seg.end_m, shots))
+    const inside = seg.room_id ? insideShot(stops, fp, seg) : null
+    if (!inside) continue
+    // the walk usually ends on this very sweep already; then it just turns to look across the room
+    const last = shots[shots.length - 1]
+    if (last?.sweepId === inside.sweepId) Object.assign(last, { s: inside.s, look: inside.look, hold: inside.hold })
+    else shots.push(inside)
+  }
+  return shots
+}
+
+/** Stops along a stretch that is walked through: the nearest sweep every SAMPLE_M, in the same room where possible. */
+function walkShots(stops: Stop[], fp: Floorplan, line: XY[], offset: number, end: number, prior: Shot[]): Shot[] {
   const total = pathLength(line)
   const n = Math.max(1, Math.ceil(total / SAMPLE_M))
-  const shots: Shot[] = []
+  const out: Shot[] = []
   let room: string | null = null
-  let lastS = -Infinity
+  let lastId = prior[prior.length - 1]?.sweepId
   for (let i = 0; i <= n; i++) {
     const p = pointAlong(line, (total * i) / n)
     room = roomAt(fp, p)?.id ?? room
-    let best: (typeof stops)[number] | null = null
+    let best: Stop | null = null
     let bestScore = Infinity
     for (const c of stops) {
-      const d = Math.hypot(c.at[0] - p[0], c.at[1] - p[1])
+      const d = dist(c.at, p)
       const score = d + (room && c.room !== room ? OTHER_ROOM_PENALTY_M : 0)
       if (d <= MAX_SNAP_M && score < bestScore) {
         best = c
@@ -87,13 +121,33 @@ export async function planShots(showcase: Showcase, overlay: Overlay, fp: Floorp
       }
     }
     if (!best) continue
-    const s = nearestAlong(line, best.at)
-    // each stop must be a new sweep further along the route, or the camera would shuffle back and forth
-    if (shots.length && (best.id === shots[shots.length - 1].sweepId || s <= lastS + 0.3)) continue
-    shots.push({ sweepId: best.id, s, at: best.at, look: pointAlong(line, Math.min(total, s + LOOK_AHEAD_M)) })
-    lastS = s
+    // progress is where along the leg this sample is, not a projection of the sweep onto the line:
+    // a leg that goes into a room and back out the same door passes the same spot twice
+    const local = (total * i) / n
+    if (best.id === lastId) continue
+    out.push({ sweepId: best.id, s: Math.min(end, offset + local), at: best.at, look: pointAlong(line, Math.min(total, local + LOOK_AHEAD_M)) })
+    lastId = best.id
   }
-  return shots
+  return out
+}
+
+/**
+ * The stop that counts as having been inside a room: a sweep in it (Matterport's room tag, then inside the
+ * polygon, then the nearest one close by), the one nearest where the leg ends, looking at the far side of the
+ * room from the way in. Null if the model has no sweep there.
+ */
+function insideShot(stops: Stop[], fp: Floorplan, seg: TourSegment): Shot | null {
+  const room = fp.rooms.find((r) => r.id === seg.room_id)
+  if (!room) return null
+  const end = seg.polyline[seg.polyline.length - 1]
+  const nearest = (xs: Stop[]) => [...xs].sort((a, b) => dist(a.at, end) - dist(b.at, end))[0]
+  const inRoom = stops.filter((c) => c.room === room.id || (!!room.matterport_id && c.mp === room.matterport_id))
+  const near = nearest(stops)
+  const pick = nearest(inRoom) ?? (near && dist(near.at, end) <= NEAR_ROOM_M ? near : undefined)
+  if (!pick) return null
+  const cameFrom = seg.polyline[seg.polyline.length - 2] ?? end
+  const far = room.polygon.reduce((best, v) => (dist(v, cameFrom) > dist(best, cameFrom) ? v : best), room.centroid)
+  return { sweepId: pick.id, s: seg.end_m, at: pick.at, look: far, hold: INSIDE_HOLD_MS }
 }
 
 /** Index of the caption to show when the camera is `s` meters along (the next step within reach). */
@@ -140,11 +194,24 @@ export function tourPlayer(showcase: Showcase, overlay: Overlay, fp: Floorplan, 
     })
     const first = clip.polyline[0]
     const last = clip.polyline[clip.polyline.length - 1]
-    const door = clip.kind === 'in' ? first : last
+    const sideOf = (text?: string) => text?.match(/side (\w)/)?.[1]
+    const door = (at: XY, word: string, side?: string) => {
+      layer.marker(at, { shape: 'pillar', radius: 0.25, size: 2.2, color: '#22c55e', opacity: 0.5, xray: true })
+      layer.label(at, `${word}${side ? ` · side ${side}` : ''}`, { height: 2.6, color: '#bbf7d0', size: 0.3 })
+    }
+    if (clip.kind === 'search') {
+      // a whole run: entry at the start, a numbered marker per room, exit at the end
+      door(first, 'ENTRY', sideOf(clip.steps[0]?.text))
+      door(last, 'EXIT', sideOf(clip.steps[clip.steps.length - 1]?.text))
+      for (const st of clip.stops ?? []) {
+        layer.marker(st.xy, { shape: 'ring', radius: 0.5, color: '#ffffff', opacity: 0.85, xray: true })
+        layer.label(st.xy, st.label, { height: 2.2, color: '#ffffff', size: 0.42 })
+      }
+      return
+    }
+    const doorPt = clip.kind === 'in' ? first : last
     const room = clip.kind === 'in' ? last : first
-    const doorSide = clip.steps.find((s) => s.door_id === clip.door_id)?.text.match(/side (\w)/)?.[1]
-    layer.marker(door, { shape: 'pillar', radius: 0.25, size: 2.2, color: '#22c55e', opacity: 0.5, xray: true })
-    layer.label(door, `${clip.kind === 'in' ? 'ENTRY' : 'EXIT'}${doorSide ? ` · side ${doorSide}` : ''}`, { height: 2.6, color: '#bbf7d0', size: 0.3 })
+    door(doorPt, clip.kind === 'in' ? 'ENTRY' : 'EXIT', sideOf(clip.steps.find((s) => s.door_id === clip.door_id)?.text))
     layer.marker(room, { shape: 'cone', radius: 0.3, size: 0.8, height: 1.4, color: '#ef4444', xray: true })
     layer.label(room, 'TARGET', { height: 2.6, color: '#fecaca', size: 0.3 })
   }
@@ -196,17 +263,24 @@ export function tourPlayer(showcase: Showcase, overlay: Overlay, fp: Floorplan, 
         if (paused) await paused
         if (mine !== run) return
         const sh = shots[i]
-        const w = overlay.toWorld(sh.look)
-        const sw = overlay.toWorld(sh.at)
-        const dx = w.x - sw.x
-        const dz = w.z - sw.z
-        if (Math.hypot(dx, dz) > 0.5) yaw = (Math.atan2(-dx, -dz) * 180) / Math.PI
-        progress = total > 0 ? Math.min(1, sh.s / total) : 1
-        step = stepAt(clip, sh.s)
-        drawNext(step)
-        emit()
+        // face a floor plan point from a floor plan point; keeps the last heading if they are on top of each other
+        const face = (at: XY, look: XY) => {
+          const w = overlay.toWorld(look)
+          const sw = overlay.toWorld(at)
+          const dx = w.x - sw.x
+          const dz = w.z - sw.z
+          if (Math.hypot(dx, dz) > 0.3) yaw = (Math.atan2(-dx, -dz) * 180) / Math.PI
+        }
+        const show = (s: number) => {
+          progress = total > 0 ? Math.min(1, s / total) : 1
+          step = stepAt(clip, s)
+          drawNext(step)
+          emit()
+        }
+        face(sh.at, sh.look)
+        show(sh.s)
         const hop = from ? Math.hypot(sh.at[0] - from[0], sh.at[1] - from[1]) : 6
-        const ms = Math.max(650, Math.min(2600, ((hop / WALK_MPS) * 1000) / speed))
+        const ms = hop < 0.2 ? 450 / speed : Math.max(550, Math.min(2200, ((hop / WALK_MPS) * 1000) / speed))
         try {
           await sdk.Sweep.moveTo(sh.sweepId, { rotation: { x: -6, y: yaw }, transition: sdk.Camera.TransitionType.FLY, transitionTime: ms })
         } catch (e) {
@@ -215,7 +289,7 @@ export function tourPlayer(showcase: Showcase, overlay: Overlay, fp: Floorplan, 
           return
         }
         from = sh.at
-        await sleep(180 / speed)
+        await sleep((sh.hold ?? 120) / speed)
       }
       if (mine !== run) return
       progress = 1

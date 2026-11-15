@@ -1,0 +1,46 @@
+{
+  "building_id": "costar-350372",
+  "title": "Bellaire Medical: older patient with a walker in the big open area, far from the exits",
+  "lines": [
+    {
+      "role": "dispatcher",
+      "text": "911, what is the address of your emergency?"
+    },
+    {
+      "role": "caller",
+      "emotion": "panicked",
+      "text": "Sixty five fifty Mapleridge Street, the medical building in Bellaire. There's smoke coming from the back hallway near the rear door."
+    },
+    {
+      "role": "dispatcher",
+      "text": "Is everyone out?"
+    },
+    {
+      "role": "caller",
+      "emotion": "crying",
+      "text": "No, there's an older man with a walker still in the big open area in the middle of the building. He's confused and he can't find the way out."
+    },
+    {
+      "role": "dispatcher",
+      "text": "Can he walk on his own?"
+    },
+    {
+      "role": "caller",
+      "emotion": "panicked",
+      "text": "Very slowly, only with the walker. I can't get to him, the smoke is in the way."
+    },
+    {
+      "role": "dispatcher",
+      "text": "Is anyone else with him?"
+    },
+    {
+      "role": "caller",
+      "emotion": "crying",
+      "text": "No, just him. Please hurry."
+    },
+    {
+      "role": "dispatcher",
+      "text": "Stay where you are. Help is on the way."
+    }
+  ]
+}

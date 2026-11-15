@@ -6,6 +6,7 @@ import { SIDE_NAME, STEPS, hazardName, stepScript } from './model'
 import { DeadEndPict, DistScale, EnterPict, ExitBars, ExitPict, FirePict, HoseGauge, Ring, SearchChain, Section, TrappedPict, WatchPict } from './Diagrams'
 import Icon from '../ui/Icon'
 import Viewer3D from '../components/Viewer3D'
+import PathSim from './PathSim'
 import { prepareInOrder, speak } from '../ui/speech'
 
 function KeyBand({ k, step }) {
@@ -119,6 +120,10 @@ export default function Home({ k, plan, briefing, feed, go, building }) {
   const [flash, setFlash] = useState(null)
   const live = ['live', 'connecting', 'paused'].includes(feed.status)
   const [narrating, setNarrating] = useState(false)
+  const [sim, setSim] = useState(false)
+  // the right-hand panel can fold away so the plan or 3D model gets the whole width; remembered per browser
+  const [sideOpen, setSideOpen] = useState(() => { try { return localStorage.getItem('scanferno.sideOpen') !== '0' } catch { return true } })
+  const toggleSide = () => setSideOpen((v) => { try { localStorage.setItem('scanferno.sideOpen', v ? '0' : '1') } catch { /* storage unavailable */ } return !v })
   const [reading, setReading] = useState(false)
   const [caption, setCaption] = useState(null)
   const alive = useRef(false)
@@ -144,7 +149,7 @@ export default function Home({ k, plan, briefing, feed, go, building }) {
     })
   }
   const begin = (i) => {
-    halt(); setVoiceErr(null); setFollow(false); alive.current = true; setNarrating(true)
+    halt(); setVoiceErr(null); setFollow(false); setSim(false); alive.current = true; setNarrating(true)
     const from = Math.max(0, Math.min(STEPS.length - 1, i))
     // the step about to play first, then the rest in order, one request at a time
     prepareInOrder([...STEPS.keys()].slice(from).concat([...STEPS.keys()].slice(0, from)).map((j) => stepScript(k, j)), 'briefing')
@@ -162,7 +167,7 @@ export default function Home({ k, plan, briefing, feed, go, building }) {
     return () => clearTimeout(t)
   }, [scripts, feed.status])
   useEffect(() => {
-    const onKey = (e) => { if (/^[1-4]$/.test(e.key) && !e.target.closest('input,textarea,select')) { stop(); setFollow(false); setStep(+e.key - 1) } }
+    const onKey = (e) => { if (/^[1-4]$/.test(e.key) && !e.target.closest('input,textarea,select')) { stop(); setFollow(false); setSim(false); setStep(+e.key - 1) } }
     window.addEventListener('keydown', onKey); return () => window.removeEventListener('keydown', onKey)
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -187,8 +192,12 @@ export default function Home({ k, plan, briefing, feed, go, building }) {
   const o = { ...(livePlan ? liveOverlay(k) : attackPlan(k, step)), flash: flash?.ids || [] }
   const last = feed.utterances.at(-1)
   return (
-    <div className="page brief">
+    <div className={`page brief ${sideOpen ? '' : 'noside'}`}>
       <KeyBand k={k} step={step} />
+      <button className="sidetoggle" onClick={toggleSide} aria-expanded={sideOpen} aria-controls="side-panel" title={sideOpen ? 'Hide the side panel' : 'Show the side panel'}>
+        <span aria-hidden="true">{sideOpen ? '›' : '‹'}</span>{sideOpen ? 'Hide panel' : 'Show panel'}
+      </button>
+      {sim ? <PathSim k={k} building={building} plan={plan} briefing={briefing} onClose={() => setSim(false)} /> : <>
       <div className="stage panel">
         {livePlan && <button className="livebadge" onClick={() => setFollow(false)} title="Click a step to take over"><span className="dotlive" />Live · the plan updates as the caller talks</button>}
         {live && !follow && <button className="livebadge off" onClick={() => setFollow(true)}><span className="dotlive" />Back to live</button>}
@@ -213,7 +222,7 @@ export default function Home({ k, plan, briefing, feed, go, building }) {
           <div className="ticker"><span className="dotlive" /><b>{last?.role || 'call'}</b>{last?.text || 'Connecting…'}</div>
         ) : null}
       </div>
-      <div className="side" key={`${step}-${reading}`}>
+      <div className="side" id="side-panel" key={`${step}-${reading}`}>
         {reading ? (
           <div className="readp"><h2>Briefing <span>tap a step to show it on the plan</span></h2>
             {STEPS.map((s, i) => (
@@ -224,13 +233,15 @@ export default function Home({ k, plan, briefing, feed, go, building }) {
           </div>
         ) : <StepPanel k={k} step={step} briefing={briefing} go={go} />}
       </div>
+      </>}
       <div className="stepper">
         {STEPS.map((s, i) => (
-          <button key={s} className={`stp ${!livePlan && i === step ? 'on' : ''} ${!livePlan && i < step ? 'past' : ''}`} onClick={() => { if (narrating) jump(i); else { stop(); setFollow(false); setStep(i) } }}><i>{i + 1}</i>{s}</button>
+          <button key={s} className={`stp ${!livePlan && i === step ? 'on' : ''} ${!livePlan && i < step ? 'past' : ''}`} onClick={() => { setSim(false); if (narrating) jump(i); else { stop(); setFollow(false); setStep(i) } }}><i>{i + 1}</i>{s}</button>
         ))}
         {narrating && <button className="btn play skip" onClick={() => jump(step - 1)} disabled={step === 0} aria-label="Previous step"><Icon name="prev" /></button>}
         {narrating && <button className="btn play skip" onClick={() => jump(step + 1)} disabled={step === STEPS.length - 1} aria-label="Next step"><Icon name="next" /></button>}
         <button className="btn f play" onClick={toggle}><Icon name={narrating ? 'pause' : 'speak'} />{narrating ? 'Stop' : 'Play'}</button>
+        <button className={`btn play ${sim ? 'on' : ''}`} onClick={() => { stop(); setReading(false); setSim((v) => !v) }} disabled={!k.plan_.length} title="Animate the whole search: every room in order, then the way out"><Icon name="route" />Path simulation</button>
         <button className={`btn play ${reading ? 'on' : ''}`} onClick={() => setReading((r) => !r)}><Icon name="facts" />{reading ? 'Close text' : 'Read'}</button>
       </div>
     </div>

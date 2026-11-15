@@ -248,10 +248,6 @@ svg.mi { width: 22px; height: 22px; } .ip { fill: var(--white); } .iad { fill: v
 .sr-item mark { background: rgba(255, 90, 31, .3); color: inherit; border-radius: 2px; }
 .sr-status { flex: none; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; padding: 2px 6px; border-radius: 4px; margin-top: 2px; background: var(--road2); color: var(--dim); }
 .sr-status.ready { background: var(--fire); color: var(--ink); }
-.sr-filters { position: sticky; top: -6px; z-index: 1; background: var(--road); margin: -6px -6px 4px; padding: 8px; border-bottom: 1px solid var(--rule); }
-.sr-frow { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 4px; } .sr-frow:empty { display: none; }
-.sr-chip { height: 30px; font-size: 13px; } .sr-chip:disabled { opacity: .35; } .sr-count { font-size: 11px; color: var(--dim); } .sr-chip.on .sr-count { color: inherit; }
-.sr-clear { border-style: dashed; }
 
 /* ---------- property card ---------- */
 .modal-bg { position: fixed; inset: 0; z-index: 30; background: rgba(10, 6, 5, .75); display: grid; place-items: center; padding: 20px; }
@@ -331,3 +327,29 @@ svg.mi { width: 22px; height: 22px; } .ip { fill: var(--white); } .iad { fill: v
 .tourpick { display: flex; flex-direction: column; gap: 8px; margin: 14px 0; padding-top: 12px; border-top: 1px solid var(--rule); }
 .tourpick .btns { display: flex; gap: 8px; } .tourpick .btns .btn { flex: 1; height: 44px; }
 .tourpick .btn small { font-weight: 600; opacity: .75; }
+
+/* path simulation */
+.rm.chk:not(.hf):not(.victim) { fill: #15301f; stroke: #3f8f5f; } .ord.chk circle { fill: #7dffb3; }
+.simplan .ag { transition: none; stroke: var(--fire); stroke-width: 4; }
+.simbar { flex: none; display: flex; flex-direction: column; gap: 8px; padding: 10px 6px 4px; }
+.simcap { font-size: 20px; font-weight: 800; line-height: 1.25; min-height: 2.5em; } .simphase { display: inline-block; margin-right: 10px; padding: 2px 10px; border-radius: 6px; background: var(--fire); color: var(--ink); font-size: 13px; text-transform: uppercase; letter-spacing: .08em; vertical-align: 2px; }
+.simbar.in .simphase { background: #4dd0ff; } .simbar.out .simphase { background: #7dffb3; }
+.simscrub { width: 100%; accent-color: var(--fire); height: 24px; margin: 0; }
+.simbar .tour-ctl button { height: 44px; min-width: 44px; }
+.simlist { display: flex; flex-direction: column; gap: 4px; overflow: auto; min-height: 0; flex: 1; }
+.simrow { display: flex; align-items: center; gap: 12px; padding: 8px 10px; border-radius: 8px; text-align: left; background: none; width: 100%; }
+.simrow:hover { background: var(--road2); } .simrow.now { background: #2e1d16; box-shadow: inset 0 0 0 2px var(--fire); }
+.simrow i { flex: none; width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--dim); display: grid; place-items: center; font-style: normal; font-weight: 800; font-size: 14px; }
+.simrow i svg { width: 16px; height: 16px; }
+.simrow.done i { background: #7dffb3; border-color: #7dffb3; color: var(--ink); } .simrow.now i { background: var(--fire); border-color: var(--fire); color: var(--ink); }
+.simrow.fire i { border-color: var(--red); } .simrow.exit i { border-color: #7dffb3; }
+.simrow div { flex: 1; min-width: 0; } .simrow b { display: block; font-size: 16px; } .simrow small { display: block; color: var(--dim); font-size: 12px; font-weight: 600; }
+.simrow > span { flex: none; color: var(--dim); font-weight: 700; font-size: 13px; }
+.tour-bar.search { border-color: var(--fire); } .tour-bar.search .tour-prog i { background: var(--fire); }
+
+/* collapsible side panel on the briefing page */
+.brief { position: relative; }
+.brief.noside { grid-template-columns: 1fr; } .brief.noside .side { display: none; } .brief.noside .stepper { grid-column: 1 / -1; }
+.sidetoggle { position: absolute; z-index: 6; top: 50%; right: 466px; transform: translateY(-50%); display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 12px 0 10px; border-radius: 22px; background: var(--night); border: 2px solid var(--rule); color: var(--white); font-size: 13px; font-weight: 800; }
+.sidetoggle span { font-size: 22px; line-height: 1; } .sidetoggle:hover { border-color: var(--fire); }
+.brief.noside .sidetoggle { right: 12px; }

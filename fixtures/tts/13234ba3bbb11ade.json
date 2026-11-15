@@ -1,0 +1,97 @@
+{
+  "text": "Two exits, Alpha and Charlie. Office 123, dead end. If lost, call a mayday and follow the wall.",
+  "voice": "briefing",
+  "audio_url": "/fixtures/tts/13234ba3bbb11ade.mp3",
+  "words": [
+    {
+      "word": "Two",
+      "start": 0.023,
+      "end": 0.139
+    },
+    {
+      "word": "exits,",
+      "start": 0.209,
+      "end": 0.929
+    },
+    {
+      "word": "Alpha",
+      "start": 1.022,
+      "end": 1.405
+    },
+    {
+      "word": "and",
+      "start": 1.614,
+      "end": 1.742
+    },
+    {
+      "word": "Charlie.",
+      "start": 1.811,
+      "end": 2.311
+    },
+    {
+      "word": "Office",
+      "start": 2.682,
+      "end": 3.019
+    },
+    {
+      "word": "123,",
+      "start": 3.065,
+      "end": 3.797
+    },
+    {
+      "word": "dead",
+      "start": 3.855,
+      "end": 4.017
+    },
+    {
+      "word": "end.",
+      "start": 4.064,
+      "end": 4.412
+    },
+    {
+      "word": "If",
+      "start": 4.911,
+      "end": 5.051
+    },
+    {
+      "word": "lost,",
+      "start": 5.12,
+      "end": 5.573
+    },
+    {
+      "word": "call",
+      "start": 5.782,
+      "end": 5.956
+    },
+    {
+      "word": "a",
+      "start": 5.991,
+      "end": 6.014
+    },
+    {
+      "word": "mayday",
+      "start": 6.061,
+      "end": 6.374
+    },
+    {
+      "word": "and",
+      "start": 6.421,
+      "end": 6.49
+    },
+    {
+      "word": "follow",
+      "start": 6.56,
+      "end": 6.769
+    },
+    {
+      "word": "the",
+      "start": 6.804,
+      "end": 6.873
+    },
+    {
+      "word": "wall.",
+      "start": 6.908,
+      "end": 7.431
+    }
+  ]
+}

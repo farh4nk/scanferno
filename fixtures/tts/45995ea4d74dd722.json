@@ -1,0 +1,77 @@
+{
+  "text": "Trapped: one, coworker Maria, Kitchen 106, 8 meters in. Secondary: 101, 102, Hallway B.",
+  "voice": "briefing",
+  "audio_url": "/fixtures/tts/45995ea4d74dd722.mp3",
+  "words": [
+    {
+      "word": "Trapped:",
+      "start": 0.023,
+      "end": 0.511
+    },
+    {
+      "word": "one,",
+      "start": 0.778,
+      "end": 1.208
+    },
+    {
+      "word": "coworker",
+      "start": 1.335,
+      "end": 1.835
+    },
+    {
+      "word": "Maria,",
+      "start": 1.904,
+      "end": 2.334
+    },
+    {
+      "word": "Kitchen",
+      "start": 2.461,
+      "end": 2.694
+    },
+    {
+      "word": "106,",
+      "start": 2.752,
+      "end": 3.39
+    },
+    {
+      "word": "8",
+      "start": 3.448,
+      "end": 3.622
+    },
+    {
+      "word": "meters",
+      "start": 3.681,
+      "end": 3.913
+    },
+    {
+      "word": "in.",
+      "start": 3.971,
+      "end": 4.238
+    },
+    {
+      "word": "Secondary:",
+      "start": 4.505,
+      "end": 5.074
+    },
+    {
+      "word": "101,",
+      "start": 5.167,
+      "end": 5.933
+    },
+    {
+      "word": "102,",
+      "start": 6.026,
+      "end": 6.838
+    },
+    {
+      "word": "Hallway",
+      "start": 6.896,
+      "end": 7.326
+    },
+    {
+      "word": "B.",
+      "start": 7.407,
+      "end": 7.848
+    }
+  ]
+}

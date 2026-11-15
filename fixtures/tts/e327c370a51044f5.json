@@ -1,0 +1,57 @@
+{
+  "text": "Search: Alpha side door, Open area A. Caution: collapse risk.",
+  "voice": "briefing",
+  "audio_url": "/fixtures/tts/e327c370a51044f5.mp3",
+  "words": [
+    {
+      "word": "Search:",
+      "start": 0.023,
+      "end": 0.488
+    },
+    {
+      "word": "Alpha",
+      "start": 0.627,
+      "end": 0.906
+    },
+    {
+      "word": "side",
+      "start": 0.975,
+      "end": 1.219
+    },
+    {
+      "word": "door,",
+      "start": 1.254,
+      "end": 1.649
+    },
+    {
+      "word": "Open",
+      "start": 1.753,
+      "end": 2.008
+    },
+    {
+      "word": "area",
+      "start": 2.055,
+      "end": 2.357
+    },
+    {
+      "word": "A.",
+      "start": 2.496,
+      "end": 2.868
+    },
+    {
+      "word": "Caution:",
+      "start": 3.135,
+      "end": 3.704
+    },
+    {
+      "word": "collapse",
+      "start": 3.878,
+      "end": 4.4
+    },
+    {
+      "word": "risk.",
+      "start": 4.481,
+      "end": 4.934
+    }
+  ]
+}
