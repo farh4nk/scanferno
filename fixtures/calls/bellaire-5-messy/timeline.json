@@ -1,0 +1,192 @@
+{
+  "utterances": [
+    {
+      "role": "dispatcher",
+      "start": 0.26,
+      "end": 2.76,
+      "text": "911, what's the address of your emergency?"
+    },
+    {
+      "role": "caller",
+      "start": 3.66,
+      "end": 8.98,
+      "text": "It's the medical building on Maple Ridge in Bel Air. I don't know the number. There's smoke everywhere."
+    },
+    {
+      "role": "dispatcher",
+      "start": 9.8,
+      "end": 13.0,
+      "text": "Ma'am, is it sixty-five fifty Maple Ridge Street?"
+    },
+    {
+      "role": "caller",
+      "start": 13.9,
+      "end": 19.72,
+      "text": "Yes. Yes, that's it. The fire is on the left side. No, wait, sorry. The right side. The back right."
+    },
+    {
+      "role": "dispatcher",
+      "start": 20.7,
+      "end": 21.78,
+      "text": "Is everyone out of the building?"
+    },
+    {
+      "role": "caller",
+      "start": 22.76,
+      "end": 35.58,
+      "text": "I think three people are still inside. Actually, no, two. One of the nurses just came out. So two, and the doctor is one of them, Dr. Nguyen. She's in her office in the very back, the one next to the supply closets."
+    },
+    {
+      "role": "dispatcher",
+      "start": 36.64,
+      "end": 37.7,
+      "text": "Anything else we should know?"
+    },
+    {
+      "role": "caller",
+      "start": 38.76,
+      "end": 43.38,
+      "text": "There's oxygen in the closets, and the smoke is really thick, almost black."
+    },
+    {
+      "role": "dispatcher",
+      "start": 44.2,
+      "end": 46.8,
+      "text": "Stay away from the building. Help is on the way."
+    }
+  ],
+  "timeline": [
+    {
+      "t": 8.98,
+      "utterance_index": 1,
+      "record": {
+        "address": "6550 Mapleridge St, Houston, TX",
+        "cross_street": null,
+        "floor": null,
+        "side": null,
+        "fire_location": null,
+        "conditions": [
+          "smoke"
+        ],
+        "trapped": [],
+        "hazards": [],
+        "caller_location": null,
+        "confidence": {
+          "address": 0.8,
+          "floor": 0.0,
+          "side": 0.0,
+          "trapped": 0.0,
+          "hazards": 0.0
+        },
+        "changed": [
+          "address",
+          "conditions"
+        ]
+      }
+    },
+    {
+      "t": 19.72,
+      "utterance_index": 3,
+      "record": {
+        "address": "6550 Mapleridge St, Houston, TX",
+        "cross_street": null,
+        "floor": null,
+        "side": "D",
+        "fire_location": "back right",
+        "conditions": [
+          "smoke everywhere"
+        ],
+        "trapped": [],
+        "hazards": [],
+        "caller_location": null,
+        "confidence": {
+          "address": 0.9,
+          "floor": 0.0,
+          "side": 0.7,
+          "trapped": 0.0,
+          "hazards": 0.0
+        },
+        "changed": [
+          "side",
+          "fire_location",
+          "conditions"
+        ]
+      }
+    },
+    {
+      "t": 35.58,
+      "utterance_index": 5,
+      "record": {
+        "address": "6550 Mapleridge St, Houston, TX",
+        "cross_street": null,
+        "floor": null,
+        "side": "D",
+        "fire_location": "back right",
+        "conditions": [
+          "smoke everywhere"
+        ],
+        "trapped": [
+          {
+            "description": "2 people, including Dr. Nguyen",
+            "location": "office in the very back, next to supply closets",
+            "floor": null,
+            "room_id": null,
+            "confidence": 0.8
+          }
+        ],
+        "hazards": [],
+        "caller_location": null,
+        "confidence": {
+          "address": 0.9,
+          "floor": 0.0,
+          "side": 0.7,
+          "trapped": 0.8,
+          "hazards": 0.0
+        },
+        "changed": [
+          "trapped"
+        ]
+      }
+    },
+    {
+      "t": 43.38,
+      "utterance_index": 7,
+      "record": {
+        "address": "6550 Mapleridge St, Houston, TX",
+        "cross_street": null,
+        "floor": null,
+        "side": "D",
+        "fire_location": "back right",
+        "conditions": [
+          "smoke everywhere",
+          "smoke is really thick, almost black"
+        ],
+        "trapped": [
+          {
+            "description": "2 people, including Dr. Nguyen",
+            "location": "office in the very back, next to supply closets",
+            "floor": null,
+            "room_id": null,
+            "confidence": 0.9
+          }
+        ],
+        "hazards": [
+          "oxygen in the closets"
+        ],
+        "caller_location": null,
+        "confidence": {
+          "address": 0.9,
+          "floor": 0.0,
+          "side": 0.7,
+          "trapped": 0.9,
+          "hazards": 0.9
+        },
+        "changed": [
+          "conditions",
+          "trapped",
+          "hazards"
+        ]
+      }
+    }
+  ]
+}

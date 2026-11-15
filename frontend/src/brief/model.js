@@ -98,7 +98,7 @@ function rawScript(k, i) {
     k.watch ? `Caution: ${hazardName(k.watch).replace('O₂', 'oxygen').toLowerCase()}.` : '',
   ].filter(Boolean).join(' ')
   if (i === 2) return k.victim
-    ? `Trapped: one, ${shortWho(k.trapped[0].description).replace(/^./, (c) => c.toLowerCase())}, ${k.victimLabel}${k.distToVictim ? `, ${Math.round(k.distToVictim)} meters in` : ''}. Secondary: ${k.plan_.slice(1, 4).map((s) => short(k.label(s.room_id))).join(', ')}.`
+    ? `Trapped: one, ${shortWho(k.trapped[0]?.description ?? k.rescuePeople[0]?.description).replace(/^./, (c) => c.toLowerCase())}, ${k.victimLabel}${k.distToVictim ? `, ${Math.round(k.distToVictim)} meters in` : ''}. Secondary: ${k.plan_.slice(1, 4).map((s) => short(k.label(s.room_id))).join(', ')}.`
     : `No trapped reported. Primary search: ${k.plan_.slice(0, 3).map((s) => short(k.label(s.room_id))).join(', ')}.`
   return [
     k.vRoute ? `Egress: ${Math.round(k.vRoute.distance_m)} meters, ${sideOf(k.vExitSide)}.` : `${num(k.exits.length)} exits, ${k.exitSides.map((x) => PHON[x] || x).join(' and ')}.`,

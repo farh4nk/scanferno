@@ -20,6 +20,7 @@ const P = {
   stop: <path d="M6 6h12v12H6z" />,
   speak: <path d="M5 9v6h4l5 4V5L9 9zM17 9a4 4 0 0 1 0 6" />,
   model: <path d="M12 3l8 4.5v9L12 21l-8-4.5v-9zM12 12l8-4.5M12 12v9M12 12L4 7.5" />,
+  route: <path d="M6 20a2 2 0 1 0 0-.1M18 4a2 2 0 1 0 0 .1M8 20h7a4 4 0 0 0 0-8H9a4 4 0 0 1 0-8h7" />,
   prev: <path d="M7 5v14M18 6l-8 6 8 6z" />,
   next: <path d="M17 5v14M6 6l8 6-8 6z" />,
   all: <path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z" />,

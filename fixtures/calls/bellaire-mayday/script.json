@@ -1,0 +1,13 @@
+{
+  "building_id": "costar-350372",
+  "kind": "mayday",
+  "title": "Bellaire Medical: Engine 12 crew disoriented in a back corner office",
+  "lines": [
+    {
+      "role": "caller",
+      "voice": "firefighter",
+      "emotion": "breathless",
+      "text": "Mayday, mayday, mayday. Engine 12, crew of two, we're lost in zero visibility. Last known position Office 119 on the Delta side. Low air."
+    }
+  ]
+}

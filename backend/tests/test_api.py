@@ -59,3 +59,31 @@ def test_tour_clips_in_and_out():
     t2 = client.get(f"/buildings/{BID}/tour", params={"to_room": "Office 110", "entry": other, "avoid": "Hallway B"}).json()
     assert t2["entry"]["door_id"] == other and t2["in"]["door_id"] == other
     assert client.get(f"/buildings/{BID}/tour", params={"to_room": "zzz nowhere"}).status_code == 404
+
+
+def test_simulation_goes_inside_every_room_in_order_then_out():
+    from shapely.geometry import LineString, Point, Polygon
+
+    fp = client.get(f"/buildings/{BID}/floorplan").json()
+    by_id = {r["id"]: r for r in fp["rooms"]}
+    rooms = [r["id"] for r in fp["rooms"] if r["type"] != "void"][:5]
+    s = client.get(f"/buildings/{BID}/simulation", params={"rooms": ",".join(rooms)}).json()
+    assert s["rooms"] == rooms and [x["order"] for x in s["stops"]] == [1, 2, 3, 4, 5]
+    kinds = [leg["kind"] for leg in s["legs"]]
+    assert kinds == ["in"] + ["search"] * 4 + ["out"]  # nothing extra is walked inside a room
+    at = [x["at_m"] for x in s["stops"]]
+    assert at == sorted(at) and 0 < at[0] and at[-1] < s["total_m"]
+    assert abs(s["in_m"] + s["search_m"] + s["out_m"] - s["total_m"]) < 0.5
+    assert s["clip"]["polyline"] == s["polyline"] and s["clip"]["steps"][0]["at_m"] == 0
+    # each leg ends inside its room, well clear of the walls, and the run passes through that point
+    segs = s["clip"]["segments"]
+    assert [x["kind"] for x in segs] == kinds
+    assert [x["room_id"] for x in segs[:-1]] == rooms and segs[-1]["room_id"] is None
+    line = LineString(s["polyline"])
+    for st in s["stops"]:
+        r = by_id[st["room_id"]]
+        poly = Polygon(r["polygon"], r.get("holes") or [])
+        p = Point(st["xy"])
+        assert poly.contains(p) and poly.boundary.distance(p) >= 0.3, r["label"]
+        assert line.distance(p) < 0.05, r["label"]
+    assert client.get(f"/buildings/{BID}/simulation", params={"rooms": "zzz nowhere"}).status_code == 404

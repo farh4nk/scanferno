@@ -1,0 +1,46 @@
+{
+  "building_id": "costar-350372",
+  "title": "Bellaire Medical: staff member cut off in the front storage closet, oxygen cylinders",
+  "lines": [
+    {
+      "role": "dispatcher",
+      "text": "911, what is the address of your emergency?"
+    },
+    {
+      "role": "caller",
+      "emotion": "panicked",
+      "text": "Six five five zero Mapleridge Street, Bellaire Medical Professional Building. The big open area is on fire!"
+    },
+    {
+      "role": "dispatcher",
+      "text": "Is anyone still inside?"
+    },
+    {
+      "role": "caller",
+      "emotion": "crying",
+      "text": "Our medical assistant went into storage room one twenty, the closet at the front, to grab an oxygen cart, and now she can't get past the flames!"
+    },
+    {
+      "role": "dispatcher",
+      "text": "Are there any hazards in that closet?"
+    },
+    {
+      "role": "caller",
+      "emotion": "panicked",
+      "text": "Yes. We keep oxygen cylinders in there, at least four of them."
+    },
+    {
+      "role": "dispatcher",
+      "text": "Is everyone else out of the building?"
+    },
+    {
+      "role": "caller",
+      "emotion": "nervous",
+      "text": "Yes, everyone else is out. I'm across the street."
+    },
+    {
+      "role": "dispatcher",
+      "text": "Stay back from the building. Firefighters are on the way."
+    }
+  ]
+}

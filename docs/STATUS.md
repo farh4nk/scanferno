@@ -115,3 +115,4 @@ Living handoff doc. Update your role's section and add a changelog line in the s
 - 2026-11-14: Briefing voice: Bill on ElevenLabs flash at max speed, dispatch radio script with phonetic sides, background pre-generation so Play is instant.
 - 2026-11-14: Live audio → briefing heat/rescue + address auto-switch + 3D Walk enter/exit (branch `audio-analysis`).
 - 2026-11-14: On-demand ready (`backend/ondemand/`): POST /ondemand/{key}, property-card open, live address→building switch.
+- 2026-11-14: Path simulation on the home page: one animated run that goes inside every search-plan room in order (one stop inside each, no extra walking), then the exit plan, in 2D or as a single 3D clip (`GET /buildings/{id}/simulation`, `agent/simulation.py`, `frontend/src/brief/PathSim.jsx`). Guided 3D clips for one room: `/tour`, `viewer3d/src/tour.ts`.

@@ -1,0 +1,108 @@
+{
+  "floors": [
+    {
+      "id": "f1",
+      "sequence": 0,
+      "label": "1"
+    }
+  ],
+  "rooms": [
+    {
+      "id": "roomA",
+      "label": "Office",
+      "classifications": [
+        {
+          "label": "Office"
+        }
+      ],
+      "boundary": {
+        "edges": [
+          {
+            "id": "e1",
+            "type": "wall",
+            "vertices": [
+              {
+                "position": {
+                  "x": 0,
+                  "y": 0
+                }
+              },
+              {
+                "position": {
+                  "x": 5,
+                  "y": 0
+                }
+              }
+            ],
+            "openings": [
+              {
+                "id": "o1",
+                "type": "doorway",
+                "width": 1.0,
+                "relativeCenter": 0.5
+              }
+            ]
+          },
+          {
+            "id": "e2",
+            "type": "wall",
+            "vertices": [
+              {
+                "position": {
+                  "x": 5,
+                  "y": 0
+                }
+              },
+              {
+                "position": {
+                  "x": 5,
+                  "y": 4
+                }
+              }
+            ],
+            "openings": []
+          },
+          {
+            "id": "e3",
+            "type": "wall",
+            "vertices": [
+              {
+                "position": {
+                  "x": 5,
+                  "y": 4
+                }
+              },
+              {
+                "position": {
+                  "x": 0,
+                  "y": 4
+                }
+              }
+            ],
+            "openings": []
+          },
+          {
+            "id": "e4",
+            "type": "wall",
+            "vertices": [
+              {
+                "position": {
+                  "x": 0,
+                  "y": 4
+                }
+              },
+              {
+                "position": {
+                  "x": 0,
+                  "y": 0
+                }
+              }
+            ],
+            "openings": []
+          }
+        ]
+      },
+      "holes": []
+    }
+  ]
+}

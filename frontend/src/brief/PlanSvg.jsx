@@ -14,7 +14,7 @@ export default function PlanSvg({
   plan, k, selected, onSelect, heat = false, danger = true, order = null, routes = [], walked = null,
   dashed = null, hose = null, tags = [], victim = true, fire = true, doors = true, bigExits = false,
   hiDoors = [], agents = null, dim = false, deadEnd = null, sides = true, pulse = null, flash = [],
-  people = null, rescueRoutes = null,
+  people = null, rescueRoutes = null, checked = null,
 }) {
   const v = useMemo(() => makeView(plan), [plan])
   const fireSet = new Set(fire ? k?.fireIds || [] : [])
@@ -41,7 +41,7 @@ export default function PlanSvg({
       {plan.rooms.map((r) => {
         const zone = heatRooms?.[r.id]?.zone
         const cls = ['rm', dim && 'dim', fireSet.has(r.id) && 'hf', r.id === vid && 'victim',
-          r.id === selected && 'sel', r.id === deadEnd && 'de', flash.includes(r.id) && 'flash', onSelect && 'click'].filter(Boolean).join(' ')
+          r.id === selected && 'sel', checked?.has(r.id) && 'chk', r.id === deadEnd && 'de', flash.includes(r.id) && 'flash', onSelect && 'click'].filter(Boolean).join(' ')
         let style
         if (heat && !fireSet.has(r.id) && r.id !== vid) style = { fill: `rgba(255,90,31,${(plan.maze_score?.[r.id] || 0) * 0.75})` }
         else if (zone && ZONE_FILL[zone] && !fireSet.has(r.id)) style = { fill: ZONE_FILL[zone] }
@@ -59,6 +59,7 @@ export default function PlanSvg({
       })}
       {plan.rooms.map((r) => {
         const [x, y] = v.p(r.centroid)
+        if (checked?.has(r.id)) return <g key={`o${r.id}`} className="ord chk" transform={`translate(${x},${y})`}><circle r={19} /><text dy={7}>✓</text></g>
         if (order?.[r.id]) return <g key={`o${r.id}`} className="ord" transform={`translate(${x},${y})`}><circle r={19} /><text dy={7}>{order[r.id]}</text></g>
         return <text key={`l${r.id}`} className="lbl" x={x} y={y + 5}>{r.label.replace(/^(Office|Hallway|Kitchen|Room) /, '')}</text>
       })}

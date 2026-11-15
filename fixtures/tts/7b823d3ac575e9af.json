@@ -1,0 +1,52 @@
+{
+  "text": "No trapped reported. Primary search: 101, 102, Kitchen 106.",
+  "voice": "briefing",
+  "audio_url": "/fixtures/tts/7b823d3ac575e9af.mp3",
+  "words": [
+    {
+      "word": "No",
+      "start": 0.023,
+      "end": 0.128
+    },
+    {
+      "word": "trapped",
+      "start": 0.174,
+      "end": 0.441
+    },
+    {
+      "word": "reported.",
+      "start": 0.522,
+      "end": 1.022
+    },
+    {
+      "word": "Primary",
+      "start": 1.626,
+      "end": 1.997
+    },
+    {
+      "word": "search:",
+      "start": 2.055,
+      "end": 2.45
+    },
+    {
+      "word": "101,",
+      "start": 2.717,
+      "end": 3.193
+    },
+    {
+      "word": "102,",
+      "start": 3.286,
+      "end": 3.762
+    },
+    {
+      "word": "Kitchen",
+      "start": 3.855,
+      "end": 4.099
+    },
+    {
+      "word": "106.",
+      "start": 4.18,
+      "end": 4.877
+    }
+  ]
+}

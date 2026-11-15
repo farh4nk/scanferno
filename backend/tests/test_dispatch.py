@@ -76,3 +76,17 @@ def test_ask_rules():
     assert "Office 104" in r["answer"] and r["highlight"]["polylines"]
     r = ask.ask("costar-239873", "What's on the roof?", use_llm=False)
     assert "Roof" in r["answer"]
+
+
+def test_locate_reads_spoken_room_numbers():
+    from data import layers
+    from dispatch.locate import locate, spoken_room_numbers
+
+    assert spoken_room_numbers("exam room one oh four") == "exam room 104"
+    assert spoken_room_numbers("office one hundred and four") == "office 104"
+    assert spoken_room_numbers("storage room number one-twenty by the front") == "storage room 120 by the front"
+    assert spoken_room_numbers("the office by the kitchen") == "the office by the kitchen"
+    bid = "costar-350372"
+    fp, nav = layers.floorplan(bid), layers.nav(bid)
+    assert locate("exam room one oh four", fp, nav)[0]["label"] == "Office 104"
+    assert locate("storage room one twenty", fp, nav)[0]["label"] == "Storage 120"
