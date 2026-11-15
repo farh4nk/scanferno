@@ -72,7 +72,7 @@ The core technical depth: turning raw Matterport geometry into decisions.
 | 3.6 | Fire load from room types and tenant types | 🟡 | P1 | Kitchens, storage, print shops, chemical suppliers raise hazard level; combine Matterport room type with CoStar tenant |
 | 3.7 | Vacancy and building age risk flags | 🟡 | P1 | CoStar vacancy and year built; vacant buildings appear repeatedly in NIOSH fatality reports |
 | 3.8 | Large enclosed building flag | 🟡 | P1 | Footprint area from Vexcel above a threshold -> disorientation warning |
-| 3.9 | Honest confidence and staleness notes | 💡 | P1 | Show data age (scan date, imagery date) and low-confidence facts in the briefing. Supports the honesty slide |
+| 3.9 | Honest confidence and staleness notes | ✅ | P1 | Briefing `data_age` (CoStar built/renovated, Vexcel imagery month, scan date unknown, floors scanned, inferred doors). Home Arrive step: "How fresh" timeline + top warning; Exterior page: timeline + all caveats. Key facts from the caller under 85% confidence say "N% sure" |
 | 3.10 | LangChain deepagents version of the agent | 💡 | P2 | Only for the LangChain track; don't rewrite working code for it before the demo is locked |
 
 ## 4. Data layers (`backend/data/`, owner: agent and data)

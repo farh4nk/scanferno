@@ -369,6 +369,16 @@ def build(bid: str, dispatch: dict | None = None, use_llm: bool | None = None) -
     if o.get("imagery_date_ms"):
         caveats.append(f"Aerial imagery from {dt.datetime.fromtimestamp(o['imagery_date_ms'] / 1000, dt.UTC):%b %Y}.")
 
+    # how old each source is, for the "how fresh is this" timeline. Matterport gives no capture date
+    # (every model's `created` is the account copy date), so the scan date stays unknown.
+    data_age = {
+        "built": c.get("year_built"), "renovated": c.get("year_renovated"),
+        "aerial": dt.datetime.fromtimestamp(o["imagery_date_ms"] / 1000, dt.UTC).strftime("%Y-%m") if o.get("imagery_date_ms") else None,
+        "scan": None, "scan_floors": len(fp.get("floors") or []) or 1, "stories": c.get("stories"),
+        "inferred_doors": sum(1 for x in fp["doors"] if x.get("inferred")),
+        "orientation_verified": bool(b.get("scan_rotation_verified")),
+    }
+
     summary = _summary_template(b, c, o, d, occ, plan, hazards)
     if use_llm if use_llm is not None else bool(os.getenv("GEMINI_API_KEY")):
         try:
@@ -400,6 +410,7 @@ def build(bid: str, dispatch: dict | None = None, use_llm: bool | None = None) -
         "footprint_wkt": o.get("footprint_wkt"),
         "images": o.get("images") or {},
         "caveats": caveats,
+        "data_age": data_age,
         "trace": trace,
     }
     # Nest heat + rescue when dispatch facts are present (live/replay attach again with a real clock).

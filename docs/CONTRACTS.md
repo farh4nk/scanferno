@@ -53,6 +53,8 @@ Sample: [fixtures/sample/briefing.json](../fixtures/sample/briefing.json)
 | `hose_stretch[]` | per exterior door: `door_id`, `side`, `to_room_id`, `interior_m`, `total_ft`, `fits_preconnect` (200 ft), `text`, `sources` |
 | `trapped[]` | `room_id`, `description`, `confidence` |
 | `images` | view name -> image path under fixtures (nadir, oblique-north, ...) |
+| `caveats[]` | plain-language limits of the data (one scanned floor, inferred doors, assumed orientation, imagery date) |
+| `data_age` | how fresh each source is: `built`, `renovated` (CoStar years), `aerial` ("YYYY-MM", Vexcel), `scan` (always null: Matterport gives no capture date), `scan_floors`, `stories`, `inferred_doors`, `orientation_verified` |
 | `changes[]` | live stream only: `kind` (fire, trapped, search_plan, route, hazard), `text`, optional `room_id` / `severity` |
 
 `sources` is a list drawn from `costar`, `vexcel`, `matterport`, `dispatch`. Live dispatch records also carry `corrections`: `{field: [{from, to, t}]}` for values the caller changed.

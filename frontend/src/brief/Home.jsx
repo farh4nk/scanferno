@@ -3,18 +3,31 @@ import AerialView from './Aerial'
 import { asset } from '../api'
 import PlanSvg from './PlanSvg'
 import { SIDE_NAME, STEPS, hazardName, stepScript } from './model'
-import { DeadEndPict, DistScale, EnterPict, ExitBars, ExitPict, FirePict, HoseGauge, Ring, SearchChain, Section, TrappedPict, WatchPict } from './Diagrams'
+import { Freshness, trustNotes, DeadEndPict, DistScale, EnterPict, ExitBars, ExitPict, FirePict, HoseGauge, Ring, SearchChain, Section, TrappedPict, WatchPict } from './Diagrams'
 import Icon from '../ui/Icon'
 import Viewer3D from '../components/Viewer3D'
 import PathSim from './PathSim'
 import { prepareInOrder, speak } from '../ui/speech'
 
+// facts the caller isn't sure of say so; confident ones stay clean
+const unsure = (c) => (c != null && c < 0.85 ? ` · ${Math.round(c * 100)}% sure` : '')
+
+function TrustCard({ k }) {
+  const notes = trustNotes(k.age, k.caveats)
+  return (
+    <div className="card trust"><h3>How fresh <span>verify on arrival</span></h3>
+      <Freshness age={k.age} />
+      {notes.slice(0, 1).map((n) => <div key={n} className="tnote">{n}</div>)}
+    </div>
+  )
+}
+
 function KeyBand({ k, step }) {
   const cells = [
     { key: 'Fire', s: [0], hot: k.fireKnown, off: !k.fireKnown, pict: <FirePict stories={k.stories} floor={k.floor} side={k.side} known={k.fireKnown} />,
-      v: k.fireKnown ? (k.floor ? `Floor ${k.floor}` : 'Reported') : 'Listening…', sub: k.fireKnown && k.side ? `Side ${k.side} · ${SIDE_NAME[k.side]}` : null },
+      v: k.fireKnown ? (k.floor ? `Floor ${k.floor}` : 'Reported') : 'Listening…', sub: k.fireKnown && k.side ? `Side ${k.side} · ${SIDE_NAME[k.side]}${unsure(k.conf.side)}` : null },
     { key: 'Watch', s: [1], off: !k.watch, pict: <WatchPict known={!!k.watch} o2={k.isO2} />,
-      v: k.watch ? hazardName(k.watch) : 'Listening…', sub: k.watch ? `from ${k.watch.source}` : null },
+      v: k.watch ? hazardName(k.watch) : 'Listening…', sub: k.watch ? `from ${k.watch.source}${k.watch.source === 'dispatch' ? unsure(k.conf.hazards) : ''}` : null },
     { key: 'Enter', s: [1], pict: <EnterPict side={k.search?.side} />, v: k.search ? `Side ${k.search.side} door` : 'No door found', sub: k.searchRoom ? `into ${k.searchRoom}` : null },
     { key: 'Trapped', s: [2], hot: !!k.victim, off: !k.victim, pict: <TrappedPict known={!!k.victim} />, v: k.victimLabel || 'Listening…', sub: k.victim && k.victimConf != null ? `${Math.round(k.victimConf * 100)}% sure` : null },
     { key: 'Way out', s: [3], pict: <ExitPict />, v: k.vRoute ? `${k.vRoute.distance_m} m` : `${k.exits.length} exits`, sub: k.vRoute ? `from victim · side ${k.vExitSide || '?'}` : `sides ${k.exitSides.join(', ')}` },
@@ -80,7 +93,8 @@ function StepPanel({ k, step, briefing, go }) {
     return (
       <>
         {img && <div className="photo aerial-photo"><AerialView view={k.frontView} src={img} k={k} compact /></div>}
-        <div className="card"><Section k={k} /></div>
+        <div className={`card ${k.age ? 'sect' : ''}`}><Section k={k} /></div>
+        {k.age && <TrustCard k={k} />}
       </>
     )
   }
