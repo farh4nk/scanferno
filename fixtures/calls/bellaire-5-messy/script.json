@@ -1,0 +1,46 @@
+{
+  "building_id": "costar-350372",
+  "title": "Bellaire Medical: messy call, caller corrects the side and the head count, doctor in the back office",
+  "lines": [
+    {
+      "role": "dispatcher",
+      "text": "Nine one one, what's the address of your emergency?"
+    },
+    {
+      "role": "caller",
+      "emotion": "panicked",
+      "text": "It's the medical building on Mapleridge, in Bellaire, I don't know the number, there's smoke everywhere!"
+    },
+    {
+      "role": "dispatcher",
+      "text": "Ma'am, is it sixty five fifty Mapleridge Street?"
+    },
+    {
+      "role": "caller",
+      "emotion": "panicked",
+      "text": "Yes, yes, that's it. The fire is on the left side. No, wait, sorry, the right side, the back right."
+    },
+    {
+      "role": "dispatcher",
+      "text": "Is everyone out of the building?"
+    },
+    {
+      "role": "caller",
+      "emotion": "nervous",
+      "text": "I think three people are still inside. Actually, no, two. One of the nurses just came out. So two, and the doctor is one of them, Doctor Nguyen, she's in her office in the very back, the one next to the supply closets."
+    },
+    {
+      "role": "dispatcher",
+      "text": "Anything else we should know?"
+    },
+    {
+      "role": "caller",
+      "emotion": "panicked",
+      "text": "There's oxygen in the closets. And the smoke is really thick, almost black."
+    },
+    {
+      "role": "dispatcher",
+      "text": "Stay away from the building. Help is on the way."
+    }
+  ]
+}

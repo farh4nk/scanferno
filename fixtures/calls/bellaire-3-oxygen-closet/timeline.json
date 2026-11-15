@@ -1,0 +1,215 @@
+{
+  "utterances": [
+    {
+      "role": "dispatcher",
+      "start": 0.28,
+      "end": 2.76,
+      "text": "911. What is the address of your emergency?"
+    },
+    {
+      "role": "caller",
+      "start": 4.0,
+      "end": 10.52,
+      "text": "6550 Maple Ridge Street, Bel Air Medical Professional Building. The big open area is on fire."
+    },
+    {
+      "role": "dispatcher",
+      "start": 11.56,
+      "end": 12.8,
+      "text": "Is anyone still inside?"
+    },
+    {
+      "role": "caller",
+      "start": 14.44,
+      "end": 22.98,
+      "text": "Our medical assistant went into storage room one twenty, the closet at the front, to grab an oxygen cart, and now she can't get past the flames."
+    },
+    {
+      "role": "dispatcher",
+      "start": 24.0,
+      "end": 25.64,
+      "text": "Are there any hazards in that closet?"
+    },
+    {
+      "role": "caller",
+      "start": 26.64,
+      "end": 30.52,
+      "text": "Yes. We keep oxygen cylinders in there, at least four of them."
+    },
+    {
+      "role": "dispatcher",
+      "start": 31.4,
+      "end": 32.7,
+      "text": "Is everyone else out of the building?"
+    },
+    {
+      "role": "caller",
+      "start": 33.66,
+      "end": 36.16,
+      "text": "Yes, everyone else is out. I'm across the street."
+    },
+    {
+      "role": "dispatcher",
+      "start": 36.98,
+      "end": 39.74,
+      "text": "Stay back from the building. Firefighters are on the way."
+    }
+  ],
+  "timeline": [
+    {
+      "t": 10.52,
+      "utterance_index": 1,
+      "record": {
+        "address": "6550 Mapleridge St",
+        "cross_street": null,
+        "floor": null,
+        "side": null,
+        "fire_location": "the big open area",
+        "conditions": [
+          "fire"
+        ],
+        "trapped": [],
+        "hazards": [],
+        "caller_location": null,
+        "confidence": {
+          "address": 1.0,
+          "floor": 0.0,
+          "side": 0.0,
+          "trapped": 0.0,
+          "hazards": 0.0
+        },
+        "changed": [
+          "address",
+          "cross_street",
+          "floor",
+          "side",
+          "fire_location",
+          "conditions",
+          "trapped",
+          "hazards",
+          "caller_location"
+        ]
+      }
+    },
+    {
+      "t": 22.98,
+      "utterance_index": 3,
+      "record": {
+        "address": "6550 Mapleridge St",
+        "cross_street": null,
+        "floor": 1,
+        "side": "A",
+        "fire_location": "the big open area",
+        "conditions": [
+          "fire",
+          "flames"
+        ],
+        "trapped": [
+          {
+            "description": "medical assistant",
+            "location": "storage room 120",
+            "floor": 1,
+            "room_id": null,
+            "confidence": 0.9
+          }
+        ],
+        "hazards": [
+          "oxygen cart"
+        ],
+        "caller_location": null,
+        "confidence": {
+          "address": 1.0,
+          "floor": 0.9,
+          "side": 0.9,
+          "trapped": 0.9,
+          "hazards": 0.9
+        },
+        "changed": [
+          "floor",
+          "side",
+          "conditions",
+          "trapped",
+          "hazards"
+        ]
+      }
+    },
+    {
+      "t": 30.52,
+      "utterance_index": 5,
+      "record": {
+        "address": "6550 Mapleridge St",
+        "cross_street": null,
+        "floor": 1,
+        "side": "A",
+        "fire_location": "the big open area",
+        "conditions": [
+          "fire",
+          "flames"
+        ],
+        "trapped": [
+          {
+            "description": "medical assistant",
+            "location": "storage room 120",
+            "floor": 1,
+            "room_id": null,
+            "confidence": 0.9
+          }
+        ],
+        "hazards": [
+          "oxygen cylinders",
+          "oxygen cart"
+        ],
+        "caller_location": null,
+        "confidence": {
+          "address": 1.0,
+          "floor": 0.9,
+          "side": 0.9,
+          "trapped": 0.9,
+          "hazards": 0.95
+        },
+        "changed": [
+          "hazards"
+        ]
+      }
+    },
+    {
+      "t": 36.16,
+      "utterance_index": 7,
+      "record": {
+        "address": "6550 Mapleridge St",
+        "cross_street": null,
+        "floor": 1,
+        "side": "A",
+        "fire_location": "the big open area",
+        "conditions": [
+          "fire",
+          "flames"
+        ],
+        "trapped": [
+          {
+            "description": "medical assistant",
+            "location": "storage room 120",
+            "floor": 1,
+            "room_id": null,
+            "confidence": 0.9
+          }
+        ],
+        "hazards": [
+          "oxygen cylinders",
+          "oxygen cart"
+        ],
+        "caller_location": "across the street",
+        "confidence": {
+          "address": 1.0,
+          "floor": 0.9,
+          "side": 0.9,
+          "trapped": 0.9,
+          "hazards": 0.95
+        },
+        "changed": [
+          "caller_location"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "text": "No trapped reported. Primary search: 123, 119, Storage 122.",
+  "voice": "briefing",
+  "audio_url": "/fixtures/tts/9dc87b49dec6931a.mp3",
+  "words": [
+    {
+      "word": "No",
+      "start": 0.023,
+      "end": 0.128
+    },
+    {
+      "word": "trapped",
+      "start": 0.174,
+      "end": 0.43
+    },
+    {
+      "word": "reported.",
+      "start": 0.499,
+      "end": 0.964
+    },
+    {
+      "word": "Primary",
+      "start": 1.394,
+      "end": 1.73
+    },
+    {
+      "word": "search:",
+      "start": 1.788,
+      "end": 2.148
+    },
+    {
+      "word": "123,",
+      "start": 2.38,
+      "end": 3.135
+    },
+    {
+      "word": "119,",
+      "start": 3.344,
+      "end": 4.075
+    },
+    {
+      "word": "Storage",
+      "start": 4.215,
+      "end": 4.702
+    },
+    {
+      "word": "122.",
+      "start": 4.784,
+      "end": 5.527
+    }
+  ]
+}

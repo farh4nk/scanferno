@@ -1,0 +1,72 @@
+{
+  "text": "Search: Alpha side door, Office 111. Attack: 84 feet, preconnect. Caution: oxygen cylinders.",
+  "voice": "briefing",
+  "audio_url": "/fixtures/tts/995c690579d93fa0.mp3",
+  "words": [
+    {
+      "word": "Search:",
+      "start": 0.023,
+      "end": 0.464
+    },
+    {
+      "word": "Alpha",
+      "start": 0.697,
+      "end": 0.952
+    },
+    {
+      "word": "side",
+      "start": 0.987,
+      "end": 1.231
+    },
+    {
+      "word": "door,",
+      "start": 1.254,
+      "end": 1.591
+    },
+    {
+      "word": "Office",
+      "start": 1.695,
+      "end": 2.02
+    },
+    {
+      "word": "111.",
+      "start": 2.044,
+      "end": 2.891
+    },
+    {
+      "word": "Attack:",
+      "start": 3.158,
+      "end": 3.669
+    },
+    {
+      "word": "84",
+      "start": 3.739,
+      "end": 4.18
+    },
+    {
+      "word": "feet,",
+      "start": 4.215,
+      "end": 4.517
+    },
+    {
+      "word": "preconnect.",
+      "start": 4.586,
+      "end": 5.19
+    },
+    {
+      "word": "Caution:",
+      "start": 5.422,
+      "end": 5.933
+    },
+    {
+      "word": "oxygen",
+      "start": 6.072,
+      "end": 6.56
+    },
+    {
+      "word": "cylinders.",
+      "start": 6.653,
+      "end": 7.257
+    }
+  ]
+}

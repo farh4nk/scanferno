@@ -1,0 +1,139 @@
+{
+  "building_id": "mp-KKw46Xg1vgH",
+  "units": "meters",
+  "floors": [
+    {
+      "id": "f1",
+      "label": "1",
+      "sequence": 0
+    }
+  ],
+  "rooms": [
+    {
+      "id": "r-roomA",
+      "floor_id": "f1",
+      "label": "Office 101",
+      "type": "office",
+      "type_inferred": false,
+      "polygon": [
+        [
+          5.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          4.0
+        ],
+        [
+          5.0,
+          4.0
+        ]
+      ],
+      "holes": [],
+      "centroid": [
+        2.5,
+        2.0
+      ],
+      "area_m2": 20.0,
+      "matterport_id": "roomA",
+      "side": "C",
+      "exterior_sides": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  ],
+  "doors": [
+    {
+      "id": "d-o1",
+      "floor_id": "f1",
+      "rooms": [
+        "r-roomA",
+        "outside"
+      ],
+      "position": [
+        2.5,
+        0.0
+      ],
+      "width_m": 1.0,
+      "type": "doorway",
+      "is_exit": true,
+      "side": "A"
+    }
+  ],
+  "windows": [],
+  "stairs": [],
+  "voids": [],
+  "outline": [
+    [
+      5.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      4.0
+    ],
+    [
+      5.0,
+      4.0
+    ]
+  ],
+  "maze_score": {
+    "r-roomA": 0.5
+  },
+  "maze_detail": {
+    "r-roomA": {
+      "distance_m": 2.0,
+      "second_exit_m": null,
+      "turns": 0,
+      "decisions": 0,
+      "dead_end": false,
+      "windowless": true,
+      "single_exit": true,
+      "components": {
+        "distance": 1.0,
+        "turns": 0.0,
+        "decisions": 0.0,
+        "dead_end": 0.0,
+        "single_exit": 1.0,
+        "windowless": 1.0
+      },
+      "why": [
+        "2 m to the nearest exit",
+        "no practical second way out",
+        "no outside window"
+      ]
+    }
+  },
+  "exit_routes": {
+    "r-roomA": {
+      "path": [
+        "r-roomA"
+      ],
+      "door_ids": [],
+      "distance_m": 2.0,
+      "polyline": [
+        [
+          2.5,
+          2.0
+        ],
+        [
+          2.5,
+          0.0
+        ]
+      ],
+      "from_room_id": "r-roomA",
+      "exit_door_id": "d-o1"
+    }
+  }
+}

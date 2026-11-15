@@ -64,6 +64,7 @@ One router file per area (`buildings.py`, `calls.py`, `dispatch.py`, `search.py`
 | `GET /buildings/{id}/floorplan` | `floorplan.json` with `maze_score`, `maze_detail`, `exit_routes`, sides |
 | `GET /buildings/{id}/routes?from_room=&avoid=` | shortest route to an exit (room id, label or description), optionally around rooms (fire) |
 | `GET /buildings/{id}/tour?to_room=&entry=&exit=&avoid=` | guided 3D clips: `in` (entry door to room) and `out` (room to exit), each a polyline plus step captions; `entries` lists the doors that reach the room. Played by `viewer3d/src/tour.ts` |
+| `GET /buildings/{id}/simulation?rooms=&entry=&exit=&avoid=` | path simulation: one run in through an entry door, to a point inside each room in the given order (nothing extra walked in the room), then out; polyline, per-room stops, legs and a `clip` the 3D player can fly. Used by the home page's Path simulation (`frontend/src/brief/PathSim.jsx`) |
 | `GET /buildings/{id}/hose?to_room=` | hose length from each exterior door to a room vs a 200 ft preconnect |
 | `GET /search?q=&geocode=&lat=&lon=&status=&city=&kind=&costar=&offset=` | address/name/unit/tenant search over hero buildings (`ready`) and every Matterport-scanned building (`scanned`, ~8,500 from `fixtures/catalog/`, rebuilt by `scripts.sync_catalog`); returns `total` + `facets` for filter chips; unknown addresses geocoded to the nearest known buildings |
 | `GET /search/stats` | buildings, located, CoStar-linked and Matterport model counts |

@@ -1,0 +1,198 @@
+{
+  "utterances": [
+    {
+      "role": "dispatcher",
+      "start": 0.22,
+      "end": 2.74,
+      "text": "911, what is the address of your emergency?"
+    },
+    {
+      "role": "caller",
+      "start": 3.78,
+      "end": 10.24,
+      "text": "6550 Maple Ridge Street, the medical building in Bel Air. There's smoke coming from the back hallway near the rear door."
+    },
+    {
+      "role": "dispatcher",
+      "start": 11.72,
+      "end": 12.4,
+      "text": "Is everyone out?"
+    },
+    {
+      "role": "caller",
+      "start": 13.4,
+      "end": 21.02,
+      "text": "No. There's an older man with a walker still in the big open area in the middle of the building. He's confused and he can't find the way out."
+    },
+    {
+      "role": "dispatcher",
+      "start": 22.0,
+      "end": 22.96,
+      "text": "Can he walk on his own?"
+    },
+    {
+      "role": "caller",
+      "start": 24.88,
+      "end": 30.12,
+      "text": "Very slowly, only with the walker. I can't get to him. The smoke is in the way."
+    },
+    {
+      "role": "dispatcher",
+      "start": 31.18,
+      "end": 32.119,
+      "text": "Is anyone else with him?"
+    },
+    {
+      "role": "caller",
+      "start": 33.2,
+      "end": 35.96,
+      "text": "No, just him. Please hurry."
+    },
+    {
+      "role": "dispatcher",
+      "start": 37.04,
+      "end": 39.56,
+      "text": "Stay where you are. Help is on the way."
+    }
+  ],
+  "timeline": [
+    {
+      "t": 10.24,
+      "utterance_index": 1,
+      "record": {
+        "address": "6550 Mapleridge St, Houston, TX",
+        "cross_street": null,
+        "floor": null,
+        "side": "C",
+        "fire_location": "back hallway near the rear door",
+        "conditions": [
+          "smoke"
+        ],
+        "trapped": [],
+        "hazards": [],
+        "caller_location": null,
+        "confidence": {
+          "address": 1.0,
+          "floor": 0.0,
+          "side": 0.9,
+          "trapped": 0.0,
+          "hazards": 0.0
+        },
+        "changed": [
+          "address",
+          "cross_street",
+          "floor",
+          "side",
+          "fire_location",
+          "conditions",
+          "trapped",
+          "hazards",
+          "caller_location"
+        ]
+      }
+    },
+    {
+      "t": 21.02,
+      "utterance_index": 3,
+      "record": {
+        "address": "6550 Mapleridge St, Houston, TX",
+        "cross_street": null,
+        "floor": null,
+        "side": "C",
+        "fire_location": "back hallway near the rear door",
+        "conditions": [
+          "smoke"
+        ],
+        "trapped": [
+          {
+            "description": "older man with a walker",
+            "location": "big open area in the middle of the building",
+            "floor": null,
+            "room_id": null,
+            "confidence": 0.9
+          }
+        ],
+        "hazards": [],
+        "caller_location": null,
+        "confidence": {
+          "address": 1.0,
+          "floor": 0.0,
+          "side": 0.9,
+          "trapped": 0.9,
+          "hazards": 0.0
+        },
+        "changed": [
+          "trapped"
+        ]
+      }
+    },
+    {
+      "t": 30.12,
+      "utterance_index": 5,
+      "record": {
+        "address": "6550 Mapleridge St, Houston, TX",
+        "cross_street": null,
+        "floor": null,
+        "side": "C",
+        "fire_location": "back hallway near the rear door",
+        "conditions": [
+          "smoke"
+        ],
+        "trapped": [
+          {
+            "description": "older man with a walker, confused, cannot find the way out",
+            "location": "big open area in the middle of the building",
+            "floor": null,
+            "room_id": null,
+            "confidence": 0.9
+          }
+        ],
+        "hazards": [],
+        "caller_location": null,
+        "confidence": {
+          "address": 1.0,
+          "floor": 0.0,
+          "side": 0.9,
+          "trapped": 0.9,
+          "hazards": 0.0
+        },
+        "changed": [
+          "trapped"
+        ]
+      }
+    },
+    {
+      "t": 35.96,
+      "utterance_index": 7,
+      "record": {
+        "address": "6550 Mapleridge St, Houston, TX",
+        "cross_street": null,
+        "floor": null,
+        "side": "C",
+        "fire_location": "back hallway near the rear door",
+        "conditions": [
+          "smoke"
+        ],
+        "trapped": [
+          {
+            "description": "older man with a walker, confused, cannot find the way out",
+            "location": "big open area in the middle of the building",
+            "floor": null,
+            "room_id": null,
+            "confidence": 0.9
+          }
+        ],
+        "hazards": [],
+        "caller_location": null,
+        "confidence": {
+          "address": 1.0,
+          "floor": 0.0,
+          "side": 0.9,
+          "trapped": 0.9,
+          "hazards": 0.0
+        },
+        "changed": []
+      }
+    }
+  ]
+}

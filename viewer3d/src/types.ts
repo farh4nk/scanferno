@@ -129,13 +129,25 @@ export interface TourDoor {
 
 /** One clip: the way in (entry door to room) or the way out (room to exit). */
 export interface TourClip {
-  kind: 'in' | 'out'
+  kind: 'in' | 'out' | 'search'
   title: string
   distance_m: number
   polyline: XY[]
   rooms: string[]
   steps: TourStep[]
   door_id: string | null
+  /** Numbered rooms along the run (path simulation only): drawn as markers with their order. */
+  stops?: { xy: XY; label: string; name: string }[]
+  /** The run split into walking legs; each one ends inside `room_id` (null for the way out). */
+  segments?: TourSegment[]
+}
+
+export interface TourSegment {
+  kind: 'in' | 'search' | 'out'
+  room_id: string | null
+  polyline: XY[]
+  start_m: number
+  end_m: number
 }
 
 export interface Tour {
@@ -149,4 +161,24 @@ export interface Tour {
   /** Every exit door that reaches the room, nearest first: the choices for "which way in". */
   entries: (TourDoor & { distance_m: number })[]
   avoided: string[]
+}
+
+/** Path simulation: in through an entry door, every room in search order, then out. */
+export interface Simulation {
+  building_id: string
+  entry: TourDoor
+  exit: TourDoor
+  rooms: string[]
+  /** `at_m`: how far along the run the crew is inside the room (and it counts as checked). */
+  stops: { room_id: string; label: string; order: number; at_m: number; xy: XY; reason: string | null; fire: boolean }[]
+  legs: { kind: 'in' | 'search' | 'out'; from: string; to: string; polyline: XY[]; start_m: number; end_m: number; distance_m: number }[]
+  polyline: XY[]
+  total_m: number
+  in_m: number
+  search_m: number
+  out_m: number
+  entries: (TourDoor & { distance_m: number })[]
+  avoided: string[]
+  /** The whole run as a clip for the 3D player (`viewer.tour(sim.clip)`). */
+  clip: TourClip
 }

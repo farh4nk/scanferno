@@ -74,10 +74,40 @@ def neighbors(fp: dict) -> dict[str, set]:
     return out
 
 
+_DIGIT = {"zero": 0, "oh": 0, "one": 1, "two": 2, "three": 3, "four": 4, "five": 5, "six": 6, "seven": 7, "eight": 8, "nine": 9}
+_TEENS = {"ten": 10, "eleven": 11, "twelve": 12, "thirteen": 13, "fourteen": 14, "fifteen": 15, "sixteen": 16, "seventeen": 17,
+          "eighteen": 18, "nineteen": 19, "twenty": 20, "thirty": 30, "forty": 40, "fifty": 50, "sixty": 60, "seventy": 70,
+          "eighty": 80, "ninety": 90}
+_NUM_WORD = "|".join(sorted([*_DIGIT, *_TEENS, "hundred", "and"], key=len, reverse=True))
+_ROOM_NUMBER = re.compile(rf"\b(room|office|suite|storage|kitchen|exam room|closet)(?:\s+number)?((?:[\s-]+(?:{_NUM_WORD})\b){{2,4}})")
+
+
+def _spoken_number(words: list[str]) -> int | None:
+    """"one oh four", "one zero four", "one hundred four", "one twenty" -> 104, 104, 104, 120."""
+    words = [w for w in words if w != "and"]
+    if len(words) >= 2 and words[1] == "hundred" and words[0] in _DIGIT:
+        rest = words[2:]
+        extra = 0 if not rest else (_TEENS.get(rest[0]) if len(rest) == 1 and rest[0] in _TEENS else _DIGIT.get(rest[0]) if len(rest) == 1 else None)
+        return None if extra is None else _DIGIT[words[0]] * 100 + extra
+    if len(words) == 2 and words[0] in _DIGIT and words[1] in _TEENS and words[0] != "oh":
+        return _DIGIT[words[0]] * 100 + _TEENS[words[1]]  # "one twenty", "two ten"
+    if 2 <= len(words) <= 4 and all(w in _DIGIT for w in words):
+        return int("".join(str(_DIGIT[w]) for w in words))
+    return None
+
+
+def spoken_room_numbers(text: str) -> str:
+    """Rewrite spoken room numbers after a room word as digits, so "exam room one oh four" matches Office 104."""
+    def fix(m):
+        n = _spoken_number(re.split(r"[\s-]+", m.group(2).strip()))
+        return m.group(0) if n is None or n < 10 else f"{m.group(1)} {n}"
+    return _ROOM_NUMBER.sub(fix, text)
+
+
 def locate(phrase: str, fp: dict, nav: NavGraph | None = None, front: str = "S", top: int = 3) -> list[dict]:
     if not phrase:
         return []
-    text = phrase.lower()
+    text = spoken_room_numbers(phrase.lower())
     rooms = fp["rooms"]
     by_id = {r["id"]: r for r in rooms}
 

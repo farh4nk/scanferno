@@ -1,5 +1,5 @@
 // Minimal fetchers for the backend endpoints the 3D layers draw. Paths are proxied to :8000 in dev.
-import type { Building, Evac, Floorplan, Mayday, Route, Tour } from './types'
+import type { Building, Evac, Floorplan, Mayday, Route, Simulation, Tour } from './types'
 
 let base = ''
 
@@ -23,5 +23,7 @@ export const api = {
   mayday: (bid: string, room: string) => get<Mayday>(`/buildings/${bid}/mayday?room=${q(room)}`),
   tour: (bid: string, toRoom: string, o: { entry?: string; exit?: string; avoid?: string[] } = {}) =>
     get<Tour>(`/buildings/${bid}/tour?to_room=${q(toRoom)}${o.entry ? `&entry=${q(o.entry)}` : ''}${o.exit ? `&exit=${q(o.exit)}` : ''}${o.avoid?.length ? `&avoid=${q(o.avoid.join(','))}` : ''}`),
+  simulation: (bid: string, rooms: string[], o: { entry?: string; exit?: string; avoid?: string[] } = {}) =>
+    get<Simulation>(`/buildings/${bid}/simulation?rooms=${q(rooms.join(','))}${o.entry ? `&entry=${q(o.entry)}` : ''}${o.exit ? `&exit=${q(o.exit)}` : ''}${o.avoid?.length ? `&avoid=${q(o.avoid.join(','))}` : ''}`),
   evac: (bid: string, occupants?: number) => get<Evac>(`/buildings/${bid}/evac${occupants ? `?occupants=${occupants}` : ''}`),
 }

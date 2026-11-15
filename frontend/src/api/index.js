@@ -14,6 +14,8 @@ export const getFloorplan = (id) => get(`/buildings/${id}/floorplan`)
 export const getRoute = (id, fromRoom, avoid = []) => get(`/buildings/${id}/routes`, { from_room: fromRoom, avoid: avoid.join(',') })
 export const getTour = (id, toRoom, { entry, exit, avoid = [] } = {}) =>
   get(`/buildings/${id}/tour`, { to_room: toRoom, entry, exit, avoid: avoid.join(',') || null })
+export const getSimulation = (id, rooms, { entry, exit, avoid = [] } = {}) =>
+  get(`/buildings/${id}/simulation`, { rooms: rooms.join(','), entry, exit, avoid: avoid.join(',') || null })
 export const getMayday = (id, room) => get(`/buildings/${id}/mayday`, { room })
 export const getEvac = (id, occupants) => get(`/buildings/${id}/evac`, { occupants })
 export const getHose = (id, toRoom) => get(`/buildings/${id}/hose`, { to_room: toRoom })

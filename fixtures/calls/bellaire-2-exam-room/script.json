@@ -1,0 +1,46 @@
+{
+  "building_id": "costar-350372",
+  "title": "Bellaire Medical: nurse trapped in an exam room, fire in the back hallway",
+  "lines": [
+    {
+      "role": "dispatcher",
+      "text": "911, what is the address of your emergency?"
+    },
+    {
+      "role": "caller",
+      "emotion": "panicked",
+      "text": "Sixty five fifty Mapleridge Street, the Bellaire medical building! There's a fire in the back hallway, the smoke is pouring out the rear door!"
+    },
+    {
+      "role": "dispatcher",
+      "text": "Is anyone still inside?"
+    },
+    {
+      "role": "caller",
+      "emotion": "crying",
+      "text": "Yes! One of our nurses is stuck in exam room one oh four. The hallway is full of smoke and she can't get out."
+    },
+    {
+      "role": "dispatcher",
+      "text": "Is she hurt?"
+    },
+    {
+      "role": "caller",
+      "emotion": "panicked",
+      "text": "She's coughing a lot. She says the door is too hot to open."
+    },
+    {
+      "role": "dispatcher",
+      "text": "Where are you right now?"
+    },
+    {
+      "role": "caller",
+      "emotion": "nervous",
+      "text": "I'm outside in the parking lot, on the street side."
+    },
+    {
+      "role": "dispatcher",
+      "text": "Stay there. Help is on the way."
+    }
+  ]
+}

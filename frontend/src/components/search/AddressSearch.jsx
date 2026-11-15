@@ -4,8 +4,7 @@ import { useDebounced } from '../../hooks/useDebounced'
 
 const GOOD_SCORE = 0.75 // mirrors data/directory.py: below this, Enter asks the geocoder
 const PAGE = 20
-const EMPTY = { results: [], nearby: [], geocoded: null, total: 0, facets: {} }
-const KIND_LABEL = { commercial: 'Commercial', residential: 'Residential', other: 'Unclassified' }
+const EMPTY = { results: [], nearby: [], geocoded: null, total: 0 }
 
 function Highlight({ text, query }) {
   const words = query.toLowerCase().match(/[a-z0-9]+/g)
@@ -31,50 +30,11 @@ function Item({ r, query, active, onPick, onHover }) {
   )
 }
 
-// One toggle chip; mousedown keeps focus in the search box so the dropdown stays open.
-function Chip({ on, count, onClick, children }) {
-  return (
-    <button type="button" className={`chip sr-chip ${on ? 'on' : ''}`} disabled={!on && !count}
-      onMouseDown={(e) => { e.preventDefault(); onClick() }}>
-      {children}{count != null && <span className="sr-count">{count.toLocaleString()}</span>}
-    </button>
-  )
-}
-
-// Filters narrow the results live; counts come from the backend facets for the current query.
-function Filters({ filters, facets, onChange }) {
-  const set = (k, v) => onChange({ ...filters, [k]: filters[k] === v ? undefined : v })
-  const f = facets || {}
-  const active = Object.values(filters).some((v) => v != null)
-  return (
-    <div className="sr-filters">
-      <div className="sr-frow">
-        <Chip on={filters.status === 'ready'} count={f.status?.ready} onClick={() => set('status', 'ready')}>Briefing</Chip>
-        <Chip on={filters.status === 'scanned'} count={f.status?.scanned} onClick={() => set('status', 'scanned')}>3D scan only</Chip>
-        <Chip on={filters.costar === true} count={f.costar?.yes} onClick={() => set('costar', true)}>CoStar facts</Chip>
-        {active && <button type="button" className="chip sr-clear" onMouseDown={(e) => { e.preventDefault(); onChange({}) }}>Clear</button>}
-      </div>
-      <div className="sr-frow">
-        {Object.keys(KIND_LABEL).map((k) => (
-          <Chip key={k} on={filters.kind === k} count={f.kind?.[k] ?? 0} onClick={() => set('kind', k)}>{KIND_LABEL[k]}</Chip>
-        ))}
-      </div>
-      <div className="sr-frow">
-        {Object.entries(f.city || {}).slice(0, 6).map(([c, n]) => (
-          <Chip key={c} on={filters.city === c} count={n} onClick={() => set('city', c)}>{c}</Chip>
-        ))}
-        {filters.city && !(f.city || {})[filters.city] && <Chip on count={0} onClick={() => set('city', filters.city)}>{filters.city}</Chip>}
-      </div>
-    </div>
-  )
-}
-
 // Header search over every known building (GET /search). Ready buildings open the briefing;
 // scanned-only properties open a property card.
 export default function AddressSearch({ current, onOpenBuilding, onOpenProperty }) {
   const [q, setQ] = useState('')
   const [open, setOpen] = useState(false)
-  const [filters, setFilters] = useState({})
   const [res, setRes] = useState(EMPTY)
   const [active, setActive] = useState(0)
   const [busy, setBusy] = useState(false)
@@ -100,7 +60,7 @@ export default function AddressSearch({ current, onOpenBuilding, onOpenProperty 
   const run = (query, opts = {}) => {
     const id = ++seq.current
     setBusy(true); setErr(null)
-    return search(query, { limit: PAGE, filters, ...opts })
+    return search(query, { limit: PAGE, ...opts })
       .then((r) => {
         if (id !== seq.current) return null
         setRes(r); setActive(0)
@@ -115,7 +75,7 @@ export default function AddressSearch({ current, onOpenBuilding, onOpenProperty 
     if (more || busy || res.results.length >= res.total) return
     const id = seq.current
     setMore(true)
-    search(res.query ?? q, { limit: PAGE, offset: res.results.length, filters })
+    search(res.query ?? q, { limit: PAGE, offset: res.results.length })
       .then((r) => { if (id === seq.current) setRes((cur) => ({ ...cur, results: [...cur.results, ...r.results], total: r.total })) })
       .catch((e) => { if (id === seq.current) setErr(e.message) })
       .finally(() => setMore(false))
@@ -124,7 +84,7 @@ export default function AddressSearch({ current, onOpenBuilding, onOpenProperty 
   useEffect(() => {
     if (open && submitted.current !== dq) run(dq)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dq, open, filters])
+  }, [dq, open])
 
   const items = [...res.results, ...res.nearby]
 
@@ -169,9 +129,7 @@ export default function AddressSearch({ current, onOpenBuilding, onOpenProperty 
     if (el.scrollTop + el.clientHeight >= el.scrollHeight - 120) loadMore()
   }
 
-  const changeFilters = (f) => { submitted.current = null; setFilters(f) }
   const showGeocodeHint = q.trim() && !res.geocoded && !res.results.some((r) => r.score >= GOOD_SCORE)
-  const filtered = Object.values(filters).some((v) => v != null)
 
   return (
     <div className="search">
@@ -182,17 +140,16 @@ export default function AddressSearch({ current, onOpenBuilding, onOpenProperty 
       <kbd className="search-kbd">/</kbd>
       {open && (
         <div className="search-pop" ref={list} onScroll={onScroll}>
-          <Filters filters={filters} facets={res.facets} onChange={changeFilters} />
           {err && <div className="sr-note err">{err}</div>}
           <div className="sr-head">
-            {q.trim() ? 'Matches' : filtered ? 'Filtered buildings' : 'All buildings'}
+            {q.trim() ? 'Matches' : 'All buildings'}
             <span className="sr-total">{busy ? 'searching…' : `${res.total.toLocaleString()} ${res.total === 1 ? 'building' : 'buildings'}`}</span>
           </div>
           {res.results.length > 0 && (
             <ul>{res.results.map((r, i) => <Item key={r.id} r={r} query={q} active={i === active} onPick={pick} onHover={() => setActive(i)} />)}</ul>
           )}
           {!busy && !res.results.length && !res.geocoded && (
-            <div className="sr-note muted">{filtered ? 'Nothing matches these filters.' : 'No building matches.'}</div>
+            <div className="sr-note muted">No building matches.</div>
           )}
           {res.results.length < res.total && (
             <div className="sr-note muted sr-more">{more ? 'Loading more…' : `Scroll for more (${(res.total - res.results.length).toLocaleString()} left)`}</div>
